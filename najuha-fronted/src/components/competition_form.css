@@ -1,0 +1,8 @@
+.competition_register_top {
+    display: flex;
+    flex-direction: column;
+}
+
+.competition_register_top input {
+    width: 30vw;
+}
