@@ -19,7 +19,7 @@ function Competition_form() {
               {uniform: ""},
               {gender: ""},
               {name: ""},
-              {birth: [0,0]}
+              {birth: [null,null]}
             ],
             variableFactor: [
               {weight: []},
@@ -30,7 +30,7 @@ function Competition_form() {
                 {price: ""},
                 {deadline: ""}
             ]}],
-              nomalPrice: [
+              normalPrice: [
                 {price: ""}
             ]
         }
@@ -40,6 +40,69 @@ function Competition_form() {
         newDiv[i].constantFactor[0].uniform = text;
         setDivisions(newDiv);
         console.log(divisions[i].constantFactor[0].uniform)
+    }
+
+    function changeGender(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].constantFactor[1].gender = text;
+        setDivisions(newDiv);
+        console.log(divisions[i].constantFactor[1].gender)
+    }
+
+    function changeName(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].constantFactor[2].name = text;
+        setDivisions(newDiv);
+        console.log(divisions[i].constantFactor[2].name)
+    }
+
+    function changeBirthStart(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].constantFactor[3].birth[0] = text;
+        setDivisions(newDiv);
+        console.log(divisions[i].constantFactor[3].birth[0])
+    }
+
+    function changeBirthEnd(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].constantFactor[3].birth[1] = text;
+        setDivisions(newDiv);
+        console.log(divisions[i].constantFactor[3].birth[1])
+    }
+
+    function changeWeight(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].variableFactor[0].weight = text.split(',');
+        setDivisions(newDiv);
+        console.log(divisions[i].variableFactor[0].weight)
+    }
+
+    function changeBelt(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].variableFactor[1].belt = text.split(',');
+        setDivisions(newDiv);
+        console.log(divisions[i].variableFactor[1].belt)
+    }
+
+    function changeEarlybirdPrice(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].pricingPolicy[0].earlybird[0].price = text;
+        setDivisions(newDiv);
+        console.log(newDiv[i].pricingPolicy[0].earlybird[0].price)
+    }
+
+    function changeEarlybirdDeadline(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].pricingPolicy[0].earlybird[1].deadline = text;
+        setDivisions(newDiv);
+        console.log(newDiv[i].pricingPolicy[0].earlybird[1].deadline)
+    }
+
+    function changeNormalPrice(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].normalPrice[0].price = text;
+        setDivisions(newDiv);
+        console.log(newDiv[i].normalPrice[0].price = text)
     }
 
 
@@ -70,32 +133,32 @@ function Competition_form() {
                         <h3>성별</h3>
                         <div className='gender'>
                             <h4>남자</h4>
-                            <input type='radio' value='남자' checked={divs.constantFactor.gender === 'male'} />
-                            <input type='radio' value='여자' checked={divs.constantFactor.gender === 'female'} />
+                            <input type='radio' value='남자' checked={divs.constantFactor[1].gender === '남자'} onClick={(e) =>{changeGender(e.target.value, i)}}/>
+                            <input type='radio' value='여자' checked={divs.constantFactor[1].gender === '여자'} onClick={(e) =>{changeGender(e.target.value, i)}}/>
                             <h4>여자</h4>
                         </div>
-                        <input className='name' type='text' placeholder='나이 ex)초등부, 중등부, 마스터부, 어덜트'></input>
+                        <input className='name' type='text' placeholder='나이 ex)초등부, 중등부, 마스터부, 어덜트' value={divs.constantFactor[2].name} onChange={(e) => {changeName(e.target.value, i)}}></input>
                         <div>
-                            <input type='number' placeholder='몇년생부터 ex)2010'></input>
-                            <input type='number' placeholder='몇년생까지 ex)2015'></input>
+                            <input type='number' placeholder='몇년생부터 ex)2010' value={divs.constantFactor[3].birth[0]} onChange={(e) => {changeBirthStart(e.target.value, i)}}></input>
+                            <input type='number' placeholder='몇년생까지 ex)2015' value={divs.constantFactor[3].birth[1]} onChange={(e) => {changeBirthEnd(e.target.value, i)}}></input>
                         </div>
                     </div>
 
                     <div className='variableFactor'>
                         <h1>variableFactor</h1>
-                        <input className='weight' type='text' placeholder='체급 ex)-30,-35,-40,-45,-50,-55,+55'></input>
-                        <input className='belt' type='text' placeholder='벨트 ex)white,blue,purple,black'></input>
+                        <input className='weight' type='text' placeholder='체급 ex)-30,-35,-40,-45,-50,-55,+55' value={divs.variableFactor[0].weight} onChange={(e) => {changeWeight(e.target.value, i)}}></input>
+                        <input className='belt' type='text' placeholder='벨트 ex)white,blue,purple,black' value={divs.variableFactor[1].belt} onChange={(e) => {changeBelt(e.target.value, i)}}></input>
                     </div>
 
                     <div className='pricingPolicy'>
                         <h1>pricingPolicy</h1>
-                        <input className='earlybird_price' type='number' placeholder='가격 ex)30000'></input>
-                        <input className='earlybird_price' type='text' placeholder='얼리버드기한 ex)2022-08-27 00:00:00'></input>
+                        <input className='earlybird_price' type='number' placeholder='얼리버드가격 ex)30000' value={divs.pricingPolicy[0].earlybird[0].price} onChange={(e) => {changeEarlybirdPrice(e.target.value, i)}}></input>
+                        <input className='earlybird_price' type='text' placeholder='얼리버드기한 ex)2022-08-27 00:00:00' value={divs.pricingPolicy[0].earlybird[1].deadline} onChange={(e) => {changeEarlybirdDeadline(e.target.value, i)}}></input>
                     </div>
 
                     <div className='normalPrice'>
                         <h1>normalPrice</h1>
-                        <input className='price' type='number' placeholder='가격 ex)40000'></input>
+                        <input className='price' type='number' placeholder='일반가격 ex)40000' value={divs.normalPrice[0].price} onChange={(e) => {changeNormalPrice(e.target.value, i)}}></input>
                     </div>
                 </div>
 
