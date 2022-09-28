@@ -11,6 +11,10 @@ function Competition_form() {
     const [registrationDate, setRegistrationDate] = useState("")
     const [registrationDeadLine, setRegistrationDeadLine] = useState("")
     const [location, setLocation] = useState("")
+    const [banckAccount, setBanckAccount] = useState("")
+    const [rules, setRules] = useState("")
+    const [infomation, setInfomation] = useState("")
+
 
 
     const [divisions, setDivisions] = useState(
@@ -149,14 +153,18 @@ function Competition_form() {
 
     function commitToDB(){
         console.log(divisions)
-        // axios.post(`http://localhost:8000/add_questions/${id}`, {
-        //     'title': title,
-        //     'doreOpen': doreOpen,
-        //     'registrationDate': registrationDate,
-        //     'registrationDeadLine': registrationDeadLine,
-        //     'location': location,
-        //     'division': divisions,
-        // })
+
+        axios.post(`http://localhost:8000/add_competition/${id}`, {
+            'title': title,
+            'doreOpen': doreOpen,
+            'registrationDate': registrationDate,
+            'registrationDeadLine': registrationDeadLine,
+            'location': location,
+            'bankAccount': banckAccount,
+            'rules': rules,
+            'information': infomation,
+            'division': divisions,
+        })
     }
 
     function divisionsUI(){
@@ -222,6 +230,9 @@ function Competition_form() {
                 <input type='text' className='competition_register_top_registrationDate' placeholder='등록시작 ex)0000-00-00 00:00:00' value={registrationDate} onChange={(e) => {setRegistrationDate(e.target.value)}}></input>
                 <input type='text' className='competition_register_top_registrationDeadLine' placeholder='등록마감 ex)0000-00-00 00:00:00' value={registrationDeadLine} onChange={(e) => {setRegistrationDeadLine(e.target.value)}}></input>
                 <input type='text' className='competition_register_top_location' placeholder='장소' value={location} onChange={(e) => {setLocation(e.target.value)}}></input>
+                <input type='text' className='competition_register_top_bankAccount' placeholder='계좌번호' value={banckAccount} onChange={(e) => {setBanckAccount(e.target.value)}}></input>
+                <input type='text' className='competition_register_top_rules' placeholder='대회규칙' value={rules} onChange={(e) => {setRules(e.target.value)}}></input>
+                <input type='text' className='competition_register_top_information' placeholder='대회정보' value={infomation} onChange={(e) => {setInfomation(e.target.value)}}></input>
             </div>
         </div>
 
