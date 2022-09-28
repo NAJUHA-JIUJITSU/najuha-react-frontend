@@ -1,8 +1,51 @@
+/*typography*/
+
+.division h1 {
+    font-size: 3rem;
+}
+
+.division h3 {
+    font-size: 2rem;
+}
+
+.uniform h4,
+.gender h4 {
+    font-size: 2rem;
+}
+
+
+/*Layout*/
+
 .competition_register_top {
     display: flex;
     flex-direction: column;
 }
 
+.division input{
+    width: 600px;
+}
+
 .competition_register_top input {
     width: 30vw;
+}
+.division {
+    border: 5px solid red;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.constantFactor, .variableFactor, .pricingPolicy, .normalPrice{
+    width: 800px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.uniform input,
+.gender input{
+    width: 100px;
+}
+
+.uniform h4,
+.gender h4{
+    display: inline;
 }
