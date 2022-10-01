@@ -10,9 +10,9 @@ function Competition_form() {
     const [doreOpen, setDoreOpen] = useState("")
     const [registrationDate, setRegistrationDate] = useState("")
     const [registrationDeadLine, setRegistrationDeadLine] = useState("")
+    const [earlybirdDeadline, setEarlybirdDeadline] = useState("")    
     const [location, setLocation] = useState("")
     const [banckAccount, setBanckAccount] = useState("")
-    const [rules, setRules] = useState("")
     const [infomation, setInfomation] = useState("")
 
 
@@ -30,13 +30,8 @@ function Competition_form() {
                 belt: []
             },
             pricingPolicy:{
-                earlybird:{ 
-                    price: "",
-                    deadline: ""
-                },
-                normalPrice:{
-                    price: ""
-                }
+                earlyBird: "",
+                normal: ""
             }
         }
     ])
@@ -67,13 +62,8 @@ function Competition_form() {
                     belt: []
                 },
                 pricingPolicy:{
-                    earlybird:{ 
-                        price: "",
-                        deadline: ""
-                    },
-                    normalPrice:{
-                        price: ""
-                    }
+                    earlyBird: "",
+                    normal: ""
                 }
             }
         ])
@@ -131,23 +121,16 @@ function Competition_form() {
 
     function changeEarlybirdPrice(text, i){
         let newDiv = [...divisions]
-        newDiv[i].pricingPolicy.earlybird.price = text;
+        newDiv[i].pricingPolicy.earlyBird = text;
         setDivisions(newDiv);
-        console.log(newDiv[i].pricingPolicy.earlybird.price)
-    }
-
-    function changeEarlybirdDeadline(text, i){
-        let newDiv = [...divisions]
-        newDiv[i].pricingPolicy.earlybird.deadline = text;
-        setDivisions(newDiv);
-        console.log(newDiv[i].pricingPolicy.earlybird.deadline)
+        console.log(newDiv[i].pricingPolicy.earlyBird)
     }
 
     function changeNormalPrice(text, i){
         let newDiv = [...divisions]
-        newDiv[i].pricingPolicy.normalPrice.price = text;
+        newDiv[i].pricingPolicy.normal = text;
         setDivisions(newDiv);
-        console.log(newDiv[i].pricingPolicy.normalPrice.price = text)
+        console.log(newDiv[i].pricingPolicy.normal = text)
     }
 
 
@@ -161,7 +144,7 @@ function Competition_form() {
             'registrationDeadLine': registrationDeadLine,
             'location': location,
             'bankAccount': banckAccount,
-            'rules': rules,
+            'earlybirdDeadline': earlybirdDeadline,
             'information': infomation,
             'division': divisions,
         })
@@ -202,14 +185,13 @@ function Competition_form() {
                     </div>
 
                     <div className='pricingPolicy'>
-                        <h3>pricingPolicy</h3>
-                        <input className='earlybird_price' type='number' placeholder='얼리버드가격 ex)30000' value={divs.pricingPolicy.earlybird.price} onChange={(e) => {changeEarlybirdPrice(e.target.value, i)}}></input>
-                        <input className='earlybird_price' type='text' placeholder='얼리버드기한 ex)2022-08-27 00:00:00' value={divs.pricingPolicy.earlybird.deadline} onChange={(e) => {changeEarlybirdDeadline(e.target.value, i)}}></input>
+                        <h3>earlyBirdPrice</h3>
+                        <input className='earlybird_price' type='number' placeholder='얼리버드가격 ex)30000' value={divs.pricingPolicy.earlyBird} onChange={(e) => {changeEarlybirdPrice(e.target.value, i)}}></input>
                     </div>
 
                     <div className='normalPrice'>
                         <h3>normalPrice</h3>
-                        <input className='price' type='number' placeholder='일반가격 ex)40000' value={divs.pricingPolicy.normalPrice.price} onChange={(e) => {changeNormalPrice(e.target.value, i)}}></input>
+                        <input className='price' type='number' placeholder='일반가격 ex)40000' value={divs.pricingPolicy.normal} onChange={(e) => {changeNormalPrice(e.target.value, i)}}></input>
                     </div>
                     <button onClick={addMoreDivision}>디비전추가하기</button>
                     <button onClick={() => {copyDivision(i)}}>디비전복사하기</button>
@@ -231,7 +213,7 @@ function Competition_form() {
                 <input type='text' className='competition_register_top_registrationDeadLine' placeholder='등록마감 ex)0000-00-00 00:00:00' value={registrationDeadLine} onChange={(e) => {setRegistrationDeadLine(e.target.value)}}></input>
                 <input type='text' className='competition_register_top_location' placeholder='장소' value={location} onChange={(e) => {setLocation(e.target.value)}}></input>
                 <input type='text' className='competition_register_top_bankAccount' placeholder='계좌번호' value={banckAccount} onChange={(e) => {setBanckAccount(e.target.value)}}></input>
-                <input type='text' className='competition_register_top_rules' placeholder='대회규칙' value={rules} onChange={(e) => {setRules(e.target.value)}}></input>
+                <input type='text' className='competition_register_top_earlyBirdDeadline' placeholder='얼리버드기한 ex)2022-08-27 00:00:00' value={earlybirdDeadline} onChange={(e) => {setEarlybirdDeadline(e.target.value)}}></input>
                 <input type='text' className='competition_register_top_information' placeholder='대회정보' value={infomation} onChange={(e) => {setInfomation(e.target.value)}}></input>
             </div>
         </div>
