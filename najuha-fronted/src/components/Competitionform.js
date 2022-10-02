@@ -2,7 +2,7 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
-import './competition_form.css'
+import './competitionform.css'
 
 function Competition_form() {
     const {id} = useParams();

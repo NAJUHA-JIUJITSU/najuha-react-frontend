@@ -4,7 +4,8 @@ import reset from 'styled-reset' // 리액트에서는 styled-reset을 통해 �
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Mainpage from './pages/Mainpage'
 import Admincompetition from './pages/Admincompetition'
-import Competition_form from './components/Competition_form'
+import Competitionform from './components/Competitionform'
+import CompetitionSchedule from './pages/CompetitionSchedule'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -16,8 +17,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path = '/' element={<Mainpage/>} />
+        <Route path = '/competition' element={<CompetitionSchedule/>} />
         <Route path = '/Admincompetition/' element={<Admincompetition/>} />
-        <Route path = '/Admincompetition/:id' element={<Competition_form/>} />
+        <Route path = '/Admincompetition/:id' element={<Competitionform/>} />
       </Routes>
     </BrowserRouter>
     </React.Fragment>
