@@ -24,12 +24,12 @@ function Navbar() {
             <span class="bar"></span>
             <span class="bar"></span>
         </div>
-        <h1 class="logo">NAJUHA</h1>
+        <h1 class="logo" onClick={()=>{navigate('/')}}>NAJUHA</h1>
         <ul class={`category nav-menu ${isnavmenuActive ? 'active' : ''}`}>
             <li class="category-competition nav-item">
                 <p onClick={()=>{navigate('/competition')}}>대회일정</p>
             </li>
-            <li class="category-seminar nav-items">
+            <li class="category-seminar nav-item">
                 <p>세미나</p>
             </li>
         </ul> 
