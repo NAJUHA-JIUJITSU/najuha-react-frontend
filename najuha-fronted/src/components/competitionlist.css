@@ -40,6 +40,7 @@
     box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     transition: all 0.3s ease 0s;
+    padding: 8px 10px;
 }
 
 .each-competition-bottom button:hover{
@@ -132,3 +133,45 @@
     margin-right: 10px;
 }
 
+
+@media(max-width:1049px){
+    /* Layout */
+    .competition-schedule-wrapper{
+        max-width: 768px;
+    }
+
+    .competition-col{
+        width: 50%;
+    }
+}
+
+@media(max-width:750px){
+    /* Typography */
+    .each-competition-bottom h4{
+        font-size: 16px;
+    }
+    
+    .each-competition-bottom button{ /*버튼디자인 */
+        font-size: 14px;
+    }
+
+
+    /* Layout */
+    .competition-schedule-wrapper{
+        max-width: 650px;
+    }
+
+    .competition-col{
+        width: 100%;
+    }
+
+    /*Component*/
+
+
+    
+    .each-competition-bottom h4{
+        margin-right: 5px;
+    }
+
+
+}
