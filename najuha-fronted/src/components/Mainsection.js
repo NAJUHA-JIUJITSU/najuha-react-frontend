@@ -1,7 +1,10 @@
 import React from 'react'
 import './mainsection.css'
+import { useNavigate } from 'react-router-dom'
 
 function Mainsection() {
+    let navigate = useNavigate();
+
   return (
     <>
         <div class="wrapper">
@@ -12,8 +15,8 @@ function Mainsection() {
                     <h1><strong>하</strong>고싶다</h1>
                 </div>
                 <div class="left-content-bar"></div>
-                <div class="content-button" >
-                    <h2><a href="../competition/competition.html">대회일정바로가기</a></h2>
+                <div class="content-button" onClick={()=>{navigate('/competition')}}>
+                    <h2>대회일정바로가기</h2>
                     <img class='competition-icon' src="Assets/대회일정바로가기.svg" alt="대회일정바로가기아이콘"/>
                 </div>
             </section>
