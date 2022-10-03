@@ -61,7 +61,7 @@
 }
 
 .competition-list{
-    height: 64vh;
+    min-height: 64vh;
 }
 
 .competition-row{
