@@ -1,42 +1,34 @@
+import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import './competitionlist.css'
 
 function Competitionlist() {
-    const [competitions, setCompetitions] = useState([
-        {
-            "id": 1,
-            "title": "heroes of jiu-jitsu #1",
-            "host": "킹오브주짓수",
-            "doreOpen": "2022-10-21 08:31:00",
-            "registrationDate": "2022-09-20 08:31:00",
-            "registrationDeadline": "2022-11-20 08:31:00",
-            "earlyBirdDeadline": "2022-09-20 08:31:00",
-            "location": "도로명 주소"
-        },
-        {
-            "id": 2,
-            "title": "heroes of jiu-jitsu #2",
-            "host": "킹오브주짓수",
-            "doreOpen": "2022-11-21 08:31:00",
-            "registrationDate": "2022-09-20 08:31:00",
-            "registrationDeadline": "2022-11-20 08:31:00",
-            "earlyBirdDeadline": "2022-09-20 08:31:00",
-            "location": "도로명 주소"
-        },
-        {
-            "id": 3,
-            "title": "heroes of jiu-jitsu #3",
-            "host": "킹오브주짓수",
-            "doreOpen": "2022-11-21 08:31:00",
-            "registrationDate": "2022-09-20 08:31:00",
-            "registrationDeadline": "2022-11-20 08:31:00",
-            "earlyBirdDeadline": null,
-            "location": "도로명 주소"
-        },
-    ])
-
-
+    const [competitions, setCompetitions] = useState([])
     const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토', '아'])
+
+    useEffect(() => {
+        async function getCompetitionList(){
+            axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions`,
+            {
+                headers: {
+                    'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+                }
+            })
+            .then((res) => {
+                setCompetitions(res.data.result)
+                console.log('성공')
+            })
+            .catch((err) => {
+                console.log(err)
+                console.log(err.response.status);
+            })
+            return ;
+        }
+        getCompetitionList()
+            // .then(res => res.json)
+            // .then(data => console.log(data))
+            // .catch(err => console.log(err))
+    }, [])
 
     function competitionParsing(competition){
         let doreOpenDay = week[new Date(competition.doreOpen).getDay()]
