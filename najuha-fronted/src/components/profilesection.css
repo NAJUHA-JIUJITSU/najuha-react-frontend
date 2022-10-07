@@ -72,7 +72,19 @@
 .Profilesection_welcome-center p{
     font-size: 3.2rem;
     letter-spacing: 2px;
+    position: relative;
 
+}
+.Profilesection_welcome-center p:hover{
+    color: #292929;
+    cursor: pointer;
+
+}
+
+.Profilesection_welcome-center-btn img {
+    position: absolute;
+    top: -3px;
+    left: 80px;
 }
 
 .Profilesection_welcome-center-username {
