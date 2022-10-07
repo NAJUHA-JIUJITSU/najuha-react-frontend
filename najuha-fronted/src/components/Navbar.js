@@ -33,7 +33,7 @@ function Navbar() {
                 <p>세미나</p>
             </li>
         </ul> 
-        <img class='login-icon' alt="벨트모양 로그인 아이콘" src="Assets/Group 로고.svg"/>
+        <img class='login-icon' alt="벨트모양 로그인 아이콘" src="Assets/Group 로고.svg" onClick={()=>{navigate('/Profilepage')}}/>
     
     </header>
   )
