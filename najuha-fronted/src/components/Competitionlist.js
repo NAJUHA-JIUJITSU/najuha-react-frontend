@@ -1,34 +1,102 @@
 import axios from 'axios'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import './competitionlist.css'
 
 function Competitionlist() {
     const [competitions, setCompetitions] = useState([])
-    const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토', '아'])
+    const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
+    const [isLoading, setIsLoading] = useState(false)
+    const [lastElement, setLastElement] = useState('')
+    const [offset, setOffset] = useState(0);
+    const [startDate, setStartDate] = useState('');
+    const [location, setLocation] = useState('');
+    const [title, setTitle] = useState('')
+    const offsetRef = useRef();
+    const locationRef = useRef();
+    offsetRef.current = offset;
+    locationRef.current = location;
+    
+    const observer = useRef(new IntersectionObserver(async (entries)=>{
+        const first = entries[0]
+        if(first.isIntersecting){
+            await getCompetitionList(startDate, offsetRef.current, title, locationRef.current);
+            await setOffset((preOffset) =>{return preOffset+1})
+        }
+    }, {threshold:1}))
+
+
+    async function getCompetitionList(startDate, offset, title, location){
+        setIsLoading(true)
+        axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`,
+        {
+            headers: {
+                'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+            }
+        })
+        .then((res) => {
+            let newCompetitions = res.data.result
+            setCompetitions((competitions) => [...competitions, ...newCompetitions])
+            console.log('성공')
+        })
+        .catch((err) => {
+            console.log(err)
+            console.log(err.response.status);
+        })
+        setIsLoading(false)
+        return ;
+    }
+
+    
 
     useEffect(() => {
-        async function getCompetitionList(){
-            axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions`,
-            {
-                headers: {
-                    'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
-                }
-            })
-            .then((res) => {
-                setCompetitions(res.data.result)
-                console.log('성공')
-            })
-            .catch((err) => {
-                console.log(err)
-                console.log(err.response.status);
-            })
-            return ;
+        const currentElement = lastElement;
+        const currentObserver = observer.current;
+        if (currentElement) {
+            currentObserver.observe(currentElement);
+            
         }
-        getCompetitionList()
-            // .then(res => res.json)
-            // .then(data => console.log(data))
-            // .catch(err => console.log(err))
-    }, [])
+
+        return () => {
+            if (currentElement){
+                currentObserver.unobserve(currentElement)
+            }
+        }
+    }, [lastElement])
+
+    useEffect(() => {
+        console.log(competitions.length)
+    }, [competitions])
+
+    useEffect(() => {
+        console.log(`offset값은: ${offset}`)
+    }, [offset])
+
+    useEffect(() => {
+        console.log(`location값은: ${location}`)
+    }, [location])
+
+
+
+    // useEffect(() => {
+    //     async function getCompetitionList(){
+    //         axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions`,
+    //         {
+    //             headers: {
+    //                 'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+    //             }
+    //         })
+    //         .then((res) => {
+    //             setCompetitions(res.data.result)
+    //             console.log('성공')
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //             console.log(err.response.status);
+    //         })
+    //         return ;
+    //     }
+    //     getCompetitionList()
+    // }, [])
 
     function competitionParsing(competition){
         let doreOpenDay = week[new Date(competition.doreOpen).getDay()]
@@ -88,10 +156,13 @@ function Competitionlist() {
     <div className='competition-schedule-wrapper'>
         <div className='searchzone'>
         searchzone
+        <button value='서울' onClick={(e)=>setLocation(e.target.value)}>서울</button>
         </div>
         <div className='competition-list'>
             <ul class='competition-row'>
                 {renderCompetitionList()}
+                {isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}>Loading...</div>}
+                {!isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}ref={setLastElement}>HI</div>}
             </ul>
         </div>
     </div>
