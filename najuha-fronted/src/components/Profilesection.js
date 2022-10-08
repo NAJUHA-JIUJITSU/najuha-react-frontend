@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom'
 function Profilesection() {
     const [username, setUsername] = useState("나주하");
     const [competitionApplications, setCompetitionApplications] = useState([]);
+    const [isFullListedNow, setisFullListedNow] = useState(false);
+    const [isFullListedLast, setisFullListedLast] = useState(false);
 
     async function getUsers() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users`,
@@ -69,10 +71,15 @@ function Profilesection() {
     }
 
     function renderCompetition(){
+        let cnt = 0;
         return competitionApplications.map((application) => {
             let curApplication = applicationParsing(application);
             let today = new Date();
             if( today > new Date(application.Competition.doreOpen)) {
+                return ;
+            }
+            cnt++;
+            if(!isFullListedNow && cnt>3) {
                 return ;
             }
             return(
@@ -105,10 +112,15 @@ function Profilesection() {
     }
 
     function renderLastCompetition(){
+        let cnt = 0;
         return competitionApplications.map((application) => {
             let curApplication = applicationParsing(application);
             let today = new Date();
             if( today < new Date(application.Competition.doreOpen)) {
+                return ;
+            }
+            cnt++;
+            if(!isFullListedLast && cnt>3) {
                 return ;
             }
             return(
@@ -129,7 +141,7 @@ function Profilesection() {
                             <td>{curApplication.title}</td>
                             <td>{curApplication.divisionName}</td>
                         </tr>
-                        <tr className='Profilesection_MobileTable'>
+                        <tr className='Profilesection_MobileTable Profilesection_odd'>
                             <td>{curApplication.belt}</td>
                             <td>{curApplication.weight}</td>
                             <td>{curApplication.isPayment}</td>
@@ -160,6 +172,14 @@ function Profilesection() {
         return (
          <p className='Profilesection_competitionCount-box-num'>{totalCnt}</p>
         )
+    }
+
+    function ChangeIsFullListedNow() {
+        setisFullListedNow(!isFullListedNow);
+    }
+
+    function ChangeIsFullListedLast() {
+        setisFullListedLast(!isFullListedLast);
     }
 
     useEffect(() => {
@@ -209,7 +229,7 @@ function Profilesection() {
             <div className='Profilesection_myCompetitionList nowList'>
                 <div className='Profilesection_tableName'>
                     <h3>실시간 대회신청</h3>
-                    <p>전체보기<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
+                    <p onClick={ChangeIsFullListedNow}>전체보기<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
                 </div>
                 <table>
                     <thead className='Profilesection_thead'>
@@ -228,7 +248,7 @@ function Profilesection() {
             </div>
             <div className='Profilesection_myCompetitionList totlaList'>
                 <h3>총 대회신청</h3>
-                <p>전체보기<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
+                <p onClick={ChangeIsFullListedLast}>전체보기<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
                 <table>
                     <thead className='Profilesection_thead'>
                         <tr>
