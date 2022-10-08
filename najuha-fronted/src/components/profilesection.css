@@ -79,7 +79,7 @@
     position: relative;
 
 }
-.Profilesection_welcome-center p:hover{
+.Profilesection_welcome-center-btn p:hover{
     color: #292929;
     cursor: pointer;
 
@@ -333,5 +333,12 @@
 
     .Profilesection_right .Profilesection_myCompetitionList table {
         margin: 0 0 4rem 0;
+    }
+
+    #payInfoBtn {
+        width: 8rem;
+        height: 3.2rem;
+        font-size: 1.4rem;
+        margin: 0 4px;
     }
 }

@@ -20,8 +20,6 @@ app.post(`/add_competition/:doc_id`, (req, res)=>{
     fs.writeFileSync(`files/${name}.json`, data);
 })
 
-
-
 app.listen(8000, ()=>{
     console.log('express server is running at port number 8000');
 })

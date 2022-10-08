@@ -76,47 +76,30 @@ function Profilesection() {
                 return ;
             }
             return(
-                <div>
-                    <table className='Profilesection_PcTable'>
-                        <thead className='Profilesection_thead'>
-                            <tr>
-                                <th>Date</th>
-                                <th>Location</th>
-                                <th>Champitonship</th>
-                                <th>참가부</th>
-                                <th>벨트</th>
-                                <th>체급</th>
-                                <th>결제내역</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{curApplication.doreOpen}</td>
-                                <td>{curApplication.location}</td>
-                                <td>{curApplication.title}</td>
-                                <td>{curApplication.divisionName}</td>
-                                <td>{curApplication.belt}</td>
-                                <td>{curApplication.weight}</td>
-                                <td>{curApplication.isPayment}</td>
-                                <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table className='Profilesection_MobileTable'>
-                        <tr>
-                            <td><div id='Profilesection_tableDate'><p>{curApplication.doreOpen}</p></div></td>
+                <tbody>
+                        <tr className='Profilesection_PcTable'>
+                            <td>{curApplication.doreOpen}</td>
                             <td>{curApplication.location}</td>
                             <td>{curApplication.title}</td>
                             <td>{curApplication.divisionName}</td>
-                        </tr>
-                        <tr className='Profilesection_odd'>
                             <td>{curApplication.belt}</td>
                             <td>{curApplication.weight}</td>
                             <td>{curApplication.isPayment}</td>
                             <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
                         </tr>
-                    </table>
-                </div>
+                        <tr className='Profilesection_MobileTable'>
+                            <td><div id='Profilesection_tableDate'><p>{curApplication.doreOpen}</p></div></td>
+                            <td>{curApplication.location}</td>
+                            <td>{curApplication.title}</td>
+                            <td>{curApplication.divisionName}</td>
+                        </tr>
+                        <tr className='Profilesection_MobileTable Profilesection_odd'>
+                            <td>{curApplication.belt}</td>
+                            <td>{curApplication.weight}</td>
+                            <td>{curApplication.isPayment}</td>
+                            <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
+                        </tr>
+                </tbody>
             )
         })
     }
@@ -146,7 +129,7 @@ function Profilesection() {
                             <td>{curApplication.title}</td>
                             <td>{curApplication.divisionName}</td>
                         </tr>
-                        <tr className='Profilesection_MobileTable Profilesection_odd'>
+                        <tr className='Profilesection_MobileTable'>
                             <td>{curApplication.belt}</td>
                             <td>{curApplication.weight}</td>
                             <td>{curApplication.isPayment}</td>
@@ -228,7 +211,20 @@ function Profilesection() {
                     <h3>실시간 대회신청</h3>
                     <p>전체보기<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
                 </div>
+                <table>
+                    <thead className='Profilesection_thead'>
+                        <tr>
+                            <th>Date</th>
+                            <th>Location</th>
+                            <th>Champitonship</th>
+                            <th>참가부</th>
+                            <th>벨트</th>
+                            <th>체급</th>
+                            <th>결제내역</th>
+                        </tr>
+                    </thead>
                     {renderCompetition()}
+                </table>
             </div>
             <div className='Profilesection_myCompetitionList totlaList'>
                 <h3>총 대회신청</h3>
