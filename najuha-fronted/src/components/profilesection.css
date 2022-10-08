@@ -60,6 +60,10 @@
     height: 50%;
 }
 
+.Profilesection_MobileTable {
+    display: none;
+}
+
 /* Components */
 
 .Profilesection_welcome-center {
@@ -149,8 +153,8 @@
 
 .Profilesection_right h2 {
     font-size: 3rem;
-    height: 20%;
-    padding-top: 5rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
     box-sizing: border-box;
     font-weight: 500;
 }
@@ -181,6 +185,7 @@
     box-sizing: border-box;
     margin: 2rem 0 3rem 0;
     text-align: center;
+    letter-spacing: -0.1rem;
 }
 
 .Profilesection_myCompetitionList thead {
@@ -192,12 +197,14 @@
 
 .Profilesection_myCompetitionList th {
     padding: 10px 12px;
+    vertical-align:middle;
 } 
 
 .Profilesection_myCompetitionList td {
     padding: 8px;
     font-size: 1.8rem;
     border-bottom: 1px solid #E9E9E9;
+    vertical-align: middle;
 }
 
 .Profilesection_myCompetitionList .payInfo {
@@ -232,4 +239,99 @@
 
 .totlaList table {
     margin: 2rem 0 0 0;
+}
+
+@media(max-width:1049px){
+    /* Layout */
+
+    .Profilesection_wrapper {
+        max-width : 768px;
+    }
+        
+    .Profilesection_left {
+       display: none;
+    }
+
+    .Profilesection_right {
+        width: 100%;
+        margin-left: 0%;
+    }
+
+    #payInfoBtn {
+        width: 6.6rem;
+        height: 3.2rem;
+        font-size: 1.4rem;
+        margin: 0 4px;
+    }
+}
+
+@media(max-width:750px) {
+    .Profilesection_wrapper {
+        max-width:650px;
+    }
+
+    .Profilesection_right {
+        height: 88vh;
+    }
+
+    .Profilesection_PcTable {
+        display: none;
+    }
+    
+    .Profilesection_MobileTable {
+        display: table-row;
+    }
+
+    .Profilesection_right h2 {
+        font-size: 2.6rem;
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+    }
+
+    .Profilesection_thead {
+        display: none;
+    }
+
+    .Profilesection_myCompetitionList td {
+        border-bottom: none;
+    }
+     
+    #Profilesection_tableDate {
+        background-color: #E7F3FF;
+        height: 3.6rem;
+        position: relative;
+    }
+
+    .totlaList #Profilesection_tableDate {
+        background-color: #E7E7E7;
+    }
+
+    #Profilesection_tableDate p {
+        position: absolute;
+        font-size: 1.8rem;
+        color: #292929;
+        font-weight: 600;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%);
+    }
+
+    .Profilesection_myCompetitionList td {
+        padding: 26px 4px 1px 4px;
+        font-size: 1.8rem;
+    }
+
+    .Profilesection_odd td{
+        padding-top: 8px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #E9E9E9;
+    }
+
+    .Profilesection_myCompetitionList .payInfo {
+        border-bottom: 1px solid #E9E9E9;
+    }
+
+    .Profilesection_right .Profilesection_myCompetitionList table {
+        margin: 0 0 4rem 0;
+    }
 }
