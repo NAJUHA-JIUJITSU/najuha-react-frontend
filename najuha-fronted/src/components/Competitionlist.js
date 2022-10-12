@@ -13,13 +13,17 @@ function Competitionlist() {
     const [title, setTitle] = useState('')
     const offsetRef = useRef();
     const locationRef = useRef();
+    const startDateRef = useRef();
+    const titleRef = useRef();
     offsetRef.current = offset;
     locationRef.current = location;
+    startDateRef.current = startDate;
+    titleRef.current = title;
     
     const observer = useRef(new IntersectionObserver(async (entries)=>{
         const first = entries[0]
         if(first.isIntersecting){
-            await getCompetitionList(startDate, offsetRef.current, title, locationRef.current);
+            await getCompetitionList(startDateRef.current, offsetRef.current, titleRef.current, locationRef.current);
             await setOffset((preOffset) =>{return preOffset+1})
         }
     }, {threshold:1}))
