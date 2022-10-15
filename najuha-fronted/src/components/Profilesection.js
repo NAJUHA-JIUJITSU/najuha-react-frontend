@@ -31,6 +31,27 @@ function Profilesection() {
         return ;
     }
 
+    function renderCompetitonNowCount() {
+        let nowCnt = 0;
+        competitionApplications.map((application) => {
+            let competitionDate = new Date(application.Competition.doreOpen);
+            let today = new Date();
+            if( today <= competitionDate) {
+                nowCnt++;
+            }
+        })
+        return (
+            <p className='Profilesection_competitionCount-box-num'>{nowCnt}</p>
+        )
+    }
+
+    function renderCompetitonTotalCount() {
+        let totalCnt = competitionApplications.length
+        return (
+         <p className='Profilesection_competitionCount-box-num'>{totalCnt}</p>
+        )
+    }
+
     async function getCompetitionApplication() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
         {
@@ -155,27 +176,6 @@ function Profilesection() {
         })
     }
 
-    function renderCompetitonNowCount() {
-        let nowCnt = 0;
-        competitionApplications.map((application) => {
-            let competitionDate = new Date(application.Competition.doreOpen);
-            let today = new Date();
-            if( today <= competitionDate) {
-                nowCnt++;
-            }
-        })
-        return (
-            <p className='Profilesection_competitionCount-box-num'>{nowCnt}</p>
-        )
-    }
-
-    function renderCompetitonTotalCount() {
-        let totalCnt = competitionApplications.length
-        return (
-         <p className='Profilesection_competitionCount-box-num'>{totalCnt}</p>
-        )
-    }
-
     function ChangeIsFullListedNow() {
         setisFullListedNow(!isFullListedNow);
     }
@@ -218,8 +218,8 @@ function Profilesection() {
             </div>
             <div className='Profilesection_information'>
                 <li>
-                    <div className='Profilesection_information-btn'>대회신청목록</div>
-                    <div className='Profilesection_information-btn' onClick={()=>{navigate('/UserInfo')}}>내 프로필 관리</div>
+                    <div className='Profilesection_information-btn' onClick={()=>{navigate('/Profilepage')}}>대회신청목록</div>
+                    <div className='Profilesection_information-btn' onClick={()=>{navigate('/UserInfopage')}}>내 프로필 관리</div>
                     <div className='Profilesection_information-btn'>개인정보처리방침</div>
                     <div className='Profilesection_information-btn'>이용약관</div>
                     <div className='Profilesection_information-btn'>버전정보</div>
