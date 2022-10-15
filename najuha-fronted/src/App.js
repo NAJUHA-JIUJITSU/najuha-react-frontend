@@ -7,6 +7,7 @@ import Admincompetition from './pages/Admincompetition'
 import Competitionform from './components/Competitionform'
 import CompetitionSchedule from './pages/CompetitionSchedule'
 import Profilepage from './pages/Profilepage'
+import UserInfo from './components/UserInfo'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -22,6 +23,7 @@ function App() {
         <Route path = '/Admincompetition/' element={<Admincompetition/>} />
         <Route path = '/Admincompetition/:id' element={<Competitionform/>} />
         <Route path = '/Profilepage' element={<Profilepage/>} />
+        <Route path = '//UserInfo' element={<UserInfo/>} />
       </Routes>
     </BrowserRouter>
     </React.Fragment>

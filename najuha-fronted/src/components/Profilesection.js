@@ -10,6 +10,8 @@ function Profilesection() {
     const [isFullListedNow, setisFullListedNow] = useState(false);
     const [isFullListedLast, setisFullListedLast] = useState(false);
 
+    let navigate = useNavigate();
+
     async function getUsers() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users`,
         {
@@ -217,7 +219,7 @@ function Profilesection() {
             <div className='Profilesection_information'>
                 <li>
                     <div className='Profilesection_information-btn'>대회신청목록</div>
-                    <div className='Profilesection_information-btn'>내 프로필 관리</div>
+                    <div className='Profilesection_information-btn' onClick={()=>{navigate('/UserInfo')}}>내 프로필 관리</div>
                     <div className='Profilesection_information-btn'>개인정보처리방침</div>
                     <div className='Profilesection_information-btn'>이용약관</div>
                     <div className='Profilesection_information-btn'>버전정보</div>
