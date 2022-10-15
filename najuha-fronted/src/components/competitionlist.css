@@ -80,8 +80,12 @@ li {
 
 .competition-searchzone{
     height: 20vh;
-    padding-top: 3vh;
+    /* padding-top: 3vh; */
     box-sizing: border-box;
+    display: flex; /* 수직정렬을 위한 3종세트 display, align-items, justify-content */
+    align-items: center;
+    justify-content: center;
+    
 }
 
 .competition-searchzone-wrapper{
@@ -131,7 +135,7 @@ li {
 .competition-searchzone-title::after{
     content:' ';
     display: block;
-    height: 14px;
+    height: 1.4vh;
     width: 2px;
     margin: 0 auto;
     margin-top: 0.5vh;
@@ -217,6 +221,9 @@ li {
     .competition-col{
         width: 50%;
     }
+    .competition-searchzone-wrapper{
+        width: 60%;
+    }
 }
 
 @media(max-width:750px){
@@ -231,6 +238,7 @@ li {
 
 
     /* Layout */
+
     .competition-schedule-wrapper{
         max-width: 650px;
     }
@@ -239,6 +247,12 @@ li {
         width: 100%;
     }
 
+    .competition-searchzone-wrapper{
+        width: 90%;
+    }
+    .competition-list{
+        height: 68vh;
+    }
     /*Component*/
 
 

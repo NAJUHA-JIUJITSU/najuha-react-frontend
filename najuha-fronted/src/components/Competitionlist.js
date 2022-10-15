@@ -99,7 +99,7 @@ function Competitionlist() {
         console.log(`title값은: ${title}`)
     }, [title])
 
-    function listRefresh(){ // 검색 변수가 바뀔때마다 초기화 해주어야함.
+    function listRefresh(){ // 검색 변수가 바뀔때마다 초기화 해주는 역할.
         setOffset(0)
         setCompetitions([]);
     }
@@ -215,25 +215,6 @@ function Competitionlist() {
                             </Select>
                         </FormControl>
                     </div>
-                    {/* <div className='competition-searchzone-options-city'>
-                        <FormControl variant="standard" style={{width:'100%'}}>
-                        <InputLabel id="demo-simple-select-standard-label">도시</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-standard-label"
-                        id="demo-simple-select-standard"
-                        value={city}
-                        onChange={(e) => {setCity}}
-                        label="Age"
-                        >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Ten</MenuItem>
-                        <MenuItem value={20}>Twenty</MenuItem>
-                        <MenuItem value={30}>Thirty</MenuItem>
-                        </Select>
-                    </FormControl>
-                    </div> */}
                 </div>
             </div>
         </div>
@@ -241,7 +222,7 @@ function Competitionlist() {
             <ul class='competition-row'>
                 {renderCompetitionList()}
                 {isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}>Loading...</div>}
-                {!isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}ref={setLastElement}>HI</div>}
+                {!isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}ref={setLastElement}>해당 대회가 모두 로딩되었습니다.</div>}
             </ul>
         </div>
     </div>
