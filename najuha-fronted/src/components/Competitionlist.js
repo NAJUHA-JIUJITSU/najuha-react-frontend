@@ -175,13 +175,18 @@ function Competitionlist() {
                     <div className='competition-searchzone-options-date'>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                     <DesktopDatePicker
-                    label="날짜 선택"
+                    label="시작 날짜"
                     views={['year', 'month', 'day']}
                     minDate={dayjs('2022-1-1')} // 올해로 한정될수 있게 변수값을 고쳐야함 
                     maxDate={dayjs('2022-12-31')} // 올해로 한정될수 있게 변수값을 고쳐야함 
-                    inputFormat="MM-DD-YYYY" 
+                    inputFormat="MM.DD~" 
                     value={startDate}
                     onChange={(newvalue)=>{
+                        if(newvalue === null){
+                            setStartDate('')
+                            listRefresh();
+                            return;
+                        }
                         if(newvalue.format('YYYY-MM-DD') != 'Invalid Date'){
                             setStartDate(newvalue.format('YYYY-MM-DD'))
                             listRefresh();
