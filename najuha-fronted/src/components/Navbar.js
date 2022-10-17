@@ -1,10 +1,12 @@
 import React, {useState} from 'react'
 import './navbar.css'
 import { useNavigate } from 'react-router-dom'
+import Dropdown from './Dropdown'
 
 function Navbar() {
     let [isHamburgerActive, setIsHamburgerActive] = useState(false)
     let [isnavmenuActive, setIsNavmenuActive] = useState(false)
+    const [dropdownVisibility, setDropdownVisibility] = useState(false);
     let navigate = useNavigate();
         
 
@@ -33,8 +35,19 @@ function Navbar() {
                 <p>세미나</p>
             </li>
         </ul> 
-        <img class='login-icon' alt="벨트모양 로그인 아이콘" src="Assets/Group 로고.svg" onClick={()=>{navigate('/Profilepage')}}/>
-    
+        <img class='login-icon' alt="벨트모양 로그인 아이콘" src="Assets/Group 로고.svg" onClick={()=>{
+            setDropdownVisibility(!dropdownVisibility)
+            console.log(dropdownVisibility);
+            }}/>
+        <div id='navbar-dropdown'>
+        <Dropdown visibility={dropdownVisibility} >
+            <ul>
+                <li onClick={()=>{navigate('/Profilepage')}}>내 프로필</li>
+                <li onClick={()=>{navigate('/Profilepage')}}>신청대회 목록</li>
+                <li onClick={()=>{navigate('/login')}}>로그인 하기</li>
+            </ul>
+        </Dropdown>
+        </div>    
     </header>
   )
 }
