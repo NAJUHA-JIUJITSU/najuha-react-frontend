@@ -7,6 +7,8 @@ import Admincompetition from './pages/Admincompetition'
 import Competitionform from './components/Competitionform'
 import CompetitionSchedule from './pages/CompetitionSchedule'
 import Profilepage from './pages/Profilepage'
+import Redirect from './components/Redirect'
+import KakaoLogin from './components/KakaoLogin'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -22,6 +24,8 @@ function App() {
         <Route path = '/Admincompetition/' element={<Admincompetition/>} />
         <Route path = '/Admincompetition/:id' element={<Competitionform/>} />
         <Route path = '/Profilepage' element={<Profilepage/>} />
+        <Route path="/redirect" element={<Redirect />} />
+        <Route path="/oauth/callback/kakao" element={<KakaoLogin/>} />
       </Routes>
     </BrowserRouter>
     </React.Fragment>

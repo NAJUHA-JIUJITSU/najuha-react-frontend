@@ -94,6 +94,7 @@ a {
 .login-icon{
     position: absolute;
     right: 2rem;
+    cursor: pointer;
 }
 
 #navbar-dropdown{

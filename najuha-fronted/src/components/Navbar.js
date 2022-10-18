@@ -7,6 +7,9 @@ function Navbar() {
     let [isHamburgerActive, setIsHamburgerActive] = useState(false)
     let [isnavmenuActive, setIsNavmenuActive] = useState(false)
     const [dropdownVisibility, setDropdownVisibility] = useState(false);
+    const restApiKey = process.env.REACT_APP_REST_API_KEY
+    const redirectUri = process.env.REACT_APP_REDIRECT_URI
+    const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`;
     let navigate = useNavigate();
         
 
@@ -44,7 +47,7 @@ function Navbar() {
             <ul>
                 <li onClick={()=>{navigate('/Profilepage')}}>내 프로필</li>
                 <li onClick={()=>{navigate('/Profilepage')}}>신청대회 목록</li>
-                <li onClick={()=>{navigate('/login')}}>로그인 하기</li>
+                <li onClick={()=>{navigate("/redirect", { state: { url: `${kakaoAuthURL}` } })}}>로그인 하기</li>
             </ul>
         </Dropdown>
         </div>    
