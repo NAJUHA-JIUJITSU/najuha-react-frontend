@@ -103,7 +103,7 @@ a {
     box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
     position: absolute;
     right: 4rem;
-    top: 90px;
+    top: 10vh;
 }
 
 #navbar-dropdown li{
@@ -202,7 +202,7 @@ a {
     }
 
     #navbar-dropdown{
-        top: 60px;
+        top: 7.5vh;
     }
 
     #navbar-dropdown li{
