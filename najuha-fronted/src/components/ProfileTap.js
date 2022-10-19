@@ -75,7 +75,7 @@ function ProfileTap() {
     }, [])
 
     return (
-        <section className='ProfileTap_wrapper'>
+        <section className='ProfileTap_wrapper' id='ProfilesectionTap_wrapper'>
         <div className='ProfileTap_welcome'>
             <div className='ProfileTap_welcome-center'>
                 <p><span className='ProfileTap_welcome-center-username'>{username}</span>님<br></br>

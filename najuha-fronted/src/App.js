@@ -8,6 +8,7 @@ import Competitionform from './components/Competitionform'
 import CompetitionSchedule from './pages/CompetitionSchedule'
 import Profilepage from './pages/Profilepage'
 import UserInfopage from './pages/UserInfopage'
+import ProfilepageToggle from './pages/ProfilepageToggle'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -24,6 +25,7 @@ function App() {
         <Route path = '/Admincompetition/:id' element={<Competitionform/>} />
         <Route path = '/Profilepage' element={<Profilepage/>} />
         <Route path = '/UserInfopage' element={<UserInfopage/>} />
+        <Route path = '/ProfilepageToggle' element={<ProfilepageToggle/>} />
       </Routes>
     </BrowserRouter>
     </React.Fragment>

@@ -75,6 +75,18 @@
     background-color: #E2E2E2;
 }
 
+.UserInfo_genderCategory{
+    display: flex;
+}
+
+.UserInfo_genderCategory input{
+    margin-top: 1.2rem;
+    margin-right: 1rem;
+}
+
+.UserInfo_genderCategory p {
+    margin-right: 6rem;
+}
 
 @media(max-width:1049px){
     /* Layout */
@@ -83,14 +95,14 @@
         max-width : 768px;
     }
         
-    .UserInfo_left {
+    .UserInfo_wrapper  #ProfilesectionTap_wrapper{
        display: none;
     }
 
     .UserInfo_right {
         width: 100%;
         margin-left: 0%;
-        text-align: center;
+        height: 88vh;
     }
 
     .UserInfo_right .UserInfo_Boxs {
