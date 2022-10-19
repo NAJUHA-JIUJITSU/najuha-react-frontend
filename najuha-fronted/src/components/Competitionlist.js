@@ -11,6 +11,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import { height } from '@mui/system';
 
 function Competitionlist() {
     const [competitions, setCompetitions] = useState([])
@@ -31,6 +32,7 @@ function Competitionlist() {
     startDateRef.current = startDate;
     titleRef.current = title;
     const [locationSample, setLocationSample]=useState(['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북'])
+    
     
     const observer = useRef(new IntersectionObserver(async (entries)=>{
         const first = entries[0]
@@ -180,7 +182,12 @@ function Competitionlist() {
                     minDate={dayjs('2022-1-1')} // 올해로 한정될수 있게 변수값을 고쳐야함 
                     maxDate={dayjs('2022-12-31')} // 올해로 한정될수 있게 변수값을 고쳐야함 
                     inputFormat="MM.DD~" 
-                    value={startDate}
+                    componentsProps={{
+                    actionBar: {
+                        actions: ['clear'],
+                    },
+                    }}
+                    value={startDate || null}
                     onChange={(newvalue)=>{
                         if(newvalue === null){
                             setStartDate('')
@@ -192,7 +199,7 @@ function Competitionlist() {
                             listRefresh();
                         }
                     }}
-                    renderInput={(params) => <TextField style={{width: '100%'}} {...params} />}
+                    renderInput={(params) => <TextField sx={{width: '100%', "& fieldset": {borderRadius: '0', borderTop: 'none', borderLeft: 'none', borderRight: 'none', height: '44px', borderBottom:'1px solid #999999 ' }}}  {...params} />}
                     />
                     </LocalizationProvider>
                     </div>
