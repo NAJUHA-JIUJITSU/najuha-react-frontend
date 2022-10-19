@@ -261,5 +261,7 @@
 }
 
 @media(max-width:750px) {
-  
+    .ProfilesectionToggle_wrapper {
+        max-width : 650px;
+    }
 }

@@ -102,7 +102,6 @@
     .UserInfo_right {
         width: 100%;
         margin-left: 0%;
-        height: 88vh;
     }
 
     .UserInfo_right .UserInfo_Boxs {
@@ -114,5 +113,15 @@
         font-size: 2.6rem;
         padding-top: 2rem;
         padding-bottom: 3rem;
+    }
+}
+
+@media(max-width:750px) {
+    .UserInfo_wrapper {
+        max-width : 650px;
+    }
+
+    .UserInfo_right {
+        height: 88vh;
     }
 }
