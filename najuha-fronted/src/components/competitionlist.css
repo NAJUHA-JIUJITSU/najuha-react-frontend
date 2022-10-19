@@ -20,12 +20,16 @@ li {
 .competition-searchzone-input::placeholder{
     color: #B1B1B1;
     font-size: 13px;
-    padding-left: 3%;
+    padding-left: 5%;
 }
 
 .competition-searchzone-input:focus{
     outline: none;
-    padding-left: 3%;
+    padding-left: 5%;
+}
+
+.competition-searchzone-input:focus::placeholder{
+    color:transparent;
 }
 
 .each-competition-top-date h1{
