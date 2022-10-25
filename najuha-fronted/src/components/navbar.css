@@ -95,6 +95,31 @@ a {
 .login-icon{
     position: absolute;
     right: 2rem;
+    cursor: pointer;
+}
+
+#navbar-dropdown{
+    background: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    right: 4rem;
+    top: 10vh;
+}
+
+#navbar-dropdown li{
+    width: 105px;
+    height: 40px;
+    font-size: 1.4rem;
+    text-align: left;
+    display: flex; /* 수직정렬을 위한 3종세트 display, align-items, justify-content */
+    align-items: center;
+    justify-content:left;
+    padding-left: 14px;
+}
+
+#navbar-dropdown li:hover {
+    background-color: #EEEEEE;
 }
 
 @media(max-width:1049px){
@@ -175,6 +200,17 @@ a {
 
     .nav-menu{
         top: 12vh;
+    }
+
+    #navbar-dropdown{
+        top: 7.5vh;
+    }
+
+    #navbar-dropdown li{
+        width: 80px;
+        height: 30px;
+        font-size: 1.2rem;
+        padding-left: 10px;
     }
 
     /* typography */
