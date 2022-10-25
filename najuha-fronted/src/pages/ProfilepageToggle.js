@@ -1,16 +1,16 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import Profilesection from '../components/Profilesection'
+import ProfilesectionToggle from '../components/ProfilesectionToggle'
 import Footer from '../components/Footer'
 
-function Profilepage() {
+function ProfilepageToggle() {
   return (
     <>
         <Navbar/>
-        <Profilesection/>
+        <ProfilesectionToggle/>
         <Footer />
     </>
   )
 }
 
-export default Profilepage
+export default ProfilepageToggle

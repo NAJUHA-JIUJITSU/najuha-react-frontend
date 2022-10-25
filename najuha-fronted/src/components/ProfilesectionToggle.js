@@ -1,10 +1,10 @@
 import React from 'react'
 import {useState, useEffect} from 'react';
-import './profilesection.css'
+import './profilesectionToggle.css'
 import axios from 'axios';
 import ProfileTap from '../components/ProfileTap'
 
-function Profilesection() {
+function ProfilesectionToggle() {
     const [competitionApplications, setCompetitionApplications] = useState([]);
     const [isFullListedNow, setisFullListedNow] = useState(false);
     const [isFullListedLast, setisFullListedLast] = useState(false);
@@ -147,9 +147,9 @@ function Profilesection() {
 
 
     return (
-        <div className='Profilesection_wrapper'>
+        <div className='ProfilesectionToggle_wrapper'>
             <ProfileTap/>
-            <section className='Profilesection_right'>
+            <section className='ProfilesectionToggle_right'>
                 <h2>대회신청목록</h2>
                 <div className='Profilesection_myCompetitionList nowList'>
                     <div className='Profilesection_tableName'>
@@ -195,4 +195,4 @@ function Profilesection() {
 
 }
 
-export default Profilesection
+export default ProfilesectionToggle

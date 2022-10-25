@@ -1,0 +1,127 @@
+/* UA reset */
+
+
+/* Typography */
+
+:root {
+    font-size: 62.5%; /* 10px */
+  }
+
+/* Layout */
+
+.UserInfo_wrapper {
+    width: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem 0 2rem;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.UserInfo_left {
+    /* border: 2px solid yellow; */
+    width: 28%;
+    height: 84vh;
+}
+
+.UserInfo_right {
+    width: 68%;
+    height: 84vh;
+    margin-left: 4%;
+    overflow-y: auto;
+    position: relative;
+}
+
+.UserInfo_right h2 {
+    font-size: 3rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    box-sizing: border-box;
+    font-weight: 500;
+}
+
+.UserInfo_infoBox {
+    border-bottom : 1px solid #E9E9E9;
+    height: 54px;
+    width: 98%;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+}
+
+.UserInfo_infoBox p {
+    font-size: 2rem;
+    margin-top: 1.4rem;
+}
+
+.UserInfo_infoBox span {
+    color: #9F9F9F;
+    font-size: 1.4rem;
+}
+
+.UserInfo_right .UserInfo_updateBtn {
+    background-color: #F9F9F9;
+    color: #7e7e7e;
+    border: 1px solid #E2E2E2;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 7.2rem;
+    height: 3.4rem;
+    font-size: 1.6rem;
+    margin: 0 auto;
+}
+
+.UserInfo_right .UserInfo_updateBtn:hover {
+    cursor: pointer;
+    background-color: #E2E2E2;
+}
+
+.UserInfo_genderCategory{
+    display: flex;
+}
+
+.UserInfo_genderCategory input{
+    margin-top: 1.2rem;
+    margin-right: 1rem;
+}
+
+.UserInfo_genderCategory p {
+    margin-right: 6rem;
+}
+
+@media(max-width:1049px){
+    /* Layout */
+
+    .UserInfo_wrapper {
+        max-width : 768px;
+    }
+        
+    .UserInfo_wrapper  #ProfilesectionTap_wrapper{
+       display: none;
+    }
+
+    .UserInfo_right {
+        width: 100%;
+        margin-left: 0%;
+    }
+
+    .UserInfo_right .UserInfo_Boxs {
+        text-align: left;
+    }
+
+    .UserInfo_right h2 {
+        text-align: left;
+        font-size: 2.6rem;
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+    }
+}
+
+@media(max-width:750px) {
+    .UserInfo_wrapper {
+        max-width : 650px;
+    }
+
+    .UserInfo_right {
+        height: 88vh;
+    }
+}

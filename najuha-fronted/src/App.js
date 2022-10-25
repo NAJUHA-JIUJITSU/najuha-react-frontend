@@ -7,6 +7,8 @@ import Admincompetition from './pages/Admincompetition'
 import Competitionform from './components/Competitionform'
 import CompetitionSchedule from './pages/CompetitionSchedule'
 import Profilepage from './pages/Profilepage'
+import UserInfopage from './pages/UserInfopage'
+import ProfilepageToggle from './pages/ProfilepageToggle'
 import Redirect from './components/Redirect'
 import KakaoLogin from './components/KakaoLogin'
 
@@ -24,6 +26,8 @@ function App() {
         <Route path = '/Admincompetition/' element={<Admincompetition/>} />
         <Route path = '/Admincompetition/:id' element={<Competitionform/>} />
         <Route path = '/Profilepage' element={<Profilepage/>} />
+        <Route path = '/UserInfopage' element={<UserInfopage/>} />
+        <Route path = '/ProfilepageToggle' element={<ProfilepageToggle/>} />
         <Route path="/redirect" element={<Redirect />} />
         <Route path="/oauth/callback/kakao" element={<KakaoLogin/>} />
       </Routes>

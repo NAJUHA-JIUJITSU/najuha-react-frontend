@@ -44,6 +44,7 @@ a {
     margin: 0 auto;
     padding: 8vh 2rem;
     box-sizing: border-box;
+    z-index: 999;
     /* border: 10px red solid; */
 }
 .category{
