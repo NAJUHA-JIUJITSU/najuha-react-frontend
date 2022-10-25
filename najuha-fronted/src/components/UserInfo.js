@@ -30,28 +30,46 @@ function UserInfo() {
     }
 
     async function updateUser(updateUerinfo) {
-        axios.patch(`${process.env.REACT_APP_BACK_END_API}/users`,
-        {
+        console.log(updateUerinfo);
+        axios({
+            method: "patch",
             headers: {
-                'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+              "x-access-token":  process.env.REACT_APP_BACK_END_TOKEN,
             },
+            url: `${process.env.REACT_APP_BACK_END_API}/users`,
             data: updateUerinfo
-        })
-        .then((res) => {
-            console.log(res.data.message);
-            console.log(res.data.result);
-        })
-        .catch((err) => {
-            console.log(err);
-            console.log(err.response.data.message);
-        })
+          })
+          .then((res) => {
+                console.log(res.data.message);
+                console.log(res.data.result);
+            })
+            .catch((err) => {
+                console.log(err);
+                console.log(err.response.data.message);
+            })
+          
+        // axios.patch(`${process.env.REACT_APP_BACK_END_API}/users`,
+        // {
+        //     headers: {
+        //         'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+        //     },
+        //     data: updateUerinfo
+        // })
+        // .then((res) => {
+        //     console.log(res.data.message);
+        //     console.log(res.data.result);
+        // })
+        // .catch((err) => {
+        //     console.log(err);
+        //     console.log(err.response.data.message);
+        // })
     }
 
     function userParsing(userInfo) {
         let fullName = userInfo.fullName;
         let email = userInfo.email;
         let phoneNumber = userInfo.phoneNumber;
-        let gender = (userInfo.gender = 'male') ? '남자' : '여자';
+        let gender = (userInfo.gender === 'male') ? '남자' : '여자';
         let belt = userInfo.belt;
         let weight = userInfo.weight;
 
@@ -116,14 +134,14 @@ function UserInfo() {
                 'fullName': e.target.fullName.value,
                 'email': e.target.email.value,
                 'phoneNumber': e.target.phoneNumber.value,
-                'gender': (e.target.male.checked) ? '남자' : '여자',
+                'gender': (e.target.male.checked) ? 'male' : 'female',
                 'belt': e.target.belt.value,
                 'weight': e.target.weight.value
     
             }
             setUserInfo(updateUerinfo);
-            console.log('UPDATE: ', updateUerinfo);
-            // updateUser(updateUerinfo);
+            updateUser(updateUerinfo);
+            console.log(updateUerinfo);
             setMode('READ');
         }
     
