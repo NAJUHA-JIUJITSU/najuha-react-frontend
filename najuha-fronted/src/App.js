@@ -11,25 +11,36 @@ import UserInfopage from './pages/UserInfopage'
 import ProfilepageToggle from './pages/ProfilepageToggle'
 import Redirect from './components/Redirect'
 import KakaoLogin from './components/KakaoLogin'
+import Auth from './hoc/auth'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
 
 function App() {
+  const AuthMainpage = Auth(Mainpage, null)
+  const AuthCompetitionSchedule = Auth(CompetitionSchedule, null)
+  const AuthAdmincompetition = Auth(Admincompetition, true, true)
+  const AuthCompetitionform = Auth(Competitionform, true, true)
+  const AuthProfilepage = Auth(Profilepage, true)
+  const AuthUserInfopage = Auth(UserInfopage, true)
+  const AuthProfilepageToggle = Auth(ProfilepageToggle, true)
+  const AuthRedirect = Auth(Redirect, null)
+  const Authkakao = Auth(KakaoLogin, null)
+
   return (
     <React.Fragment>
     <GlobalStyle />  
     <BrowserRouter>
       <Routes>
-        <Route path = '/' element={<Mainpage/>} />
-        <Route path = '/competition' element={<CompetitionSchedule/>} />
-        <Route path = '/Admincompetition/' element={<Admincompetition/>} />
-        <Route path = '/Admincompetition/:id' element={<Competitionform/>} />
-        <Route path = '/Profilepage' element={<Profilepage/>} />
-        <Route path = '/UserInfopage' element={<UserInfopage/>} />
-        <Route path = '/ProfilepageToggle' element={<ProfilepageToggle/>} />
-        <Route path="/redirect" element={<Redirect />} />
-        <Route path="/oauth/callback/kakao" element={<KakaoLogin/>} />
+        <Route path = '/' element={<AuthMainpage/>} />
+        <Route path = '/competition' element={<AuthCompetitionSchedule/>} />
+        <Route path = '/Admincompetition/' element={<AuthAdmincompetition/>} />
+        <Route path = '/Admincompetition/:id' element={<AuthCompetitionform/>} />
+        <Route path = '/Profilepage' element={<AuthProfilepage/>} />
+        <Route path = '/UserInfopage' element={<AuthUserInfopage/>} />
+        <Route path = '/ProfilepageToggle' element={<AuthProfilepageToggle/>} />
+        <Route path="/redirect" element={<AuthRedirect/>} />
+        <Route path="/oauth/callback/kakao" element={<Authkakao/>} />
       </Routes>
     </BrowserRouter>
     </React.Fragment>

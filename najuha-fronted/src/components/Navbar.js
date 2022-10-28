@@ -45,7 +45,7 @@ function Navbar() {
         <div id='navbar-dropdown'>
         <Dropdown visibility={dropdownVisibility} >
             <ul>
-                <li onClick={()=>{navigate('/Profilepage')}}>내 프로필</li>
+                <li onClick={()=>{navigate('/ProfilepageToggle')}}>내 프로필</li>
                 <li onClick={()=>{navigate('/Profilepage')}}>신청대회 목록</li>
                 <li onClick={()=>{navigate("/redirect", { state: { url: `${kakaoAuthURL}` } })}}>로그인 하기</li>
             </ul>

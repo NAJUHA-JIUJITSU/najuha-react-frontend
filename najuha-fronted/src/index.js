@@ -3,12 +3,24 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { applyMiddleware, legacy_createStore as createStore } from 'redux';
+import promiseMiddleware from 'redux-promise';
+import ReduxThunk from 'redux-thunk';
+import Reducer from './_reducer';
+
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware, ReduxThunk)(createStore); // 현재 createStore를 못쓰게 바뀌어서 react toolkit으로 다시 바꿔줘야함.
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <>
+  <Provider
+    store={createStoreWithMiddleware(Reducer,
+      window.__REDUX_DEVTOOLS_EXTENSION__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION__()
+    )}
+  >
     <App />
-  </>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
