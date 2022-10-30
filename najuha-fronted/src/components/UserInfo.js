@@ -1,19 +1,20 @@
 import React from 'react'
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import './userInfo.css'
 import axios from 'axios';
 import ProfileTap from '../components/ProfileTap'
 import { Cookies } from 'react-cookie';
-import { useSelector } from 'react-redux'
+import { useJwt } from "react-jwt";
 
-function UserInfo() {
+function  UserInfo() {
     const [mode, setMode] = useState('READ');
     const [userInfo, setUserInfo] = useState([]);
     const [token, setToken] = useState(null);
     let user = userParsing(userInfo);
     let content = null
     const cookies = new Cookies();
-    let userstate = useSelector(user => user);
+    const xAccessToken = cookies.get("x-access-token");
+    const { decodedToken, isExpired } = useJwt(xAccessToken);
 
     async function getUsers() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users`,
@@ -187,16 +188,15 @@ function UserInfo() {
     }
 
     useEffect(() => {
-        // if(cookies.get("x-access-token")){
-        //     console.log(cookies.get("x-access-token"));
-        // }
-        if(userstate.user.userAuth.isSuccess && userstate.user.userAuth.result.userLevel == 1){
-            console.log(userstate.user.userAuth)
-            setMode('UPDATE')
+
+        if(decodedToken){
+            if(decodedToken.userLevel == 1)
+                setMode('UPDATE')
         }
+
             
         getUsers();
-    }, [])
+    }, [decodedToken])
 
     if(mode === 'READ') {
         content = <Read/>
