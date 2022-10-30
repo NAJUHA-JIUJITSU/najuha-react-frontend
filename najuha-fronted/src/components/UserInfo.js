@@ -3,18 +3,23 @@ import {useState, useEffect} from 'react';
 import './userInfo.css'
 import axios from 'axios';
 import ProfileTap from '../components/ProfileTap'
+import { Cookies } from 'react-cookie';
+import { useSelector } from 'react-redux'
 
 function UserInfo() {
     const [mode, setMode] = useState('READ');
     const [userInfo, setUserInfo] = useState([]);
+    const [token, setToken] = useState(null);
     let user = userParsing(userInfo);
     let content = null
+    const cookies = new Cookies();
+    let userstate = useSelector(user => user);
 
     async function getUsers() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users`,
         {
             headers: {
-                'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+                'x-access-token': cookies.get("x-access-token")
             }
         })
         .then((res) => {
@@ -34,14 +39,15 @@ function UserInfo() {
         axios({
             method: "patch",
             headers: {
-              "x-access-token":  process.env.REACT_APP_BACK_END_TOKEN,
+              "x-access-token":  cookies.get("x-access-token")
             },
             url: `${process.env.REACT_APP_BACK_END_API}/users`,
             data: updateUerinfo
           })
           .then((res) => {
-                console.log(res.data.message);
-                console.log(res.data.result);
+            cookies.set('x-access-token', res.data.result, { path: '/', overwrite: true})
+            console.log(res.data.message);
+            console.log(res.data.result);
             })
             .catch((err) => {
                 console.log(err);
@@ -143,6 +149,7 @@ function UserInfo() {
             updateUser(updateUerinfo);
             console.log(updateUerinfo);
             setMode('READ');
+            // getUsers();
         }
     
         return (
@@ -180,6 +187,14 @@ function UserInfo() {
     }
 
     useEffect(() => {
+        // if(cookies.get("x-access-token")){
+        //     console.log(cookies.get("x-access-token"));
+        // }
+        if(userstate.user.userAuth.isSuccess && userstate.user.userAuth.result.userLevel == 1){
+            console.log(userstate.user.userAuth)
+            setMode('UPDATE')
+        }
+            
         getUsers();
     }, [])
 

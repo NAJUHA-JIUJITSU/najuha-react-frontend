@@ -15,13 +15,14 @@ export async function LoginUser(url, dataTosubmit){
 
     })
     .then((res) => {
-        cookies.set('x-access-token', res.data.result, { path: '/', overwrite: true})
+        cookies.set('x-access-token', res.data.result.xAccessToken, { path: '/', overwrite: true})
         alert('로그인에 성공하셨습니다.')
         return res;
     })
     .catch((err) => {
         console.log(err)
         alert('로그인에 실패하셨습니다.')
+        return err.response;
     })
     return {
         type: LOGIN_USER,
