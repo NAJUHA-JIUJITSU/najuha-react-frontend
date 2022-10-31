@@ -3,10 +3,13 @@ import {useState, useEffect} from 'react';
 import './profileTap.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
+import { Cookies } from 'react-cookie';
 
 function ProfileTap() {
     const [username, setUsername] = useState("나주하");
     const [competitionApplications, setCompetitionApplications] = useState([]);
+    const cookies = new Cookies();
+    const xAccessToken = cookies.get("x-access-token");
    
     let navigate = useNavigate();
 
@@ -14,7 +17,7 @@ function ProfileTap() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users`,
         {
             headers: {
-                'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+                'x-access-token':  xAccessToken
             }
         })
         .then((res) => {
@@ -54,7 +57,7 @@ function ProfileTap() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
         {
             headers: {
-                'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+                'x-access-token':  xAccessToken
             }
         })
         .then((res) => {
