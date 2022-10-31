@@ -46,6 +46,9 @@ function  UserInfo() {
             data: updateUerinfo
           })
           .then((res) => {
+            if(decodedToken.userLevel === 1){
+                alert('회원가입이 완료되었습니다')
+            }
             cookies.set('x-access-token', res.data.result, { path: '/', overwrite: true})
             console.log(res.data.message);
             console.log(res.data.result);
