@@ -46,12 +46,7 @@ function Competitionlist() {
 
     async function getCompetitionList(startDate, offset, title, location){
         setIsLoading(true)
-        axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`,
-        {
-            headers: {
-                'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
-            }
-        })
+        axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`)
         .then((res) => {
             let newCompetitions = res.data.result
             setCompetitions((competitions) => [...competitions, ...newCompetitions])
