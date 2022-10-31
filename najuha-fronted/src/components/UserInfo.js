@@ -188,13 +188,12 @@ function  UserInfo() {
     }
 
     useEffect(() => {
-
         if(decodedToken){
-            if(decodedToken.userLevel == 1)
+            if(decodedToken.userLevel === 1){
                 setMode('UPDATE')
+            }
         }
 
-            
         getUsers();
     }, [decodedToken])
 

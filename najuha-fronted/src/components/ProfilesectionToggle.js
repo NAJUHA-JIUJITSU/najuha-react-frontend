@@ -3,17 +3,24 @@ import {useState, useEffect} from 'react';
 import './profilesectionToggle.css'
 import axios from 'axios';
 import ProfileTap from '../components/ProfileTap'
+import { Cookies } from 'react-cookie';
+import { useJwt } from "react-jwt";
+import { useNavigate } from "react-router-dom";
 
 function ProfilesectionToggle() {
     const [competitionApplications, setCompetitionApplications] = useState([]);
     const [isFullListedNow, setisFullListedNow] = useState(false);
     const [isFullListedLast, setisFullListedLast] = useState(false);
+    const cookies = new Cookies();
+    const xAccessToken = cookies.get("x-access-token");
+    const { decodedToken, isExpired } = useJwt(xAccessToken);
+    const navigate = useNavigate();
 
     async function getCompetitionApplication() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
         {
             headers: {
-                'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+                'x-access-token':  xAccessToken
             }
         })
         .then((res) => {
@@ -142,8 +149,14 @@ function ProfilesectionToggle() {
     }
 
     useEffect(() => {
+        if(decodedToken){ // 레벨 1인 유저가 들어오면 다시 수정페이지로 리다이렉트
+            if(decodedToken.userLevel == 1){
+                alert('회원가입을 완료해주세요');
+                navigate('/UserInfopage')
+            }
+        }
         getCompetitionApplication();
-    }, [])
+    }, [decodedToken])
 
 
     return (
