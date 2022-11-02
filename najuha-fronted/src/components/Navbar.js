@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './navbar.css'
 import { useNavigate } from 'react-router-dom'
 import Dropdown from './Dropdown'
+import { useCookies } from 'react-cookie';
 
 function Navbar() {
     let [isHamburgerActive, setIsHamburgerActive] = useState(false)
@@ -11,14 +12,25 @@ function Navbar() {
     const redirectUri = process.env.REACT_APP_REDIRECT_URI
     const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`;
     let navigate = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies(["x-access-token"]);
         
-
     function hamburgerClick() {
         isHamburgerActive = !isHamburgerActive
         setIsHamburgerActive(isHamburgerActive);
         isnavmenuActive = !isnavmenuActive
         setIsNavmenuActive(isnavmenuActive);
     }
+
+    let logout = () => {
+        removeCookie('x-access-token', {path: '/'})
+        alert('로그아웃이 완료되었습니다.')
+        setDropdownVisibility(false)
+        navigate('/');
+    }
+
+    useEffect(() => {
+        console.log(cookies['x-access-token']);
+    },[cookies['x-access-token']])
 
 
 
@@ -47,7 +59,8 @@ function Navbar() {
             <ul>
                 <li onClick={()=>{navigate('/ProfilepageToggle')}}>내 프로필</li>
                 <li onClick={()=>{navigate('/Profilepage')}}>신청대회 목록</li>
-                <li onClick={()=>{navigate("/redirect", { state: { url: `${kakaoAuthURL}` } })}}>로그인 하기</li>
+                {cookies['x-access-token'] == undefined ? <li onClick={()=>{navigate("/redirect", { state: { url: `${kakaoAuthURL}` } })}}>로그인 하기</li> 
+                : <li onClick={logout}>로그아웃 하기</li>}
             </ul>
         </Dropdown>
         </div>    
