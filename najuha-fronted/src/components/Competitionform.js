@@ -3,10 +3,13 @@ import {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import './competitionform.css'
+import { Cookies } from 'react-cookie';
+import { useNavigate } from "react-router-dom";
 
 function Competition_form() {
     const {id} = useParams();
     const [title, setTitle] = useState("")
+    const [host, setHost] = useState("");
     const [doreOpen, setDoreOpen] = useState("")
     const [registrationDate, setRegistrationDate] = useState("")
     const [registrationDeadLine, setRegistrationDeadLine] = useState("")
@@ -14,8 +17,10 @@ function Competition_form() {
     const [location, setLocation] = useState("")
     const [banckAccount, setBanckAccount] = useState("")
     const [infomation, setInfomation] = useState("")
+    const [mode, setMode] = useState("post")
+    let navigate = useNavigate();
 
-
+    const cookies = new Cookies();
 
     const [divisions, setDivisions] = useState(
         [{
@@ -134,21 +139,71 @@ function Competition_form() {
     }
 
 
-    function commitToDB(){
+    function postToDB(){
         console.log(divisions)
 
-        axios.post(`http://localhost:8000/add_competition/${id}`, {
-            'title': title,
-            'doreOpen': doreOpen,
-            'registrationDate': registrationDate,
-            'registrationDeadLine': registrationDeadLine,
-            'location': location,
-            'bankAccount': banckAccount,
-            'earlybirdDeadline': earlybirdDeadline,
-            'information': infomation,
-            'division': divisions,
-        })
+        axios({
+            method: "post",
+            headers: {
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions`,
+            data: {
+                'title': title,
+                'host': host,
+                'doreOpen': doreOpen,
+                'registrationDate': registrationDate,
+                'registrationDeadline': registrationDeadLine,
+                'location': location,
+                'bankAccount': banckAccount,
+                'earlybirdDeadline': earlybirdDeadline,
+                'information': infomation,
+                'division': JSON.stringify(divisions),
+            }
+          })
+          .then(res => {
+            console.log(res)
+            alert('대회등록이 완료되었습니다.')
+            navigate('/Admincompetition/');
+          })
+          .catch(err => {
+            console.log(err)
+            alert('대회수정이 실패하였습니다.')
+          })
     }
+
+    function patchToDB(){
+        console.log(divisions)
+
+        axios({
+            method: "patch",
+            headers: {
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/${id}`,
+            data: {
+                'title': title,
+                'host': host,
+                'doreOpen': doreOpen,
+                'registrationDate': registrationDate,
+                'registrationDeadline': registrationDeadLine,
+                'location': location,
+                'bankAccount': banckAccount,
+                'earlybirdDeadline': earlybirdDeadline,
+                'information': infomation,
+                'division': JSON.stringify(divisions),
+            }
+          })
+          .then(res => {
+            console.log(res)
+            alert('대회수정이 완료되었습니다.')
+          })
+          .catch(err => {
+            console.log(err)
+            alert('대회수정이 실패하였습니다.')
+          })
+    }
+
 
     function divisionsUI(){
         return divisions.map((divs, i) => {
@@ -202,12 +257,20 @@ function Competition_form() {
         })
     }
 
+    useEffect(() => {
+        if(Number(id)){
+            setMode('patch')
+        }
+    },[])
+
+
 
   return (
     <div className='competition_register_form'>
         <div className='section'>
             <div className='competition_register_top'>
                 <input type='text' className='competition_register_top_title' placeholder='대회이름' value={title} onChange={(e) => {setTitle(e.target.value)}}></input>
+                <input type='text' className='competition_register_top_host' placeholder='대회사' value={host} onChange={(e) => {setHost(e.target.value)}}></input>
                 <input type='text' className='competition_register_top_doreOpen' placeholder='대회날짜 ex)0000-00-00 00:00:00' value={doreOpen} onChange={(e) => {setDoreOpen(e.target.value)}}></input>
                 <input type='text' className='competition_register_top_registrationDate' placeholder='등록시작 ex)0000-00-00 00:00:00' value={registrationDate} onChange={(e) => {setRegistrationDate(e.target.value)}}></input>
                 <input type='text' className='competition_register_top_registrationDeadLine' placeholder='등록마감 ex)0000-00-00 00:00:00' value={registrationDeadLine} onChange={(e) => {setRegistrationDeadLine(e.target.value)}}></input>
@@ -219,7 +282,9 @@ function Competition_form() {
         </div>
 
         {divisionsUI()}
-        <button id='save' onClick={commitToDB}>대회등록하기</button>
+        {mode==='post' ? <button id='save' onClick={postToDB}>대회등록하기</button> :
+        <button id='patch' onClick={patchToDB}>대회수정하기</button>
+        }
     </div>
   )
 }
