@@ -132,14 +132,14 @@ function  UserInfo() {
         const [userInfos, setUserInfos] = useState(props.user);
     
         const handleChange = (e, title) => {
-            if(title=='phoneNumber' || title=='weight') {
-                if(title=='phoneNumber' && e.target.value.length > 11){
-                    e.value = e.value.slice(0, 11)
+            if(title =='phoneNumber' || title=='weight') {
+                e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                if(title =='phoneNumber' && e.target.value.length > 11){
+                    e.target.value = e.target.value.slice(0, 11)
                 }
-                if(title=='weight' && e.target.value.length > 3){
-                    e.value = e.value.slice(0, 3)
+                if(title =='weight' && e.target.value.length > 3){
+                    e.target.value = e.target.value.slice(0, 3)
                 }
-                e.target.value.replace(/[^0-9]/g, "");
             }
             console.log(userInfos);
             let newuserInfos = {...userInfos};
@@ -181,7 +181,7 @@ function  UserInfo() {
                 <div className='UserInfo_infoBox'>
                     <span>휴대폰</span>
                     <div className='UserInfo_flexbox UserInfo_phoneNumber'>
-                        <p><input type='text' name='phoneNumber' placeholder={userInfos.phoneNumber} value={userInfos.phoneNumber} onChange={(e)=>handleChange(e, 'phoneNumber')} required/></p>
+                        <p><input type='tel' name='phoneNumber' placeholder={userInfos.phoneNumber} value={userInfos.phoneNumber} onChange={(e)=>handleChange(e, 'phoneNumber')} required/></p>
                         <span>'-' 없이 숫자만 입력(12자리)</span>
                     </div>
                 </div>
@@ -213,7 +213,7 @@ function  UserInfo() {
         )
     }
 
-
+    
     useEffect(() => {
         if(decodedToken){
             if(decodedToken.userLevel === 1){
