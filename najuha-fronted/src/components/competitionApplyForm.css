@@ -1,0 +1,214 @@
+/* Typography */
+.CompetitionApplyForm-top-title{
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.CompetitionApplyForm-top-table-standard li{
+    font-size: 1.6rem;
+    color: #8C8C8C
+}
+
+.CompetitionApplyForm-top-table-item li{
+    font-size: 2rem;
+}
+
+.CompetitionApplyForm-middle-function-re p{
+    font-size: 1.4rem;
+}
+
+.CompetitionApplyForm-middle-function-complete p{
+    font-size: 1.4rem;
+}
+
+.CompetitionApplyForm-middle-info{
+    font-size: 1.5rem;
+}
+
+.CompetitionApplyForm-bottom-sum p{
+    font-size: 1.5rem;
+    color: #8C8C8C;
+}
+
+.CompetitionApplyForm-bottom-sum h3 {
+    font-size: 2rem
+}
+
+/* Layout */
+
+.CompetitionApplyForm-wrapper{
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    height: 84vh;
+    box-sizing: border-box;
+    /* border: 2px blue solid; */
+}
+
+/* .CompetitionApplyForm-top{
+} */
+
+
+
+
+
+/*Component*/
+
+
+.CompetitionApplyForm-top-title{
+    text-align: center;
+    padding: 4vh 0;
+}
+
+.CompetitionApplyForm-top-table{
+    display: flex;
+    flex-direction: column;
+}
+
+.CompetitionApplyForm-top-table-standard{
+    display: flex;
+    margin: 0 auto;
+    /* border: 1px solid red; */
+    width: 60%;
+    margin-bottom: 0.5vh;
+}
+
+.CompetitionApplyForm-top-table-standard li{
+    width: 20%;
+    text-align: center;
+}
+
+.CompetitionApplyForm-top-table-item{
+    display: flex;
+    margin: 0 auto;
+    /* border: 1px solid red; */
+    width: 60%;
+}
+
+.CompetitionApplyForm-top-table-item li{
+    width: 20%;
+    text-align: center;
+}
+
+.CompetitionApplyForm-middle {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 6vh;
+    background-color: #F8FBFF;
+    
+}
+
+.CompetitionApplyForm-middle-function{
+    display: flex;
+    justify-content: space-between;
+}
+
+.CompetitionApplyForm-middle-function-re {
+    text-align: center;
+}
+
+.CompetitionApplyForm-middle-function-complete{
+    text-align: center;
+}
+
+.CompetitionApplyForm-middle-function-re p{
+    margin-top: 1vh;
+}
+
+.CompetitionApplyForm-middle-function-complete p{
+    margin-top: 1vh;
+}
+
+.CompetitionApplyForm-middle-option{
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 3vh;
+    /* display: flex; */
+}
+
+.CompetitionApplyForm-middle-option li{
+    display: inline-block;
+    width: 40%;
+    text-align: center;
+    margin: 1vh 5%;
+    padding: 1vh 0;
+    font-size: 2rem;
+    box-sizing: border-box;
+    border: 3px solid #000000;
+    border-radius: 30px;
+}
+
+.CompetitionApplyForm-middle-info{
+    text-align: center;
+    margin-top: 8vh;
+    padding-bottom: 1vh;
+}
+
+.CompetitionApplyForm-bottom{
+    text-align: center;
+}
+
+.CompetitionApplyForm-bottom-sum{
+    display: flex;
+    padding-top: 5vh;
+}
+
+.CompetitionApplyForm-bottom-sum p {
+    margin-left: auto;
+    margin-right: 2%;
+}
+
+.CompetitionApplyForm-bottom-sum h3 {
+    margin-right: auto;
+}
+
+.CompetitionApplyForm-bottom-payment{
+    border: 1px solid #F1F1F1;
+    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    color: #4E82E6;
+    background: #FFFFFF;
+    width: 15%;
+    height: 5vh;
+    margin-top: 3vh;
+    font-size: 2rem;
+}
+
+@media(max-width:750px){
+    /* Layout */
+
+    .CompetitionApplyForm-wrapper{
+        height: 88vh;
+    }
+    
+    .CompetitionApplyForm-top-table-standard{
+        width: 90%
+    }
+
+    .CompetitionApplyForm-top-table-item{
+        width: 90%
+    }
+
+
+    /*Component*/
+    
+    .CompetitionApplyForm-bottom-payment{
+        width: 25%;
+    }
+
+    .CompetitionApplyForm-middle {
+    width: 80%;
+    }
+    /* Typography */
+
+    .CompetitionApplyForm-top-table-standard li{
+        font-size: 1.3rem;
+        color: #8C8C8C
+    }
+    
+    .CompetitionApplyForm-top-table-item li{
+        font-size: 1.7rem;
+    }
+
+}
+

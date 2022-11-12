@@ -12,6 +12,7 @@ import ProfilepageToggle from './pages/ProfilepageToggle'
 import Redirect from './components/Redirect'
 import KakaoLogin from './components/KakaoLogin'
 import Auth from './hoc/auth'
+import CompetitionApplyPage from './pages/CompetitionApplyPage'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -19,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const AuthMainpage = Auth(Mainpage, null)
   const AuthCompetitionSchedule = Auth(CompetitionSchedule, null)
+  const AuthCompetitionApplyPage = Auth(CompetitionApplyPage, true);
   const AuthAdmincompetition = Auth(Admincompetition, true, true)
   const AuthCompetitionform = Auth(Competitionform, true, true)
   const AuthProfilepage = Auth(Profilepage, true)
@@ -34,6 +36,7 @@ function App() {
       <Routes>
         <Route path = '/' element={<AuthMainpage/>} />
         <Route path = '/competition' element={<AuthCompetitionSchedule/>} />
+        <Route path = '/competition/apply/:id' element={<AuthCompetitionApplyPage/>} />
         <Route path = '/Admincompetition/' element={<AuthAdmincompetition/>} />
         <Route path = '/Admincompetition/:id' element={<AuthCompetitionform/>} />
         <Route path = '/Profilepage' element={<AuthProfilepage/>} />

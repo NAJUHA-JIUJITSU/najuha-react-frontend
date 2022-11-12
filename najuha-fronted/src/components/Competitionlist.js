@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, {useState, useEffect, useRef} from 'react'
+import { useNavigate } from "react-router-dom";
 import './competitionlist.css'
 
 import InputLabel from '@mui/material/InputLabel';
@@ -32,6 +33,7 @@ function Competitionlist() {
     startDateRef.current = startDate;
     titleRef.current = title;
     const [locationSample, setLocationSample]=useState(['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북'])
+    let navigate = useNavigate();
     
     
     const observer = useRef(new IntersectionObserver(async (entries)=>{
@@ -111,6 +113,7 @@ function Competitionlist() {
         let registrationDate = competition.registrationDate.substr(5,5).replace('-','.')
         let registrationDeadline = competition.registrationDeadline.substr(5,5).replace('-','.')
         return {
+            'id': competition.id,
             'title': competition.title,
             'location': competition.location,
             'doreOpen': doreOpen,
@@ -144,7 +147,7 @@ function Competitionlist() {
                             <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDeadline}({curcompetition.registrationDeadlineDay})</h4>
                             <div class='each-competition-bottom-buttons'>
                                 <button>세부정보</button>
-                                <button>신청</button>
+                                <button onClick={()=>{navigate(`/competition/apply/${curcompetition.id}`)}}>신청</button>
                             </div>
                         </div> 
                     </div>
