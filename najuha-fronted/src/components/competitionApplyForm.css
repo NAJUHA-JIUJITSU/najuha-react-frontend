@@ -25,6 +25,11 @@
     font-size: 1.5rem;
 }
 
+.CompetitionApplyForm-middle-info-checkmessage{
+    font-size: 1.5rem;
+}
+
+
 .CompetitionApplyForm-bottom-sum p{
     font-size: 1.5rem;
     color: #8C8C8C;
@@ -70,7 +75,7 @@
     margin: 0 auto;
     /* border: 1px solid red; */
     width: 60%;
-    margin-bottom: 0.5vh;
+    margin-bottom: 15px;
 }
 
 .CompetitionApplyForm-top-table-standard li{
@@ -83,7 +88,7 @@
     margin: 0 auto;
     /* border: 1px solid red; */
     width: 60%;
-    margin-bottom: 1vh;
+    margin-bottom: 15px;
 }
 
 .CompetitionApplyForm-top-table-item li{
@@ -143,6 +148,12 @@
     text-align: center;
     margin-top: 8vh;
     padding-bottom: 1vh;
+}
+
+.CompetitionApplyForm-middle-info-checkmessage{
+    text-align: center;
+    margin-top: 5vh;
+    padding-bottom: 4vh;
 }
 
 .CompetitionApplyForm-bottom{
