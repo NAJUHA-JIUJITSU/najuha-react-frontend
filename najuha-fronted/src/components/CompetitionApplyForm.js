@@ -8,18 +8,21 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import {useParams} from 'react-router-dom';
 import ApplyModal from './ApplyModal'
+import Paymentbridgemodal from './Paymentbridgemodal'
+import Paymentmodal from './Paymentmodal'
 
 function CompetitionApplyForm() {
     const {id} = useParams();
     const [totalprice, setTotalPrice] = useState(0);
     const [competition, setCompetition] = useState(null);
     const [applymodal, setapplymodal] = useState(false);
+    const [paymentbridgemodal, setPaymentbridgemodal] = useState(false);
+    const [paymentmodal, setPaymentmodal] = useState(false);
     const cookies = new Cookies();
     const [fillteredcompetition, setFillteredCompetition] = useState(null);
-    const [selectedcompetition, setSelectedCompetition] = useState([]);
-    const [competitionApplicationList, setCompetitionApplicationList] = useState(
+    const [competitionApplicationId, setCompetitionApplicationId] = useState(null);
+    const [viewcompetitionApplicationList, setviewCompetitionApplicationList] = useState(
         [{
-            isMyself: true,
             playerName: "",
             playerBirth: "",
             phoneNumber: "",
@@ -34,6 +37,30 @@ function CompetitionApplyForm() {
             check: 0, 
         },
     ])
+
+    const parsingbeforeapplypost = (viewcompetitionApplicationList) => {
+        let copyList = JSON.parse(JSON.stringify(viewcompetitionApplicationList))
+        copyList.map((competitionapply) => {
+            delete competitionapply['price']
+            delete competitionapply['check']
+        })
+        return copyList
+    }
+    
+    const parsingbeforegetprice = (viewcompetitionApplicationList) => {
+        let copyList = JSON.parse(JSON.stringify(viewcompetitionApplicationList))
+        copyList.map((competitionapply) => {
+            delete competitionapply['price']
+            delete competitionapply['check']
+            delete competitionapply['playerName']
+            delete competitionapply['team']
+            delete competitionapply['competitionId']
+            delete competitionapply['playerBirth']
+            delete competitionapply['phoneNumber']
+
+        })
+        return copyList
+    } 
 
 
     const getCompetition = async (id) => {
@@ -52,19 +79,22 @@ function CompetitionApplyForm() {
     }
 
     const getTotalPrice = async (id) => {
+        let parsedlist = parsingbeforegetprice(viewcompetitionApplicationList);
+        console.log(parsedlist);
         axios({
-            method: "get",
+            method: "post",
             headers: {
               "x-access-token":  cookies.get("x-access-token")
             },
             url: `${process.env.REACT_APP_BACK_END_API}/competitions/${id}/prices`,
             data: {
                 isGroup: false,
-                divisions: [...competitionApplicationList]
+                divisions: parsedlist
             }
           })
           .then(res => {
             console.log(res);
+            setTotalPrice(res.data.result.discountedPrice);
 
           })
           .catch(err => {
@@ -78,7 +108,7 @@ function CompetitionApplyForm() {
     //             headers: {
     //                 "x-access-token":  cookies.get("x-access-token")
     //             },
-    //             body: {competitionApplicationList}
+    //             body: {viewcompetitionApplicationList}
     //         });
     //         console.log(response)
     //     } catch(err) {
@@ -88,7 +118,7 @@ function CompetitionApplyForm() {
 
 
     function postCompetition(){
-
+        let competitionApplicationList = parsingbeforeapplypost(viewcompetitionApplicationList);
         axios({
             method: "post",
             headers: {
@@ -101,7 +131,9 @@ function CompetitionApplyForm() {
           })
           .then(res => {
             console.log(res)
-
+            setCompetitionApplicationId(res.data.result.competitionApplicationId);
+            setapplymodal(pre => !pre);
+            setPaymentbridgemodal(pre => !pre);
           })
           .catch(err => {
             console.log(err)
@@ -113,6 +145,10 @@ function CompetitionApplyForm() {
     }, [])
 
     useEffect(() => {
+        console.log(competitionApplicationId)
+    }, [competitionApplicationId])
+
+    useEffect(() => {
         console.log(competition)
     }, [competition])
 
@@ -121,14 +157,13 @@ function CompetitionApplyForm() {
     }, [fillteredcompetition])
 
     useEffect(() => {
-        console.log(competitionApplicationList)
-    }, [competitionApplicationList])
+        console.log(viewcompetitionApplicationList)
+    }, [viewcompetitionApplicationList])
 
     const curApplicationReset = (i) => {
         console.log(i);
-        let cal = [...competitionApplicationList];
+        let cal = [...viewcompetitionApplicationList];
         cal[i] = {
-            isMyself: '',
             playerName: "",
             playerBirth: "",
             phoneNumber: "",
@@ -142,7 +177,7 @@ function CompetitionApplyForm() {
             price: null,
             check: 0, 
         }
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
         setFillteredCompetition(competition.division);
     }
 
@@ -150,19 +185,16 @@ function CompetitionApplyForm() {
     // }
 
     const curApplicationcomplete = (i) => {
-        let cal = [...competitionApplicationList];
+        let cal = [...viewcompetitionApplicationList];
         cal[i].price = fillteredcompetition[0].pricingPolicy.normal;
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
         getTotalPrice(id);
-        setSelectedCompetition(fillteredcompetition[0]);
-        // calculatePrice();
     }
 
     const addApplication = (i) => {
-        let cal = [...competitionApplicationList];
+        let cal = [...viewcompetitionApplicationList];
         cal[i].check = 1;
         cal.push({
-            isMyself: true,
             playerName: "",
             playerBirth: "",
             phoneNumber: "",
@@ -172,23 +204,23 @@ function CompetitionApplyForm() {
             belt: null,
             weight: null,
             team: "김포 골든라이언",
-            competitionId: '',
+            competitionId: id,
             price: null,
             check: 0, 
         })
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
         setFillteredCompetition(competition.division);
     }
 
     const checkInvaildApply = () => {
-        let cal = [...competitionApplicationList];
+        let cal = [...viewcompetitionApplicationList];
         cal.forEach((x, i) => {
             if(x.price == null){
                 cal.splice(i, 1);
             }
         })
         if(cal.length >= 1){
-            setCompetitionApplicationList(cal);
+            setviewCompetitionApplicationList(cal);
             return true; 
         } else {
             alert('신청을 끝까지 완료해주셔야 합니다.')
@@ -198,7 +230,7 @@ function CompetitionApplyForm() {
     }
 
     const applicationDetailUI = () => {
-        return competitionApplicationList.map((application, i) => {
+        return viewcompetitionApplicationList.map((application, i) => {
             return(
                 <>
                 <ul className='CompetitionApplyForm-top-table-item'>
@@ -229,75 +261,75 @@ function CompetitionApplyForm() {
 
     const chooseUniformOption = (value, i) => {
         console.log(value);
-        let cal = [...competitionApplicationList];
+        let cal = [...viewcompetitionApplicationList];
         cal[i].uniform = value;
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
         constfillteringcompetition(value, 'uniform')
     }
 
     const chooseDivisionOption = (value, i) => {
         console.log(value);
-        let cal = [...competitionApplicationList];
+        let cal = [...viewcompetitionApplicationList];
         cal[i].divisionName = value;
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
         constfillteringcompetition(value, 'divisionName')
     }
 
     const chooseGenderOption = (value, i) => {
         console.log(value);
-        let cal = [...competitionApplicationList];
+        let cal = [...viewcompetitionApplicationList];
         cal[i].gender = value;
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
         constfillteringcompetition(value, 'gender')
     }
 
     const chooseWeightOption = (value, i) => {
         console.log(value);
-        let cal = [...competitionApplicationList];
+        let cal = [...viewcompetitionApplicationList];
         cal[i].weight = value;
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
         varfillteringcompetition(value, 'weight')
     }
 
     const chooseBeltOption = (value, i) => {
         console.log(value);
-        let cal = [...competitionApplicationList];
+        let cal = [...viewcompetitionApplicationList];
         cal[i].belt = value;
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
         varfillteringcompetition(value, 'belt')
 
     }
 
     const changePlayerName = (value) => {
-        let cal = [...competitionApplicationList]
+        let cal = [...viewcompetitionApplicationList]
         cal.map(x => {
             x.playerName = value
         })
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
     }
 
     const changePlayerBirth = (value) => {
-        let cal = [...competitionApplicationList]
+        let cal = [...viewcompetitionApplicationList]
         cal.map(x => {
             x.playerBirth = value
         })
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
     }
 
     const changephoneNumber = (value) => {
-        let cal = [...competitionApplicationList]
+        let cal = [...viewcompetitionApplicationList]
         cal.map(x => {
             x.phoneNumber = value
         })
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
     }
 
     const changeTeam = (value) => {
-        let cal = [...competitionApplicationList]
+        let cal = [...viewcompetitionApplicationList]
         cal.map(x => {
             x.team = value
         })
-        setCompetitionApplicationList(cal);
+        setviewCompetitionApplicationList(cal);
     }
 
     const chooseOptionUI = (application, i) => {
@@ -363,7 +395,7 @@ function CompetitionApplyForm() {
     }
 
     const optionUI = () => {
-        return competitionApplicationList.map((application, i) => {
+        return viewcompetitionApplicationList.map((application, i) => {
             return(
             <>
                 {!application.check ? <>
@@ -421,7 +453,17 @@ function CompetitionApplyForm() {
             }}>결제하기</button>
             {
                 applymodal && (
-                    <ApplyModal closeModal={() => setapplymodal(!applymodal)} changePlayerName={changePlayerName} changePlayerBirth={changePlayerBirth} changephoneNumber={changephoneNumber} changeTeam={changeTeam} postCompetition={postCompetition}/>
+                    <ApplyModal closeModal={() => setapplymodal(pre => !pre)} changePlayerName={changePlayerName} changePlayerBirth={changePlayerBirth} changephoneNumber={changephoneNumber} changeTeam={changeTeam} postCompetition={postCompetition}/>
+                )
+            }
+            {
+                competitionApplicationId && paymentbridgemodal && (
+                    <Paymentbridgemodal closeModal={() => setPaymentbridgemodal(pre => !pre)} openNextModal={() => setPaymentmodal(pre => !pre)} />
+                )
+            }
+            {
+                paymentmodal && (
+                    <Paymentmodal closeModal={() => setPaymentmodal(!paymentbridgemodal)} />
                 )
             }
         </div>
