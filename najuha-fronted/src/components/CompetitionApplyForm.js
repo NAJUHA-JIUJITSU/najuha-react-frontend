@@ -13,7 +13,8 @@ import Paymentmodal from './Paymentmodal'
 
 function CompetitionApplyForm() {
     const {id} = useParams();
-    const [totalprice, setTotalPrice] = useState(0);
+    const [discountedprice, setDiscountedprice] = useState(0);
+    const [normalprice, setNormalprice] = useState(0);
     const [competition, setCompetition] = useState(null);
     const [applymodal, setapplymodal] = useState(false);
     const [paymentbridgemodal, setPaymentbridgemodal] = useState(false);
@@ -37,6 +38,10 @@ function CompetitionApplyForm() {
             check: 0, 
         },
     ])
+    const [paymentmethod, setPaymentmethod] = useState(null);
+    const [easypaymethod, setEasypaymethod] = useState(null);
+
+
 
     const parsingbeforeapplypost = (viewcompetitionApplicationList) => {
         let copyList = JSON.parse(JSON.stringify(viewcompetitionApplicationList))
@@ -94,8 +99,8 @@ function CompetitionApplyForm() {
           })
           .then(res => {
             console.log(res);
-            setTotalPrice(res.data.result.discountedPrice);
-
+            setDiscountedprice(res.data.result.discountedPrice);
+            setNormalprice(res.data.result.normalPrice);
           })
           .catch(err => {
             console.log(err)
@@ -332,6 +337,9 @@ function CompetitionApplyForm() {
         setviewCompetitionApplicationList(cal);
     }
 
+
+
+
     const chooseOptionUI = (application, i) => {
         if(application.uniform == null){
             let comuniform = [];
@@ -445,7 +453,7 @@ function CompetitionApplyForm() {
         <div className='CompetitionApplyForm-bottom'>
             <div className='CompetitionApplyForm-bottom-sum'>
                 <p>총 결제금액</p>
-                <h3>{totalprice}원</h3>
+                <h3>{discountedprice}원</h3>
             </div>
             <button className='CompetitionApplyForm-bottom-payment' onClick={() => {
                 if(checkInvaildApply())
@@ -463,7 +471,7 @@ function CompetitionApplyForm() {
             }
             {
                 paymentmodal && (
-                    <Paymentmodal closeModal={() => setPaymentmodal(!paymentbridgemodal)} />
+                    <Paymentmodal closeModal={() => setPaymentmodal(pre => !pre)} paymentmethod={paymentmethod} setPaymentmethod={setPaymentmethod} easypaymethod={easypaymethod} setEasypaymethod={setEasypaymethod} discountedprice={discountedprice} normalprice={normalprice}/>
                 )
             }
         </div>

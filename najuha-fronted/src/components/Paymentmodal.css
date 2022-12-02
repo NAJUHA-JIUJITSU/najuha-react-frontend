@@ -1,0 +1,206 @@
+/* modal창 외부화면 */
+.Paymentmodal_Modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+   
+  /* modal창 */
+  .Paymentmodal_modalBody {
+    position: relative;
+    width: 270px;
+    min-height: 400px;
+    padding: 40px;
+    padding-bottom: 20px;
+    text-align: left;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+  }
+  .Paymentmodal_firstsection{
+    /* position: absolute; */
+    margin-top: 30px;
+    margin-left: -20px;
+    width: 310px;
+  }
+
+  .Paymentmodal_firstsection_title{
+    font-size: 13px;
+    color: #8C8C8C;
+    font-weight: 700;
+  }
+
+  .Paymentmodal_firstsection_infos{
+    margin: 20px 0;
+  }
+
+  .Paymentmodal_firstsection_info{
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .Paymentmodal_firstsection_info h4{
+    color: #8C8C8C
+  }
+
+  .Paymentmodal_firstsection_totalprice {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .Paymentmodal_firstsection::after{
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 310px;
+    background: #F0F0F0;
+  }
+
+  /* secondsection */
+
+  .Paymentmodal_secondsection{
+    /* position: absolute; */
+    margin-top: 30px;
+    margin-left: -20px;
+    width: 310px;
+  }
+
+  .Paymentmodal_secondsection_title{
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .Paymentmodal_secondsection_method{
+    display: flex;
+    margin-top: 20px;
+  }
+
+  .Paymentmodal_secondsection_method p{
+    font-size: 13px;
+    margin-left: 10px;
+  }
+
+  .Paymentmodal_secondsection_method input[type="radio"] {
+    margin-left: 10px;
+    margin-top: -1px;
+    vertical-align: middle;
+  }
+
+  .Paymentmodal_secondsection_methods{
+    margin-bottom: 10px;
+  }
+
+  .Paymentmodal_secondsection::after{
+    content: '';
+    position: absolute;
+    height: 4px;
+    width: 310px;
+    background: #F0F0F0;
+  }
+
+ /* thirdsection */
+
+ .Paymentmodal_thirdsection{
+    /* position: absolute; */
+    margin-top: 30px;
+    margin-left: -20px;
+    width: 310px;
+ }
+
+
+ .Paymentmodal_thirdsection_lastcheck{
+    display: flex;
+    margin-top: 20px;
+  }
+
+ .Paymentmodal_thirdsection_lastcheck p{
+    font-size: 13px;
+    margin-left: 10px;
+  }
+
+  .Paymentmodal_thirdsection_lastcheck input[type="radio"] {
+    margin-left: 10px;
+    margin-top: -1px;
+    vertical-align: middle;
+  }
+
+  .Paymentmodal_thirdsection_lastinfo{
+    margin: 25px 0;
+    font-size: 10px;
+    color: #8C8C8C;
+    text-align: center;
+  }
+
+  .Paymentmodal_thirdsection_paybutton{
+    width: 310px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;    
+    font-size: 18px;
+    color: #4E82E5;
+  }
+
+  /* 간편결제 선택존 */
+
+  .Paymentmodal_secondsection_esaypaymethods{
+    margin-top: 10px;
+    width: 290px;
+    margin-left: 20px;
+    border: 1px solid #F0F0F0;
+    border-radius: 10px;
+  }
+
+  .Paymentmodal_secondsection_esaypaymethod{
+    margin: 4%;
+    box-sizing: border-box;
+    display: inline-flex;
+    width: 25%;
+  }
+
+  .Paymentmodal_secondsection_esaypaymethod p{
+    font-size: 12px;
+    margin-left: 4px;
+  }
+
+
+  .Paymentmodal_secondsection_esaypaymethod input[type="radio"] {
+    margin-left: 0;
+    margin-top: -1px;
+    vertical-align: middle;
+  }
+
+
+  #Paymentmodal_modaltitle{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-weight: 700;
+    font-size: 24px;
+  }
+   
+  #Paymentmodal_modalCloseBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    color: rgba(0, 0, 0, 0.7);
+    background-color: transparent;
+    font-size: 20px;
+  }
+   
+  #Paymentmodal_modalCloseBtn:hover {
+    cursor: pointer;
+  }
