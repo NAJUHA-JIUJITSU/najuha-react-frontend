@@ -14,7 +14,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { height } from '@mui/system';
 
-function Competitionlist() {
+function AdminCompetitionlist() {
     const [competitions, setCompetitions] = useState([])
     const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
     const [isLoading, setIsLoading] = useState(false)
@@ -32,8 +32,8 @@ function Competitionlist() {
     locationRef.current = location;
     startDateRef.current = startDate;
     titleRef.current = title;
-    const [locationSample, setLocationSample]=useState(['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북'])
     let navigate = useNavigate();
+    const [locationSample, setLocationSample]=useState(['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북'])
     
     
     const observer = useRef(new IntersectionObserver(async (entries)=>{
@@ -129,7 +129,7 @@ function Competitionlist() {
         return competitions.map((competition, i) => {
             let curcompetition = competitionParsing(competition)
             return(
-                <li class='competition-col'>
+                <li class='competition-col' key={i}>
                     <div class='each-competition'>
                         <div class='each-competition-top'>
                             <div class='each-competition-top-date'>
@@ -139,6 +139,7 @@ function Competitionlist() {
                                 <div class='each-competition-top-location-tag'> {/*display:flex써서 세로 가운데 정렬하려고 클래스하나 더 넣은거임 */}
                                     <h2>{curcompetition.title}</h2><br/>
                                     <h3>{curcompetition.location}</h3>
+                                    <h3>대회 id:{curcompetition.id}</h3>
                                 </div>
                             </div>
                         </div>
@@ -146,8 +147,7 @@ function Competitionlist() {
                             <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDate}({curcompetition.registrationDateDay})</h4>
                             <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDeadline}({curcompetition.registrationDeadlineDay})</h4>
                             <div class='each-competition-bottom-buttons'>
-                                <button>세부정보</button>
-                                <button onClick={()=>{navigate(`/competition/apply/${curcompetition.id}`)}}>신청</button>
+                                <button style={{background:'orange', color:'black'}} onClick={()=>{navigate(`/admincompetition/${curcompetition.id}`)}}>대회수정하기</button>
                             </div>
                         </div> 
                     </div>
@@ -240,4 +240,4 @@ function Competitionlist() {
   )
 }
 
-export default Competitionlist
+export default AdminCompetitionlist
