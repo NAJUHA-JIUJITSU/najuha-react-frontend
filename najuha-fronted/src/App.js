@@ -13,6 +13,7 @@ import Redirect from './components/Redirect'
 import KakaoLogin from './components/KakaoLogin'
 import Auth from './hoc/auth'
 import CompetitionApplyPage from './pages/CompetitionApplyPage'
+import TossSuccess from './components/Tosssuccess'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -44,6 +45,7 @@ function App() {
         <Route path = '/ProfilepageToggle' element={<AuthProfilepageToggle/>} />
         <Route path="/redirect" element={<AuthRedirect/>} />
         <Route path="/oauth/callback/kakao" element={<Authkakao/>} />
+        <Route path="/toss/success" element={<TossSuccess/>} />
       </Routes>
     </BrowserRouter>
     </React.Fragment>

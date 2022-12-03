@@ -10,6 +10,7 @@ import {useParams} from 'react-router-dom';
 import ApplyModal from './ApplyModal'
 import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
+import { loadTossPayments } from '@tosspayments/payment-sdk';
 
 function CompetitionApplyForm() {
     const {id} = useParams();
@@ -40,7 +41,7 @@ function CompetitionApplyForm() {
     ])
     const [paymentmethod, setPaymentmethod] = useState(null);
     const [easypaymethod, setEasypaymethod] = useState(null);
-
+    const frontBaseUrl = 'http://localhost:3001';
 
 
     const parsingbeforeapplypost = (viewcompetitionApplicationList) => {
@@ -143,6 +144,68 @@ function CompetitionApplyForm() {
           .catch(err => {
             console.log(err)
           })
+    }
+
+    const postPaymentData = async () => {
+        const xAccessToken = cookies.get("x-access-token");
+        const paymentData = await axios({
+          method: "post",
+          url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications/${competitionApplicationId}/payments`,
+          headers: {
+            "x-access-token": xAccessToken,
+          },
+        });
+        console.log(paymentData);
+        return paymentData;
+      };
+
+    // const tossPaymentMethodValidation = () => {
+
+    // }
+
+    const tossPay = async () => {
+        const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
+        const res = await postPaymentData();
+        const data = res.data.result;
+        if(paymentmethod == '카드'){
+            loadTossPayments(clientkey).then((tossPayments)=> {
+                tossPayments.requestPayment("카드", {
+                    amount: data.amount,
+                    orderId: data.orderId,
+                    orderName: data.orderName,
+                    customerName: data.customerName,
+                    customerEmail: data.customerEmail,
+                    successUrl: frontBaseUrl + "/toss/success",
+                    failUrl: frontBaseUrl + "/toss/fail",
+                  });
+            })
+        } else if(paymentmethod == '간편결제'){
+            loadTossPayments(clientkey).then((tossPayments) => {
+                tossPayments.requestPayment("카드", {
+                  amount: data.amount,
+                  orderId: data.orderId,
+                  orderName: data.orderName,
+                  customerName: data.customerName,
+                  customerEmail: data.customerEmail,
+                  successUrl: frontBaseUrl + "/toss/success",
+                  failUrl: frontBaseUrl + "/toss/fail",
+                  flowMode: "DIRECT",
+                  easyPay: easypaymethod,
+                });
+            });
+        } else if(paymentmethod == '계좌이체'){
+            loadTossPayments(clientkey).then((tossPayments) => {
+                tossPayments.requestPayment("계좌이체", {
+                  amount: data.amount,
+                  orderId: data.orderId,
+                  orderName: data.orderName,
+                  customerName: data.customerName,
+                  customerEmail: data.customerEmail,
+                  successUrl: frontBaseUrl + "/toss/success",
+                  failUrl: frontBaseUrl + "/toss/fail",
+                })
+            });
+        }
     }
 
     useEffect(() => {
@@ -471,7 +534,7 @@ function CompetitionApplyForm() {
             }
             {
                 paymentmodal && (
-                    <Paymentmodal closeModal={() => setPaymentmodal(pre => !pre)} paymentmethod={paymentmethod} setPaymentmethod={setPaymentmethod} easypaymethod={easypaymethod} setEasypaymethod={setEasypaymethod} discountedprice={discountedprice} normalprice={normalprice}/>
+                    <Paymentmodal closeModal={() => setPaymentmodal(pre => !pre)} paymentmethod={paymentmethod} setPaymentmethod={setPaymentmethod} easypaymethod={easypaymethod} setEasypaymethod={setEasypaymethod} discountedprice={discountedprice} normalprice={normalprice} tossPay={tossPay}/>
                 )
             }
         </div>

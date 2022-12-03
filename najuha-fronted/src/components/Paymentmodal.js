@@ -95,7 +95,7 @@ function Paymentmodal(props) {
                         <p>주문내용 확인 및 결제 동의</p>
                     </div>
                     <p className='Paymentmodal_thirdsection_lastinfo'>나주하는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br/> 대회 신청, 환불의 의무와 책임은 각 판매업체에 있습니다</p>
-                    <button className='Paymentmodal_thirdsection_paybutton'>결제하기</button>
+                    <button className='Paymentmodal_thirdsection_paybutton' onClick={props.tossPay}>결제하기</button>
                 </div>
             </div>
     </div>
