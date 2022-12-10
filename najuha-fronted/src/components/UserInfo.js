@@ -24,7 +24,7 @@ function  UserInfo() {
             }
         })
         .then((res) => {
-            setUserInfo(res.data.result.userInfo);
+            setUserInfo(res.data.result.UserInfo);
             console.log(res.data.message);
         })
         .catch((err) => {

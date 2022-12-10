@@ -26,6 +26,7 @@ function Profilesection() {
             }
         })
         .then((res) => {
+            console.log(res.data);
             setCompetitionApplications(res.data.result);
             console.log(res.data.message);
         })
@@ -42,9 +43,9 @@ function Profilesection() {
         let locations = application.Competition.location.split(' ');
         let location = locations[0]
         let title = (application.Competition.title.length > 24) ? application.Competition.title.substr(0, 14) + '...' : application.Competition.title;
-        let divisionName = application.divisionName;
-        let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
-        let uniform = (application.uniform = "gi") ? '기-' : '노기-';
+        // let divisionName = application.divisionName;
+        // let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
+        // let uniform = (application.uniform = "gi") ? '기-' : '노기-';
         let weight = application.weight + 'kg';
         let isPayment = application.isPayment ? '결제완료' : '미결제';
        
@@ -52,8 +53,6 @@ function Profilesection() {
             'doreOpen': doreOpen,
             'location': location,
             'title': title,
-            'divisionName': uniform + divisionName,
-            'belt': belt,
             'weight': weight,
             'isPayment': isPayment,
         }

@@ -21,7 +21,7 @@ function ProfileTap() {
             }
         })
         .then((res) => {
-            setUsername(res.data.result.userInfo.fullName);
+            setUsername(res.data.result.UserInfo.fullName);
             console.log(res.data.message);
         })
         .catch((err) => {
