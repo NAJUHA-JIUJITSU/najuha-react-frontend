@@ -496,7 +496,7 @@ function CompetitionApplyForm() {
     <div className='CompetitionApplyForm-wrapper'>
         <div className='CompetitionApplyForm-top'>
             <h2 className='CompetitionApplyForm-top-title'>
-                예거스 챔피언쉽 로컬대회 송도 오픈
+                {competition != null ? competition.title : ''}
             </h2>
             <div className='CompetitionApplyForm-top-table'>
                 <ul className='CompetitionApplyForm-top-table-standard'>
