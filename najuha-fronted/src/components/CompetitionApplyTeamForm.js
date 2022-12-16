@@ -4,7 +4,31 @@ import {useState} from 'react'
 import dropdownicon from '../src_assets/드랍다운아이콘.svg'
 
 function CompetitionApplyTeamForm() {
-    const [name, setName] = useState('')
+    const [genderDropdown, setGenderDropdown] = useState(false)
+    const [uniformDropdown, setUniformDropdown] = useState(false)
+    const [divisionDropdown, setDivisionDropdown] = useState(false)
+    const [beltDropdown, setBeltDropdown] = useState(false)
+    const [weightDropdown, setWeightDropdown] = useState(false)
+
+    function genderDropdownToggle(){
+      setGenderDropdown((pre) => (!pre));
+    }
+
+    function uniformDropdownToggle(){
+      setUniformDropdown((pre) => (!pre));
+    }
+
+    function divisionDropdownToggle(){
+      setDivisionDropdown((pre) => (!pre));
+    }
+
+    function beltDropdownToggle(){
+      setBeltDropdown((pre) => (!pre));
+    }
+
+    function weightDropdownToggle(){
+      setWeightDropdown((pre) => (!pre));
+    }
 
   return (
     <div className='CompetitionApplyTeamForm-wrapper'>
@@ -26,11 +50,63 @@ function CompetitionApplyTeamForm() {
             </ul>
             <ul className='CompetitionApplyTeamForm-top-table-row'>
                     <li><input></input> </li>
-                    <li>성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown' src={dropdownicon}/></li>
-                    <li>기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown' src={dropdownicon}/></li>
-                    <li>부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown' src={dropdownicon}/></li>
-                    <li>벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown' src={dropdownicon}/></li>
-                    <li>체급 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown' src={dropdownicon}/></li>
+                    <li onClick={genderDropdownToggle}>
+                      성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                      {genderDropdown ?
+                      <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                        <li>1</li>
+                        <li>1</li>
+                        <li>1</li>
+                      </ul>
+                      :
+                      ''
+                      }
+                    </li>
+                    <li onClick={uniformDropdownToggle}>
+                      기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                      {uniformDropdown ?
+                      <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                        <li>1</li>
+                        <li>1</li>
+                        <li>1</li>
+                      </ul>
+                      :
+                      ''
+                      }
+                    </li>
+                    <li onClick={divisionDropdownToggle}>부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                      {divisionDropdown ?
+                        <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                          <li>1</li>
+                          <li>1</li>
+                          <li>1</li>
+                        </ul>
+                        :
+                        ''
+                      }
+                    </li>
+                    <li onClick={beltDropdownToggle}>벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                      {beltDropdown ?
+                        <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                          <li>1</li>
+                          <li>1</li>
+                          <li>1</li>
+                        </ul>
+                        :
+                        ''
+                      }
+                    </li>
+                    <li onClick={weightDropdownToggle}>체급 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                      {weightDropdown ?
+                        <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                          <li>1</li>
+                          <li>1</li>
+                          <li>1</li>
+                        </ul>
+                        :
+                        ''
+                        }
+                    </li>
             </ul>
             <button className='CompetitionApplyTeamForm-button-add'>추가하기</button>
         </div>
