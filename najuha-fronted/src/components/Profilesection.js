@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function Profilesection() {
-    const [competitionApplications, setCompetitionApplications] = useState([]);
+    const [competitionApplications, setCompetitionApplications] = useState([]); //유저 신청 대회 가져오기
     const [isFullListedNow, setisFullListedNow] = useState(false);
     const [isFullListedLast, setisFullListedLast] = useState(false);
     const cookies = new Cookies();
@@ -38,36 +38,42 @@ function Profilesection() {
         return ;
     }
 
+    //신청대회 데이터 파싱
     function applicationParsing(application){
-        let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
-        let locations = application.Competition.location.split(' ');
-        let location = locations[0]
+        let id = application.Competition.id;
+        let customerName = application.competitionPayment.customerName;
         let title = (application.Competition.title.length > 24) ? application.Competition.title.substr(0, 14) + '...' : application.Competition.title;
+        let locations = application.Competition.location.split(' ');
+        let location = locations[0];
+        let amount = application.competitionPayment.amount;
+        let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
+        let postUrl = application.Competition.CompetitionPoster.imageUrl;
+        let isPayment = application.isPayment ? '결제완료' : '결제하기';
         // let divisionName = application.divisionName;
         // let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
         // let uniform = (application.uniform = "gi") ? '기-' : '노기-';
-        let weight = application.weight + 'kg';
-        let isPayment = application.isPayment ? '결제완료' : '미결제';
-       
+        // let weight = application.weight + 'kg';
+      
         return {
-            'doreOpen': doreOpen,
-            'location': location,
+            'id' : id,
+            'customerName' : customerName,
             'title': title,
-            'weight': weight,
+            'location': location,
+            'amount' : amount,
+            'doreOpen': doreOpen,
+            'postUrl' : postUrl,
             'isPayment': isPayment,
         }
     }
 
+    //실시간 대회
     function renderCompetition(){
-        let cnt = 0;
         return competitionApplications.map((application) => {
             let curApplication = applicationParsing(application);
             let today = new Date();
+            
+            //날짜가 오늘을 기준으로 지났으면 안보여주기
             if( today > new Date(application.Competition.doreOpen)) {
-                return ;
-            }
-            cnt++;
-            if(!isFullListedNow && cnt>3) {
                 return ;
             }
             return(
@@ -99,6 +105,7 @@ function Profilesection() {
         })
     }
 
+    //지난 대회
     function renderLastCompetition(){
         let cnt = 0;
         return competitionApplications.map((application) => {
@@ -165,7 +172,7 @@ function Profilesection() {
         <div className='Profilesection_wrapper'>
             <ProfileTap/>
             <section className='Profilesection_right'>
-                <h2>대회신청목록</h2>
+                <h2>대회신청 목록</h2>
                 <div className='Profilesection_myCompetitionList nowList'>
                     <div className='Profilesection_tableName'>
                         <h3>실시간 대회신청</h3>
