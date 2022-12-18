@@ -35,79 +35,95 @@ function CompetitionApplyTeamForm() {
         <div className='CompetitionApplyTeamForm-top'>
             <h1 className='CompetitionApplyTeamForm-title'>예거스 챔피언쉽 로컬대회 송도오픈</h1>
             <div className='CompetitionApplyTeamForm-teaminfo'>
-                <label>팀이름</label>
-                <input placeholder='팀 이름을 입력해주세요'></input>
-                <label>대표자 번호</label>
-                <input placeholder="'-' 없이 번호만 입력해주세요"></input>
+                <div className='CompetitionApplyTeamForm-teaminfo-element'>
+                  <label>팀이름</label>
+                  <input placeholder='팀 이름을 입력해주세요'></input>
+                </div>
+                <div className='CompetitionApplyTeamForm-teaminfo-element'>
+                  <label>대표자 번호</label>
+                  <input placeholder="'-' 없이 번호만 입력해주세요"></input>
+                </div>
             </div>
-            <ul className='CompetitionApplyTeamForm-top-table-column'>
-                    <li>이름</li>
-                    <li>성별</li>
-                    <li>기/노기</li>
-                    <li>부문</li>
-                    <li>벨트</li>
-                    <li>체급</li>
-            </ul>
-            <ul className='CompetitionApplyTeamForm-top-table-row'>
-                    <li><input></input> </li>
-                    <li onClick={genderDropdownToggle}>
-                      성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
-                      {genderDropdown ?
-                      <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                        <li>1</li>
-                        <li>1</li>
-                        <li>1</li>
-                      </ul>
-                      :
-                      ''
-                      }
-                    </li>
-                    <li onClick={uniformDropdownToggle}>
-                      기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
-                      {uniformDropdown ?
-                      <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                        <li>1</li>
-                        <li>1</li>
-                        <li>1</li>
-                      </ul>
-                      :
-                      ''
-                      }
-                    </li>
-                    <li onClick={divisionDropdownToggle}>부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
-                      {divisionDropdown ?
-                        <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
-                        </ul>
-                        :
-                        ''
-                      }
-                    </li>
-                    <li onClick={beltDropdownToggle}>벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
-                      {beltDropdown ?
-                        <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
-                        </ul>
-                        :
-                        ''
-                      }
-                    </li>
-                    <li onClick={weightDropdownToggle}>체급 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
-                      {weightDropdown ?
-                        <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                          <li>1</li>
-                          <li>1</li>
-                          <li>1</li>
-                        </ul>
-                        :
-                        ''
-                        }
-                    </li>
-            </ul>
+            <div className='CompetitionApplyTeamForm-top-table'>
+              <div className='CompetitionApplyTeamForm-top-table-child'>
+                <ul className='CompetitionApplyTeamForm-top-table-column'>
+                        <li>이름</li>
+                        <li>성별</li>
+                        <li>기/노기</li>
+                </ul>
+                <ul className='CompetitionApplyTeamForm-top-table-row'>
+                        <li><input></input> </li>
+                        <li onClick={genderDropdownToggle}>
+                          성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                          {genderDropdown ?
+                          <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                            <li onClick={() => {console.log('1')}}>1</li>
+                            <li>1</li>
+                            <li>1</li>
+                          </ul>
+                          :
+                          ''
+                          }
+                        </li>
+                        <li onClick={uniformDropdownToggle}>
+                          기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                          {uniformDropdown ?
+                          <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                            <li>1</li>
+                            <li>1</li>
+                            <li>1</li>
+                          </ul>
+                          :
+                          ''
+                          }
+                        </li>
+                </ul>
+              </div>
+              <div className='CompetitionApplyTeamForm-top-table-child'>  
+                <ul className='CompetitionApplyTeamForm-top-table-column'>
+                        <li>부문</li>
+                        <li>벨트</li>
+                        <li>체급</li>
+                </ul>
+                <ul className='CompetitionApplyTeamForm-top-table-row'>            
+                        <li onClick={divisionDropdownToggle}>부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                          {divisionDropdown ?
+                            <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                              <li>1</li>
+                              <li>1</li>
+                              <li>1</li>
+                            </ul>
+                            :
+                            ''
+                          }
+                        </li>
+                        <li onClick={beltDropdownToggle}>벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                          {beltDropdown ?
+                            <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                              <li>1</li>
+                              <li>1</li>
+                              <li>1</li>
+                            </ul>
+                            :
+                            ''
+                          }
+                        </li>
+                        <li onClick={weightDropdownToggle}>체급 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                          {weightDropdown ?
+                            <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                              <li>1</li>
+                              <li>1</li>
+                              <li>1</li>
+                            </ul>
+                            :
+                            ''
+                            }
+                        </li>
+                </ul>
+              </div>
+            </div>
+            
+            
             <button className='CompetitionApplyTeamForm-button-add'>추가하기</button>
         </div>
         <div className='CompetitionApplyTeamForm-bottom'>
@@ -164,7 +180,7 @@ function CompetitionApplyTeamForm() {
                       <li>50,000원</li>
             </ul>
             <div className='CompetitionApplyTeamForm-bottom-table-result'>
-              <h3>총 결제금액</h3>
+              <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
               <h3>90,000원</h3>
             </div>
           </div>

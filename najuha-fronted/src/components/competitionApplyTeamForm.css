@@ -94,10 +94,20 @@
     margin-left: 10px;
 }
 
+.CompetitionApplyTeamForm-top-table{
+    width: 70%;
+    margin: 0 auto;
+}
+
+.CompetitionApplyTeamForm-top-table-child{
+    width: 50%;  
+    display: inline-block;
+}
+
 .CompetitionApplyTeamForm-top-table-column{
     display: table;
     margin: 0 auto;
-    width: 70%;
+    width: 100%;
 }
 
 .CompetitionApplyTeamForm-top-table-column li{
@@ -112,7 +122,7 @@
 .CompetitionApplyTeamForm-top-table-row{
     display: table;
     margin: 0 auto;
-    width: 70%;
+    width: 100%;
 }
 
 .CompetitionApplyTeamForm-top-table-row li{
@@ -146,6 +156,10 @@
 
 /*Component*/
 
+.CompetitionApplyTeamForm-teaminfo-element{
+    display: inline-block;
+}
+
 
 .CompetitionApplyTeamForm-teaminfo input{
     width: 170px;
@@ -176,7 +190,11 @@
 
 .CompetitionApplyTeamForm-top-table-row li:first-child{
     border-radius: 0px 0px 0px 5px;
-    padding-left: 0;
+    padding-left: 10px;
+}
+
+.CompetitionApplyTeamForm-top-table-row input{ 
+    margin-left: -10px;
 }
 
 .CompetitionApplyTeamForm-top-table-row li:last-child{
@@ -321,4 +339,120 @@
     box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
     border-radius: 30px;
     cursor: pointer;
+    margin-bottom: 30px;
+}
+
+@media(max-width:1049px){
+
+    .CompetitionApplyTeamForm-wrapper{
+        width: 600px;
+    }
+
+    .CompetitionApplyTeamForm-top-table{
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .CompetitionApplyTeamForm-button-add{
+        right: 0px;
+        bottom: -35px;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table{
+        width: 100%;
+    }
+
+}
+
+@media(max-width:750px){
+    .CompetitionApplyTeamForm-wrapper{
+        width: 90%;
+    }
+
+    .CompetitionApplyTeamForm-teaminfo-element{
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .CompetitionApplyTeamForm-teaminfo-element label{
+        display: inline-block;
+        width: 60px;
+    }
+
+    .CompetitionApplyTeamForm-top-table-child{
+        width: 100%;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table{
+        border: none;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-column{
+        display: none;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-row {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        border-left: 1px solid #E2EAEF;
+        border-top: 1px solid #E2EAEF;
+        border-radius: 5px;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-row li{
+        width: 33.33%;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #E2EAEF;
+        border-right: 1px solid #E2EAEF;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-row li:first-child{
+        width:4.8%;
+        justify-content: center;
+        border-right: none;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-row li:nth-child(2){
+        width:28.53%
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-row li:nth-child(4){
+        border-radius: 0 5px 0 0;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-row li:nth-child(5){
+        border-radius: 0 0 0 5px;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-row li:nth-child(7){
+        border-radius: 0 0 5px 0;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-row li:nth-child(8){
+        display: none;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-row li:first-child{
+        font-weight: 700;
+        color: #000000;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-result{
+        justify-content: space-around;
+        font-size: 1.8rem;   
+    }
+
+    #CompetitionApplyTeamForm-bottom-table-result-key{
+        color: #8C8C8C;
+        font-size: 1.4rem;
+    }
+
+    .CompetitionApplyTeamForm-bottom-table-buttons button{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
 }
