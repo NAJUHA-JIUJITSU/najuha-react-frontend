@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import './navbar.css'
 import { useNavigate } from 'react-router-dom'
 import Dropdown from './Dropdown'
+import belticon from '../src_assets/Group 로고.svg';
 import { useCookies } from 'react-cookie';
 
 function Navbar() {
@@ -50,7 +51,7 @@ function Navbar() {
                 <p>세미나</p>
             </li>
         </ul> 
-        <img class='login-icon' alt="벨트모양 로그인 아이콘" src="Assets/Group 로고.svg" onClick={()=>{
+        <img class='login-icon' alt="벨트모양 로그인 아이콘" src={belticon} onClick={()=>{
             setDropdownVisibility(!dropdownVisibility)
             console.log(dropdownVisibility);
             }}/>
