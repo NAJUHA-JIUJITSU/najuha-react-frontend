@@ -148,6 +148,11 @@ function Profilesection() {
         })
     }
 
+    //탭 클릭
+    function isClicked() {
+
+    }
+
     function ChangeIsFullListedNow() {
         setisFullListedNow(!isFullListedNow);
     }
@@ -173,44 +178,12 @@ function Profilesection() {
             <ProfileTap/>
             <section className='Profilesection_right'>
                 <h2>대회신청 목록</h2>
-                <div className='Profilesection_myCompetitionList nowList'>
-                    <div className='Profilesection_tableName'>
-                        <h3>실시간 대회신청</h3>
-                        <p onClick={ChangeIsFullListedNow}>전체보기<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
-                    </div>
-                    <table>
-                        <thead className='Profilesection_thead'>
-                            <tr>
-                                <th>Date</th>
-                                <th>Location</th>
-                                <th>Champitonship</th>
-                                <th>참가부</th>
-                                <th>벨트</th>
-                                <th>체급</th>
-                                <th>결제내역</th>
-                            </tr>
-                        </thead>
-                        {renderCompetition()}
-                    </table>
-                </div>
-                <div className='Profilesection_myCompetitionList totlaList'>
-                    <h3>총 대회신청</h3>
-                    <p onClick={ChangeIsFullListedLast}>전체보기<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
-                    <table>
-                        <thead className='Profilesection_thead'>
-                            <tr>
-                                <th>Date</th>
-                                <th>Location</th>
-                                <th>Champitonship</th>
-                                <th>참가부</th>
-                                <th>벨트</th>
-                                <th>체급</th>
-                                <th>결제내역</th>
-                            </tr>
-                        </thead>               
-                        {renderLastCompetition()}
-                    </table>
-                </div>
+                <ul className='Profilesection_competitonNav'>
+                    <li className='Profilesection_active'>개인 신청</li>
+                    <li>단체 신청</li>
+                    <li>지난 대회</li>
+                </ul>
+                <hr className='Profilesection_hr'/>
             </section>
         </div>
     )
