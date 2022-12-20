@@ -45,13 +45,15 @@ function CompetitionApplyTeamForm() {
                 </div>
             </div>
             <div className='CompetitionApplyTeamForm-top-table'>
-              <div className='CompetitionApplyTeamForm-top-table-child'>
+              <div className='CompetitionApplyTeamForm-top-table-child1'>
                 <ul className='CompetitionApplyTeamForm-top-table-column'>
                         <li>이름</li>
+                        <li>생년월일</li>
                         <li>성별</li>
                         <li>기/노기</li>
                 </ul>
                 <ul className='CompetitionApplyTeamForm-top-table-row'>
+                        <li><input></input> </li>
                         <li><input></input> </li>
                         <li onClick={genderDropdownToggle}>
                           성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
@@ -65,7 +67,7 @@ function CompetitionApplyTeamForm() {
                           ''
                           }
                         </li>
-                        <li onClick={uniformDropdownToggle}>
+                        <li onClick={uniformDropdownToggle} id='CompetitionApplyTeamForm-top-table-ginogi'>
                           기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {uniformDropdown ?
                           <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
@@ -79,14 +81,14 @@ function CompetitionApplyTeamForm() {
                         </li>
                 </ul>
               </div>
-              <div className='CompetitionApplyTeamForm-top-table-child'>  
+              <div className='CompetitionApplyTeamForm-top-table-child2'>  
                 <ul className='CompetitionApplyTeamForm-top-table-column'>
                         <li>부문</li>
                         <li>벨트</li>
                         <li>체급</li>
                 </ul>
                 <ul className='CompetitionApplyTeamForm-top-table-row'>            
-                        <li onClick={divisionDropdownToggle}>부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                        <li onClick={divisionDropdownToggle} id='CompetitionApplyTeamForm-top-table-division'>부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {divisionDropdown ?
                             <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
                               <li>1</li>
@@ -132,6 +134,7 @@ function CompetitionApplyTeamForm() {
             <ul className='CompetitionApplyTeamForm-bottom-table-column'>
                       <li>No.</li>
                       <li>이름</li>
+                      <li>생년월일</li>
                       <li>성별</li>
                       <li>기/노기</li>
                       <li>부문</li>
@@ -142,6 +145,7 @@ function CompetitionApplyTeamForm() {
             <ul className='CompetitionApplyTeamForm-bottom-table-row'>
                       <li>1</li>
                       <li>유연아</li>
+                      <li>981127</li>
                       <li>여자</li>
                       <li>노기</li>
                       <li>마스터부</li>
@@ -152,6 +156,7 @@ function CompetitionApplyTeamForm() {
             <ul className='CompetitionApplyTeamForm-bottom-table-row'>
                       <li>1</li>
                       <li>유연아</li>
+                      <li>981127</li>
                       <li>여자</li>
                       <li>노기</li>
                       <li>마스터부</li>
@@ -162,6 +167,7 @@ function CompetitionApplyTeamForm() {
             <ul className='CompetitionApplyTeamForm-bottom-table-row'>
                       <li>1</li>
                       <li>유연아</li>
+                      <li>981127</li>
                       <li>여자</li>
                       <li>노기</li>
                       <li>마스터부</li>
@@ -172,6 +178,7 @@ function CompetitionApplyTeamForm() {
             <ul className='CompetitionApplyTeamForm-bottom-table-row'>
                       <li>1</li>
                       <li>유연아</li>
+                      <li>981127</li>
                       <li>여자</li>
                       <li>노기</li>
                       <li>마스터부</li>
