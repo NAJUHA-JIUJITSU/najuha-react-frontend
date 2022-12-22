@@ -42,10 +42,10 @@ function CompetitionApplyTeamForm() {
       console.log(competitionApplication);
     }, [competitionApplication])
 
-    useEffect(() => {
-      console.log(competition);
-      console.log(fillteredcompetition)
-    }, [competitionApplication, fillteredcompetition])
+    // useEffect(() => {
+    //   console.log(competition);
+    //   console.log(fillteredcompetition)
+    // }, [competitionApplication, fillteredcompetition])
 
 
     const getCompetition = async (id) => {
@@ -87,22 +87,137 @@ function CompetitionApplyTeamForm() {
       let copycompetitionApplication = JSON.parse(JSON.stringify(competitionApplication))
       copycompetitionApplication[key] = value
       setCompetitionApplication(copycompetitionApplication)
+      return copycompetitionApplication;
     }
 
-    const constfillteringcompetition = (value, part) => {
-      console.log(value, part);
-      let newfillteredcompetition = fillteredcompetition.filter((div) => div.constantFactor[part] == value);
-      setFillteredCompetition(newfillteredcompetition);
+    const constfillteringcompetition = (object, value, part) => {
+      let newfillteredcompetition = object.filter((div) => div.constantFactor[part] == value);
+      return newfillteredcompetition
     }
 
-    const varfillteringcompetition = (value, part) => {
-        console.log(value, part);
-        let newfillteredcompetition = fillteredcompetition.filter((div) => div.variableFactor[part].includes(value));
-        setFillteredCompetition(newfillteredcompetition);
+    const varfillteringcompetition = (object, value, part) => {
+        let newfillteredcompetition = object.filter((div) => div.variableFactor[part].includes(value));
+        return newfillteredcompetition
     }
 
-    function renderGenderOption(){
+    function renderGenderOptionUI(){
+      let comgender = [];
+            fillteredcompetition.map((com, j) => {
+                comgender.push(com.constantFactor.gender);
+            })
+            comgender = [...new Set(comgender)];
+            return comgender.map((el, h) => {
+                return(
+                    <li key={el} value={el} onClick={() => {
+                      let copycompetitionApplication = changeCompetitionApplication(el, 'gender')
+                      stateRefresh('gender', copycompetitionApplication)
+                    }}>
+                    {el == 'female' ? '여자' : '남자' }</li>
+                )
+                })
+    }
 
+    function renderUniformOptionUI(){
+      let newfillteredcompetition = JSON.parse(JSON.stringify(fillteredcompetition))
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.gender, 'gender')
+      let comuniform = [];
+            newfillteredcompetition.map((com, j) => {
+                comuniform.push(com.constantFactor.uniform);
+            })
+            comuniform = [...new Set(comuniform)];
+            return comuniform.map((el, h) => {
+                return(
+                    <li key={el} value={el} onClick={() => {
+                      let copycompetitionApplication = changeCompetitionApplication(el, 'uniform')
+                      stateRefresh('uniform', copycompetitionApplication)
+                      }}>
+                      {el == 'gi' ? '기' : '노기' }</li>
+                )
+                })
+    }
+
+    function renderDivisionNameOptionUI(){
+      let newfillteredcompetition = JSON.parse(JSON.stringify(fillteredcompetition))
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.gender, 'gender')
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.uniform, 'uniform')
+      let comdi = [];
+            newfillteredcompetition.map((com, j) => {
+                comdi.push(com.constantFactor.divisionName);
+            })
+            comdi = [...new Set(comdi)];
+            return comdi.map((el, h) => {
+                return(
+                    <li key={el} value={el} onClick={() => {
+                      let copycompetitionApplication = changeCompetitionApplication(el, 'divisionName')
+                      stateRefresh('divisionName', copycompetitionApplication)
+                      }}>{el}</li>
+                )
+                })
+    }
+
+    function renderBeltOptionUI(){
+      let newfillteredcompetition = JSON.parse(JSON.stringify(fillteredcompetition))
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.gender, 'gender')
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.uniform, 'uniform')
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.divisionName, 'divisionName')
+      let combelt = [];
+            newfillteredcompetition.map((com, j) => {
+                com.variableFactor.belt.map((bel, g) => {
+                    combelt.push(bel);
+                })
+            })
+            combelt = [...new Set(combelt)]
+            return combelt.map((el, h) => {
+                return(
+                    <li key={el} onClick={() => {
+                      let copycompetitionApplication = changeCompetitionApplication(el, 'belt')
+                      stateRefresh('belt', copycompetitionApplication)
+                      }}>{el}</li>
+                )
+            })
+    }
+
+    function renderWeightOptionUI(){
+      let newfillteredcompetition = JSON.parse(JSON.stringify(fillteredcompetition))
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.gender, 'gender')
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.uniform, 'uniform')
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.divisionName, 'divisionName')
+      newfillteredcompetition = varfillteringcompetition(newfillteredcompetition, competitionApplication.belt, 'belt')
+      let comweight = [];
+            newfillteredcompetition.map((com, j) => {
+                com.variableFactor.weight.map((wei, g) => {
+                    comweight.push(wei);
+                })
+            })
+            comweight = [...new Set(comweight)]
+            return comweight.map((el, h) => {
+                return(
+                    <li key={el} onClick={() => {changeCompetitionApplication(el, 'weight')}}>{el}</li>
+                )
+            })
+    }
+
+    function stateRefresh(key, copycompetitionApplication){
+      if(key == 'gender'){
+        copycompetitionApplication.uniform = '';
+        copycompetitionApplication.divisionName = '';
+        copycompetitionApplication.belt = '';
+        copycompetitionApplication.weight = '';
+        console.log(copycompetitionApplication)
+        setCompetitionApplication(copycompetitionApplication)
+      } else if(key == 'uniform'){
+        copycompetitionApplication.divisionName = '';
+        copycompetitionApplication.belt = '';
+        copycompetitionApplication.weight = '';
+        setCompetitionApplication(copycompetitionApplication)
+      } else if(key == 'divisionName'){
+        copycompetitionApplication.belt = '';
+        copycompetitionApplication.weight = '';
+        setCompetitionApplication(copycompetitionApplication)
+      } else if(key == 'belt'){
+        copycompetitionApplication.weight = '';
+        setCompetitionApplication(copycompetitionApplication)
+      }
     }
 
   return (
@@ -130,37 +245,61 @@ function CompetitionApplyTeamForm() {
                 <ul className='CompetitionApplyTeamForm-top-table-row'>
                         <li><input placeholder='이름' value={competitionApplication.playerName} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerName')}}></input> </li>
                         {competitionApplication.playerName != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> 
-                        : <li className='CompetitionApplyTeamForm-top-table-row-disable'>ex) 900404</li>}
+                        : 
+                        competitionApplication.playerBirth != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> : <li className='CompetitionApplyTeamForm-top-table-row-disable'>ex) 900404</li>}
                         
-                        {competitionApplication.playerBirth != '' ? 
+                        {competitionApplication.gender != '' ?  // 본인값있으면 본인값 보여주고 
                         <li onClick={genderDropdownToggle}>
-                          성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                          <p style={{color:'black'}}>{competitionApplication.gender == 'male' ? '남자' : '여자'}</p><img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {genderDropdown ?
-                          <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown' onClick={(e) => {console.log(e.target.value)}}>
-                            <li value={1}>1</li>
-                            <li value={2}>2</li>
-                            <li value={3}>3</li>
+                          <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                            {renderGenderOptionUI()}
                           </ul>
                           :
                           ''
                           }
                         </li>
-                        : <li className='CompetitionApplyTeamForm-top-table-row-disable'>성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
+                        : 
+                          (competitionApplication.playerBirth != '' ? // 없으면, 앞에 값(생년월일) 유무에 따라 유: 선택할수있는 드랍다운, 무: 디스에이블 
+                          <li onClick={genderDropdownToggle}>
+                            성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                            {genderDropdown ?
+                            <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                              {renderGenderOptionUI()}
+                            </ul>
+                            :
+                            ''
+                            }
+                          </li>
+                          :
+                          <li className='CompetitionApplyTeamForm-top-table-row-disable'>성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>)}
 
-                        {competitionApplication.gender != '' ? 
+
+                        {competitionApplication.uniform != '' ? // 본인값있으면 본인값 보여주고 
                         <li onClick={uniformDropdownToggle} id='CompetitionApplyTeamForm-top-table-ginogi'>
-                          기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                        <p style={{color:'black'}}>{competitionApplication.uniform == 'gi' ? '기' : '노기'}</p> <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {uniformDropdown ?
                           <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                            <li>1</li>
-                            <li>1</li>
-                            <li>1</li>
+                            {renderUniformOptionUI()}
                           </ul>
                           :
                           ''
                           }
                         </li>
-                        : <li className='CompetitionApplyTeamForm-top-table-row-disable' id='CompetitionApplyTeamForm-top-table-ginogi' >기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
+                        : 
+                          competitionApplication.gender != '' ? // 없으면 앞에 값(성별) 유무에따라 유: 선택할수있는 드랍다운, 무: 디스에이블  
+                          <li onClick={uniformDropdownToggle} id='CompetitionApplyTeamForm-top-table-ginogi'>
+                          기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                            {uniformDropdown ?
+                            <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                              {renderUniformOptionUI()}
+                            </ul>
+                            :
+                            ''
+                            }
+                          </li>
+                          :
+                          <li className='CompetitionApplyTeamForm-top-table-row-disable' id='CompetitionApplyTeamForm-top-table-ginogi' >기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
                 </ul>
               </div>
               <div className='CompetitionApplyTeamForm-top-table-child2'>  
@@ -170,45 +309,83 @@ function CompetitionApplyTeamForm() {
                         <li>체급</li>
                 </ul>
                 <ul className='CompetitionApplyTeamForm-top-table-row'>
-                        {competitionApplication.gender != '' ?            
-                        <li onClick={divisionDropdownToggle} id='CompetitionApplyTeamForm-top-table-division'>부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                        {competitionApplication.divisionName != '' ? // 본인값있으면 본인값 보여주고            
+                        <li onClick={divisionDropdownToggle} id='CompetitionApplyTeamForm-top-table-division'>
+                        <p style={{color:'black'}}>{competitionApplication.divisionName}</p><img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {divisionDropdown ?
                             <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                              <li>1</li>
-                              <li>1</li>
-                              <li>1</li>
+                              {renderDivisionNameOptionUI()}
                             </ul>
                             :
                             ''
                           }
                         </li>
-                        : <li className='CompetitionApplyTeamForm-top-table-row-disable' id='CompetitionApplyTeamForm-top-table-division' >부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
-                        {competitionApplication.divisionName != '' ?
-                        <li onClick={beltDropdownToggle}>벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                        :
+                          competitionApplication.uniform != '' ? // 없으면 앞에(유니폼) 값 유무에따라 유: 선택할 수 있는 드랍다운, 무: 디스에이블            
+                          <li onClick={divisionDropdownToggle} id='CompetitionApplyTeamForm-top-table-division'>
+                          부문<img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                            {divisionDropdown ?
+                              <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                              {renderDivisionNameOptionUI()}
+                              </ul>
+                              :
+                              ''
+                            }
+                          </li>
+                          :
+                          <li className='CompetitionApplyTeamForm-top-table-row-disable' id='CompetitionApplyTeamForm-top-table-division' >부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
+
+                        {competitionApplication.belt != '' ? // 본인값있으면 본인값 보여주고 
+                        <li onClick={beltDropdownToggle}>
+                        <p style={{color:'black'}}>{competitionApplication.belt}</p><img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {beltDropdown ?
                             <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                              <li>1</li>
-                              <li>1</li>
-                              <li>1</li>
+                              {renderBeltOptionUI()}
                             </ul>
                             :
                             ''
                           }
                         </li>
-                        : <li className='CompetitionApplyTeamForm-top-table-row-disable' >벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
-                        {competitionApplication.belt != '' ?
-                        <li onClick={weightDropdownToggle}>체급 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                        : 
+                          competitionApplication.divisionName != '' ? // 없으면 앞에(디비전이름) 값 유무에따라 유: 선택할 수 있는 드랍다운, 무: 디스에이블 
+                          <li onClick={beltDropdownToggle}>
+                          벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                            {beltDropdown ?
+                              <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                                {renderBeltOptionUI()}
+                              </ul>
+                              :
+                              ''
+                            }
+                          </li>
+                          :
+                          <li className='CompetitionApplyTeamForm-top-table-row-disable' >벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
+
+                        {competitionApplication.weight != '' ? // 본인값이 있을때,
+                        <li onClick={weightDropdownToggle}>
+                        <p style={{color:'black'}}>{competitionApplication.weight}</p><img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {weightDropdown ?
                             <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                              <li>1</li>
-                              <li>1</li>
-                              <li>1</li>
+                              {renderWeightOptionUI()}
                             </ul>
                             :
                             ''
                             }
                         </li>
-                        : <li className='CompetitionApplyTeamForm-top-table-row-disable'>체급 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
+                        : 
+                          competitionApplication.belt != '' ? // 없으면 앞에(벨트) 값 유무에따라 유: 선택할 수 있는 드랍다운, 무: 디스에이블 
+                          <li onClick={weightDropdownToggle}>
+                          체급<img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
+                            {weightDropdown ?
+                              <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
+                                {renderWeightOptionUI()}
+                              </ul>
+                              :
+                              ''
+                              }
+                          </li>
+                          :
+                          <li className='CompetitionApplyTeamForm-top-table-row-disable'>체급<img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
                 </ul>
               </div>
             </div>
