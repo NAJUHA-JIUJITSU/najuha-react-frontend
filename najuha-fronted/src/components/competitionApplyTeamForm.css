@@ -364,6 +364,7 @@
 #CompetitionApplyTeamForm-bottom-table-row-deleteicon{
     position: absolute;
     transform: translate(50%, 50%);
+    cursor: pointer;
 }
 
 @media(max-width:1049px){

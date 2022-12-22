@@ -246,6 +246,12 @@ function CompetitionApplyTeamForm() {
       
     }
 
+    function deleteCompetitionApplication(i){
+      let copy = [...competitionApplicationList]
+      copy.splice(i, 1);
+      setCompetitionApplicationList(copy);
+    }
+
     function renderCompetitionApplicationList(){
       return competitionApplicationList.map((application, i) => {
         return(
@@ -259,7 +265,7 @@ function CompetitionApplyTeamForm() {
                       <li>{application.belt}</li>
                       <li>{application.weight}</li>
                       <li>50,000원</li>
-                      <img id='CompetitionApplyTeamForm-bottom-table-row-deleteicon' src={deleteicon} alt='삭제아이콘'/>
+                      <img id='CompetitionApplyTeamForm-bottom-table-row-deleteicon' src={deleteicon} alt='삭제아이콘' onClick={() => deleteCompetitionApplication(i)}/>
           </ul>
         )
       })
