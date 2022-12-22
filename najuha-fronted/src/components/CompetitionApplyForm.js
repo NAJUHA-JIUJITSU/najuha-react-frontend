@@ -445,6 +445,7 @@ function CompetitionApplyForm() {
                     combelt.push(bel);
                 })
             })
+            combelt = [...new Set(combelt)];
             return combelt.map((el, h) => {
                 return(
                     <li onClick={(() => chooseBeltOption(el, i))}>{el}</li>
@@ -457,6 +458,7 @@ function CompetitionApplyForm() {
                     comweight.push(wei);
                 })
             })
+            comweight = [...new Set(comweight)];
             return comweight.map((el, h) => {
                 return(
                     <li onClick={(() => chooseWeightOption(el, i))}>{el}</li>
