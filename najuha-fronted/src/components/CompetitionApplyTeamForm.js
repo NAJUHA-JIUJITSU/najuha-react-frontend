@@ -1,14 +1,67 @@
 import React from 'react'
 import './competitionApplyTeamForm.css';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
+import {useParams} from 'react-router-dom';
 import dropdownicon from '../src_assets/드랍다운아이콘.svg'
 
+import axios from 'axios';
+import { Cookies } from 'react-cookie';
+
 function CompetitionApplyTeamForm() {
+    const {id} = useParams();
     const [genderDropdown, setGenderDropdown] = useState(false)
     const [uniformDropdown, setUniformDropdown] = useState(false)
     const [divisionDropdown, setDivisionDropdown] = useState(false)
     const [beltDropdown, setBeltDropdown] = useState(false)
     const [weightDropdown, setWeightDropdown] = useState(false)
+
+    const [competition, setCompetition] = useState(null);
+    const [fillteredcompetition, setFillteredCompetition] = useState(null);
+
+    const [competitionApplicationList, setCompetitionApplicationList] = useState([]);
+    const [competitionApplication, setCompetitionApplication] = useState({
+      playerName: '',
+      playerBirth: '',
+      phoneNumber: '',
+      uniform: '',
+      divisionName: '',
+      gender: '',
+      belt: '',
+      weight: '',
+      team: '',
+      competitionId: '',
+    })
+
+    const cookies = new Cookies();
+
+    useEffect(() => {
+      getCompetition(id);
+  }, [])
+
+    useEffect(() => {
+      console.log(competitionApplication);
+    }, [competitionApplication])
+
+    useEffect(() => {
+      console.log(competition);
+      console.log(fillteredcompetition)
+    }, [competitionApplication, fillteredcompetition])
+
+
+    const getCompetition = async (id) => {
+      try {
+          const response = await axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions/${id}`, {
+              headers: {
+                  "x-access-token":  cookies.get("x-access-token")
+              }
+          });
+          const newCompetition = response.data.result;
+          setCompetition(newCompetition)
+          setFillteredCompetition(newCompetition.division);
+      } catch(err) {
+          console.log(err);
+      }
+  }
 
     function genderDropdownToggle(){
       setGenderDropdown((pre) => (!pre));
@@ -29,6 +82,28 @@ function CompetitionApplyTeamForm() {
     function weightDropdownToggle(){
       setWeightDropdown((pre) => (!pre));
     }
+    
+    function changeCompetitionApplication(value, key){
+      let copycompetitionApplication = JSON.parse(JSON.stringify(competitionApplication))
+      copycompetitionApplication[key] = value
+      setCompetitionApplication(copycompetitionApplication)
+    }
+
+    const constfillteringcompetition = (value, part) => {
+      console.log(value, part);
+      let newfillteredcompetition = fillteredcompetition.filter((div) => div.constantFactor[part] == value);
+      setFillteredCompetition(newfillteredcompetition);
+    }
+
+    const varfillteringcompetition = (value, part) => {
+        console.log(value, part);
+        let newfillteredcompetition = fillteredcompetition.filter((div) => div.variableFactor[part].includes(value));
+        setFillteredCompetition(newfillteredcompetition);
+    }
+
+    function renderGenderOption(){
+
+    }
 
   return (
     <div className='CompetitionApplyTeamForm-wrapper'>
@@ -37,11 +112,11 @@ function CompetitionApplyTeamForm() {
             <div className='CompetitionApplyTeamForm-teaminfo'>
                 <div className='CompetitionApplyTeamForm-teaminfo-element'>
                   <label>팀이름</label>
-                  <input placeholder='팀 이름을 입력해주세요'></input>
+                  <input placeholder='팀 이름을 입력해주세요' value={competitionApplication.team} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'team')}}></input>
                 </div>
                 <div className='CompetitionApplyTeamForm-teaminfo-element'>
                   <label>대표자 번호</label>
-                  <input placeholder="'-' 없이 번호만 입력해주세요"></input>
+                  <input placeholder="'-' 없이 번호만 입력해주세요" value={competitionApplication.phoneNumber} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'phoneNumber')}}></input>
                 </div>
             </div>
             <div className='CompetitionApplyTeamForm-top-table'>
@@ -53,20 +128,26 @@ function CompetitionApplyTeamForm() {
                         <li>기/노기</li>
                 </ul>
                 <ul className='CompetitionApplyTeamForm-top-table-row'>
-                        <li><input></input> </li>
-                        <li><input></input> </li>
+                        <li><input placeholder='이름' value={competitionApplication.playerName} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerName')}}></input> </li>
+                        {competitionApplication.playerName != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> 
+                        : <li className='CompetitionApplyTeamForm-top-table-row-disable'>ex) 900404</li>}
+                        
+                        {competitionApplication.playerBirth != '' ? 
                         <li onClick={genderDropdownToggle}>
                           성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {genderDropdown ?
-                          <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
-                            <li onClick={() => {console.log('1')}}>1</li>
-                            <li>1</li>
-                            <li>1</li>
+                          <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown' onClick={(e) => {console.log(e.target.value)}}>
+                            <li value={1}>1</li>
+                            <li value={2}>2</li>
+                            <li value={3}>3</li>
                           </ul>
                           :
                           ''
                           }
                         </li>
+                        : <li className='CompetitionApplyTeamForm-top-table-row-disable'>성별 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
+
+                        {competitionApplication.gender != '' ? 
                         <li onClick={uniformDropdownToggle} id='CompetitionApplyTeamForm-top-table-ginogi'>
                           기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {uniformDropdown ?
@@ -79,6 +160,7 @@ function CompetitionApplyTeamForm() {
                           ''
                           }
                         </li>
+                        : <li className='CompetitionApplyTeamForm-top-table-row-disable' id='CompetitionApplyTeamForm-top-table-ginogi' >기/노기 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
                 </ul>
               </div>
               <div className='CompetitionApplyTeamForm-top-table-child2'>  
@@ -87,7 +169,8 @@ function CompetitionApplyTeamForm() {
                         <li>벨트</li>
                         <li>체급</li>
                 </ul>
-                <ul className='CompetitionApplyTeamForm-top-table-row'>            
+                <ul className='CompetitionApplyTeamForm-top-table-row'>
+                        {competitionApplication.gender != '' ?            
                         <li onClick={divisionDropdownToggle} id='CompetitionApplyTeamForm-top-table-division'>부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {divisionDropdown ?
                             <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
@@ -99,6 +182,8 @@ function CompetitionApplyTeamForm() {
                             ''
                           }
                         </li>
+                        : <li className='CompetitionApplyTeamForm-top-table-row-disable' id='CompetitionApplyTeamForm-top-table-division' >부문 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
+                        {competitionApplication.divisionName != '' ?
                         <li onClick={beltDropdownToggle}>벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {beltDropdown ?
                             <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
@@ -110,6 +195,8 @@ function CompetitionApplyTeamForm() {
                             ''
                           }
                         </li>
+                        : <li className='CompetitionApplyTeamForm-top-table-row-disable' >벨트 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
+                        {competitionApplication.belt != '' ?
                         <li onClick={weightDropdownToggle}>체급 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/>
                           {weightDropdown ?
                             <ul id= 'CompetitionApplyTeamForm-top-table-row-dropdown'>
@@ -121,6 +208,7 @@ function CompetitionApplyTeamForm() {
                             ''
                             }
                         </li>
+                        : <li className='CompetitionApplyTeamForm-top-table-row-disable'>체급 <img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
                 </ul>
               </div>
             </div>
