@@ -16,6 +16,9 @@ function CompetitionApplyTeamForm() {
     const [beltDropdown, setBeltDropdown] = useState(false)
     const [weightDropdown, setWeightDropdown] = useState(false)
 
+    const [normalPrice, setNormalPrice] = useState(0)
+    const [discountedPrice, setDiscountedPrice] = useState(0)
+
     const [competition, setCompetition] = useState(null);
     const [fillteredcompetition, setFillteredCompetition] = useState(null);
 
@@ -39,12 +42,17 @@ function CompetitionApplyTeamForm() {
       getCompetition(id);
   }, [])
 
+  useEffect(() => {
+    console.log(competition);
+}, [competition])
+
     useEffect(() => {
       console.log(competitionApplication);
     }, [competitionApplication])
 
     useEffect(() => {
       console.log(competitionApplicationList);
+      if(competitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
     }, [competitionApplicationList])
 
     // useEffect(() => {
@@ -255,7 +263,7 @@ function CompetitionApplyTeamForm() {
     function renderCompetitionApplicationList(){
       return competitionApplicationList.map((application, i) => {
         return(
-          <ul className='CompetitionApplyTeamForm-bottom-table-row'>
+          <ul key={i} className='CompetitionApplyTeamForm-bottom-table-row'>
                       <li>{i+1}</li>
                       <li>{application.playerName}</li>
                       <li>{application.playerBirth}</li>
@@ -270,6 +278,29 @@ function CompetitionApplyTeamForm() {
         )
       })
     }
+
+
+    const getTotalPrice = async () => {
+      axios({
+          method: "post",
+          headers: {
+            "x-access-token":  cookies.get("x-access-token")
+          },
+          url: `${process.env.REACT_APP_BACK_END_API}/competitions/${id}/prices`,
+          data: {
+              isGroup: true,
+              divisions: competitionApplicationList
+          }
+        })
+        .then(res => {
+          console.log(res);
+          setDiscountedPrice(res.data.result.discountedPrice);
+          setNormalPrice(res.data.result.normalPrice);
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  }
 
   return (
     <div className='CompetitionApplyTeamForm-wrapper'>
@@ -459,7 +490,7 @@ function CompetitionApplyTeamForm() {
             {renderCompetitionApplicationList()}
             <div className='CompetitionApplyTeamForm-bottom-table-result'>
               <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
-              <h3>90,000원</h3>
+              <h3>{discountedPrice}원</h3>
             </div>
           </div>
           <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
