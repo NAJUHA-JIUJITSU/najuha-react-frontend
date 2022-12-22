@@ -361,6 +361,11 @@
     margin-bottom: 30px;
 }
 
+#CompetitionApplyTeamForm-bottom-table-row-deleteicon{
+    position: absolute;
+    transform: translate(50%, 50%);
+}
+
 @media(max-width:1049px){
 
     .CompetitionApplyTeamForm-wrapper{
@@ -425,6 +430,12 @@
 
 
 /* 바텀 */
+    #CompetitionApplyTeamForm-bottom-table-row-deleteicon{
+        transform: none;
+        right: 0;
+        bottom: 0;
+        transform: translate(-50%, -50%);
+    }
 
     .CompetitionApplyTeamForm-bottom-table{
         border: none;
@@ -435,6 +446,7 @@
     }
 
     .CompetitionApplyTeamForm-bottom-table-row {
+        position: relative;
         display: flex;
         width: 100%;
         flex-wrap: wrap;

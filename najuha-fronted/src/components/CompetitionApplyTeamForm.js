@@ -3,6 +3,7 @@ import './competitionApplyTeamForm.css';
 import {useState, useEffect} from 'react'
 import {useParams} from 'react-router-dom';
 import dropdownicon from '../src_assets/드랍다운아이콘.svg'
+import deleteicon from '../src_assets/명단삭제로고.svg'
 
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
@@ -258,6 +259,7 @@ function CompetitionApplyTeamForm() {
                       <li>{application.belt}</li>
                       <li>{application.weight}</li>
                       <li>50,000원</li>
+                      <img id='CompetitionApplyTeamForm-bottom-table-row-deleteicon' src={deleteicon} alt='삭제아이콘'/>
           </ul>
         )
       })
