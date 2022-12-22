@@ -29,7 +29,7 @@ function CompetitionApplyTeamForm() {
       belt: '',
       weight: '',
       team: '',
-      competitionId: '',
+      competitionId: id,
     })
 
     const cookies = new Cookies();
@@ -41,6 +41,10 @@ function CompetitionApplyTeamForm() {
     useEffect(() => {
       console.log(competitionApplication);
     }, [competitionApplication])
+
+    useEffect(() => {
+      console.log(competitionApplicationList);
+    }, [competitionApplicationList])
 
     // useEffect(() => {
     //   console.log(competition);
@@ -220,6 +224,27 @@ function CompetitionApplyTeamForm() {
       }
     }
 
+    function validationcheck(application){
+      let tmp = Object.values(application)
+      let ret = true
+      tmp.forEach(x => {
+        if(x == '') ret = false;
+      })
+      return ret;
+    }
+
+    function addCompetitionApplication(){
+      let check = validationcheck(competitionApplication)
+      if(check){
+        let newCompetitionApplicationList = [...competitionApplicationList]
+        newCompetitionApplicationList.push(competitionApplication);
+        setCompetitionApplicationList(newCompetitionApplicationList);
+      } else{
+        alert('신청서를 빈 항목 없이 끝까지 작성해주세요');
+      }
+      
+    }
+
   return (
     <div className='CompetitionApplyTeamForm-wrapper'>
         <div className='CompetitionApplyTeamForm-top'>
@@ -388,10 +413,8 @@ function CompetitionApplyTeamForm() {
                           <li className='CompetitionApplyTeamForm-top-table-row-disable'>체급<img className= 'CompetitionApplyTeamForm-top-table-row-dropdown-icon' src={dropdownicon}/></li>}
                 </ul>
               </div>
-            </div>
-            
-            
-            <button className='CompetitionApplyTeamForm-button-add'>추가하기</button>
+            </div>     
+            <button className='CompetitionApplyTeamForm-button-add' onClick={addCompetitionApplication}>추가하기</button>
         </div>
         <div className='CompetitionApplyTeamForm-bottom'>
           <h3 className='CompetitionApplyTeamForm-bottom-title'>신청자 명단</h3>
