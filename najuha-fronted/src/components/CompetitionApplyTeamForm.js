@@ -245,6 +245,24 @@ function CompetitionApplyTeamForm() {
       
     }
 
+    function renderCompetitionApplicationList(){
+      return competitionApplicationList.map((application, i) => {
+        return(
+          <ul className='CompetitionApplyTeamForm-bottom-table-row'>
+                      <li>{i+1}</li>
+                      <li>{application.playerName}</li>
+                      <li>{application.playerBirth}</li>
+                      <li>{application.gender == 'female' ? '여자' : '남자'}</li>
+                      <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
+                      <li>{application.divisionName}</li>
+                      <li>{application.belt}</li>
+                      <li>{application.weight}</li>
+                      <li>50,000원</li>
+          </ul>
+        )
+      })
+    }
+
   return (
     <div className='CompetitionApplyTeamForm-wrapper'>
         <div className='CompetitionApplyTeamForm-top'>
@@ -430,50 +448,7 @@ function CompetitionApplyTeamForm() {
                       <li>체급</li>
                       <li>참가비</li>
             </ul>
-            <ul className='CompetitionApplyTeamForm-bottom-table-row'>
-                      <li>1</li>
-                      <li>유연아</li>
-                      <li>981127</li>
-                      <li>여자</li>
-                      <li>노기</li>
-                      <li>마스터부</li>
-                      <li>브라운</li>
-                      <li>-45kg</li>
-                      <li>50,000원</li>
-            </ul>
-            <ul className='CompetitionApplyTeamForm-bottom-table-row'>
-                      <li>1</li>
-                      <li>유연아</li>
-                      <li>981127</li>
-                      <li>여자</li>
-                      <li>노기</li>
-                      <li>마스터부</li>
-                      <li>브라운</li>
-                      <li>-45kg</li>
-                      <li>50,000원</li>
-            </ul>
-            <ul className='CompetitionApplyTeamForm-bottom-table-row'>
-                      <li>1</li>
-                      <li>유연아</li>
-                      <li>981127</li>
-                      <li>여자</li>
-                      <li>노기</li>
-                      <li>마스터부</li>
-                      <li>브라운</li>
-                      <li>-45kg</li>
-                      <li>50,000원</li>
-            </ul>
-            <ul className='CompetitionApplyTeamForm-bottom-table-row'>
-                      <li>1</li>
-                      <li>유연아</li>
-                      <li>981127</li>
-                      <li>여자</li>
-                      <li>노기</li>
-                      <li>마스터부</li>
-                      <li>브라운</li>
-                      <li>-45kg</li>
-                      <li>50,000원</li>
-            </ul>
+            {renderCompetitionApplicationList()}
             <div className='CompetitionApplyTeamForm-bottom-table-result'>
               <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
               <h3>90,000원</h3>
