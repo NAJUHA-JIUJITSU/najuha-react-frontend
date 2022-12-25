@@ -65,7 +65,7 @@ function CompetitionApplyTeamForm() {
       if(competitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
     }, [competitionApplicationList])
     
-  const postPaymentData = async () => {
+    const postPaymentData = async () => {
       const xAccessToken = cookies.get("x-access-token");
       const paymentData = await axios({
         method: "post",
@@ -76,9 +76,9 @@ function CompetitionApplyTeamForm() {
       });
       console.log(paymentData);
       return paymentData;
-  };
+    };
 
-  const tossPay = async () => {
+    const tossPay = async () => {
       const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
       const res = await postPaymentData();
       const data = res.data.result;
@@ -121,9 +121,7 @@ function CompetitionApplyTeamForm() {
               })
           });
       }
-  }
-
-  
+    }
 
     function postCompetitionApply(){
       axios({
@@ -143,7 +141,7 @@ function CompetitionApplyTeamForm() {
         .catch(err => {
           console.log(err)
         })
-  }
+    }
 
     const getCompetition = async (id) => {
       try {
@@ -384,12 +382,12 @@ function CompetitionApplyTeamForm() {
         .catch(err => {
           console.log(err)
         })
-  }
+    }
 
   return (
     <div className='CompetitionApplyTeamForm-wrapper'>
         <div className='CompetitionApplyTeamForm-top'>
-            <h1 className='CompetitionApplyTeamForm-title'>예거스 챔피언쉽 로컬대회 송도오픈</h1>
+            <h1 className='CompetitionApplyTeamForm-title'>{competition?.title}</h1>
             <div className='CompetitionApplyTeamForm-teaminfo'>
                 <div className='CompetitionApplyTeamForm-teaminfo-element'>
                   <label>팀이름</label>
