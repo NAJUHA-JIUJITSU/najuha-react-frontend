@@ -70,7 +70,7 @@ function Paymentmodal(props) {
                     </div>
                     <div className='Paymentmodal_firstsection_totalprice'>
                         <p>총 결제금액</p>
-                        <p>{props.normalprice}</p>
+                        <p>{props.discountedprice}</p>
                     </div>
                 </div>
                 <div className= 'Paymentmodal_secondsection'>

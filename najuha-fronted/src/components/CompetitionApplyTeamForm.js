@@ -1,20 +1,25 @@
 import React from 'react'
 import './competitionApplyTeamForm.css';
 import {useState, useEffect} from 'react'
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import dropdownicon from '../src_assets/드랍다운아이콘.svg'
 import deleteicon from '../src_assets/명단삭제로고.svg'
 
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
+import { loadTossPayments } from '@tosspayments/payment-sdk';
+
+import Paymentmodal from './Paymentmodal'
 
 function CompetitionApplyTeamForm() {
     const {id} = useParams();
+    const navigate = useNavigate();
     const [genderDropdown, setGenderDropdown] = useState(false)
     const [uniformDropdown, setUniformDropdown] = useState(false)
     const [divisionDropdown, setDivisionDropdown] = useState(false)
     const [beltDropdown, setBeltDropdown] = useState(false)
     const [weightDropdown, setWeightDropdown] = useState(false)
+    const [paymentmodal, setPaymentmodal] = useState(false);
 
     const [normalPrice, setNormalPrice] = useState(0)
     const [discountedPrice, setDiscountedPrice] = useState(0)
@@ -35,6 +40,11 @@ function CompetitionApplyTeamForm() {
       team: '',
       competitionId: id,
     })
+    const [competitionApplicationId, setCompetitionApplicationId] = useState(null);
+
+    const [paymentmethod, setPaymentmethod] = useState(null);
+    const [easypaymethod, setEasypaymethod] = useState(null);
+    const frontBaseUrl = 'http://localhost:3001';
 
     const cookies = new Cookies();
 
@@ -54,12 +64,86 @@ function CompetitionApplyTeamForm() {
       console.log(competitionApplicationList);
       if(competitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
     }, [competitionApplicationList])
+    
+  const postPaymentData = async () => {
+      const xAccessToken = cookies.get("x-access-token");
+      const paymentData = await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications/${competitionApplicationId}/payments`,
+        headers: {
+          "x-access-token": xAccessToken,
+        },
+      });
+      console.log(paymentData);
+      return paymentData;
+  };
 
-    // useEffect(() => {
-    //   console.log(competition);
-    //   console.log(fillteredcompetition)
-    // }, [competitionApplication, fillteredcompetition])
+  const tossPay = async () => {
+      const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
+      const res = await postPaymentData();
+      const data = res.data.result;
+      if(paymentmethod == '카드'){
+          loadTossPayments(clientkey).then((tossPayments)=> {
+              tossPayments.requestPayment("카드", {
+                  amount: data.amount,
+                  orderId: data.orderId,
+                  orderName: data.orderName,
+                  customerName: data.customerName,
+                  customerEmail: data.customerEmail,
+                  successUrl: frontBaseUrl + "/toss/success",
+                  failUrl: frontBaseUrl + "/toss/fail",
+                });
+          })
+      } else if(paymentmethod == '간편결제'){
+          loadTossPayments(clientkey).then((tossPayments) => {
+              tossPayments.requestPayment("카드", {
+                amount: data.amount,
+                orderId: data.orderId,
+                orderName: data.orderName,
+                customerName: data.customerName,
+                customerEmail: data.customerEmail,
+                successUrl: frontBaseUrl + "/toss/success",
+                failUrl: frontBaseUrl + "/toss/fail",
+                flowMode: "DIRECT",
+                easyPay: easypaymethod,
+              });
+          });
+      } else if(paymentmethod == '계좌이체'){
+          loadTossPayments(clientkey).then((tossPayments) => {
+              tossPayments.requestPayment("계좌이체", {
+                amount: data.amount,
+                orderId: data.orderId,
+                orderName: data.orderName,
+                customerName: data.customerName,
+                customerEmail: data.customerEmail,
+                successUrl: frontBaseUrl + "/toss/success",
+                failUrl: frontBaseUrl + "/toss/fail",
+              })
+          });
+      }
+  }
 
+  
+
+    function postCompetitionApply(){
+      axios({
+          method: "post",
+          headers: {
+            "x-access-token":  cookies.get("x-access-token")
+          },
+          url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications`,
+          data: {
+              competitionApplicationList
+          }
+        })
+        .then(res => {
+          console.log(res)
+          setCompetitionApplicationId(res.data.result.competitionApplicationId);
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  }
 
     const getCompetition = async (id) => {
       try {
@@ -494,10 +578,22 @@ function CompetitionApplyTeamForm() {
             </div>
           </div>
           <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
-            <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>저장하기</button>
-            <button id='CompetitionApplyTeamForm-bottom-table-buttons-register'>신청하기</button>
+            <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={() => {
+              postCompetitionApply()
+              navigate('/')
+              alert('저장되었습니다.')
+            }}>저장하기</button>
+            <button id='CompetitionApplyTeamForm-bottom-table-buttons-register' onClick={() => {
+              postCompetitionApply()
+              setPaymentmodal(pre => !pre);
+            }}>신청하기</button>
           </div>
         </div>
+        {
+                paymentmodal && (
+                    <Paymentmodal closeModal={() => setPaymentmodal(pre => !pre)} paymentmethod={paymentmethod} setPaymentmethod={setPaymentmethod} easypaymethod={easypaymethod} setEasypaymethod={setEasypaymethod} discountedprice={discountedPrice} normalprice={normalPrice} tossPay={tossPay}/>
+                )
+        }
     </div>
   )
 }
