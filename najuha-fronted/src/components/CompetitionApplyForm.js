@@ -108,21 +108,6 @@ function CompetitionApplyForm() {
           })
     }
 
-    // const postCompetition = async () => {
-    //     try {
-    //         const response = await axios.post(`${process.env.REACT_APP_BACK_END_API}/competitionApplications`, {
-    //             headers: {
-    //                 "x-access-token":  cookies.get("x-access-token")
-    //             },
-    //             body: {viewcompetitionApplicationList}
-    //         });
-    //         console.log(response)
-    //     } catch(err) {
-    //         console.log(err);
-    //     }
-    // }
-
-
     function postCompetition(){
         let competitionApplicationList = parsingbeforeapplypost(viewcompetitionApplicationList);
         axios({
@@ -158,10 +143,6 @@ function CompetitionApplyForm() {
         console.log(paymentData);
         return paymentData;
       };
-
-    // const tossPaymentMethodValidation = () => {
-
-    // }
 
     const tossPay = async () => {
         const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
@@ -248,9 +229,6 @@ function CompetitionApplyForm() {
         setviewCompetitionApplicationList(cal);
         setFillteredCompetition(competition.division);
     }
-
-    // const calculatePrice = () => {        
-    // }
 
     const curApplicationcomplete = (i) => {
         let cal = [...viewcompetitionApplicationList];
@@ -399,9 +377,6 @@ function CompetitionApplyForm() {
         })
         setviewCompetitionApplicationList(cal);
     }
-
-
-
 
     const chooseOptionUI = (application, i) => {
         if(application.uniform == null){
