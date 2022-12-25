@@ -15,6 +15,7 @@ import CompetitionApplyTeamPage from './pages/CompetitionApplyTeamPage'
 import Auth from './hoc/auth'
 import CompetitionApplyPage from './pages/CompetitionApplyPage'
 import TossSuccess from './components/Tosssuccess'
+import CompetitionApplyMethodPage from './pages/CompetitionApplyMethodPage'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -31,6 +32,7 @@ function App() {
   const AuthProfilepageToggle = Auth(ProfilepageToggle, true)
   const AuthRedirect = Auth(Redirect, null)
   const Authkakao = Auth(KakaoLogin, null)
+  const AuthoCompetitionApplyMethodPage = Auth(CompetitionApplyMethodPage, true);
 
   return (
     <React.Fragment>
@@ -39,6 +41,7 @@ function App() {
       <Routes>
         <Route path = '/' element={<AuthMainpage/>} />
         <Route path = '/competition' element={<AuthCompetitionSchedule/>} />
+        <Route path = '/competition/applymethod/:id' element={<AuthoCompetitionApplyMethodPage/>} />
         <Route path = '/competition/apply/:id' element={<AuthCompetitionApplyPage/>} />
         <Route path = '/competition/applyteam/:id' element={<AuthCompetitionApplyTeamPage/>} />
         <Route path = '/Admincompetition/' element={<AuthAdmincompetition/>} />
