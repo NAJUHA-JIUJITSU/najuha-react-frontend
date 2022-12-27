@@ -1,0 +1,36 @@
+
+/* Typography */
+
+
+/* Layout */
+.ChooseApplyMethod-wrapper{
+    margin: 0 auto;
+}
+
+/* component */
+
+.ChooseApplyMethod-wrapper{
+    min-height: 84vh;
+    max-width: 900px;
+    display: flex;
+    justify-content: center;
+}
+
+.ChooseApplyMethod-card{
+    width: 363px;
+    height: 463px;
+    border: 1px solid #F0F0F0;
+    border-radius: 10px;
+    filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.1));
+}
+
+
+
+@media(max-width:750px){
+
+.ChooseApplyMethod-wrapper{
+    min-height: 88vh;
+}
+
+
+}
