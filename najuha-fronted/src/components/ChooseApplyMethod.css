@@ -1,13 +1,41 @@
-
 /* Typography */
 
+.ChooseApplyMethod-card-top-title{
+    font-size: 2.4rem;
+}
+
+.ChooseApplyMethod-card-bottom button{
+    font-size: 2.2rem;
+    color: #4E82E6;
+}
+
+.ChooseApplyMethod-card-bottom-info{
+    color: #8C8C8C;
+    font-size: 1.4rem;
+}
 
 /* Layout */
 .ChooseApplyMethod-wrapper{
     margin: 0 auto;
 }
 
+.ChooseApplyMethod-card-middle li{
+    color: #505050;
+    font-size: 1.4rem;
+    letter-spacing: -0.12em;
+    /* line-height: 18px; */
+}
+
+.ChooseApplyMethod-card-bottom{
+    font-size: 1.4rem;
+    letter-spacing: -0.12em;
+}
+
 /* component */
+
+/* #ChooseApplyMethod-forshadows{
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.72));
+} */
 
 .ChooseApplyMethod-wrapper{
     min-height: 84vh;
@@ -21,7 +49,81 @@
     height: 463px;
     border: 1px solid #F0F0F0;
     border-radius: 10px;
-    filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.1));
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+    margin: 40px 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+
+.ChooseApplyMethod-card-top{
+    text-align: center;
+    position: relative;
+}
+
+.ChooseApplyMethod-card-top-title{
+    position: absolute;
+    display: block;
+    width: 116px;
+    left: 181.5px;
+    background-color: #FFFFFF;
+    transform: translate(-50%, -50%);
+    /* border: 10px solid #FFFFFF; */
+    filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, -0.1));
+}
+
+.ChooseApplyMethod-card-top img{
+    margin-top: 51px;
+    margin-bottom: 51px;
+}
+
+.ChooseApplyMethod-card-top::after{
+    content: ' ';
+    display: block;
+    width: 300px;
+    height: 1px;
+    position: absolute;
+    left: 31.5px;
+    background-color:#F0F0F0;
+}
+
+.ChooseApplyMethod-card-middle{
+    margin-top: 29px;
+    /* position: relative; */
+}
+
+
+.ChooseApplyMethod-card-middle li{
+    display: flex;
+    padding-left: 37px;
+    margin-bottom: 16px;
+}
+
+.ChooseApplyMethod-card-middle li img{
+    margin-right: 10px;
+}
+
+.ChooseApplyMethod-card-bottom{
+    text-align: center;
+    position: absolute;
+    width: 329px;
+    left: 17px;
+    bottom: 14px;
+}
+
+.ChooseApplyMethod-card-bottom button{
+    /* position: absolute; */
+    border: 1px solid #F1F1F1;
+    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    width: 329px;
+    height: 57px;
+    background: #FFFFFF;
+    /* left: 17px;
+    bottom: 42px; */
+}
+.ChooseApplyMethod-card-bottom p{
+    margin-top: 14px;
 }
 
 
