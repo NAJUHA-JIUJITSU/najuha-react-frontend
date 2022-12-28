@@ -7,8 +7,6 @@
     font-size: 62.5%; /* 10px */
   }
 
-
-
 /* Layout */
 
 .Profilesection_wrapper {
@@ -83,6 +81,13 @@
     background-color : #F0F0F0;
 }
 
+.Profilesection_competitonHr {
+    height:4px;
+    border:0;
+    background-color : #FBFBFB;
+    margin-bottom: 2rem;
+}
+
 #payInfoBtn {
     background-color: #F9F9F9;
     color: #7e7e7e;
@@ -98,6 +103,152 @@
 #payInfoBtn:hover {
     cursor: pointer;
     background-color: #E2E2E2;
+}
+
+/* 대회 리스트 목록 */
+.Profilesection_competitonList {
+    /* border : solid 1px red; */
+    padding: 4px;
+}
+
+.Profilesection_competitoninfo {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    color: #8C8C8C;
+    text-align: right;
+    padding: 0.4rem;
+    letter-spacing: -0.12rem;
+}
+
+/* 대회 박스 */
+
+.Profilesection_competitoninfo a {
+    margin-bottom: 1rem;
+}
+
+.Profilesection_competitoninfo img {
+    margin-left: 0.5rem;
+    margin-bottom: -1px;
+}
+
+.Profilesection_competitonbox {
+    border : solid 1px #ECECEC;
+    height: 16.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: -6rem;
+    border-radius: 10px;
+    display: flex;
+}
+
+.Profilesection_boxDelete {
+    margin-left: 96.5%;
+    margin-top: 1rem;
+}
+
+.Profilesection_boxLeft {
+    /* border : solid 1px red; */
+    width: 15%;
+    margin: 2rem;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.Profilesection_boxLeft img {
+    width: 100%;
+    height: 100%;
+}
+
+.Profilesection_posterBlack {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.34);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.Profilesection_boxLeft h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.8rem;
+    color: white;
+    letter-spacing: -0.2rem;
+    z-index: 10;
+}
+
+.Profilesection_boxRight {
+    /* border : solid 1px blue; */
+    width: 85%;
+    margin-bottom: 2rem;
+}
+
+.Profilesection_boxRightTitle {
+    padding-bottom: 0.4rem;
+    height: 65%;
+    align-items: center;
+    font-size: 1.4rem;
+    box-sizing: border-box;
+}
+
+.Profilesection_boxRightTitle span {
+    font-weight: 700;
+    margin-left: 0.2rem;
+}
+
+.Profilesection_boxRightTitle h4 {
+    padding-bottom: 1rem;
+}
+
+.Profilesection_boxRightTitle h3 {
+    margin-bottom: 1rem;
+    font-size: 2.4rem;
+}
+
+.Profilesection_boxRightTitle p {
+    color: #696969;
+}
+
+.Profilesection_boxRightCost {
+    display: flex;
+    margin-right: 2rem;
+    margin-bottom: 6rem;
+    box-sizing: border-box;
+}
+
+.Profilesection_costLayout {
+    display: flex;
+    align-items: flex-end;    
+    margin-left: auto;
+}
+
+.Profilesection_costLayout h3{
+    font-size: 1.4rem;
+    margin-right: -0.4rem;
+}
+
+.Profilesection_costLayout p{
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-left: 1rem;
+    margin-right: 0.8rem;
+}
+
+.Profilesection_costBtn {
+    width: 84px;
+    height: 37px;
+    border-radius: 30px;
+    border: 1px solid #F1F1F1;
+    text-align: center;
+    background: #FFFFFF;
+    color: #4E82E5;
+    font-weight: 400;
+    font-size: 1.6rem;
+    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 @media(max-width:1049px){
@@ -144,4 +295,56 @@
         font-size: 1.4rem;
         margin: 0 4px;
     }
+
+    .Profilesection_boxDelete {
+        margin-left: 92%;
+        margin-top: 1rem;
+    }
+
+    .Profilesection_competitonbox {
+        height: 125px;
+        margin-bottom: 0.6rem;
+    }
+
+    .Profilesection_boxLeft {
+        margin: 0rem;
+        width: 104px;
+        margin-right: 0.8rem;
+    }
+
+    .Profilesection_boxLeft h3 {
+        font-size: 2.4rem;
+    }
+
+    .Profilesection_boxRightTitle h4 {
+        font-size: 1.4rem;
+    }
+
+    .Profilesection_boxRightTitle h3 {
+        font-size: 2rem;
+    }
+
+    .Profilesection_boxRightTitle p {
+        font-size: 1.4rem;
+    }
+
+    .Profilesection_boxRightCost {
+        display: flex;
+        /* border: solid 1px red; */
+        margin-right: 0rem;
+        margin-bottom: 2rem;
+    }
+
+    .Profilesection_boxRightCost p{
+        font-size: 1.8rem;
+    }
+    .Profilesection_boxRightCost h3 {
+        font-size: 1.4rem;
+    }
+    .Profilesection_costBtn{
+        font-size: 1.8rem;
+        width: 80px;
+        height: 36px;
+    }
+
 }
