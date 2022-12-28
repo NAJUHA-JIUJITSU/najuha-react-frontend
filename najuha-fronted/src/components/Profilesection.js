@@ -80,7 +80,7 @@ function Profilesection() {
             let today = new Date();
             
             //날짜가 오늘을 기준으로 지났으면 안보여주기
-            if( today > new Date(curApplication.doreOpen) ) {
+            if( today > new Date(application.Competition.doreOpen) ) {
                 return ;
             }
             //단체신청이면 안보여주기
