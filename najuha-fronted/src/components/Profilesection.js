@@ -42,16 +42,17 @@ function Profilesection() {
         let today = new Date();
 
         let id = application.Competition.id;
-        let customerName = application.competitionPayment.customerName;
+        let host = application.Competition.host;
         let title = (application.Competition.title.length > 24) ? application.Competition.title.substr(0, 14) + '...' : application.Competition.title;
         let locations = application.Competition.location.split(' ');
         let location = locations[0];
         let amount = ( today > new Date(application.Competition.earlyBirdDeadline) ) ? application.expectedPrice.earlyBirdFalse : application.expectedPrice.earlyBirdTrue;
         let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
-        let postUrl = application.Competition.CompetitionPoster.imageUrl;
+        // let postUrl = application.Competition.CompetitionPoster.imageUrl;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
         let isGroup = application.isGroup;
+        let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
         // let divisionName = application.divisionName;
         // let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
         // let uniform = (application.uniform = "gi") ? '기-' : '노기-';
@@ -59,53 +60,67 @@ function Profilesection() {
       
         return {
             'id' : id,
-            'customerName' : customerName,
+            'host' : host,
             'title': title,
             'location': location,
             'amount' : amount, //위에서 오늘날짜랑 비교해서 얼리버드 할인 알아서 적용한 값
             'doreOpen': doreOpen,
             'registrationDeadline' : registrationDeadline, //false면 신청마감
-            'postUrl' : postUrl,
+            // 'postUrl' : postUrl,
             'isPayment': isPayment,
             'isGroup' : isGroup, //false 면 개인, true면 단체
+            'costMsg' : costMsg,
         }
     }
 
-    //실시간 대회
+    //실시간 대회 (개인신청)
     function renderCompetition(){
         return competitionApplications.map((application) => {
             let curApplication = applicationParsing(application);
             let today = new Date();
             
             //날짜가 오늘을 기준으로 지났으면 안보여주기
-            if( today > new Date(application.Competition.doreOpen)) {
+            if( today > new Date(curApplication.doreOpen) ) {
+                return ;
+            }
+            //단체신청이면 안보여주기
+            if( curApplication.isGroup ) {
                 return ;
             }
             return(
-                <tbody>
-                        <tr className='Profilesection_PcTable'>
-                            <td>{curApplication.doreOpen}</td>
-                            <td>{curApplication.location}</td>
-                            <td>{curApplication.title}</td>
-                            <td>{curApplication.divisionName}</td>
-                            <td>{curApplication.belt}</td>
-                            <td>{curApplication.weight}</td>
-                            <td>{curApplication.isPayment}</td>
-                            <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
-                        </tr>
-                        <tr className='Profilesection_MobileTable'>
-                            <td><div id='Profilesection_tableDate'><p>{curApplication.doreOpen}</p></div></td>
-                            <td>{curApplication.location}</td>
-                            <td>{curApplication.title}</td>
-                            <td>{curApplication.divisionName}</td>
-                        </tr>
-                        <tr className='Profilesection_MobileTable Profilesection_odd'>
-                            <td>{curApplication.belt}</td>
-                            <td>{curApplication.weight}</td>
-                            <td>{curApplication.isPayment}</td>
-                            <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
-                        </tr>
-                </tbody>
+                <div>
+                    <div>
+                        <div className='Profilesection_competitoninfo'>
+                            <a>대회신청내역 상세보기</a>
+                            <img src='Assets/rightArrow.svg' alt='이동 화살표'></img>
+                        </div>
+                        <div className= 'Profilesection_competitonbox'>
+                            <div className= 'Profilesection_boxLeft'>
+                                <img src='Assets/samplePoster.png' alt='대회포스터'></img>
+                                <p className= 'Profilesection_posterBlack'></p>
+                                <h3>{curApplication.doreOpen}</h3>
+                            </div>
+                            <div className= 'Profilesection_boxRight'>
+                                <img src='Assets/x.svg' alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
+                                <div className= 'Profilesection_boxRightTitle'>
+                                    <h4>신청인<span>{curApplication.host}</span></h4>
+                                    <h3>{curApplication.title}</h3>
+                                    <p>{curApplication.location}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className= 'Profilesection_boxRightCost'>
+                            <div className= 'Profilesection_costLayout'>
+                                <h3>{curApplication.costMsg}</h3>
+                                <p>{curApplication.amount}</p>
+                                <button className= 'Profilesection_costBtn'>{curApplication.isPayment}</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr className='Profilesection_competitonHr'/>
+                </div>
+               
             )
         })
     }
@@ -191,64 +206,37 @@ function Profilesection() {
                 <hr className='Profilesection_hr'/>
                 <div className='Profilesection_competitonList'>
                     <div>
-                        <div className='Profilesection_competitoninfo'>
-                            <a>대회신청내역 상세보기</a>
-                            <img src='Assets/rightArrow.svg' alt='이동 화살표'></img>
-                        </div>
-                        <div className= 'Profilesection_competitonbox'>
-                            <div className= 'Profilesection_boxLeft'>
-                                <img src='Assets/samplePoster.png' alt='대회포스터'></img>
-                                <p className= 'Profilesection_posterBlack'></p>
-                                <h3>08.27(월)</h3>
+                        <div>
+                            <div className='Profilesection_competitoninfo'>
+                                <a>대회신청내역 상세보기</a>
+                                <img src='Assets/rightArrow.svg' alt='이동 화살표'></img>
                             </div>
-                            <div className= 'Profilesection_boxRight'>
-                                <img src='Assets/x.svg' alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
-                                <div className= 'Profilesection_boxRightTitle'>
-                                    <h4>신청인<span>유연아</span></h4>
-                                    <h3>인천시 회장배 주짓수 대회</h3>
-                                    <p>송도, 글로벌캠퍼스</p>
+                            <div className= 'Profilesection_competitonbox'>
+                                <div className= 'Profilesection_boxLeft'>
+                                    <img src='Assets/samplePoster.png' alt='대회포스터'></img>
+                                    <p className= 'Profilesection_posterBlack'></p>
+                                    <h3>08.27(월)</h3>
+                                </div>
+                                <div className= 'Profilesection_boxRight'>
+                                    <img src='Assets/x.svg' alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
+                                    <div className= 'Profilesection_boxRightTitle'>
+                                        <h4>신청인<span>유연아</span></h4>
+                                        <h3>인천시 회장배 주짓수 대회</h3>
+                                        <p>송도, 글로벌캠퍼스</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className= 'Profilesection_boxRightCost'>
+                                <div className= 'Profilesection_costLayout'>
+                                    <h3>예상 결제금액</h3>
+                                    <p>50,000원</p>
+                                    <button className= 'Profilesection_costBtn'>결제하기</button>
                                 </div>
                             </div>
                         </div>
-                        <div className= 'Profilesection_boxRightCost'>
-                            <div className= 'Profilesection_costLayout'>
-                                <h3>예상 결제금액</h3>
-                                <p>50,000원</p>
-                                <button className= 'Profilesection_costBtn'>결제하기</button>
-                            </div>
-                        </div>
+                        <hr className='Profilesection_competitonHr'/>
                     </div>
-                    
-                    <hr className='Profilesection_competitonHr'/>
-
-                    <div>
-                        <div className='Profilesection_competitoninfo'>
-                            <a>대회신청내역 상세보기</a>
-                            <img src='Assets/rightArrow.svg' alt='이동 화살표'></img>
-                        </div>
-                        <div className= 'Profilesection_competitonbox'>
-                            <div className= 'Profilesection_boxLeft'>
-                                <img src='Assets/samplePoster.png' alt='대회포스터'></img>
-                                <p className= 'Profilesection_posterBlack'></p>
-                                <h3>08.27(월)</h3>
-                            </div>
-                            <div className= 'Profilesection_boxRight'>
-                                <img src='Assets/x.svg' alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
-                                <div className= 'Profilesection_boxRightTitle'>
-                                    <h4>신청인<span>유연아</span></h4>
-                                    <h3>인천시 회장배 주짓수 대회</h3>
-                                    <p>송도, 글로벌캠퍼스</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className= 'Profilesection_boxRightCost'>
-                            <div className= 'Profilesection_costLayout'>
-                                <h3>예상 결제금액</h3>
-                                <p>50,000원</p>
-                                <button className= 'Profilesection_costBtn'>결제하기</button>
-                            </div>
-                        </div>
-                    </div>
+                    {renderCompetition()}
                 </div>
             </section>
         </div>
