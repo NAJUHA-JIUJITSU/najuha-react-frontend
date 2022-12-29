@@ -147,7 +147,7 @@ function Competitionlist() {
                             <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDeadline}({curcompetition.registrationDeadlineDay})</h4>
                             <div class='each-competition-bottom-buttons'>
                                 <button>세부정보</button>
-                                <button onClick={()=>{navigate(`/competition/apply/${curcompetition.id}`)}}>신청</button>
+                                <button onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>신청</button>
                             </div>
                         </div> 
                     </div>

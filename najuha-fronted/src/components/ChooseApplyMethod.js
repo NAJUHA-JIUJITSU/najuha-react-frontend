@@ -5,7 +5,13 @@ import teamicon from '../src_assets/단체 아이콘.svg'
 import checkicon from '../src_assets/파란색체크아이콘.svg'
 import xicon from '../src_assets/빨간엑스아이콘.svg'
 
+import {useParams, useNavigate} from 'react-router-dom';
+
 function ChooseApplyMethod() {
+    const {id} = useParams();
+    const navigate = useNavigate();
+
+    
   return (
     <div className='ChooseApplyMethod-wrapper'>
         <div className='ChooseApplyMethod-card' id='ChooseApplyMethod-forshadows'>
@@ -21,7 +27,7 @@ function ChooseApplyMethod() {
                 </ul>    
             </div>
             <div className='ChooseApplyMethod-card-bottom'>
-                    <button>개인 신청하기</button>
+                    <button onClick={() => {navigate(`/competition/apply/${id}`)}}>개인 신청하기</button>
                     <p className='ChooseApplyMethod-card-bottom-info'>ex) 선수 개인이 1개 이상의 부문에 신청을 하는 경우</p>
             </div>
         </div>
@@ -40,7 +46,7 @@ function ChooseApplyMethod() {
                 </ul>    
             </div>
             <div className='ChooseApplyMethod-card-bottom'>
-                    <button>단체 신청하기</button>
+                    <button onClick={() => {navigate(`/competition/applyteam/${id}`)}}>단체 신청하기</button>
                     <p className='ChooseApplyMethod-card-bottom-info'>ex) 체육관 관장님이  본인의 관원들을 단체로 대리 신청하는 경우</p>
             </div>
         </div>
