@@ -16,6 +16,8 @@ import Auth from './hoc/auth'
 import CompetitionApplyPage from './pages/CompetitionApplyPage'
 import TossSuccess from './components/Tosssuccess'
 import CompetitionApplyMethodPage from './pages/CompetitionApplyMethodPage'
+import PaymentSuccessPage from './pages/PaymentSuccessPage'
+import PaymentFailPage from './pages/PaymentFailPage'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -33,6 +35,8 @@ function App() {
   const AuthRedirect = Auth(Redirect, null)
   const Authkakao = Auth(KakaoLogin, null)
   const AuthoCompetitionApplyMethodPage = Auth(CompetitionApplyMethodPage, true);
+  const AuthPaymentSuccessPage = Auth(PaymentSuccessPage, true)
+  const AuthPaymentFailPage = Auth(PaymentFailPage, true)
 
   return (
     <React.Fragment>
@@ -52,6 +56,8 @@ function App() {
         <Route path="/redirect" element={<AuthRedirect/>} />
         <Route path="/oauth/callback/kakao" element={<Authkakao/>} />
         <Route path="/toss/success" element={<TossSuccess/>} />
+        <Route path="/payment/success" element={<AuthPaymentSuccessPage/>} />
+        <Route path="/payment/fail" element={<AuthPaymentFailPage/>} />
       </Routes>
     </BrowserRouter>
     </React.Fragment>
