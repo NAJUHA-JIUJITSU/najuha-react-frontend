@@ -45,7 +45,8 @@
 }
 
 .company-menu-list li{
-    padding: 0 2em
+    padding: 0 2em;
+    position: relative;
 }
 
 
@@ -63,6 +64,21 @@
     padding: 0.2em 0;
 }
 
+.company-menu-list li::after{
+    content: ' ';
+    display: inline-block;
+    width: 1.5px;
+    height: 100%;
+    background-color: #888888;
+    position: absolute;
+    right: 0;
+    bottom: 1px
+}
+
+#company-menu-list-last::after{
+    display: none;
+}
+
 
 @media(max-width:1049px){
     /* Typography */
@@ -71,8 +87,15 @@
 
     /* Layout */
 
+    .company-menu{
+        width: 100%;
+        /* border: 2px solid green; */
+    }
+
     .company-menu-list li{
-        padding: 0 3em;
+        width: 20%;
+        text-align: center;
+
     }
 
     .footer-wrapper {
@@ -97,20 +120,34 @@
 @media(max-width:750px){
     /* Typography */
     .company-menu-list{
-        font-size: 0.4rem;
-        color: #888888;
+        font-size: 1rem;
+        color: #444444;
+        letter-spacing: -0.1em;
     }
 
 
     /* Layout */
 
-    .company-menu-list li{
-        padding: 0 1em;
-    }
+
     .footer-wrapper {
-        max-width: 650px; 
+        max-width: none;
+        width: 100%;
         margin: 2vh auto;
+        padding: 0;
     }
+
+    .company-menu{
+        width: auto;
+        /* border: 2px solid green; */
+        margin: 0 auto;
+    }
+
+    .company-menu-list li{
+        width: auto;
+        text-align: center;
+        padding: 0 10px;
+    }
+
     .footer-info{
         display: none;
     }
