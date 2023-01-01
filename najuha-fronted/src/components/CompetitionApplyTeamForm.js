@@ -10,6 +10,7 @@ import { Cookies } from 'react-cookie';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 
 import Paymentmodal from './Paymentmodal'
+import Paymentbridgemodal from './Paymentbridgemodal'
 
 function CompetitionApplyTeamForm() {
     const {id} = useParams();
@@ -20,6 +21,7 @@ function CompetitionApplyTeamForm() {
     const [beltDropdown, setBeltDropdown] = useState(false)
     const [weightDropdown, setWeightDropdown] = useState(false)
     const [paymentmodal, setPaymentmodal] = useState(false);
+    const [paymentbridgemodal, setPaymentbridgemodal] = useState(false);
 
     const [normalPrice, setNormalPrice] = useState(0)
     const [discountedPrice, setDiscountedPrice] = useState(0)
@@ -583,10 +585,15 @@ function CompetitionApplyTeamForm() {
             }}>저장하기</button>
             <button id='CompetitionApplyTeamForm-bottom-table-buttons-register' onClick={() => {
               postCompetitionApply()
-              setPaymentmodal(pre => !pre);
+              setPaymentbridgemodal(pre => !pre);
             }}>신청하기</button>
           </div>
         </div>
+        {
+                paymentbridgemodal && (
+                    <Paymentbridgemodal closeModal={() => setPaymentbridgemodal(pre => !pre)} openNextModal={() => setPaymentmodal(pre => !pre)} />
+                )
+        }
         {
                 paymentmodal && (
                     <Paymentmodal closeModal={() => setPaymentmodal(pre => !pre)} paymentmethod={paymentmethod} setPaymentmethod={setPaymentmethod} easypaymethod={easypaymethod} setEasypaymethod={setEasypaymethod} discountedprice={discountedPrice} normalprice={normalPrice} tossPay={tossPay}/>
