@@ -12,6 +12,7 @@ function Profilesection() {
     const [competitionApplications, setCompetitionApplications] = useState([]); //유저 신청 대회 가져오기
     const [isFullListedNow, setisFullListedNow] = useState(false);
     const [isFullListedLast, setisFullListedLast] = useState(false);
+    const [clickedList, setclickedList] = useState('person');
     const cookies = new Cookies();
     const xAccessToken = cookies.get("x-access-token");
     const { decodedToken, isExpired } = useJwt(xAccessToken);
@@ -37,17 +38,29 @@ function Profilesection() {
         return ;
     }
 
+    //요일 값 구하기
+    function getDayOfWeek(날짜문자열){ //ex) getDayOfWeek('2022-06-13')
+
+        const week = ['일', '월', '화', '수', '목', '금', '토'];
+    
+        const dayOfWeek = week[new Date(날짜문자열).getDay()];
+    
+        return dayOfWeek;
+    
+    }
+
     //신청대회 데이터 파싱
     function applicationParsing(application){
         let today = new Date();
 
         let id = application.Competition.id;
         let host = application.Competition.host;
-        let title = (application.Competition.title.length > 24) ? application.Competition.title.substr(0, 14) + '...' : application.Competition.title;
+        let title = (application.Competition.title.length > 44) ? application.Competition.title.substr(0, 24) + '...' : application.Competition.title;
         let locations = application.Competition.location.split(' ');
         let location = locations[0];
         let amount = ( today > new Date(application.Competition.earlyBirdDeadline) ) ? application.expectedPrice.earlyBirdFalse : application.expectedPrice.earlyBirdTrue;
         let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
+        let day = getDayOfWeek(application.Competition.doreOpen);
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
         // let postUrl = application.Competition.CompetitionPoster.imageUrl;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
@@ -65,9 +78,10 @@ function Profilesection() {
             'location': location,
             'amount' : amount, //위에서 오늘날짜랑 비교해서 얼리버드 할인 알아서 적용한 값
             'doreOpen': doreOpen,
+            'day' : day,
             'registrationDeadline' : registrationDeadline, //false면 신청마감
             // 'postUrl' : postUrl,
-            'isPayment': isPayment,
+            'isPayment': ( registrationDeadline ) ? isPayment : '신청마감',
             'isGroup' : isGroup, //false 면 개인, true면 단체
             'costMsg' : costMsg,
         }
@@ -79,14 +93,34 @@ function Profilesection() {
             let curApplication = applicationParsing(application);
             let today = new Date();
             
-            //날짜가 오늘을 기준으로 지났으면 안보여주기
-            if( today > new Date(application.Competition.doreOpen) ) {
-                return ;
+            if(clickedList == 'person') {
+                //날짜가 오늘을 기준으로 지났으면 안보여주기
+                if( today > new Date(application.Competition.doreOpen) ) {
+                    return ;
+                }
+                //단체신청이면 안보여주기
+                if( curApplication.isGroup ) {
+                    return ;
+                }
             }
-            //단체신청이면 안보여주기
-            if( curApplication.isGroup ) {
-                return ;
+            if(clickedList == 'group') {
+                //날짜가 오늘을 기준으로 지났으면 안보여주기(오늘은 보여줌)
+                if( today >= new Date(application.Competition.doreOpen) ) {
+                    return ;
+                }
+                //개인신청이면 안보여주기
+                if( !curApplication.isGroup ) {
+                    return ;
+                }
             }
+
+            if(clickedList == 'last') {
+                //날짜가 오늘을 기준으로 안지났으면 안보여주기
+                if( today < new Date(application.Competition.doreOpen) ) {
+                    return ;
+                }
+            }
+
             return(
                 <div>
                     <div>
@@ -98,7 +132,7 @@ function Profilesection() {
                             <div className= 'Profilesection_boxLeft'>
                                 <img src='Assets/samplePoster.png' alt='대회포스터'></img>
                                 <p className= 'Profilesection_posterBlack'></p>
-                                <h3>{curApplication.doreOpen}</h3>
+                                <h3>{curApplication.doreOpen}({curApplication.day})</h3>
                             </div>
                             <div className= 'Profilesection_boxRight'>
                                 <img src='Assets/x.svg' alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
@@ -169,8 +203,9 @@ function Profilesection() {
     }
 
     //탭 클릭
-    function isClicked() {
-
+    function isClicked(list) {
+        setclickedList(list)
+        console.log(clickedList)
     }
 
     function ChangeIsFullListedNow() {
@@ -199,9 +234,9 @@ function Profilesection() {
             <section className='Profilesection_right'>
                 <h2>대회신청 목록</h2>
                 <ul className='Profilesection_competitonNav'>
-                    <li className='Profilesection_active'>개인 신청</li>
-                    <li>단체 신청</li>
-                    <li>지난 대회</li>
+                    <li className='Profilesection_active' onClick={() => isClicked('person')}>개인 신청</li>
+                    <li onClick={() => isClicked('group')}>단체 신청</li>
+                    <li onClick={() => isClicked('last')}>지난 대회</li>
                 </ul>
                 <hr className='Profilesection_hr'/>
                 <div className='Profilesection_competitonList'>
