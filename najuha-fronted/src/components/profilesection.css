@@ -106,6 +106,10 @@
 }
 
 /* 대회 리스트 목록 */
+.Profilesection_competitonNav:hover {
+    cursor: pointer;
+}
+
 .Profilesection_competitonList {
     /* border : solid 1px red; */
     padding: 4px;

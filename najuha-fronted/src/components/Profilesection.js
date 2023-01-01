@@ -10,9 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 function Profilesection() {
     const [competitionApplications, setCompetitionApplications] = useState([]); //유저 신청 대회 가져오기
-    const [isFullListedNow, setisFullListedNow] = useState(false);
-    const [isFullListedLast, setisFullListedLast] = useState(false);
     const [clickedList, setclickedList] = useState('person');
+    const [active, setActive] = useState(['Profilesection_active', '', '']);
     const cookies = new Cookies();
     const xAccessToken = cookies.get("x-access-token");
     const { decodedToken, isExpired } = useJwt(xAccessToken);
@@ -87,7 +86,7 @@ function Profilesection() {
         }
     }
 
-    //실시간 대회 (개인신청)
+    //실시간 대회 렌더
     function renderCompetition(){
         return competitionApplications.map((application) => {
             let curApplication = applicationParsing(application);
@@ -159,61 +158,13 @@ function Profilesection() {
         })
     }
 
-    //지난 대회
-    function renderLastCompetition(){
-        let cnt = 0;
-        return competitionApplications.map((application) => {
-            let curApplication = applicationParsing(application);
-            let today = new Date();
-            if( today < new Date(application.Competition.doreOpen)) {
-                return ;
-            }
-            cnt++;
-            if(!isFullListedLast && cnt>3) {
-                return ;
-            }
-            return(
-                <tbody>
-                        <tr className='Profilesection_PcTable'>
-                            <td>{curApplication.doreOpen}</td>
-                            <td>{curApplication.location}</td>
-                            <td>{curApplication.title}</td>
-                            <td>{curApplication.divisionName}</td>
-                            <td>{curApplication.belt}</td>
-                            <td>{curApplication.weight}</td>
-                            <td>{curApplication.isPayment}</td>
-                            <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
-                        </tr>
-                        <tr className='Profilesection_MobileTable'>
-                            <td><div id='Profilesection_tableDate'><p>{curApplication.doreOpen}</p></div></td>
-                            <td>{curApplication.location}</td>
-                            <td>{curApplication.title}</td>
-                            <td>{curApplication.divisionName}</td>
-                        </tr>
-                        <tr className='Profilesection_MobileTable Profilesection_odd'>
-                            <td>{curApplication.belt}</td>
-                            <td>{curApplication.weight}</td>
-                            <td>{curApplication.isPayment}</td>
-                            <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
-                        </tr>
-                </tbody>
-            )
-
-        })
-    }
-
     //탭 클릭
-    function isClicked(list) {
-        setclickedList(list)
-        console.log(clickedList)
-    }
-
-    function ChangeIsFullListedNow() {
-        setisFullListedNow(!isFullListedNow);
-    }
-
-    function ChangeIsFullListedLast() {
-        setisFullListedLast(!isFullListedLast);
+    function isClicked(list, i) {
+        let reset = ['', '', ''];
+        reset[i] = 'Profilesection_active';
+        setActive(reset);
+        setclickedList(list);
+        console.log(clickedList);
     }
 
     useEffect(() => {
@@ -234,9 +185,9 @@ function Profilesection() {
             <section className='Profilesection_right'>
                 <h2>대회신청 목록</h2>
                 <ul className='Profilesection_competitonNav'>
-                    <li className='Profilesection_active' onClick={() => isClicked('person')}>개인 신청</li>
-                    <li onClick={() => isClicked('group')}>단체 신청</li>
-                    <li onClick={() => isClicked('last')}>지난 대회</li>
+                    <li className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
+                    <li className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
+                    <li className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
                 </ul>
                 <hr className='Profilesection_hr'/>
                 <div className='Profilesection_competitonList'>
