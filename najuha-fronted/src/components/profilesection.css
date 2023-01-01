@@ -88,23 +88,6 @@
     margin-bottom: 2rem;
 }
 
-#payInfoBtn {
-    background-color: #F9F9F9;
-    color: #7e7e7e;
-    border: 1px solid #E2E2E2;
-    border-radius: 4px;
-    box-sizing: border-box;
-    width: 7.2rem;
-    height: 3.4rem;
-    font-size: 1.6rem;
-    margin: 0 4px;
-}
-
-#payInfoBtn:hover {
-    cursor: pointer;
-    background-color: #E2E2E2;
-}
-
 /* 대회 리스트 목록 */
 .Profilesection_competitonNav:hover {
     cursor: pointer;
@@ -189,9 +172,13 @@
     /* border : solid 1px blue; */
     width: 85%;
     margin-bottom: 2rem;
+    letter-spacing: -0.1rem;
+
+    overflow: hidden; 
 }
 
 .Profilesection_boxRightTitle {
+    width: 98%;
     padding-bottom: 0.4rem;
     height: 65%;
     align-items: center;
@@ -211,6 +198,15 @@
 .Profilesection_boxRightTitle h3 {
     margin-bottom: 1rem;
     font-size: 2.4rem;
+
+    height: 1.9em;
+
+    display: block;
+    /* white-space: normal; */
+    white-space: nowrap;
+    line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .Profilesection_boxRightTitle p {
@@ -225,6 +221,7 @@
 }
 
 .Profilesection_costLayout {
+    color: #8C8C8C;
     display: flex;
     align-items: flex-end;    
     margin-left: auto;
@@ -249,10 +246,18 @@
     border: 1px solid #F1F1F1;
     text-align: center;
     background: #FFFFFF;
-    color: #4E82E5;
+    color: #8C8C8C;
     font-weight: 400;
     font-size: 1.6rem;
     box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* 결제하기 금액 + 버튼 효과 */
+.Profilesection_payCss {
+    color: #000000;
+}
+.Profilesection_payCss .Profilesection_costBtn{
+    color: #4E82E5;
 }
 
 @media(max-width:1049px){
@@ -293,11 +298,8 @@
         padding-top: 1rem;
         padding-bottom: 4rem;
     }
-    #payInfoBtn {
-        width: 8rem;
-        height: 3.2rem;
-        font-size: 1.4rem;
-        margin: 0 4px;
+    .Profilesection_competitonNav li:after {
+        width: 90px;
     }
 
     .Profilesection_boxDelete {
@@ -326,6 +328,7 @@
 
     .Profilesection_boxRightTitle h3 {
         font-size: 2rem;
+        height: 1.4em;
     }
 
     .Profilesection_boxRightTitle p {

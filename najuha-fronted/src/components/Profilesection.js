@@ -65,6 +65,7 @@ function Profilesection() {
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
         let isGroup = application.isGroup;
         let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
+        let payCss = (isPayment == '결제하기' && registrationDeadline == true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
         // let divisionName = application.divisionName;
         // let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
         // let uniform = (application.uniform = "gi") ? '기-' : '노기-';
@@ -83,6 +84,7 @@ function Profilesection() {
             'isPayment': ( registrationDeadline ) ? isPayment : '신청마감',
             'isGroup' : isGroup, //false 면 개인, true면 단체
             'costMsg' : costMsg,
+            'payCss' : payCss,
         }
     }
 
@@ -137,13 +139,14 @@ function Profilesection() {
                                 <img src='Assets/x.svg' alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
                                 <div className= 'Profilesection_boxRightTitle'>
                                     <h4>신청인<span>{curApplication.host}</span></h4>
-                                    <h3>{curApplication.title}</h3>
+                                    {/* <h3>{curApplication.title}</h3> */}
+                                    <h3>엄청나게 긴긴긴긴긴 대회이름 엄청 길어서 몇줄이 될 지는 모르겠다 너무 길다아아아</h3>
                                     <p>{curApplication.location}</p>
                                 </div>
                             </div>
                         </div>
                         <div className= 'Profilesection_boxRightCost'>
-                            <div className= 'Profilesection_costLayout'>
+                            <div className={curApplication.payCss}>
                                 <h3>{curApplication.costMsg}</h3>
                                 <p>{curApplication.amount}</p>
                                 <button className= 'Profilesection_costBtn'>{curApplication.isPayment}</button>
