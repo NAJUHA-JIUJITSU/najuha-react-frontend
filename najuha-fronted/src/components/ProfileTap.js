@@ -83,9 +83,9 @@ function ProfileTap() {
             <div className='ProfileTap_welcome-center'>
                 <p><span className='ProfileTap_welcome-center-username'>{username}</span>님<br></br>
                 안녕하세요</p>
-                <div className='ProfileTap_welcome-center-btn'>
+                {/* <div className='ProfileTap_welcome-center-btn'>
                     <p>내 프로필 관리<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
-                </div>
+                </div> */}
             </div>
         </div>
         <div className='ProfileTap_competitionCount'>
