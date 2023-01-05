@@ -26,8 +26,9 @@
 
 .ProfileTap_competitionCount {
     /* border: 1px solid green; */
-    height: 30%;
+    height: 20%;
     display: flex;
+    align-items: center;
 }
 
 .ProfileTap_information {
@@ -79,13 +80,16 @@
 
 .ProfileTap_competitionCount-box {
     background-color: #E7F3FF;
-    margin: auto 16px auto 0;
-    height: 60%;
-    width: 45%;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 80%;
+    width: 48%;
     box-sizing: border-box;
     position: relative;
 }
-
+.nowCnt{
+    margin-right: auto;
+}
 .totalCnt{
     background-color: #EEEAFF;
 }
