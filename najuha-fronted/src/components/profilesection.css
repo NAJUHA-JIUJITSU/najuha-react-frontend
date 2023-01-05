@@ -200,7 +200,6 @@
     font-size: 2.4rem;
 
     height: 1.9em;
-
     display: block;
     /* white-space: normal; */
     white-space: nowrap;
@@ -223,7 +222,7 @@
 .Profilesection_costLayout {
     color: #8C8C8C;
     display: flex;
-    align-items: flex-end;    
+    align-items: flex-end;
     margin-left: auto;
 }
 

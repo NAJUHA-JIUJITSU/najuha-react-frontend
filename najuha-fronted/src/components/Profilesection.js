@@ -61,7 +61,7 @@ function Profilesection() {
         let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
         let day = getDayOfWeek(application.Competition.doreOpen);
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
-        // let postUrl = application.Competition.CompetitionPoster.imageUrl;
+        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : 'Assets/samplePoster.png';
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
         let isGroup = application.isGroup;
         let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
@@ -80,11 +80,11 @@ function Profilesection() {
             'doreOpen': doreOpen,
             'day' : day,
             'registrationDeadline' : registrationDeadline, //false면 신청마감
-            // 'postUrl' : postUrl,
             'isPayment': ( registrationDeadline ) ? isPayment : '신청마감',
             'isGroup' : isGroup, //false 면 개인, true면 단체
             'costMsg' : costMsg,
             'payCss' : payCss,
+            'postUrl' : postUrl,
         }
     }
 
@@ -131,7 +131,7 @@ function Profilesection() {
                         </div>
                         <div className= 'Profilesection_competitonbox'>
                             <div className= 'Profilesection_boxLeft'>
-                                <img src='Assets/samplePoster.png' alt='대회포스터'></img>
+                                <img src={curApplication.postUrl} alt='대회포스터'></img>
                                 <p className= 'Profilesection_posterBlack'></p>
                                 <h3>{curApplication.doreOpen}({curApplication.day})</h3>
                             </div>
@@ -139,8 +139,7 @@ function Profilesection() {
                                 <img src='Assets/x.svg' alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
                                 <div className= 'Profilesection_boxRightTitle'>
                                     <h4>신청인<span>{curApplication.host}</span></h4>
-                                    {/* <h3>{curApplication.title}</h3> */}
-                                    <h3>엄청나게 긴긴긴긴긴 대회이름 엄청 길어서 몇줄이 될 지는 모르겠다 너무 길다아아아</h3>
+                                    <h3>{curApplication.title}</h3>
                                     <p>{curApplication.location}</p>
                                 </div>
                             </div>
@@ -194,37 +193,6 @@ function Profilesection() {
                 </ul>
                 <hr className='Profilesection_hr'/>
                 <div className='Profilesection_competitonList'>
-                    <div>
-                        <div>
-                            <div className='Profilesection_competitoninfo'>
-                                <a>대회신청내역 상세보기</a>
-                                <img src='Assets/rightArrow.svg' alt='이동 화살표'></img>
-                            </div>
-                            <div className= 'Profilesection_competitonbox'>
-                                <div className= 'Profilesection_boxLeft'>
-                                    <img src='Assets/samplePoster.png' alt='대회포스터'></img>
-                                    <p className= 'Profilesection_posterBlack'></p>
-                                    <h3>08.27(월)</h3>
-                                </div>
-                                <div className= 'Profilesection_boxRight'>
-                                    <img src='Assets/x.svg' alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
-                                    <div className= 'Profilesection_boxRightTitle'>
-                                        <h4>신청인<span>유연아</span></h4>
-                                        <h3>인천시 회장배 주짓수 대회</h3>
-                                        <p>송도, 글로벌캠퍼스</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className= 'Profilesection_boxRightCost'>
-                                <div className= 'Profilesection_costLayout'>
-                                    <h3>예상 결제금액</h3>
-                                    <p>50,000원</p>
-                                    <button className= 'Profilesection_costBtn'>결제하기</button>
-                                </div>
-                            </div>
-                        </div>
-                        <hr className='Profilesection_competitonHr'/>
-                    </div>
                     {renderCompetition()}
                 </div>
             </section>
