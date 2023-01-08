@@ -18,6 +18,7 @@ import TossSuccess from './components/Tosssuccess'
 import CompetitionApplyMethodPage from './pages/CompetitionApplyMethodPage'
 import PaymentSuccessPage from './pages/PaymentSuccessPage'
 import PaymentFailPage from './pages/PaymentFailPage'
+import CompetitionPage from './pages/CompetitionPage'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -25,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const AuthMainpage = Auth(Mainpage, null)
   const AuthCompetitionSchedule = Auth(CompetitionSchedule, null)
+  const AuthCompetitionPage = Auth(CompetitionPage, null);
   const AuthCompetitionApplyPage = Auth(CompetitionApplyPage, true);
   const AuthCompetitionApplyTeamPage = Auth(CompetitionApplyTeamPage, true);
   const AuthAdmincompetition = Auth(Admincompetition, true, true)
@@ -38,6 +40,7 @@ function App() {
   const AuthPaymentSuccessPage = Auth(PaymentSuccessPage, true)
   const AuthPaymentFailPage = Auth(PaymentFailPage, true)
 
+
   return (
     <React.Fragment>
     <GlobalStyle />  
@@ -45,6 +48,7 @@ function App() {
       <Routes>
         <Route path = '/' element={<AuthMainpage/>} />
         <Route path = '/competition' element={<AuthCompetitionSchedule/>} />
+        <Route path = '/competition/:id' element={<AuthCompetitionPage/>} />
         <Route path = '/competition/applymethod/:id' element={<AuthoCompetitionApplyMethodPage/>} />
         <Route path = '/competition/apply/:id' element={<AuthCompetitionApplyPage/>} />
         <Route path = '/competition/applyteam/:id' element={<AuthCompetitionApplyTeamPage/>} />
