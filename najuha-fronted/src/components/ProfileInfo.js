@@ -26,7 +26,8 @@ function ProfileInfo() {
         })
         .then((res) => {
             console.log('불러온 데이터: ' + res.data.result);
-            setcompetitionApplicationInfo(res.data.result);
+            setcompetitionApplicationInfo(applicationParsing(res.data.result));
+            console.log('파싱한 데이터: ' + competitionApplicationInfo)
             console.log(res.data.message);
         })
         .catch((err) => {
@@ -47,43 +48,73 @@ function ProfileInfo() {
         return dayOfWeek;
     
     }
+
+    function autoHypenPhone(str){
+        let tmp = '';
+        if( str.length < 4){
+            return str;
+        }else if(str.length < 7){
+            tmp += str.substr(0, 3);
+            tmp += '-';
+            tmp += str.substr(3);
+            return tmp;
+        }else if(str.length < 11){
+            tmp += str.substr(0, 3);
+            tmp += '-';
+            tmp += str.substr(3, 3);
+            tmp += '-';
+            tmp += str.substr(6);
+            return tmp;
+        }else{              
+            tmp += str.substr(0, 3);
+            tmp += '-';
+            tmp += str.substr(3, 4);
+            tmp += '-';
+            tmp += str.substr(7);
+            return tmp;
+        }
+    
+        return str;
+  }
+    
      //신청대회 데이터 파싱
     function applicationParsing(application){
-        let today = new Date();
+        let title =  application.Competition.title;
 
-        let id = application.id;
-        let host = application.Competition.host;
-        let title = (application.Competition.title.length > 44) ? application.Competition.title.substr(0, 24) + '...' : application.Competition.title;
-        let locations = application.Competition.location.split(' ');
-        let location = locations[0];
-        let amount = ( today > new Date(application.Competition.earlyBirdDeadline) ) ? application.expectedPrice.earlyBirdFalse : application.expectedPrice.earlyBirdTrue;
-        let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
-        let day = getDayOfWeek(application.Competition.doreOpen);
-        let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
         let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : 'Assets/samplePoster.png';
-        let isPayment = application.isPayment ? '결제완료' : '결제하기';
-        let isGroup = application.isGroup;
-        let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
-        let payCss = (isPayment == '결제하기' && registrationDeadline == true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
-        // let divisionName = application.divisionName;
-        // let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
-        // let uniform = (application.uniform = "gi") ? '기-' : '노기-';
-        // let weight = application.weight + 'kg';
+        let doreOpen = application.Competition.doreOpen.substr(0,9).replace('-','.').replace('-','.');
+        let doreOpenDay = getDayOfWeek(application.Competition.doreOpen);
+        let location = application.Competition.location;
+        let earlyBirdDeadline = application.Competition.earlyBirdDeadline.substr(0,9).replace('-','.').replace('-','.');
+        let earlyBirdDeadlineDay = getDayOfWeek(application.Competition.earlyBirdDeadline);
+        let registrationDeadline = application.Competition.registrationDeadline.substr(0,9).replace('-','.').replace('-','.');
+        let registrationDeadlineDay = getDayOfWeek(application.Competition.registrationDeadline);
+        let applicantTableOpenDate = application.Competition.applicantTableOpenDate.substr(0,9).replace('-','.').replace('-','.');
+        let applicantTableOpenDateDay = getDayOfWeek(application.Competition.applicantTableOpenDate);
+        let tournamentTableOpenDate = application.Competition.tournamentTableOpenDate.substr(0,9).replace('-','.').replace('-','.');
+        let tournamentTableOpenDateDay = getDayOfWeek(application.Competition.tournamentTableOpenDate);
+
+        let team = application.CompetitionApplicationInfos[0].team;
+        let phoneNumber = autoHypenPhone(application.CompetitionApplicationInfos[0].phoneNumber);
+
+        let isGroup = ( application.isGroup ) ?  "단체" : "개인";
+
+
       
         return {
-            'id' : id,
-            'host' : host,
             'title': title,
-            'location': location,
-            'amount' : amount, //위에서 오늘날짜랑 비교해서 얼리버드 할인 알아서 적용한 값
-            'doreOpen': doreOpen,
-            'day' : day,
-            'registrationDeadline' : registrationDeadline, //false면 신청마감
-            'isPayment': ( registrationDeadline ) ? isPayment : '신청마감',
-            'isGroup' : isGroup, //false 면 개인, true면 단체
-            'costMsg' : costMsg,
-            'payCss' : payCss,
+
             'postUrl' : postUrl,
+            'doreOpen' : doreOpen + '(' + doreOpenDay + ')',
+            'location': location,
+            'earlyBirdDeadline' : earlyBirdDeadline + '(' + earlyBirdDeadlineDay + ')',
+            'registrationDeadline' : registrationDeadline + '(' + registrationDeadlineDay + ')',
+            'applicantTableOpenDate' : applicantTableOpenDate + '(' + applicantTableOpenDateDay + ')',
+            'tournamentTableOpenDate' : tournamentTableOpenDate + '(' + tournamentTableOpenDateDay + ')',
+
+            'team' : team,
+            'phoneNumber' : phoneNumber,
+            'isGroup' : isGroup,
         }
     }
     
@@ -102,37 +133,37 @@ function ProfileInfo() {
     return (
         <div className='ProfileInfo_wrapper'>
             <div className='ProfileInfo_title'>
-                <h2>인천시 회장배 주짓수 대회</h2>
+                <h2>{competitionApplicationInfo.title}</h2>
             </div>
             <div className='ProfileInfo_competition'>
                 <div className='ProfileInfo_competition_Left'>
                     이미지
-                    <img src='Assets/samplePoster.png' alt='대회포스터'></img>
+                    <img src={competitionApplicationInfo.postUrl} alt='대회포스터'></img>
                 </div>
                 <div className='ProfileInfo_competition_Right'>
                     <div className='ProfileInfo_competition_date'>
                         <h3>대회 날짜</h3>
-                        <p>22.11.04(월)</p>
+                        <p>{competitionApplicationInfo.doreOpen}</p>
                     </div>
                     <div className='ProfileInfo_competition_date'>
                         <h3>대회 장소</h3>
-                        <p>서울, 88 체육관인데 두 줄로 이렇게까지 넘어가면</p>
+                        <p>{competitionApplicationInfo.location}</p>
                     </div>
                     <div className='ProfileInfo_competition_date'>
                         <h3>얼리버드 마감</h3>
-                        <p>22.11.04(월)</p>
+                        <p>{competitionApplicationInfo.earlyBirdDeadline}</p>
                     </div>
                     <div className='ProfileInfo_competition_date'>
                         <h3>참가신청 마감</h3>
-                        <p>22.11.04(월)</p>
+                        <p>{competitionApplicationInfo.registrationDeadline}</p>
                     </div>
                     <div className='ProfileInfo_competition_date'>
                         <h3>신청자 명단</h3>
-                        <p>22.11.04(월)</p>
+                        <p>{competitionApplicationInfo.applicantTableOpenDate}</p>
                     </div>
                     <div className='ProfileInfo_competition_date'>
                         <h3>대진표 공개</h3>
-                        <p>22.11.04(월)</p>
+                        <p>{competitionApplicationInfo.tournamentTableOpenDate}</p>
                     </div>
                 </div>
             </div>
@@ -141,16 +172,16 @@ function ProfileInfo() {
                 <div className='ProfileInfo_userInfo_Wrap'>
                     <div className='ProfileInfo_userInfo ProfileInfo_userInfo_team'>
                         <h3>팀 이름</h3>
-                        <p>김포 골든라이언</p>
+                        <p>{competitionApplicationInfo.team}</p>
                     </div>
                     <div className='ProfileInfo_userInfo'>
                         <h3>대표 번호</h3>
-                        <p>010-1234-1234</p>
+                        <p>{competitionApplicationInfo.phoneNumber}</p>
                     </div>
                 </div> 
             </div>
             <div className='ProfileInfo_userList'>
-                <h2>신청자 명단(단체)</h2>
+                <h2>신청자 명단({competitionApplicationInfo.isGroup})</h2>
                 <table>
                     <tr>
                         <td>No.</td>
