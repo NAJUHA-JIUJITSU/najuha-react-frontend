@@ -7,6 +7,7 @@ import Admincompetition from './pages/Admincompetition'
 import Competitionform from './components/Competitionform'
 import CompetitionSchedule from './pages/CompetitionSchedule'
 import Profilepage from './pages/Profilepage'
+import ProfileInfopage from './pages/ProfileInfopage'
 import UserInfopage from './pages/UserInfopage'
 import ProfilepageToggle from './pages/ProfilepageToggle'
 import Redirect from './components/Redirect'
@@ -25,6 +26,7 @@ function App() {
   const AuthAdmincompetition = Auth(Admincompetition, true, true)
   const AuthCompetitionform = Auth(Competitionform, true, true)
   const AuthProfilepage = Auth(Profilepage, true)
+  const AuthProfileInfopage = Auth(ProfileInfopage, true)
   const AuthUserInfopage = Auth(UserInfopage, true)
   const AuthProfilepageToggle = Auth(ProfilepageToggle, true)
   const AuthRedirect = Auth(Redirect, null)
@@ -41,6 +43,7 @@ function App() {
         <Route path = '/Admincompetition/' element={<AuthAdmincompetition/>} />
         <Route path = '/Admincompetition/:id' element={<AuthCompetitionform/>} />
         <Route path = '/Profilepage' element={<AuthProfilepage/>} />
+        <Route path = '/Profilepage/info/:id' element={<AuthProfileInfopage/>} />
         <Route path = '/UserInfopage' element={<AuthUserInfopage/>} />
         <Route path = '/ProfilepageToggle' element={<AuthProfilepageToggle/>} />
         <Route path="/redirect" element={<AuthRedirect/>} />

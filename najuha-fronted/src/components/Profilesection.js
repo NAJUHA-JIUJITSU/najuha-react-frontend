@@ -52,7 +52,7 @@ function Profilesection() {
     function applicationParsing(application){
         let today = new Date();
 
-        let id = application.Competition.id;
+        let id = application.id;
         let host = application.Competition.host;
         let title = (application.Competition.title.length > 44) ? application.Competition.title.substr(0, 24) + '...' : application.Competition.title;
         let locations = application.Competition.location.split(' ');
@@ -126,7 +126,7 @@ function Profilesection() {
                 <div>
                     <div>
                         <div className='Profilesection_competitoninfo'>
-                            <a>대회신청내역 상세보기</a>
+                            <a onClick={()=>{navigate(`/Profilepage/info/${curApplication.id}`)}}>대회신청내역 상세보기</a>
                             <img src='Assets/rightArrow.svg' alt='이동 화살표'></img>
                         </div>
                         <div className= 'Profilesection_competitonbox'>
