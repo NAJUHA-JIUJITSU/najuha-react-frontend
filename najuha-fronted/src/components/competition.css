@@ -1,0 +1,104 @@
+/* typography */
+
+.competition-top-title h2{
+    font-size: 3rem;
+    letter-spacing: -0.1em;
+}
+
+.competition-top-title button{
+    font-weight: 400;
+    font-size: 22px;
+    color: #4E82E6;
+}
+
+.competition-top-content-info-each h3{
+    font-size: 18px;
+    color: #8C8C8C;
+    letter-spacing: -0.1em;
+}
+
+.competition-top-content-info-each p{
+    font-size: 20px;
+    letter-spacing: -0.1em;
+}
+
+/* Layout */
+
+.competition-wrapper{
+    max-width: 1200px;
+    width: 100%;
+    min-height: 84vh;
+    padding: 0 2rem;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding-top: 3vh;
+    
+}
+
+.competition-top-title{
+    margin-bottom: 3vh;
+}
+
+.competition-top-content-info{
+    padding-left: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+}
+
+
+/* component */
+
+.competition-top-title{
+    display: flex;
+    align-items: center;
+}
+
+.competition-top-title button{
+    border: 1px solid #F1F1F1;
+    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    width: 138px;
+    height: 57px;
+    background: #FFFFFF;
+    margin-left: 5.2rem;
+    position: relative;
+}
+
+.competition-top-title button::before{
+    content: 'D-20';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    background-color: #FFFFFF;
+}
+
+.competition-top-content{
+    display: flex;
+}
+
+.competition-top-content-img{
+    width: 194px;
+    height: 264px;
+    background-color: red;
+}
+
+.competition-top-content-info{
+    width: auto;
+}
+
+.competition-top-content-info-each{
+    display: flex;
+    align-items: center;
+    margin-bottom: 2.3rem;
+}
+
+#competition-top-content-info-each-last{
+    margin-bottom: 0;
+}
+
+.competition-top-content-info-each h3{
+    width: 120px;
+}
