@@ -5,9 +5,10 @@
     letter-spacing: -0.1em;
 }
 
-.competition-top-title button{
+#competition-top-button{
     font-weight: 400;
     font-size: 22px;
+    letter-spacing: -0.1em;
     color: #4E82E6;
 }
 
@@ -51,21 +52,20 @@
 
 .competition-top-title{
     display: flex;
-    align-items: center;
 }
 
-.competition-top-title button{
+#competition-top-button{
     border: 1px solid #F1F1F1;
     box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
     border-radius: 30px;
     width: 138px;
     height: 57px;
     background: #FFFFFF;
-    margin-left: 5.2rem;
-    position: relative;
+    margin-left: 100%;
+    transform: translate(-100%, 0);
 }
 
-.competition-top-title button::before{
+/* .competition-top-title button::before{
     content: 'D-20';
     position: absolute;
     top: 0;
@@ -73,26 +73,32 @@
     transform: translate(-50%, -50%);
     display: block;
     background-color: #FFFFFF;
-}
+} */
 
 .competition-top-content{
     display: flex;
 }
 
 .competition-top-content-img{
-    width: 194px;
+    min-width: 194px;
     height: 264px;
     background-color: red;
 }
 
 .competition-top-content-info{
-    width: auto;
+    width: calc(100% - 194px);
 }
 
 .competition-top-content-info-each{
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     margin-bottom: 2.3rem;
+}
+
+.competition-top-content-info-each p{
+    display: block;
+    width: calc(100%-120px);
+    overflow: hidden;
 }
 
 #competition-top-content-info-each-last{
@@ -100,5 +106,84 @@
 }
 
 .competition-top-content-info-each h3{
-    width: 120px;
+    min-width: 120px;
+}
+
+@media(max-width:1049px){
+
+    .competition-wrapper{
+        max-width: 768px;
+    }
+
+
+}
+
+@media(max-width:750px){
+
+    .competition-wrapper{
+        max-width: 650px;
+        min-height: 88vh;
+    }
+
+
+    /* typography */
+    .competition-top-title h2{
+        font-size: 2rem;
+        letter-spacing: -0.1em;
+    }
+    
+    #competition-top-button{
+        font-weight: 400;
+        font-size: 1.8rem;
+        color: #4E82E6;
+    }
+    
+    .competition-top-content-info-each h3{
+        font-size: 1.4rem;
+        color: #8C8C8C;
+        letter-spacing: -0.1em;
+    }
+    
+    .competition-top-content-info-each p{
+        font-size: 1.6rem;
+        letter-spacing: -0.1em;
+    }
+
+    /* Layout */
+
+    .competition-top-content-info{
+        padding-top: 0;
+        padding-left: 1.5rem;
+        padding-bottom: 1.4rem;
+        box-sizing: border-box;
+    }
+
+    .competition-top-content-info-each{
+        margin-bottom: 1.4rem;
+    }
+    
+
+    /* component */
+
+    .competition-top-content-img{
+        min-width: 98px;
+        height: 144px;
+    }
+
+    .competition-top-content-info{
+        width: calc(100% - 98px);
+    }
+
+    #competition-top-button{
+        width: 95px;
+        height: 39px;
+    }
+
+    .competition-top-content-info-each h3{
+        min-width: 98px;
+    }
+
+    .competition-top-content-info-each p{
+        width: calc(100%-98px);
+    }
 }

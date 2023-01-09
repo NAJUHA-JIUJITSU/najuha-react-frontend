@@ -7,7 +7,7 @@ function Competition() {
         <div className='competition-top'>
             <div className='competition-top-title'>
                 <h2>예거스 챔피언쉽 로컬대회 송도 오픈</h2>
-                <button>대회 신청</button>
+                
             </div>
             <div className='competition-top-content'>
                 <div className='competition-top-content-img'></div>
@@ -39,6 +39,7 @@ function Competition() {
                     </div>
                 </div>
             </div>
+            <button id='competition-top-button'>대회 신청</button>
         </div>
         <div className='competition-bottom'>
             
