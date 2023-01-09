@@ -155,7 +155,7 @@
 .Profilesection_posterBlack {
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.34);
+    background: rgba(0, 0, 0, 0.432);
     position: absolute;
     top: 0;
     left: 0;
@@ -169,7 +169,7 @@
     transform: translate(-50%, -50%);
     font-size: 2.8rem;
     color: white;
-    letter-spacing: -0.2rem;
+    letter-spacing: -0.04rem;
     z-index: 10;
 }
 
@@ -180,6 +180,10 @@
     letter-spacing: -0.1rem;
 
     overflow: hidden; 
+}
+
+.Profilesection_boxRight img:hover {
+    cursor: pointer;
 }
 
 .Profilesection_boxRightTitle {

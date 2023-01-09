@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { useJwt } from "react-jwt";
 import { useNavigate, useParams } from "react-router-dom";
+import arrowLeftIcon from "../src_assets/arrow_left.svg";
 
 function ProfileInfo() {
     const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState([]); //유저 신청 대회 상세정보 가져오기
@@ -82,16 +83,16 @@ function ProfileInfo() {
         let title =  application.Competition.title;
 
         let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : 'Assets/samplePoster.png';
-        let doreOpen = application.Competition.doreOpen.substr(0,9).replace('-','.').replace('-','.');
+        let doreOpen = application.Competition.doreOpen.substr(0,10).replace('-','.').replace('-','.');
         let doreOpenDay = getDayOfWeek(application.Competition.doreOpen);
         let location = application.Competition.location;
-        let earlyBirdDeadline = application.Competition.earlyBirdDeadline.substr(0,9).replace('-','.').replace('-','.');
+        let earlyBirdDeadline = application.Competition.earlyBirdDeadline.substr(0,10).replace('-','.').replace('-','.');
         let earlyBirdDeadlineDay = getDayOfWeek(application.Competition.earlyBirdDeadline);
-        let registrationDeadline = application.Competition.registrationDeadline.substr(0,9).replace('-','.').replace('-','.');
+        let registrationDeadline = application.Competition.registrationDeadline.substr(0,10).replace('-','.').replace('-','.');
         let registrationDeadlineDay = getDayOfWeek(application.Competition.registrationDeadline);
-        let applicantTableOpenDate = application.Competition.applicantTableOpenDate.substr(0,9).replace('-','.').replace('-','.');
+        let applicantTableOpenDate = application.Competition.applicantTableOpenDate.substr(0,10).replace('-','.').replace('-','.');
         let applicantTableOpenDateDay = getDayOfWeek(application.Competition.applicantTableOpenDate);
-        let tournamentTableOpenDate = application.Competition.tournamentTableOpenDate.substr(0,9).replace('-','.').replace('-','.');
+        let tournamentTableOpenDate = application.Competition.tournamentTableOpenDate.substr(0,10).replace('-','.').replace('-','.');
         let tournamentTableOpenDateDay = getDayOfWeek(application.Competition.tournamentTableOpenDate);
 
         let team = application.CompetitionApplicationInfos[0].team;
@@ -106,7 +107,7 @@ function ProfileInfo() {
 
             'postUrl' : postUrl,
             'doreOpen' : doreOpen + '(' + doreOpenDay + ')',
-            'location': location,
+            'location': location + '엄청 엄청 긴 대회라서 두 줄로 표시해야 한다고오오오',
             'earlyBirdDeadline' : earlyBirdDeadline + '(' + earlyBirdDeadlineDay + ')',
             'registrationDeadline' : registrationDeadline + '(' + registrationDeadlineDay + ')',
             'applicantTableOpenDate' : applicantTableOpenDate + '(' + applicantTableOpenDateDay + ')',
@@ -133,11 +134,11 @@ function ProfileInfo() {
     return (
         <div className='ProfileInfo_wrapper'>
             <div className='ProfileInfo_title'>
+                <a onClick={()=>{navigate(`/Profilepage/`)}}><img src={arrowLeftIcon} alt='이전으로 돌아가기'></img></a>
                 <h2>{competitionApplicationInfo.title}</h2>
             </div>
             <div className='ProfileInfo_competition'>
                 <div className='ProfileInfo_competition_Left'>
-                    이미지
                     <img src={competitionApplicationInfo.postUrl} alt='대회포스터'></img>
                 </div>
                 <div className='ProfileInfo_competition_Right'>

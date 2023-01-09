@@ -6,6 +6,9 @@ import ProfileTap from '../components/ProfileTap'
 import { Cookies } from 'react-cookie';
 import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
+import rightArrow from "../src_assets/rightArrow.svg";
+import xIcon from "../src_assets/x.svg";
+import samplePoster from "../src_assets/samplePoster.png";
 
 function ProfilesectionToggle() {
     const [competitionApplications, setCompetitionApplications] = useState([]); //유저 신청 대회 가져오기
@@ -192,7 +195,7 @@ function ProfilesectionToggle() {
         let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
         let day = getDayOfWeek(application.Competition.doreOpen);
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
-        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : 'Assets/samplePoster.png';
+        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
         let isGroup = application.isGroup;
         let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
@@ -258,7 +261,7 @@ function ProfilesectionToggle() {
                     <div>
                         <div className='Profilesection_competitoninfo'>
                             <a>대회신청내역 상세보기</a>
-                            <img src='Assets/rightArrow.svg' alt='이동 화살표'></img>
+                            <img src={rightArrow} alt='이동 화살표'></img>
                         </div>
                         <div className= 'Profilesection_competitonbox'>
                             <div className= 'Profilesection_boxLeft'>
@@ -267,7 +270,7 @@ function ProfilesectionToggle() {
                                 <h3>{curApplication.doreOpen}({curApplication.day})</h3>
                             </div>
                             <div className= 'Profilesection_boxRight'>
-                                <img src='Assets/x.svg' alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
+                                <img src={xIcon} alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
                                 <div className= 'Profilesection_boxRightTitle'>
                                     <h4>신청인<span>{curApplication.host}</span></h4>
                                     <h3>{curApplication.title}</h3>

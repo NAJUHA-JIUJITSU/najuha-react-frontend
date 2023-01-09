@@ -22,6 +22,16 @@
 .ProfileInfo_title {
     padding-top: 2rem;
     padding-bottom: 4rem;
+    display: flex;
+    align-items: center;
+}
+
+.ProfileInfo_title a:hover {
+    cursor: pointer;
+}
+
+.ProfileInfo_title img {
+    margin-right: 1rem;
 }
 
 .ProfileInfo_competition {
@@ -32,6 +42,7 @@
 
 .ProfileInfo_competition_Left {
     min-width: 16rem;
+    height: 188px;
 }
 
 .ProfileInfo_competition_Left img {
@@ -78,7 +89,7 @@
 }
 
 .ProfileInfo_competition_date p {
-    width: 70%;
+    width: 80%;
     font-size: 2rem;
     word-break: normal;
 }
@@ -148,5 +159,11 @@
 
     .ProfileInfo_userInfo_team {
         padding-right: 2.6rem;
+    }
+
+
+    .ProfileInfo_competition_Left {
+        min-width: 11rem;
+        height: 138px;
     }
 }
