@@ -109,6 +109,12 @@
     min-width: 120px;
 }
 
+
+.competition-bottom{
+    white-space: pre-wrap;
+}
+
+
 @media(max-width:1049px){
 
     .competition-wrapper{

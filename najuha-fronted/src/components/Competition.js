@@ -1,7 +1,21 @@
 import React from 'react'
 import './competition.css'
+import ReactMarkdown from 'react-markdown';
 
 function Competition() {
+    const markdown = `
+# Hello, World!
+
+This is some **bold** text.
+
+Here's a list:
+
+- Item 1
+- Item 2
+- Item 3
+  `;
+
+
   return (
     <div className='competition-wrapper'>
         <div className='competition-top'>
@@ -39,10 +53,11 @@ function Competition() {
                     </div>
                 </div>
             </div>
-            <button id='competition-top-button'>대회 신청</button>
+            <button id='competition-top-button'>대회 신청</button> 
         </div>
         <div className='competition-bottom'>
-            
+            <ReactMarkdown children={markdown} />
+            {/* {console.log(<ReactMarkdown source={markdown} />)} */}
         </div>
     </div>
   )
