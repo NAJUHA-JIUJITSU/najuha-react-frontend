@@ -104,8 +104,8 @@ function ProfileTap() {
         </div>
         <div className='ProfileTap_information'>
             <li>
-                <div className='ProfileTap_information-btn' onClick={()=>{navigate('/Profilepage')}}>대회신청목록</div>
-                <div className='ProfileTap_information-btn' onClick={()=>{navigate('/UserInfopage')}}>내 프로필 관리</div>
+                <div className='ProfileTap_information-btn' onClick={()=>{navigate('/Profilepage')}}>신청대회 목록</div>
+                <div className='ProfileTap_information-btn' onClick={()=>{navigate('/UserInfopage')}}>내 프로필 수정</div>
                 <div className='ProfileTap_information-btn'>개인정보처리방침</div>
                 <div className='ProfileTap_information-btn'>이용약관</div>
                 <div className='ProfileTap_information-btn'>버전정보</div>

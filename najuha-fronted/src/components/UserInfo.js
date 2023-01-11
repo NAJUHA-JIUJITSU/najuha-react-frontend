@@ -234,7 +234,7 @@ function  UserInfo() {
         <div className='UserInfo_wrapper'>
             <ProfileTap/>
             <div className='UserInfo_right'>
-                <h2>내 프로필 관리</h2>
+                <h2>내 프로필 수정</h2>
                 {content}    
             </div>
         </div>

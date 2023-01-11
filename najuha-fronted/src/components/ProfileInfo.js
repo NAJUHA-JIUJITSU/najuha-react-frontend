@@ -6,6 +6,7 @@ import { Cookies } from 'react-cookie';
 import { useJwt } from "react-jwt";
 import { useNavigate, useParams } from "react-router-dom";
 import arrowLeftIcon from "../src_assets/arrow_left.svg";
+import samplePoster from "../src_assets/samplePoster.png";
 
 function ProfileInfo() {
     const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState([]); //유저 신청 대회 상세정보 가져오기
@@ -82,7 +83,7 @@ function ProfileInfo() {
     function applicationParsing(application){
         let title =  application.Competition.title;
 
-        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : 'Assets/samplePoster.png';
+        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
         let doreOpen = application.Competition.doreOpen.substr(0,10).replace('-','.').replace('-','.');
         let doreOpenDay = getDayOfWeek(application.Competition.doreOpen);
         let location = application.Competition.location;

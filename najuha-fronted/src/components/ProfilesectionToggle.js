@@ -19,137 +19,6 @@ function ProfilesectionToggle() {
     const { decodedToken, isExpired } = useJwt(xAccessToken);
     const navigate = useNavigate();
 
-    // async function getCompetitionApplication() {
-    //     axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
-    //     {
-    //         headers: {
-    //             'x-access-token':  xAccessToken
-    //         }
-    //     })
-    //     .then((res) => {
-    //         setCompetitionApplications(res.data.result);
-    //         console.log(res.data.message);
-    //     })
-    //     .catch((err) => {
-    //         console.log(err);
-    //         console.log(err.response.status);
-    //         console.log(err.response.data.message);
-    //     })
-    //     return ;
-    // }
-
-    // function applicationParsing(application){
-    //     let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
-    //     let locations = application.Competition.location.split(' ');
-    //     let location = locations[0]
-    //     let title = (application.Competition.title.length > 24) ? application.Competition.title.substr(0, 14) + '...' : application.Competition.title;
-    //     let divisionName = application.divisionName;
-    //     let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
-    //     let uniform = (application.uniform = "gi") ? '기-' : '노기-';
-    //     let weight = application.weight + 'kg';
-    //     let isPayment = application.isPayment ? '결제완료' : '미결제';
-       
-    //     return {
-    //         'doreOpen': doreOpen,
-    //         'location': location,
-    //         'title': title,
-    //         'divisionName': uniform + divisionName,
-    //         'belt': belt,
-    //         'weight': weight,
-    //         'isPayment': isPayment,
-    //     }
-    // }
-
-    // function renderCompetition(){
-    //     let cnt = 0;
-    //     return competitionApplications.map((application) => {
-    //         let curApplication = applicationParsing(application);
-    //         let today = new Date();
-    //         if( today > new Date(application.Competition.doreOpen)) {
-    //             return ;
-    //         }
-    //         cnt++;
-    //         if(!isFullListedNow && cnt>3) {
-    //             return ;
-    //         }
-    //         return(
-    //             <tbody>
-    //                     <tr className='Profilesection_PcTable'>
-    //                         <td>{curApplication.doreOpen}</td>
-    //                         <td>{curApplication.location}</td>
-    //                         <td>{curApplication.title}</td>
-    //                         <td>{curApplication.divisionName}</td>
-    //                         <td>{curApplication.belt}</td>
-    //                         <td>{curApplication.weight}</td>
-    //                         <td>{curApplication.isPayment}</td>
-    //                         <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
-    //                     </tr>
-    //                     <tr className='Profilesection_MobileTable'>
-    //                         <td><div id='Profilesection_tableDate'><p>{curApplication.doreOpen}</p></div></td>
-    //                         <td>{curApplication.location}</td>
-    //                         <td>{curApplication.title}</td>
-    //                         <td>{curApplication.divisionName}</td>
-    //                     </tr>
-    //                     <tr className='Profilesection_MobileTable Profilesection_odd'>
-    //                         <td>{curApplication.belt}</td>
-    //                         <td>{curApplication.weight}</td>
-    //                         <td>{curApplication.isPayment}</td>
-    //                         <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
-    //                     </tr>
-    //             </tbody>
-    //         )
-    //     })
-    // }
-
-    // function renderLastCompetition(){
-    //     let cnt = 0;
-    //     return competitionApplications.map((application) => {
-    //         let curApplication = applicationParsing(application);
-    //         let today = new Date();
-    //         if( today < new Date(application.Competition.doreOpen)) {
-    //             return ;
-    //         }
-    //         cnt++;
-    //         if(!isFullListedLast && cnt>3) {
-    //             return ;
-    //         }
-    //         return(
-    //             <tbody>
-    //                     <tr className='Profilesection_PcTable'>
-    //                         <td>{curApplication.doreOpen}</td>
-    //                         <td>{curApplication.location}</td>
-    //                         <td>{curApplication.title}</td>
-    //                         <td>{curApplication.divisionName}</td>
-    //                         <td>{curApplication.belt}</td>
-    //                         <td>{curApplication.weight}</td>
-    //                         <td>{curApplication.isPayment}</td>
-    //                         <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
-    //                     </tr>
-    //                     <tr className='Profilesection_MobileTable'>
-    //                         <td><div id='Profilesection_tableDate'><p>{curApplication.doreOpen}</p></div></td>
-    //                         <td>{curApplication.location}</td>
-    //                         <td>{curApplication.title}</td>
-    //                         <td>{curApplication.divisionName}</td>
-    //                     </tr>
-    //                     <tr className='Profilesection_MobileTable Profilesection_odd'>
-    //                         <td>{curApplication.belt}</td>
-    //                         <td>{curApplication.weight}</td>
-    //                         <td>{curApplication.isPayment}</td>
-    //                         <td className='payInfo'><button id='payInfoBtn'>상세정보</button></td>
-    //                     </tr>
-    //             </tbody>
-    //         )
-
-    //     })
-    // }
-
-    // function ChangeIsFullListedNow() {
-    //     setisFullListedNow(!isFullListedNow);
-    // }
-
-    // function ChangeIsFullListedLast() {
-    //     setisFullListedLast(!isFullListedLast);
-    // }
 
     async function getCompetitionApplication() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
@@ -186,7 +55,7 @@ function ProfilesectionToggle() {
     function applicationParsing(application){
         let today = new Date();
 
-        let id = application.Competition.id;
+        let id = application.id;
         let host = application.Competition.host;
         let title = (application.Competition.title.length > 44) ? application.Competition.title.substr(0, 24) + '...' : application.Competition.title;
         let locations = application.Competition.location.split(' ');
@@ -260,7 +129,7 @@ function ProfilesectionToggle() {
                 <div>
                     <div>
                         <div className='Profilesection_competitoninfo'>
-                            <a>대회신청내역 상세보기</a>
+                            <a onClick={()=>{navigate(`/Profilepage/info/${curApplication.id}`)}}>대회신청내역 상세보기</a>
                             <img src={rightArrow} alt='이동 화살표'></img>
                         </div>
                         <div className= 'Profilesection_competitonbox'>
@@ -319,7 +188,7 @@ function ProfilesectionToggle() {
         <div className='ProfilesectionToggle_wrapper'>
             <ProfileTap/>
             <section className='ProfilesectionToggle_right'>
-                <h2>대회신청목록</h2>
+                <h2>신청대회 목록</h2>
                 <ul className='Profilesection_competitonNav'>
                     <li className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
                     <li className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>

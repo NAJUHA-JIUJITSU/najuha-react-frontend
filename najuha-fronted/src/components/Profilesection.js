@@ -19,6 +19,7 @@ function Profilesection() {
     const { decodedToken, isExpired } = useJwt(xAccessToken);
     const navigate = useNavigate();
 
+    // 신청 대회 가져오기
     async function getCompetitionApplication() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
         {
@@ -48,8 +49,10 @@ function Profilesection() {
             }
         })
         .then((res) => {
+            console.log('지울 대회 id: ' + id);
             console.log(res.data.result);
             console.log(res.data.message);
+            getCompetitionApplication();
         })
         .catch((err) => {
             console.log(err);
@@ -75,6 +78,7 @@ function Profilesection() {
         let today = new Date();
 
         let id = application.id;
+        let competitonId = application.Competition.id;
         let host = application.Competition.host;
         let title = (application.Competition.title.length > 44) ? application.Competition.title.substr(0, 24) + '...' : application.Competition.title;
         let locations = application.Competition.location.split(' ');
@@ -83,7 +87,7 @@ function Profilesection() {
         let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
         let day = getDayOfWeek(application.Competition.doreOpen);
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
-        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : {samplePoster};
+        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
         let isGroup = application.isGroup;
         let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
@@ -158,7 +162,11 @@ function Profilesection() {
                                 <h3>{curApplication.doreOpen}({curApplication.day})</h3>
                             </div>
                             <div className= 'Profilesection_boxRight'>
-                                <img src={xIcon} alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
+                                <img onClick={()=>{
+                                    console.log("click: " + curApplication.id)
+                                    deleteCompetitionApplication(curApplication.id)
+
+                                    }} src={xIcon} alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
                                 <div className= 'Profilesection_boxRightTitle'>
                                     <h4>신청인<span>{curApplication.host}</span></h4>
                                     <h3>{curApplication.title}</h3>
@@ -207,7 +215,7 @@ function Profilesection() {
         <div className='Profilesection_wrapper'>
             <ProfileTap/>
             <section className='Profilesection_right'>
-                <h2>대회신청 목록</h2>
+                <h2>신청대회 목록</h2>
                 <ul className='Profilesection_competitonNav'>
                     <li className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
                     <li className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
