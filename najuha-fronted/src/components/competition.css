@@ -294,17 +294,17 @@
     
     .competition-bottom-markdown h2{
         font-size: 14px;
-        width: 104px;
+        width: 90px;
         margin-bottom: 24px;
     }
     
     .competition-bottom-markdown h3{
         font-size: 14px;
-        width: 104px;
+        width: 90px;
     }
     
     .competition-bottom-markdown ul{
-        padding-left: 104px;
+        padding-left: 90px;
     }
     
     .competition-bottom-markdown li:last-child{
