@@ -100,7 +100,7 @@
 
     .footer-wrapper {
         max-width: 768px;
-        margin-top: 4vh;
+        margin-top: 8vh;
     }
 
     .company-menu{
@@ -132,7 +132,9 @@
     .footer-wrapper {
         max-width: none;
         width: 100%;
-        margin: 2vh auto;
+        margin: 0 auto;
+        margin-top: 8vh;
+        margin-bottom: 2vh;
         padding: 0;
     }
 
