@@ -19,7 +19,7 @@ function ProfilesectionToggle() {
     const { decodedToken, isExpired } = useJwt(xAccessToken);
     const navigate = useNavigate();
 
-
+    // 신청 대회 가져오기
     async function getCompetitionApplication() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
         {
@@ -36,6 +36,27 @@ function ProfilesectionToggle() {
             console.log(err);
             console.log(err.response.status);
             console.log(err.response.data.message);
+        })
+        return ;
+    }
+
+    // 신청 대회 지우기(결제 미완료)
+    async function deleteCompetitionApplication(id) {
+        axios.delete(`${process.env.REACT_APP_BACK_END_API}/competitionApplications/${id}`,
+        {
+            headers: {
+                'x-access-token':  xAccessToken
+            }
+        })
+        .then((res) => {
+            console.log('지울 대회 id: ' + id);
+            console.log(res.data.result);
+            console.log(res.data.message);
+            getCompetitionApplication();
+        })
+        .catch((err) => {
+            console.log(err);
+            console.log(err.response.data.result);
         })
         return ;
     }
@@ -65,6 +86,7 @@ function ProfilesectionToggle() {
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
         let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
+        let isCanceled = application.competitionPayment.status; // 'CANCELED'면 환불완료
         let isGroup = application.isGroup;
         let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
         let payCss = (isPayment == '결제하기' && registrationDeadline == true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
@@ -83,6 +105,7 @@ function ProfilesectionToggle() {
             'day' : day,
             'registrationDeadline' : registrationDeadline, //false면 신청마감
             'isPayment': ( registrationDeadline ) ? isPayment : '신청마감',
+            'isCanceled' : ( isCanceled=='CANCELED' ) ? true : false, 
             'isGroup' : isGroup, //false 면 개인, true면 단체
             'costMsg' : costMsg,
             'payCss' : payCss,
@@ -95,7 +118,8 @@ function ProfilesectionToggle() {
         return competitionApplications.map((application) => {
             let curApplication = applicationParsing(application);
             let today = new Date();
-            
+            curApplication.isPayment = ( curApplication.isCanceled ) ? '환불완료' : curApplication.isPayment;
+
             if(clickedList == 'person') {
                 //날짜가 오늘을 기준으로 지났으면 안보여주기
                 if( today > new Date(application.Competition.doreOpen) ) {
@@ -138,7 +162,8 @@ function ProfilesectionToggle() {
                                 <h3>{curApplication.doreOpen}({curApplication.day})</h3>
                             </div>
                             <div className= 'Profilesection_boxRight'>
-                                <img src={xIcon} alt='삭제 아이콘' className= 'Profilesection_boxDelete'></img>
+                                <img onClick={()=>{deleteCompetitionApplication(curApplication.id)}} 
+                                    src={xIcon} alt='삭제 아이콘' className= 'Profilesection_boxDelete Profilesection_boxDeleteHidden'></img>
                                 <div className= 'Profilesection_boxRightTitle'>
                                     <h4>신청인<span>{curApplication.host}</span></h4>
                                     <h3>{curApplication.title}</h3>
