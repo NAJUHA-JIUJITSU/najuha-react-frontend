@@ -76,6 +76,10 @@
 }
 
 /* Components */
+.Profilesection_lastCompetiton {
+    color: #8C8C8C;
+}
+
 .ProfileInfo_title h2{
     font-size: 3rem;
     font-weight: 600;

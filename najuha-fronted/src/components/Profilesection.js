@@ -81,8 +81,7 @@ function Profilesection() {
         let competitonId = application.Competition.id;
         let host = application.Competition.host;
         let title = (application.Competition.title.length > 44) ? application.Competition.title.substr(0, 24) + '...' : application.Competition.title;
-        let locations = application.Competition.location.split(' ');
-        let location = locations[0];
+        let location = application.Competition.location;
         let amount = ( today > new Date(application.Competition.earlyBirdDeadline) ) ? application.expectedPrice.earlyBirdFalse : application.expectedPrice.earlyBirdTrue;
         let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
         let day = getDayOfWeek(application.Competition.doreOpen);
@@ -92,6 +91,7 @@ function Profilesection() {
         let isGroup = application.isGroup;
         let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
         let payCss = (isPayment == '결제하기' && registrationDeadline == true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
+        let last = ( today < new Date(application.Competition.doreOpen) ) ? ' ' : 'Profilesection_lastCompetiton';
         // let divisionName = application.divisionName;
         // let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
         // let uniform = (application.uniform = "gi") ? '기-' : '노기-';
@@ -111,6 +111,7 @@ function Profilesection() {
             'costMsg' : costMsg,
             'payCss' : payCss,
             'postUrl' : postUrl,
+            'last' : last,
         }
     }
 
@@ -150,7 +151,7 @@ function Profilesection() {
 
             return(
                 <div>
-                    <div>
+                    <div className={curApplication.last}>
                         <div className='Profilesection_competitoninfo'>
                             <a onClick={()=>{navigate(`/Profilepage/info/${curApplication.id}`)}}>대회신청내역 상세보기</a>
                             <img src={rightArrow} alt='이동 화살표'></img>
