@@ -194,6 +194,11 @@
     letter-spacing: -0.1em;
 }
 
+.competition-bottom-markdown img{
+    max-width: 100%;
+    margin-bottom: 2.4rem;
+}
+
 @media(max-width:1049px){
 
     .competition-wrapper{
@@ -245,6 +250,10 @@
 
     .competition-top-content-info-each{
         margin-bottom: 1.4rem;
+    }
+
+    .competition-bottom-markdown img{
+        margin-bottom: 1.6rem;
     }
     
 

@@ -28,6 +28,14 @@ function Competition() {
 
 ---
 
+# Division
+## 환불 규정
+환불 요청은 11.20(화) 23:59 이전에만 가능
+![sample](https://user-images.githubusercontent.com/76994774/211767637-9b72a5a8-0d20-4e7c-9ca3-bb655fd90fcb.png)
+
+
+---
+
 # 대회 안내
 ### 대회규정
 - 어드 존재 안함
@@ -49,7 +57,6 @@ function Competition() {
 - 선수 1명당 코치 1명 동반 입장 가능
 - 코치는 대회사에서 제공하는 코치복을 착용하고 입장
 - 영상 촬영 허용
-
 `;
 
     // markdown =  markdown.replace(/\n/gi, '\n &nbsp;');
