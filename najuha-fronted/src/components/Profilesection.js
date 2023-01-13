@@ -42,7 +42,7 @@ function Profilesection() {
 
     // 신청 대회 지우기(결제 미완료)
     async function deleteCompetitionApplication(id) {
-        axios.delete(`${process.env.REACT_APP_BACK_END_API}/competitionApplications/${id}`,
+        axios.delete(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${id}`,
         {
             headers: {
                 'x-access-token':  xAccessToken
@@ -86,9 +86,9 @@ function Profilesection() {
         let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
         let day = getDayOfWeek(application.Competition.doreOpen);
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
-        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
+        let postUrl = ( application.Competition.CompetitionPosters[0] ) ? application.Competition.CompetitionPosters[0].imageUrl : samplePoster;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
-        let isCanceled = application.competitionPayment.status; // 'CANCELED'면 환불완료
+        let isCanceled = (application.competitionPayment == null) ? ' ' : application.competitionPayment.status; // 'CANCELED'면 환불완료
         let isGroup = application.isGroup;
         let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
         let payCss = (isPayment == '결제하기' && registrationDeadline == true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';

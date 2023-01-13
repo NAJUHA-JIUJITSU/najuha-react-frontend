@@ -83,7 +83,7 @@ function ProfileInfo() {
     function applicationParsing(application){
         let title =  application.Competition.title;
 
-        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
+        let postUrl = ( application.Competition.CompetitionPosters[0] ) ? application.Competition.CompetitionPosters[0].imageUrl : samplePoster;
         let doreOpen = application.Competition.doreOpen.substr(0,10).replace('-','.').replace('-','.');
         let doreOpenDay = getDayOfWeek(application.Competition.doreOpen);
         let location = application.Competition.location;
