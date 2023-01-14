@@ -1,8 +1,14 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom';
 import './competition.css'
 import ReactMarkdown from 'react-markdown';
+import axios from 'axios';
 
 function Competition() {
+    const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
+    const [competition, setCompetition] = useState(null)
+    const [viewCompetition, setViewCompetition] = useState(false)
+    const {id} = useParams();
     let markdown = `
 # 참가자 명단
 ## 세부 정보
@@ -59,42 +65,92 @@ function Competition() {
 - 영상 촬영 허용
 `;
 
-    // markdown =  markdown.replace(/\n/gi, '\n &nbsp;');
+const getCompetition = async (id) => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions/${id}`);
+        console.log(response);
+        const newCompetition = response.data.result;
+        setCompetition(newCompetition)
+    } catch(err) {
+        console.log(err);
+    }
+}
+function competitionParsing(competition){
+    let doreOpen = competition.doreOpen.substr(2,8).replace('-','.').replace('-','.');
+    let doreOpenDay = week[new Date(competition.doreOpen).getDay()]
+    let location = competition.location
+    let earlyBirdDeadline = competition.earlyBirdDeadline.substr(2,8).replace('-','.').replace('-','.');
+    let earlyBirdDeadlineDay = week[new Date(competition.earlyBirdDeadline).getDay()]
+    let registrationDeadline = competition.registrationDeadline.substr(2,8).replace('-','.').replace('-','.')
+    let registrationDeadlineDay = week[new Date(competition.registrationDeadline).getDay()]
+    let applicantTableOpenDate = competition.applicantTableOpenDate.substr(2,8).replace('-','.').replace('-','.')
+    let applicantTableOpenDateDay = week[new Date(competition.applicantTableOpenDate).getDay()]
+    let tournamentTableOpenDate = competition.tournamentTableOpenDate.substr(2,8).replace('-','.').replace('-','.')
+    let tournamentTableOpenDateDay = week[new Date(competition.tournamentTableOpenDate).getDay()]
+    setViewCompetition({
+        title: competition.title,
+        location: location,
+        doreOpen: doreOpen,
+        doreOpenDay: doreOpenDay,
+        earlyBirdDeadline: earlyBirdDeadline,
+        earlyBirdDeadlineDay: earlyBirdDeadlineDay,
+        registrationDeadline: registrationDeadline,
+        registrationDeadlineDay: registrationDeadlineDay,
+        applicantTableOpenDate: applicantTableOpenDate,
+        applicantTableOpenDateDay: applicantTableOpenDateDay,
+        tournamentTableOpenDate: tournamentTableOpenDate,
+        tournamentTableOpenDateDay: tournamentTableOpenDateDay,
+    })
+}
+
+useEffect(() => {
+    getCompetition(id);
+}, [])
+
+useEffect(() => {
+    if(competition !== null)
+        competitionParsing(competition)
+    console.log(competition);
+}, [competition])
+
+useEffect(() => {
+    console.log(viewCompetition);
+}, [viewCompetition])
 
   return (
     <div className='competition-wrapper'>
         <div className='competition-top'>
             <div className='competition-top-title'>
-                <h2>예거스 챔피언쉽 로컬대회 송도 오픈</h2>
+                <h2>{viewCompetition ? viewCompetition.title : ''}</h2>
                 
             </div>
             <div className='competition-top-content'>
-                <div className='competition-top-content-img'></div>
-                {/* <img className='competition-top-content-img' src={} alt='대회이미지' /> */}
+                {/* <div className='competition-top-content-img'></div> */}
+                <img className='competition-top-content-img' src={competition ? (competition.CompetitionPosters[0] ? competition.CompetitionPosters[0].imageUrl : '') : ''} alt='대회이미지' />
                 <div className='competition-top-content-info'>
                     <div className='competition-top-content-info-each'>
                         <h3>대회 날짜</h3>
-                        <p>22.11.04 (월)</p>
+                        <p>{viewCompetition ? viewCompetition.doreOpen : ''} ({viewCompetition ? viewCompetition.doreOpenDay : ''})</p>
                     </div>
                     <div className='competition-top-content-info-each'>
                         <h3>대회 장소</h3>
-                        <p>서울,KBS 88 제2체육관 두 줄 넘어감</p>
+                        <p>{viewCompetition ? viewCompetition.location : ''}</p>
                     </div>
                     <div className='competition-top-content-info-each'>
                         <h3>얼리버드 마감</h3>
-                        <p>22.11.14 (월)</p>
+                        <p>{viewCompetition ? viewCompetition.earlyBirdDeadline : ''} ({viewCompetition ? viewCompetition.earlyBirdDeadlineDay : ''})</p>
                     </div>
                     <div className='competition-top-content-info-each'>
                         <h3>참가신청 마감</h3>
-                        <p>22.11.22 (토)</p>
+                        <p>{viewCompetition ? viewCompetition.registrationDeadline : ''} ({viewCompetition ? viewCompetition.registrationDeadlineDay : ''})</p>
                     </div>
                     <div className='competition-top-content-info-each'>
                         <h3>신청자 명단</h3>
-                        <p>22.11.25 (화)</p>
+                        <p>{viewCompetition ? viewCompetition.applicantTableOpenDate : ''} ({viewCompetition ? viewCompetition.applicantTableOpenDateDay : ''})</p>
                     </div>
                     <div id='competition-top-content-info-each-last' className='competition-top-content-info-each'>
                         <h3>대진표 공개</h3>
-                        <p>22.11.25 (화)</p>
+                        <p>{viewCompetition ? viewCompetition.tournamentTableOpenDate : ''} ({viewCompetition ? viewCompetition.tournamentTableOpenDateDay : ''})</p>
                     </div>
                 </div>
             </div>
