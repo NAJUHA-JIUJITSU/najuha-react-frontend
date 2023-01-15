@@ -178,8 +178,8 @@ function Competitionlist() {
                     <DesktopDatePicker
                     label="시작 날짜"
                     views={['year', 'month', 'day']}
-                    minDate={dayjs('2022-1-1')} // 올해로 한정될수 있게 변수값을 고쳐야함 
-                    maxDate={dayjs('2022-12-31')} // 올해로 한정될수 있게 변수값을 고쳐야함 
+                    minDate={dayjs('2023-1-1')} // 올해로 한정될수 있게 변수값을 고쳐야함 
+                    maxDate={dayjs('2023-12-31')} // 올해로 한정될수 있게 변수값을 고쳐야함 
                     inputFormat="MM.DD~" 
                     componentsProps={{
                     actionBar: {
