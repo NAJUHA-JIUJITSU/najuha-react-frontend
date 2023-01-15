@@ -86,7 +86,7 @@ function Profilesection() {
         let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
         let day = getDayOfWeek(application.Competition.doreOpen);
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
-        let postUrl = ( application.Competition.CompetitionPosters[0] ) ? application.Competition.CompetitionPosters[0].imageUrl : samplePoster;
+        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
         let isCanceled = (application.competitionPayment == null) ? ' ' : application.competitionPayment.status; // 'CANCELED'면 환불완료
         let isGroup = application.isGroup;

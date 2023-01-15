@@ -89,7 +89,7 @@
 }
 
 /* 대회 리스트 목록 */
-.Profilesection_competitonNav:hover {
+.Profilesection_competitonNav {
     cursor: pointer;
 }
 
@@ -107,8 +107,8 @@
     letter-spacing: -0.12rem;
 }
 
-.Profilesection_competitoninfo a:hover,
-.Profilesection_competitoninfo img:hover {
+.Profilesection_competitoninfo a,
+.Profilesection_competitoninfo img {
     cursor: pointer;
 } 
 
@@ -182,7 +182,7 @@
     overflow: hidden; 
 }
 
-.Profilesection_boxRight img:hover {
+.Profilesection_boxRight img {
     cursor: pointer;
 }
 
@@ -260,9 +260,14 @@
     box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
-.Profilesection_costBtn:hover {
+.Profilesection_costBtn {
+    cursor: default;
+}
+
+.Profilesection_payCss .Profilesection_costBtn {
     cursor: pointer;
 }
+
 
 /* 결제하기 금액 + 버튼 효과 */
 .Profilesection_payCss {

@@ -84,9 +84,9 @@ function ProfilesectionToggle() {
         let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
         let day = getDayOfWeek(application.Competition.doreOpen);
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
-        let postUrl = ( application.Competition.CompetitionPosters[0] ) ? application.Competition.CompetitionPosters[0].imageUrl : samplePoster;
+        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
-        let isCanceled = application.competitionPayment.status; // 'CANCELED'면 환불완료
+        let isCanceled = (application.competitionPayment == null) ? ' ' : application.competitionPayment.status; // 'CANCELED'면 환불완료 
         let isGroup = application.isGroup;
         let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
         let payCss = (isPayment == '결제하기' && registrationDeadline == true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
@@ -222,44 +222,6 @@ function ProfilesectionToggle() {
                 <div className='Profilesection_competitonList'>
                     {renderCompetition()}
                 </div>
-                {/* <div className='Profilesection_myCompetitionList nowList'>
-                    <div className='Profilesection_tableName'>
-                        <h3>실시간 대회신청</h3>
-                        <p onClick={ChangeIsFullListedNow}>전체보기<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
-                    </div>
-                    <table>
-                        <thead className='Profilesection_thead'>
-                            <tr>
-                                <th>Date</th>
-                                <th>Location</th>
-                                <th>Champitonship</th>
-                                <th>참가부</th>
-                                <th>벨트</th>
-                                <th>체급</th>
-                                <th>결제내역</th>
-                            </tr>
-                        </thead>
-                        {renderCompetition()}
-                    </table>
-                </div>
-                <div className='Profilesection_myCompetitionList totlaList'>
-                    <h3>총 대회신청</h3>
-                    <p onClick={ChangeIsFullListedLast}>전체보기<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
-                    <table>
-                        <thead className='Profilesection_thead'>
-                            <tr>
-                                <th>Date</th>
-                                <th>Location</th>
-                                <th>Champitonship</th>
-                                <th>참가부</th>
-                                <th>벨트</th>
-                                <th>체급</th>
-                                <th>결제내역</th>
-                            </tr>
-                        </thead>               
-                        {renderLastCompetition()}
-                    </table>
-                </div> */}
             </section>
         </div>
     )
