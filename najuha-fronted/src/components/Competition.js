@@ -126,7 +126,7 @@ useEffect(() => {
             </div>
             <div className='competition-top-content'>
                 {/* <div className='competition-top-content-img'></div> */}
-                <img className='competition-top-content-img' src={competition ? (competition.CompetitionPosters[0] ? competition.CompetitionPosters[0].imageUrl : '') : ''} alt='대회이미지' />
+                <img className='competition-top-content-img' src={competition ? (competition.CompetitionPoster ? competition.CompetitionPoster.imageUrl : '') : ''} alt='대회이미지' />
                 <div className='competition-top-content-info'>
                     <div className='competition-top-content-info-each'>
                         <h3>대회 날짜</h3>
