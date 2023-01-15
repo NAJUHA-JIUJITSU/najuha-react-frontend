@@ -12,7 +12,8 @@ function ProfileTap() {
     const xAccessToken = cookies.get("x-access-token");
    
     let navigate = useNavigate();
-
+    
+    //User 프로필 정보 가져오기
     async function getUsers() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users`,
         {
@@ -32,6 +33,7 @@ function ProfileTap() {
         return ;
     }
 
+    //실시간 대회 수 그리기
     function renderCompetitonNowCount() {
         let nowCnt = 0;
         competitionApplications.map((application) => {
@@ -46,6 +48,7 @@ function ProfileTap() {
         )
     }
 
+    //총 대회 수 그리기
     function renderCompetitonTotalCount() {
         let totalCnt = competitionApplications.length
         return (
@@ -53,6 +56,7 @@ function ProfileTap() {
         )
     }
 
+    //User 대회 정보 가져오기
     async function getCompetitionApplication() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
         {

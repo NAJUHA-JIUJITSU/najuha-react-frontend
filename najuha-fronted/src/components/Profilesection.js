@@ -50,17 +50,32 @@ function Profilesection() {
         })
         .then((res) => {
             console.log('지울 대회 id: ' + id);
-            console.log(res.data.result);
             console.log(res.data.message);
+            alert('대회 정보가 삭제되었습니다.');
             getCompetitionApplication();
         })
         .catch((err) => {
             console.log(err);
             console.log(err.response.data.result);
+            alert(err.response.data.result);
         })
         return ;
     }
 
+    //삭제 경고 문구창
+    const onRemove = (id) => {
+
+        if (window.confirm("대회 정보가 모두 삭제됩니다. 해당 대회를 정말 취소하시겠습니까?")) {
+    
+            deleteCompetitionApplication(id)
+    
+        } else {
+    
+        //   alert("취소합니다.");
+    
+        }
+    
+    };
 
     //요일 값 구하기
     function getDayOfWeek(날짜문자열){ //ex) getDayOfWeek('2022-06-13')
@@ -78,7 +93,6 @@ function Profilesection() {
         let today = new Date();
 
         let id = application.id;
-        let competitonId = application.Competition.id;
         let host = application.Competition.host;
         let title = (application.Competition.title.length > 44) ? application.Competition.title.substr(0, 24) + '...' : application.Competition.title;
         let location = application.Competition.location;
@@ -88,10 +102,10 @@ function Profilesection() {
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
         let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
-        let isCanceled = (application.competitionPayment == null) ? ' ' : application.competitionPayment.status; // 'CANCELED'면 환불완료
+        let isCanceled = (application.competitionPayment === null) ? ' ' : application.competitionPayment.status; // 'CANCELED'면 환불완료
         let isGroup = application.isGroup;
-        let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
-        let payCss = (isPayment == '결제하기' && registrationDeadline == true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
+        let costMsg = application.isPayment ? '총 결제금액' : '예상 결제금액';
+        let payCss = (isPayment === '결제하기' && registrationDeadline === true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
         let last = ( today < new Date(application.Competition.doreOpen) ) ? ' ' : 'Profilesection_lastCompetiton';
         // let divisionName = application.divisionName;
         // let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
@@ -108,7 +122,7 @@ function Profilesection() {
             'day' : day,
             'registrationDeadline' : registrationDeadline, //false면 신청마감
             'isPayment': ( registrationDeadline ) ? isPayment : ( ( isPayment=='결제완료' ) ? isPayment : '신청마감' ),
-            'isCanceled' : ( isCanceled=='CANCELED' ) ? true : false, 
+            'isCanceled' : ( isCanceled==='CANCELED' ) ? true : false, 
             'isGroup' : isGroup, //false 면 개인, true면 단체
             'costMsg' : costMsg,
             'payCss' : payCss,
@@ -124,7 +138,7 @@ function Profilesection() {
             let today = new Date();
             curApplication.isPayment = ( curApplication.isCanceled ) ? '환불완료' : curApplication.isPayment;
             
-            if(clickedList == 'person') {
+            if(clickedList === 'person') {
                 //날짜가 오늘을 기준으로 지났으면 안보여주기
                 if( today > new Date(application.Competition.doreOpen) ) {
                     return ;
@@ -134,7 +148,7 @@ function Profilesection() {
                     return ;
                 }
             }
-            if(clickedList == 'group') {
+            if(clickedList === 'group') {
                 //날짜가 오늘을 기준으로 지났으면 안보여주기(오늘은 보여줌)
                 if( today >= new Date(application.Competition.doreOpen) ) {
                     return ;
@@ -144,8 +158,7 @@ function Profilesection() {
                     return ;
                 }
             }
-
-            if(clickedList == 'last') {
+            if(clickedList === 'last') {
                 //날짜가 오늘을 기준으로 안지났으면 안보여주기
                 if( today < new Date(application.Competition.doreOpen) ) {
                     return ;
@@ -166,7 +179,7 @@ function Profilesection() {
                                 <h3>{curApplication.doreOpen}({curApplication.day})</h3>
                             </div>
                             <div className= 'Profilesection_boxRight'>
-                                <img onClick={()=>{deleteCompetitionApplication(curApplication.id)}} 
+                                <img onClick={()=>{onRemove(curApplication.id)}} 
                                     src={xIcon} alt='삭제 아이콘' className= 'Profilesection_boxDelete Profilesection_boxDeleteHidden'></img>
                                 <div className= 'Profilesection_boxRightTitle'>
                                     <h4>신청인<span>{curApplication.host}</span></h4>
@@ -218,9 +231,9 @@ function Profilesection() {
             <section className='Profilesection_right'>
                 <h2>신청대회 목록</h2>
                 <ul className='Profilesection_competitonNav'>
-                    <li className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
-                    <li className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
-                    <li className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
+                    <li key='개인 신청' className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
+                    <li key='단체 신청' className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
+                    <li key='지난 신청' className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
                 </ul>
                 <hr className='Profilesection_hr'/>
                 <div className='Profilesection_competitonList'>

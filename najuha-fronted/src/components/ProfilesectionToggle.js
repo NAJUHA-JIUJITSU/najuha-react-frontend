@@ -49,7 +49,6 @@ function ProfilesectionToggle() {
             }
         })
         .then((res) => {
-            console.log('지울 대회 id: ' + id);
             console.log(res.data.result);
             console.log(res.data.message);
             getCompetitionApplication();
@@ -86,10 +85,10 @@ function ProfilesectionToggle() {
         let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
         let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
         let isPayment = application.isPayment ? '결제완료' : '결제하기';
-        let isCanceled = (application.competitionPayment == null) ? ' ' : application.competitionPayment.status; // 'CANCELED'면 환불완료 
+        let isCanceled = (application.competitionPayment === null) ? ' ' : application.competitionPayment.status; // 'CANCELED'면 환불완료 
         let isGroup = application.isGroup;
-        let costMsg = application.isPayment ? '예상 결제금액' : '총 결제금액';
-        let payCss = (isPayment == '결제하기' && registrationDeadline == true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
+        let costMsg = application.isPayment ? '총 결제금액' : '예상 결제금액';
+        let payCss = (isPayment === '결제하기' && registrationDeadline === true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
         // let divisionName = application.divisionName;
         // let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
         // let uniform = (application.uniform = "gi") ? '기-' : '노기-';
@@ -105,7 +104,7 @@ function ProfilesectionToggle() {
             'day' : day,
             'registrationDeadline' : registrationDeadline, //false면 신청마감
             'isPayment': ( registrationDeadline ) ? isPayment : '신청마감',
-            'isCanceled' : ( isCanceled=='CANCELED' ) ? true : false, 
+            'isCanceled' : ( isCanceled==='CANCELED' ) ? true : false, 
             'isGroup' : isGroup, //false 면 개인, true면 단체
             'costMsg' : costMsg,
             'payCss' : payCss,
@@ -120,7 +119,7 @@ function ProfilesectionToggle() {
             let today = new Date();
             curApplication.isPayment = ( curApplication.isCanceled ) ? '환불완료' : curApplication.isPayment;
 
-            if(clickedList == 'person') {
+            if(clickedList === 'person') {
                 //날짜가 오늘을 기준으로 지났으면 안보여주기
                 if( today > new Date(application.Competition.doreOpen) ) {
                     return ;
@@ -130,7 +129,7 @@ function ProfilesectionToggle() {
                     return ;
                 }
             }
-            if(clickedList == 'group') {
+            if(clickedList === 'group') {
                 //날짜가 오늘을 기준으로 지났으면 안보여주기(오늘은 보여줌)
                 if( today >= new Date(application.Competition.doreOpen) ) {
                     return ;
@@ -140,8 +139,7 @@ function ProfilesectionToggle() {
                     return ;
                 }
             }
-
-            if(clickedList == 'last') {
+            if(clickedList === 'last') {
                 //날짜가 오늘을 기준으로 안지났으면 안보여주기
                 if( today < new Date(application.Competition.doreOpen) ) {
                     return ;
@@ -214,9 +212,9 @@ function ProfilesectionToggle() {
             <section className='ProfilesectionToggle_right'>
                 <h2>신청대회 목록</h2>
                 <ul className='Profilesection_competitonNav'>
-                    <li className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
-                    <li className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
-                    <li className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
+                    <li key='개인 신청' className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
+                    <li key='단체 신청' className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
+                    <li key='지난 신청' className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
                 </ul>
                 <hr className='Profilesection_hr'/>
                 <div className='Profilesection_competitonList'>
