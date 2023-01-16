@@ -42,20 +42,58 @@
 
 .UserInfo_infoBox {
     border-bottom : 1px solid #E9E9E9;
-    height: 54px;
+    height: 7.0rem;
     width: 98%;
     margin-bottom: 24px;
     box-sizing: border-box;
 }
 
+.UserInfo_boxsRead .UserInfo_infoBox {
+    height: 5.8rem;
+}
+
+.UserInfo_infoBox input {
+    padding: 0.6rem;
+    font-size: 1.8rem;
+}
+
+.UserInfo_infoBox .UserInfo_phoneNumber{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .UserInfo_infoBox p {
     font-size: 2rem;
-    margin-top: 1.4rem;
+    margin-top: 1.2rem;
 }
 
 .UserInfo_infoBox span {
     color: #9F9F9F;
     font-size: 1.4rem;
+}
+
+.UserInfo_flexbox {
+    display: flex;
+}
+
+.UserInfo_flexbox span{
+    margin-top: 3.2rem;
+    margin-left: 1rem;
+    font-size: 1.2rem;
+}
+
+.UserInfo_beltSeclet {
+    margin-top: 1.2rem;
+}
+
+.UserInfo_beltSeclet select {
+    padding: 0.6rem 0.2rem;
+    font-size: 1.8rem;
+    width: 200px;
+}
+
+.UserInfo_beltSeclet select:hover {
+    cursor: pointer;
 }
 
 .UserInfo_right .UserInfo_updateBtn {
@@ -80,12 +118,14 @@
 }
 
 .UserInfo_genderCategory input{
-    margin-top: 1.2rem;
+    margin-top: 1rem;
     margin-right: 1rem;
 }
 
-.UserInfo_genderCategory p {
+.UserInfo_genderCategory span {
     margin-right: 6rem;
+    color: black;
+    font-size: 1.8rem;
 }
 
 @media(max-width:1049px){

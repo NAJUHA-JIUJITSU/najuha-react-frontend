@@ -41,115 +41,7 @@
     height: 3%;
   }
 
-.Profilesection_welcome {
-    /* border: 2px solid red; */
-    height: 20%;
-    margin-top: auto;
-    margin-bottom: auto;
-    position: relative;
-}
-
-.Profilesection_competitionCount {
-    /* border: 1px solid green; */
-    height: 30%;
-    display: flex;
-}
-
-.Profilesection_information {
-    /* border: 1px solid blue; */
-    height: 50%;
-}
-
-.Profilesection_MobileTable {
-    display: none;
-}
-
 /* Components */
-
-.Profilesection_welcome-center {
-    /* border: 2px solid black; */
-    position: absolute;
-    top:100%;
-    transform: translateY(-100%);
-}
-
-.Profilesection_welcome-center p{
-    font-size: 3.2rem;
-    letter-spacing: 2px;
-    position: relative;
-
-}
-.Profilesection_welcome-center-btn p:hover{
-    color: #292929;
-    cursor: pointer;
-
-}
-
-.Profilesection_welcome-center-btn img {
-    position: absolute;
-    top: -3px;
-    left: 80px;
-}
-
-.Profilesection_welcome-center-username {
-    font-size: 3.4rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-right: 2.4px;
-}
-
-.Profilesection_welcome-center-btn p{
-    margin-top: 0.8em;
-    font-size: 1.4rem;
-    letter-spacing: 0.5px;
-    color: gray;
-
-}
-
-.Profilesection_competitionCount-box {
-    background-color: #E7F3FF;
-    margin: auto 16px auto 0;
-    height: 60%;
-    width: 45%;
-    box-sizing: border-box;
-    position: relative;
-}
-
-.totalCnt{
-    background-color: #EEEAFF;
-}
-
-.Profilesection_competitionCount-box-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: block;
-    text-align: center;
-    font-size: 1.4rem;
-    width: 100%;
-}
-
-.Profilesection_competitionCount-box-num{
-    font-size: 4.8rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.Profilesection_information-btn {
-    background: white;
-    border-bottom: 1px solid #EEEEEE;
-    font-size: 1.8rem;
-    height: 60px;
-    line-height: 60px;
-    padding-left: 16px;
-    box-sizing: border-box;
-    cursor: pointer;
-}
-
-.Profilesection_information-btn:hover {
-    background: #F5F5F5;
-}
 
 .Profilesection_right h2 {
     font-size: 3rem;
@@ -159,86 +51,230 @@
     font-weight: 500;
 }
 
-.Profilesection_myCompetitionList h3 {
-    font-size: 1.8rem;
-    font-weight: 500;
+.Profilesection_competitonNav {
+    display: flex;
+    gap: 1rem;
+    font-size: 2rem;
+    letter-spacing: -0.2rem; 
+    text-align: center;
 }
 
-.Profilesection_myCompetitionList p {
-    font-size: 1.2rem;
-    color : #5C5C5C;
-    margin-top: 0.5rem;
-    position: relative;
+.Profilesection_competitonNav li:after {
+    display: block;
+    content: "";
+    width: 100px;
+    /* border-bottom: 1px solid #a01a1a; */
+    padding: 0.5rem;
 }
-.Profilesection_myCompetitionList p:hover {
-    color : #292929;
+
+.Profilesection_active {
+    font-weight: 600;
+}
+.Profilesection_competitonNav .Profilesection_active:after {
+    border-bottom: 4px solid black;
+}
+
+.Profilesection_hr{
+    margin-top: -0.2rem;
+    height:1px;
+    border:0;
+    background-color : #F0F0F0;
+}
+
+.Profilesection_competitonHr {
+    height:4px;
+    border:0;
+    background-color : #FBFBFB;
+    margin-bottom: 2rem;
+}
+
+/* 대회 리스트 목록 */
+.Profilesection_competitonNav {
     cursor: pointer;
 }
 
-.Profilesection_myCompetitionList Img {
-    position: absolute;
-    top: -3.5px;
-    left: 38px;
+.Profilesection_competitonList {
+    /* border : solid 1px red; */
+    padding: 4px;
 }
 
-.Profilesection_myCompetitionList table {
-    box-sizing: border-box;
-    margin: 2rem 0 3rem 0;
-    text-align: center;
-    letter-spacing: -0.1rem;
-}
-
-.Profilesection_myCompetitionList thead {
-    background-color: #E5E9EC;
-    color: #5C5C5C;
+.Profilesection_competitoninfo {
+    margin-top: 1rem;
     font-size: 1.4rem;
-    font-weight: 400;
+    color: #8C8C8C;
+    text-align: right;
+    padding: 0.4rem;
+    letter-spacing: -0.12rem;
 }
 
-.Profilesection_myCompetitionList th {
-    padding: 10px 12px;
-    vertical-align:middle;
+.Profilesection_competitoninfo a,
+.Profilesection_competitoninfo img {
+    cursor: pointer;
 } 
 
-.Profilesection_myCompetitionList td {
-    padding: 8px;
-    font-size: 1.8rem;
-    border-bottom: 1px solid #E9E9E9;
-    vertical-align: middle;
+/* 대회 박스 */
+
+.Profilesection_competitoninfo a {
+    margin-bottom: 1rem;
 }
 
-.Profilesection_myCompetitionList .payInfo {
-    border: none;
+.Profilesection_competitoninfo img {
+    margin-left: 0.5rem;
+    margin-bottom: -1px;
 }
 
-#payInfoBtn {
-    background-color: #F9F9F9;
-    color: #7e7e7e;
-    border: 1px solid #E2E2E2;
-    border-radius: 4px;
+.Profilesection_competitonbox {
+    border : solid 1px #ECECEC;
+    height: 16.5rem;
+    width: 100%;
     box-sizing: border-box;
-    width: 7.2rem;
-    height: 3.4rem;
-    font-size: 1.6rem;
-    margin: 0 4px;
+    margin-bottom: -6rem;
+    border-radius: 10px;
+    display: flex;
 }
 
-#payInfoBtn:hover {
+.Profilesection_boxDelete {
+    margin-left: 96.5%;
+    margin-top: 1rem;
+}
+
+.Profilesection_boxLeft {
+    /* border : solid 1px red; */
+    width: 15%;
+    margin: 2rem;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.Profilesection_boxLeft img {
+    width: 100%;
+    height: 100%;
+}
+
+.Profilesection_posterBlack {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.432);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.Profilesection_boxLeft h3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.8rem;
+    color: white;
+    letter-spacing: -0.04rem;
+    z-index: 10;
+}
+
+.Profilesection_boxRight {
+    /* border : solid 1px blue; */
+    width: 85%;
+    margin-bottom: 2rem;
+    letter-spacing: -0.1rem;
+
+    overflow: hidden; 
+}
+
+.Profilesection_boxRight img {
     cursor: pointer;
-    background-color: #E2E2E2;
 }
 
-.totlaList thead{
-    background-color: #F6F6F6;
-    color: #5C5C5C;
+.Profilesection_boxRightTitle {
+    width: 98%;
+    padding-bottom: 0.4rem;
+    height: 65%;
+    align-items: center;
+    font-size: 1.4rem;
+    box-sizing: border-box;
 }
 
-.totlaList tbody {
-    color: #848484;
+.Profilesection_boxRightTitle span {
+    font-weight: 700;
+    margin-left: 0.2rem;
 }
 
-.totlaList table {
-    margin: 2rem 0 0 0;
+.Profilesection_boxRightTitle h4 {
+    padding-bottom: 1rem;
+}
+
+.Profilesection_boxRightTitle h3 {
+    margin-bottom: 1rem;
+    font-size: 2.4rem;
+
+    height: 1.9em;
+    display: block;
+    /* white-space: normal; */
+    white-space: nowrap;
+    line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Profilesection_boxRightTitle p {
+    color: #696969;
+}
+
+.Profilesection_boxRightCost {
+    display: flex;
+    margin-right: 2rem;
+    margin-bottom: 6rem;
+    box-sizing: border-box;
+}
+
+.Profilesection_costLayout {
+    color: #8C8C8C;
+    display: flex;
+    align-items: flex-end;
+    margin-left: auto;
+}
+
+.Profilesection_costLayout h3{
+    font-size: 1.4rem;
+    margin-right: -0.4rem;
+}
+
+.Profilesection_costLayout p{
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-left: 1rem;
+    margin-right: 0.8rem;
+}
+
+.Profilesection_costBtn {
+    width: 84px;
+    height: 37px;
+    border-radius: 30px;
+    border: 1px solid #F1F1F1;
+    text-align: center;
+    background: #FFFFFF;
+    color: #8C8C8C;
+    font-weight: 400;
+    font-size: 1.6rem;
+    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.Profilesection_costBtn {
+    cursor: default;
+}
+
+.Profilesection_payCss .Profilesection_costBtn {
+    cursor: pointer;
+}
+
+
+/* 결제하기 금액 + 버튼 효과 */
+.Profilesection_payCss {
+    color: #000000;
+}
+.Profilesection_payCss .Profilesection_costBtn{
+    color: #4E82E5;
 }
 
 @media(max-width:1049px){
@@ -273,73 +309,66 @@
     .Profilesection_right {
         height: 88vh;
     }
-
-    .Profilesection_PcTable {
-        display: none;
-    }
     
-    .Profilesection_wrapper .Profilesection_MobileTable {
-        display: table-row;
-    }
-
     .Profilesection_right h2 {
         font-size: 2.6rem;
         padding-top: 1rem;
-        padding-bottom: 2rem;
+        padding-bottom: 4rem;
+    }
+    .Profilesection_competitonNav li:after {
+        width: 90px;
     }
 
-    .Profilesection_thead {
-        display: none;
+    .Profilesection_boxDelete {
+        margin-left: 92%;
+        margin-top: 1rem;
     }
 
-    .Profilesection_myCompetitionList td {
-        border-bottom: none;
-    }
-     
-    #Profilesection_tableDate {
-        background-color: #E7F3FF;
-        height: 3.6rem;
-        width: 10rem;
-        position: relative;
+    .Profilesection_competitonbox {
+        height: 125px;
+        margin-bottom: 0.6rem;
     }
 
-    .totlaList #Profilesection_tableDate {
-        background-color: #E7E7E7;
+    .Profilesection_boxLeft {
+        margin: 0rem;
+        width: 104px;
+        margin-right: 0.8rem;
     }
 
-    #Profilesection_tableDate p {
-        position: absolute;
-        font-size: 1.8rem;
-        color: #292929;
-        font-weight: 600;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -70%);
+    .Profilesection_boxLeft h3 {
+        font-size: 2.4rem;
     }
 
-    .Profilesection_myCompetitionList td {
-        padding: 26px 4px 1px 4px;
-        font-size: 1.8rem;
-    }
-
-    .Profilesection_odd td{
-        padding-top: 8px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #E9E9E9;
-    }
-
-    .Profilesection_myCompetitionList .payInfo {
-        border-bottom: 1px solid #E9E9E9;
-    }
-
-    .Profilesection_right .Profilesection_myCompetitionList table {
-        margin: 0 0 4rem 0;
-    }
-
-    #payInfoBtn {
-        width: 8rem;
-        height: 3.2rem;
+    .Profilesection_boxRightTitle h4 {
         font-size: 1.4rem;
-        margin: 0 4px;
     }
+
+    .Profilesection_boxRightTitle h3 {
+        font-size: 2rem;
+        height: 1.4em;
+    }
+
+    .Profilesection_boxRightTitle p {
+        font-size: 1.4rem;
+    }
+
+    .Profilesection_boxRightCost {
+        display: flex;
+        /* border: solid 1px red; */
+        margin-right: 0rem;
+        margin-bottom: 2rem;
+    }
+
+    .Profilesection_boxRightCost p{
+        font-size: 1.8rem;
+    }
+    .Profilesection_boxRightCost h3 {
+        font-size: 1.4rem;
+    }
+    .Profilesection_costBtn{
+        font-size: 1.6rem;
+        width: 80px;
+        height: 36px;
+    }
+
 }
