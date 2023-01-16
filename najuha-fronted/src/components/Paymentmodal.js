@@ -1,7 +1,9 @@
 import React from 'react'
 import './Paymentmodal.css';
+import { useNavigate } from 'react-router-dom'
 
 function Paymentmodal(props) {
+    let navigate = useNavigate();
 
     function closeModal() {
         props.closeModal();
@@ -50,7 +52,7 @@ function Paymentmodal(props) {
     <div className="Paymentmodal_Modal" >
             <div className="Paymentmodal_modalBody" onClick={(e) => e.stopPropagation()}>
                 <h2 id="Paymentmodal_modaltitle">결제방식 선택 </h2>
-                <button id="Paymentmodal_modalCloseBtn" onClick={closeModal}>
+                <button id="Paymentmodal_modalCloseBtn" onClick={() => navigate('/Profilepage')}>
                 ✖
                 </button>
                 <div className='Paymentmodal_firstsection'>
@@ -68,7 +70,7 @@ function Paymentmodal(props) {
                     </div>
                     <div className='Paymentmodal_firstsection_totalprice'>
                         <p>총 결제금액</p>
-                        <p>{props.normalprice}</p>
+                        <p>{props.discountedprice}</p>
                     </div>
                 </div>
                 <div className= 'Paymentmodal_secondsection'>

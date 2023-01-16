@@ -1,0 +1,111 @@
+/*  typography */
+
+.PaymentSuccess-wrapper h2{
+    font-weight: 700;
+    font-size: 2.8rem;
+    letter-spacing: -0.1em;
+    color: #4E82E5;
+    margin-top: 40px;
+}
+
+.PaymentSuccess-wrapper h3 span{
+    font-weight: 700;
+    font-size: 2.4rem;
+    letter-spacing: -0.1em;
+}
+
+.PaymentSuccess-wrapper h3{
+    font-weight: 400;
+    font-size: 2.2rem;
+    letter-spacing: -0.1em;
+    margin-top: 30px;
+}
+
+.PaymentSuccess-wrapper-button button{
+    font-weight: 400;
+    font-size: 2.2rem;
+    letter-spacing: -0.1em;
+    color: #8C8C8C;
+}
+
+#PaymentSuccess-blue-button{
+    color: #4E82E5;
+}
+
+
+/* component */
+
+.PaymentSuccess{
+    min-height: 84vh;
+    box-sizing: border-box;
+    padding-top: 10vh;
+}
+
+.PaymentSuccess-wrapper{
+    width: 80%;
+    height: 394px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+
+.PaymentSuccess-wrapper-button button{
+    width: 189px;
+    height: 57px;
+    margin-top: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    /* 버튼그림자 */
+    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+}
+
+@media(max-width:750px){
+
+.PaymentSuccess{
+    min-height: 88vh;
+}
+
+.PaymentSuccess-wrapper{
+    /* width: 320px; */
+    height: 273px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+}
+
+.PaymentSuccess-wrapper img{
+    width: 110px;
+    height: 110px;
+}
+
+.PaymentSuccess-wrapper-button button{
+    width: 45%;
+    height: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/*  typography */
+
+.PaymentSuccess-wrapper h2{
+    font-size: 2.4rem;
+    margin-top: 20px;
+}
+
+.PaymentSuccess-wrapper h3{
+    font-size: 1.4rem;
+    margin-top: 20px;
+}
+
+.PaymentSuccess-wrapper h3 span{
+    font-size: 1.4rem;
+}
+
+.PaymentSuccess-wrapper-button button{
+    font-size: 1.6rem;
+}
+
+}

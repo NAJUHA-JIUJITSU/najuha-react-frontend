@@ -108,21 +108,6 @@ function CompetitionApplyForm() {
           })
     }
 
-    // const postCompetition = async () => {
-    //     try {
-    //         const response = await axios.post(`${process.env.REACT_APP_BACK_END_API}/competitionApplications`, {
-    //             headers: {
-    //                 "x-access-token":  cookies.get("x-access-token")
-    //             },
-    //             body: {viewcompetitionApplicationList}
-    //         });
-    //         console.log(response)
-    //     } catch(err) {
-    //         console.log(err);
-    //     }
-    // }
-
-
     function postCompetition(){
         let competitionApplicationList = parsingbeforeapplypost(viewcompetitionApplicationList);
         axios({
@@ -158,10 +143,6 @@ function CompetitionApplyForm() {
         console.log(paymentData);
         return paymentData;
       };
-
-    // const tossPaymentMethodValidation = () => {
-
-    // }
 
     const tossPay = async () => {
         const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
@@ -248,9 +229,6 @@ function CompetitionApplyForm() {
         setviewCompetitionApplicationList(cal);
         setFillteredCompetition(competition.division);
     }
-
-    // const calculatePrice = () => {        
-    // }
 
     const curApplicationcomplete = (i) => {
         let cal = [...viewcompetitionApplicationList];
@@ -400,9 +378,6 @@ function CompetitionApplyForm() {
         setviewCompetitionApplicationList(cal);
     }
 
-
-
-
     const chooseOptionUI = (application, i) => {
         if(application.uniform == null){
             let comuniform = [];
@@ -445,6 +420,7 @@ function CompetitionApplyForm() {
                     combelt.push(bel);
                 })
             })
+            combelt = [...new Set(combelt)];
             return combelt.map((el, h) => {
                 return(
                     <li onClick={(() => chooseBeltOption(el, i))}>{el}</li>
@@ -457,6 +433,7 @@ function CompetitionApplyForm() {
                     comweight.push(wei);
                 })
             })
+            comweight = [...new Set(comweight)];
             return comweight.map((el, h) => {
                 return(
                     <li onClick={(() => chooseWeightOption(el, i))}>{el}</li>
@@ -496,7 +473,7 @@ function CompetitionApplyForm() {
     <div className='CompetitionApplyForm-wrapper'>
         <div className='CompetitionApplyForm-top'>
             <h2 className='CompetitionApplyForm-top-title'>
-                예거스 챔피언쉽 로컬대회 송도 오픈
+                {competition != null ? competition.title : ''}
             </h2>
             <div className='CompetitionApplyForm-top-table'>
                 <ul className='CompetitionApplyForm-top-table-standard'>

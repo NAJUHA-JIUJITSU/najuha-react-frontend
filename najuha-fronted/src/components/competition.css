@@ -1,0 +1,342 @@
+/* typography */
+
+.competition-top-title h2{
+    font-size: 3rem;
+    letter-spacing: -0.1em;
+}
+
+#competition-top-button{
+    font-weight: 400;
+    font-size: 22px;
+    letter-spacing: -0.1em;
+    color: #4E82E6;
+}
+
+.competition-top-content-info-each h3{
+    font-size: 18px;
+    color: #8C8C8C;
+    letter-spacing: -0.1em;
+}
+
+.competition-top-content-info-each p{
+    font-size: 20px;
+    letter-spacing: -0.1em;
+}
+
+/* Layout */
+
+.competition-wrapper{
+    max-width: 1200px;
+    width: 100%;
+    min-height: 84vh;
+    padding: 0 2rem;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding-top: 3vh;
+    
+}
+
+.competition-top-title{
+    margin-bottom: 3vh;
+}
+
+.competition-top-content-info{
+    padding-left: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+}
+
+
+/* component */
+
+.competition-top-title{
+    display: flex;
+}
+
+#competition-top-button{
+    border: 1px solid #F1F1F1;
+    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    width: 138px;
+    height: 57px;
+    background: #FFFFFF;
+    margin-left: 100%;
+    transform: translate(-100%, 0);
+}
+
+/* .competition-top-title button::before{
+    content: 'D-20';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    background-color: #FFFFFF;
+} */
+
+.competition-top-content{
+    display: flex;
+}
+
+.competition-top-content-img{
+    min-width: 194px;
+    height: 264px;
+    background-color: red;
+}
+
+.competition-top-content-info{
+    width: calc(100% - 194px);
+}
+
+.competition-top-content-info-each{
+    display: flex;
+    /* align-items: center; */
+    margin-bottom: 2.3rem;
+}
+
+.competition-top-content-info-each p{
+    display: block;
+    width: calc(100%-120px);
+    overflow: hidden;
+}
+
+#competition-top-content-info-each-last{
+    margin-bottom: 0;
+}
+
+.competition-top-content-info-each h3{
+    min-width: 120px;
+}
+
+
+.competition-bottom-markdown{
+    margin-top: 1rem;
+    border-top: 1px solid #EEEEEE;
+    padding-top: 4rem;
+}
+
+/* .competition-bottom-markdown {
+    white-space: pre-wrap;
+} */
+
+/* 마크다운 문법 */
+
+.competition-bottom-markdown hr{
+    /* height: 1px; */
+    margin-top: 34px;
+    margin-bottom: 26px;
+    border-top: 1px solid #EEEEEE;
+    border-bottom: 0;
+}
+
+.competition-bottom-markdown p{
+    font-size: 20px;
+    letter-spacing: -0.1em;
+    display: inline;
+}
+
+.competition-bottom-markdown a{
+    /* color: -webkit-link; */
+    text-decoration: underline;
+}
+
+.competition-bottom-markdown h1{
+    font-size: 22px;
+    display: block;
+    margin-bottom: 53px;
+    letter-spacing: -0.1em;
+}
+
+.competition-bottom-markdown h2{
+    font-size: 18px;
+    display: inline-block;
+    width: 129px;
+    margin-bottom: 24px;
+    letter-spacing: -0.1em;
+    color: #8C8C8C;
+}
+
+.competition-bottom-markdown h3{
+    font-size: 18px;
+    display: block;
+    width: 129px;
+    letter-spacing: -0.1em;
+    color: #8C8C8C;
+}
+
+.competition-bottom-markdown ul{
+    padding-left: 129px;
+}
+
+.competition-bottom-markdown li:last-child{
+    margin-bottom: 24px;
+}
+
+.competition-bottom-markdown li::before{
+    content: ' ';
+    display: block;
+    position: absolute;
+    background-color: black;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.competition-bottom-markdown li{
+    position: relative;
+    font-size: 20px;
+    margin-bottom: 18px;
+    padding-left: 22px;
+    letter-spacing: -0.1em;
+}
+
+.competition-bottom-markdown img{
+    max-width: 100%;
+    margin-bottom: 2.4rem;
+}
+
+@media(max-width:1049px){
+
+    .competition-wrapper{
+        max-width: 768px;
+    }
+
+
+}
+
+@media(max-width:750px){
+
+    .competition-wrapper{
+        max-width: 650px;
+        min-height: 88vh;
+    }
+
+
+    /* typography */
+    .competition-top-title h2{
+        font-size: 2rem;
+        letter-spacing: -0.1em;
+    }
+    
+    #competition-top-button{
+        font-weight: 400;
+        font-size: 1.8rem;
+        color: #4E82E6;
+    }
+    
+    .competition-top-content-info-each h3{
+        font-size: 1.4rem;
+        color: #8C8C8C;
+        letter-spacing: -0.1em;
+    }
+    
+    .competition-top-content-info-each p{
+        font-size: 1.6rem;
+        letter-spacing: -0.1em;
+    }
+
+    /* Layout */
+
+    .competition-top-content-info{
+        padding-top: 0;
+        padding-left: 1.5rem;
+        padding-bottom: 1.4rem;
+        box-sizing: border-box;
+    }
+
+    .competition-top-content-info-each{
+        margin-bottom: 1.4rem;
+    }
+
+    .competition-bottom-markdown img{
+        margin-bottom: 1.6rem;
+    }
+    
+
+    /* component */
+
+    .competition-top-content-img{
+        min-width: 98px;
+        height: 144px;
+    }
+
+    .competition-top-content-info{
+        width: calc(100% - 98px);
+    }
+
+    #competition-top-button{
+        width: 95px;
+        height: 39px;
+    }
+
+    .competition-top-content-info-each h3{
+        min-width: 98px;
+    }
+
+    .competition-top-content-info-each p{
+        width: calc(100%-98px);
+    }
+
+    /* markdown */
+
+    .competition-bottom-markdown hr{
+        /* height: 1px; */
+        margin-top: 34px;
+        margin-bottom: 26px;
+        border-top: 1px solid #EEEEEE;
+        border-bottom: 0;
+    }
+    
+    .competition-bottom-markdown p{
+        font-size: 16px;
+
+    }
+
+    .competition-bottom-markdown h1{
+        font-size: 20px;
+        margin-bottom: 40px;
+    }
+    
+    .competition-bottom-markdown h2{
+        font-size: 14px;
+        width: 90px;
+        margin-bottom: 24px;
+    }
+    
+    .competition-bottom-markdown h3{
+        font-size: 14px;
+        width: 90px;
+    }
+    
+    .competition-bottom-markdown ul{
+        padding-left: 90px;
+    }
+    
+    .competition-bottom-markdown li:last-child{
+        margin-bottom: 24px;
+    }
+    
+    .competition-bottom-markdown li::before{
+        content: ' ';
+        display: block;
+        position: absolute;
+        background-color: black;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+    }
+    
+    .competition-bottom-markdown li{
+        position: relative;
+        font-size: 16px;
+        margin-bottom: 16px;
+        padding-left: 18px;
+    }
+}

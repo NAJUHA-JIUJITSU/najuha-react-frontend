@@ -20,12 +20,12 @@ const TossSuccess = () => {
       .then((res) => {
         console.log(res)
         window.alert(`결제가 완료되었습니다. 결제 금액: ${res.data.result.totalAmount}`);
-        navigate("/");
+        navigate("/payment/success");
       })
       .catch((err) => {
         console.log(err);
         window.alert("결제에 실패하였습니다.");
-        navigate("/");
+        navigate("/payment/fail");
       });
   });
 };

@@ -147,7 +147,7 @@ function Competitionlist() {
                             <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDeadline}({curcompetition.registrationDeadlineDay})</h4>
                             <div class='each-competition-bottom-buttons'>
                                 <button>세부정보</button>
-                                <button onClick={()=>{navigate(`/competition/apply/${curcompetition.id}`)}}>신청</button>
+                                <button onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>신청</button>
                             </div>
                         </div> 
                     </div>
@@ -178,8 +178,8 @@ function Competitionlist() {
                     <DesktopDatePicker
                     label="시작 날짜"
                     views={['year', 'month', 'day']}
-                    minDate={dayjs('2022-1-1')} // 올해로 한정될수 있게 변수값을 고쳐야함 
-                    maxDate={dayjs('2022-12-31')} // 올해로 한정될수 있게 변수값을 고쳐야함 
+                    minDate={dayjs('2023-1-1')} // 올해로 한정될수 있게 변수값을 고쳐야함 
+                    maxDate={dayjs('2023-12-31')} // 올해로 한정될수 있게 변수값을 고쳐야함 
                     inputFormat="MM.DD~" 
                     componentsProps={{
                     actionBar: {

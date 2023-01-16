@@ -18,7 +18,7 @@ function footer() {
                 <li>개인정보처리방침</li>
                 <li>이용약관</li>
                 <li>고객센터</li>
-                <li>인재영입</li>
+                <li id='company-menu-list-last'>인재영입</li>
             </ul>
         </div>
     </div>
