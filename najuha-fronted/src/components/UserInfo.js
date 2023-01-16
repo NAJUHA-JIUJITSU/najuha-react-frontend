@@ -24,7 +24,7 @@ function  UserInfo() {
             }
         })
         .then((res) => {
-            setUserInfo(res.data.result.userInfo);
+            setUserInfo(res.data.result.UserInfo);
             console.log(res.data.message);
         })
         .catch((err) => {
@@ -79,7 +79,7 @@ function  UserInfo() {
         let fullName = userInfo.fullName;
         let email = userInfo.email;
         let phoneNumber = userInfo.phoneNumber;
-        let gender = (userInfo.gender === 'male') ? '남자' : '여자';
+        let gender = (userInfo.gender === 'female') ? '여자' : '남자';
         let belt = userInfo.belt;
         let weight = userInfo.weight;
 
@@ -96,7 +96,7 @@ function  UserInfo() {
     function Read() {
 
         return (
-            <div className='UserInfo_Boxs'>
+        <div className='UserInfo_Boxs UserInfo_boxsRead'>
             <div className='UserInfo_infoBox'>
                 <span>이름</span>
                 <p>{user.fullName}</p>
@@ -132,6 +132,15 @@ function  UserInfo() {
         const [userInfos, setUserInfos] = useState(props.user);
     
         const handleChange = (e, title) => {
+            if(title =='phoneNumber' || title=='weight') {
+                e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                if(title =='phoneNumber' && e.target.value.length > 11){
+                    e.target.value = e.target.value.slice(0, 11)
+                }
+                if(title =='weight' && e.target.value.length > 3){
+                    e.target.value = e.target.value.slice(0, 3)
+                }
+            }
             console.log(userInfos);
             let newuserInfos = {...userInfos};
             newuserInfos[title] = e.target.value;
@@ -160,36 +169,51 @@ function  UserInfo() {
             <form onSubmit={(e)=>onSumbit(e)}>
                  <div className='UserInfo_infoBox'>
                 <span>이름</span>
-                <p><input type='text' name='fullName' placeholder={userInfos.fullName} value= {userInfos.fullName} onChange={(e)=>handleChange(e, 'fullName')}/></p>
+                <p><input type='text' name='fullName' placeholder={userInfos.fullName} value= {userInfos.fullName} onChange={(e)=>handleChange(e, 'fullName')} required/></p>
                 </div>
                 <div className='UserInfo_infoBox'>
                     <span>성별</span>
                     <div className='UserInfo_genderCategory'>
-                        <input type='radio' name='male' value='남자' id='male' checked={userInfos.gender === '남자'} onChange={(e)=>handleChange(e, 'gender')}/><p>남자</p>
-                        <input type='radio' name='female' value='여자' id='female' checked={userInfos.gender === '여자'} onChange={(e)=>handleChange(e, 'gender')}/><p>여자</p>
+                        <p><input type='radio' name='male' value='남자' id='male' checked={userInfos.gender === '남자'} onChange={(e)=>handleChange(e, 'gender')}/><span>남자</span></p>
+                        <p><input type='radio' name='female' value='여자' id='female' checked={userInfos.gender === '여자'} onChange={(e)=>handleChange(e, 'gender')}/><span>여자</span></p>
                     </div>
                 </div>
                 <div className='UserInfo_infoBox'>
                     <span>휴대폰</span>
-                    <p><input type='text' name='phoneNumber' placeholder={userInfos.phoneNumber} value={userInfos.phoneNumber} onChange={(e)=>handleChange(e, 'phoneNumber')}/></p>
+                    <div className='UserInfo_flexbox UserInfo_phoneNumber'>
+                        <p><input type='tel' name='phoneNumber' placeholder={userInfos.phoneNumber} value={userInfos.phoneNumber} onChange={(e)=>handleChange(e, 'phoneNumber')} required/></p>
+                        <span>'-' 없이 숫자만 입력(12자리)</span>
+                    </div>
                 </div>
                 <div className='UserInfo_infoBox'>
                     <span>이메일</span>
-                    <p><input type='text' name='email' placeholder={userInfos.email} value={userInfos.email} onChange={(e)=>handleChange(e, 'email')}/></p>
+                    <p><input type='email' name='email' placeholder={userInfos.email} value={userInfos.email} onChange={(e)=>handleChange(e, 'email')} required/></p>
                 </div>
                 <div className='UserInfo_infoBox'>
                     <span>벨트</span>
-                    <p><input type='text' name='belt' placeholder={userInfos.belt} value={userInfos.belt} onChange={(e)=>handleChange(e, 'belt')}/></p>
+                    <div className='UserInfo_beltSeclet'>
+                        <select name='belt' onChange={(e)=>handleChange(e, 'belt')}>
+                            <option value="white">화이트</option>
+                            <option value="blue">블루</option>
+                            <option value="purple">퍼플</option>
+                            <option value="brown">브라운</option>
+                            <option value="black">블랙</option>
+                        </select>
+                    </div>
                 </div>
                 <div className='UserInfo_infoBox'>
                     <span>체급</span>
-                    <p><input type='text' name='weight' placeholder={userInfos.weight} value={userInfos.weight} onChange={(e)=>handleChange(e, 'weight')}/></p>
+                    <div className='UserInfo_flexbox'>
+                        <p><input type='number' name='weight' min="0" max="200" placeholder={userInfos.weight} value={userInfos.weight} onChange={(e)=>handleChange(e, 'weight')}/></p>
+                        <span>숫자만 입력</span>
+                    </div>
                 </div>
                 <button className='UserInfo_updateBtn' type='submit'>저장하기</button>
             </form>
         )
     }
 
+    
     useEffect(() => {
         if(decodedToken){
             if(decodedToken.userLevel === 1){
@@ -210,7 +234,7 @@ function  UserInfo() {
         <div className='UserInfo_wrapper'>
             <ProfileTap/>
             <div className='UserInfo_right'>
-                <h2>내 프로필 관리</h2>
+                <h2>내 프로필 수정</h2>
                 {content}    
             </div>
         </div>

@@ -18,7 +18,7 @@
 
 .ProfileTap_welcome {
     /* border: 2px solid red; */
-    height: 20%;
+    height: 18%;
     margin-top: auto;
     margin-bottom: auto;
     position: relative;
@@ -26,8 +26,9 @@
 
 .ProfileTap_competitionCount {
     /* border: 1px solid green; */
-    height: 30%;
+    height: 20%;
     display: flex;
+    align-items: center;
 }
 
 .ProfileTap_information {
@@ -40,8 +41,8 @@
 .ProfileTap_welcome-center {
     /* border: 2px solid black; */
     position: absolute;
-    top:100%;
-    transform: translateY(-100%);
+    top:50%;
+    transform: translateY(-50%);
 }
 
 .ProfileTap_welcome-center p{
@@ -79,13 +80,16 @@
 
 .ProfileTap_competitionCount-box {
     background-color: #E7F3FF;
-    margin: auto 16px auto 0;
-    height: 60%;
-    width: 45%;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 80%;
+    width: 48%;
     box-sizing: border-box;
     position: relative;
 }
-
+.nowCnt{
+    margin-right: auto;
+}
 .totalCnt{
     background-color: #EEEAFF;
 }
