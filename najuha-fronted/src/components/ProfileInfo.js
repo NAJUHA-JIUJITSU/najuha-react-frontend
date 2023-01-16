@@ -10,6 +10,7 @@ import samplePoster from "../src_assets/samplePoster.png";
 
 function ProfileInfo() {
     const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState([]); //유저 신청 대회 상세정보 가져오기
+    const [competitionApplicationList, setCompetitionApplicationList] = useState([]); //유저 신청 대회 유저 리스트 가져오기
     const cookies = new Cookies();
     const xAccessToken = cookies.get("x-access-token");
     const { decodedToken, isExpired } = useJwt(xAccessToken);
@@ -51,6 +52,7 @@ function ProfileInfo() {
     
     }
 
+    //핸드폰 숫자 사이 하이픈 넣기
     function autoHypenPhone(str){
         let tmp = '';
         if( str.length < 4){
@@ -120,6 +122,57 @@ function ProfileInfo() {
         }
     }
     
+    //(오칸 코드) 테이블 렌더
+    function renderCompetitionApplicationList(){
+          return(
+              <div>
+  <ul key='1' className='CompetitionApplyTeamForm-bottom-table-row'>
+                        <li>2</li>
+                        <li>유연아</li>
+                        <li>981127</li>
+                        <li>여자</li>
+                        <li>기</li>
+                        <li>마스터부</li>
+                        <li>화이트</li>
+                        <li>-45kg</li>
+                        <li>50,000원</li>
+            </ul>
+            <ul key='2' className='CompetitionApplyTeamForm-bottom-table-row'>
+                        <li>2</li>
+                        <li>유연아</li>
+                        <li>981127</li>
+                        <li>여자</li>
+                        <li>기</li>
+                        <li>마스터부</li>
+                        <li>화이트</li>
+                        <li>-45kg</li>
+                        <li>50,000원</li>
+            </ul>
+              </div>
+          
+          )
+    }
+
+    // //(오칸 코드) 테이블 렌더
+    // function renderCompetitionApplicationList(){
+    //     return competitionApplicationList.map((application, i) => {
+    //       return(
+    //         <ul key={i} className='CompetitionApplyTeamForm-bottom-table-row'>
+    //                     <li>{i+1}</li>
+    //                     <li>{application.playerName}</li>
+    //                     <li>{application.playerBirth}</li>
+    //                     <li>{application.gender == 'female' ? '여자' : '남자'}</li>
+    //                     <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
+    //                     <li>{application.divisionName}</li>
+    //                     <li>{application.belt}</li>
+    //                     <li>{application.weight}</li>
+    //                     <li>50,000원</li>
+    //                     <img id='CompetitionApplyTeamForm-bottom-table-row-deleteicon' src={deleteicon} alt='삭제아이콘' onClick={() => deleteCompetitionApplication(i)}/>
+    //         </ul>
+    //       )
+    //     })
+    // }
+
     useEffect(() => {
         if(decodedToken){ // 레벨 1인 유저가 들어오면 다시 수정페이지로 리다이렉트
             if(decodedToken.userLevel == 1){
@@ -184,19 +237,30 @@ function ProfileInfo() {
             </div>
             <div className='ProfileInfo_userList'>
                 <h2>신청자 명단({competitionApplicationInfo.isGroup})</h2>
-                <table>
-                    <tr>
-                        <td>No.</td>
-                        <td>이름</td>
-                        <td>생년월일</td>
-                        <td>성별</td>
-                        <td>기/노기</td>
-                        <td>부문</td>
-                        <td>벨트</td>
-                        <td>체급</td>
-                        <td>참가비</td>
-                    </tr>
-                </table>
+
+                {/* 오칸 코드 가져온 부분 - 시작 */}
+                <div className='CompetitionApplyTeamForm-bottom'>
+                    {/* 오칸 코드 가져온 부분 - 신청명단 테이블*/}
+                    <div className='CompetitionApplyTeamForm-bottom-table'>
+                        <ul className='CompetitionApplyTeamForm-bottom-table-column'>
+                            <li>No.</li>
+                            <li>이름</li>
+                            <li>생년월일</li>
+                            <li>성별</li>
+                            <li>기/노기</li>
+                            <li>부문</li>
+                            <li>벨트</li>
+                            <li>체급</li>
+                            <li>참가비</li>
+                        </ul>
+                        {renderCompetitionApplicationList()}
+                        <div className='CompetitionApplyTeamForm-bottom-table-result'>
+                            <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
+                            <h3>50,000원</h3>
+                        </div>
+                    </div>
+                </div>
+                {/* 오칸 코드 가져온 부분 - 끝 */}
             </div>
         </div>
     )
