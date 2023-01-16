@@ -13,8 +13,22 @@
     font-size: 2rem;
 }
 
+.competition_register_top_each h1{
+    font-size: 2.5rem;
+}
+
+.competition_register_top_each input{
+    font-size: 2rem;
+}
+
 
 /*Layout*/
+
+.competition_register_top_each{
+    display: flex;   
+    align-items: center;
+    margin-bottom: 1rem;
+}
 
 .competition_register_top {
     display: flex;
@@ -26,7 +40,7 @@
 }
 
 .competition_register_top input {
-    width: 30vw;
+    width: 600px;
 }
 .division {
     border: 5px solid red;

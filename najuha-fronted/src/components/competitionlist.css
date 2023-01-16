@@ -48,29 +48,22 @@ li {
 }
 
 .each-competition-top-location-tag h3{
-    font-size: 18px
-}
-
-.each-competition-bottom h4{
-    font-size: 18px;
-
-}
-
-.each-competition-bottom button{ /*버튼디자인 */
-    color: #8C8C8C;
     font-size: 16px;
-    border: none;
-    cursor: pointer;
-    background: #F9F9F9;
-    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 20px;
-    transition: all 0.3s ease 0s;
-    padding: 8px 10px;
+    letter-spacing: -0.12em;
 }
 
-.each-competition-bottom button:hover{
-    transform: scale(1.1);
+#each-competition-button-able{ /*버튼디자인*/
+    position: absolute;
+    width: 74px;
+    height: 34px;
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    bottom: 8px;
+    right: 8px;
 }
+
 
 /* Layout */
 
@@ -127,7 +120,7 @@ li {
     padding: 0 1rem;
     box-sizing: border-box;
     margin-bottom: 2rem;
-    height: 180px;
+    height: 154px;
 }
 
 /*Component*/
@@ -174,13 +167,6 @@ li {
     height: 126px;
 }
 
-.each-competition-bottom{
-    display: flex;
-    height: 54px;
-    position: relative;
-    align-items: center;   /* align 세로 */
-}
-
 .each-competition-top-date{
     background-image: linear-gradient(
         rgba(0, 0, 0, 0.6),
@@ -200,21 +186,8 @@ li {
     padding-left: 10px;
     display: flex;
     align-items: center;   /* align 세로 */
+    position: relative;
 }
-
-.each-competition-bottom-buttons{
-    position:absolute;
-    right: 0;
-}
-
-.each-competition-bottom-buttons button{
-    margin-right: 5px;    
-}
-
-.each-competition-bottom h4{
-    margin-right: 10px;
-}
-
 
 @media(max-width:1049px){
     /* Layout */
@@ -232,13 +205,6 @@ li {
 
 @media(max-width:750px){
     /* Typography */
-    .each-competition-bottom h4{
-        font-size: 16px;
-    }
-    
-    .each-competition-bottom button{ /*버튼디자인 */
-        font-size: 14px;
-    }
 
 
     /* Layout */
@@ -257,13 +223,4 @@ li {
     .competition-list{
         height: 68vh;
     }
-    /*Component*/
-
-
-    
-    .each-competition-bottom h4{
-        margin-right: 5px;
-    }
-
-
 }

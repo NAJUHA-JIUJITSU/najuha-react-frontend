@@ -17,6 +17,8 @@ function Competition_form() {
     const [location, setLocation] = useState("")
     const [bankAccount, setBankAccount] = useState("")
     const [infomation, setInfomation] = useState("")
+    const [applicantTableOpenDate, setApplicantTableOpenDate] = useState("")
+    const [tournamentTableOpenDate, setTournamentTableOpenDate] = useState("")
     const [mode, setMode] = useState("post")
     const [competition, setCompetition] = useState(null)
     let navigate = useNavigate();
@@ -28,7 +30,7 @@ function Competition_form() {
             constantFactor:{ 
                 uniform: "",
                 gender: "",
-                name: "",
+                divisionName: "",
                 birth: [null,null]
             },
             variableFactor:{
@@ -61,7 +63,7 @@ function Competition_form() {
                 constantFactor:{ 
                     uniform: "",
                     gender: "",
-                    name: "",
+                    divisionName: "",
                     birth: [null,null]
                 },
                 variableFactor:{
@@ -93,9 +95,9 @@ function Competition_form() {
 
     function changeName(text, i){
         let newDiv = [...divisions]
-        newDiv[i].constantFactor.name = text;
+        newDiv[i].constantFactor.divisionName = text;
         setDivisions(newDiv);
-        console.log(divisions[i].constantFactor.name)
+        console.log(divisions[i].constantFactor.divisionName)
     }
 
     function changeBirthStart(text, i){
@@ -167,6 +169,8 @@ function Competition_form() {
                 'bankAccount': bankAccount,
                 'earlybirdDeadline': earlybirdDeadline,
                 'information': infomation,
+                'applicantTableOpenDate': applicantTableOpenDate,
+                'tournamentTableOpenDate': tournamentTableOpenDate,
                 'division': JSON.stringify(divisions),
             }
           })
@@ -177,7 +181,7 @@ function Competition_form() {
           })
           .catch(err => {
             console.log(err)
-            alert('대회수정이 실패하였습니다.')
+            alert('대회등록이 실패하였습니다.')
           })
     }
 
@@ -200,6 +204,8 @@ function Competition_form() {
                 'bankAccount': bankAccount,
                 'earlybirdDeadline': earlybirdDeadline,
                 'information': infomation,
+                'applicantTableOpenDate': applicantTableOpenDate,
+                'tournamentTableOpenDate': tournamentTableOpenDate,
                 'division': divisions,
             }
           })
@@ -223,6 +229,8 @@ function Competition_form() {
         setLocation(competition.location)
         setBankAccount(competition.bankAccount)
         setInfomation(competition.information)
+        setApplicantTableOpenDate(competition.applicantTableOpenDate)
+        setTournamentTableOpenDate(competition.tournamentTableOpenDate)
         setDivisions(competition.division)
     }
 
@@ -283,7 +291,7 @@ function Competition_form() {
                             <input type='radio' value='female' checked={divs.constantFactor.gender === 'female'} onClick={(e) =>{changeGender(e.target.value, i)}}/>
                             <h4>여자</h4>
                         </div>
-                        <input className='name' type='text' placeholder='나이 ex)초등부, 중등부, 마스터부, 어덜트' value={divs.constantFactor.name} onChange={(e) => {changeName(e.target.value, i)}}></input>
+                        <input className='divisionName' type='text' placeholder='나이 ex)초등부, 중등부, 마스터부, 어덜트' value={divs.constantFactor.divisionName} onChange={(e) => {changeName(e.target.value, i)}}></input>
                         <div>
                             <input type='number' placeholder='몇년생부터 ex)2010' value={divs.constantFactor.birth[0]} onChange={(e) => {changeBirthStart(e.target.value, i)}}></input>
                             <input type='number' placeholder='몇년생까지 ex)2015' value={divs.constantFactor.birth[1]} onChange={(e) => {changeBirthEnd(e.target.value, i)}}></input>
@@ -303,7 +311,7 @@ function Competition_form() {
 
                     <div className='pricingPolicy'>
                         <h3>earlyBirdPrice</h3>
-                        <input className='earlybird_price' type='number' placeholder='얼리버드가격 ex)-10000' value={divs.pricingPolicy.earlyBird} onChange={(e) => {changeEarlybirdPrice(e.target.value, i)}}></input>
+                        <input className='earlybird_price' type='number' placeholder='얼리버드할인률 ex)10%하고싶으면 10' value={divs.pricingPolicy.earlyBird} onChange={(e) => {changeEarlybirdPrice(e.target.value, i)}}></input>
                     </div>
 
                     <div className='pricingPolicy'>
@@ -342,15 +350,50 @@ function Competition_form() {
     <div className='competition_register_form'>
         <div className='section'>
             <div className='competition_register_top'>
-                <input type='text' className='competition_register_top_title' placeholder='대회이름' value={title} onChange={(e) => {setTitle(e.target.value)}}></input>
-                <input type='text' className='competition_register_top_host' placeholder='대회사' value={host} onChange={(e) => {setHost(e.target.value)}}></input>
-                <input type='text' className='competition_register_top_doreOpen' placeholder='대회날짜 ex)0000-00-00 00:00:00' value={doreOpen} onChange={(e) => {setDoreOpen(e.target.value)}}></input>
-                <input type='text' className='competition_register_top_registrationDate' placeholder='등록시작 ex)0000-00-00 00:00:00' value={registrationDate} onChange={(e) => {setRegistrationDate(e.target.value)}}></input>
-                <input type='text' className='competition_register_top_registrationDeadLine' placeholder='등록마감 ex)0000-00-00 00:00:00' value={registrationDeadLine} onChange={(e) => {setRegistrationDeadLine(e.target.value)}}></input>
-                <input type='text' className='competition_register_top_location' placeholder='장소' value={location} onChange={(e) => {setLocation(e.target.value)}}></input>
-                <input type='text' className='competition_register_top_bankAccount' placeholder='계좌번호' value={bankAccount} onChange={(e) => {setBankAccount(e.target.value)}}></input>
-                <input type='text' className='competition_register_top_earlyBirdDeadline' placeholder='얼리버드기한 ex)2022-08-27 00:00:00' value={earlybirdDeadline} onChange={(e) => {setEarlybirdDeadline(e.target.value)}}></input>
-                <input type='text' className='competition_register_top_information' placeholder='대회정보' value={infomation} onChange={(e) => {setInfomation(e.target.value)}}></input>
+                <div className='competition_register_top_each'>
+                    <h1>대회이름:</h1>
+                    <input type='text' className='competition_register_top_title' placeholder='대회이름' value={title} onChange={(e) => {setTitle(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>대회사:</h1>
+                    <input type='text' className='competition_register_top_host' placeholder='대회사' value={host} onChange={(e) => {setHost(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>대회날짜:</h1>
+                    <input type='text' className='competition_register_top_doreOpen' placeholder='대회날짜 ex)0000-00-00 00:00:00' value={doreOpen} onChange={(e) => {setDoreOpen(e.target.value)}}></input>
+                </div>                
+                <div className='competition_register_top_each'>
+                    <h1>신청오픈날짜:</h1>
+                    <input type='text' className='competition_register_top_registrationDate' placeholder='신청시작 ex)0000-00-00 00:00:00' value={registrationDate} onChange={(e) => {setRegistrationDate(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>신청마감날짜:</h1>
+                    <input type='text' className='competition_register_top_registrationDeadLine' placeholder='신청마감 ex)0000-00-00 00:00:00' value={registrationDeadLine} onChange={(e) => {setRegistrationDeadLine(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>대회장소:</h1>
+                    <input type='text' className='competition_register_top_location' placeholder='장소' value={location} onChange={(e) => {setLocation(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>계좌번호:</h1>
+                    <input type='text' className='competition_register_top_bankAccount' placeholder='계좌번호' value={bankAccount} onChange={(e) => {setBankAccount(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>얼리버드기한날짜:</h1>
+                    <input type='text' className='competition_register_top_earlyBirdDeadline' placeholder='얼리버드기한 ex)2022-08-27 00:00:00' value={earlybirdDeadline} onChange={(e) => {setEarlybirdDeadline(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>대회정보(마크업템플릿맞춰서):</h1>
+                    <input type='text' className='competition_register_top_information' placeholder='대회정보' value={infomation} onChange={(e) => {setInfomation(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>선수명단오픈날짜:</h1>
+                    <input type='text' className='competition_register_top_applicantTableOpenDate' placeholder='선수명단오픈 ex)2022-08-27 00:00:00' value={applicantTableOpenDate} onChange={(e) => {setApplicantTableOpenDate(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>대진표오픈날짜:</h1>
+                    <input type='text' className='competition_register_top_tournamentTableLink' placeholder='대진표오픈 ex)2022-08-27 00:00:00' value={tournamentTableOpenDate} onChange={(e) => {setTournamentTableOpenDate(e.target.value)}}></input>
+                </div>
             </div>
         </div>
 

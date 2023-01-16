@@ -131,6 +131,9 @@ function Competitionlist() {
             return(
                 <li class='competition-col'>
                     <div class='each-competition'>
+                        <div style={{fontSize:'20px'}}>
+                            hi
+                        </div>
                         <div class='each-competition-top'>
                             <div class='each-competition-top-date'>
                                 <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
@@ -140,16 +143,17 @@ function Competitionlist() {
                                     <h2>{curcompetition.title}</h2><br/>
                                     <h3>{curcompetition.location}</h3>
                                 </div>
+                                <button id='each-competition-button-able' onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>신청</button>
                             </div>
                         </div>
-                        <div class='each-competition-bottom'>
+                        {/* <div class='each-competition-bottom'>
                             <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDate}({curcompetition.registrationDateDay})</h4>
                             <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDeadline}({curcompetition.registrationDeadlineDay})</h4>
                             <div class='each-competition-bottom-buttons'>
                                 <button>세부정보</button>
-                                <button onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>신청</button>
+                                
                             </div>
-                        </div> 
+                        </div>  */}
                     </div>
                 </li>
             )
