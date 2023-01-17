@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, {useState, useEffect, useRef} from 'react'
 import { useNavigate } from "react-router-dom";
-import './competitionlist.css'
+import './admincompetitionlist.css'
 
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,9 +13,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { height } from '@mui/system';
+import { Cookies } from 'react-cookie';
 
 function AdminCompetitionlist() {
+    const cookies = new Cookies();
     const [competitions, setCompetitions] = useState([])
+    const [activeModal, setActiveModal] = useState(false);
     const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
     const [isLoading, setIsLoading] = useState(false)
     const [lastElement, setLastElement] = useState('')
@@ -48,7 +51,13 @@ function AdminCompetitionlist() {
 
     async function getCompetitionList(startDate, offset, title, location){
         setIsLoading(true)
-        axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`)
+        axios({
+            method: "get",
+            headers: {
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`,
+          })
         .then((res) => {
             console.log(res.data.result);
             let newCompetitions = res.data.result
@@ -61,6 +70,42 @@ function AdminCompetitionlist() {
         })
         setIsLoading(false)
         return ;
+    }
+
+    async function ActivePatch(id){
+        await axios({
+            method: "patch",
+            headers: {
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}/status/ACTIVE`,
+          })
+          .then(res => {
+            console.log(res)
+            alert(`id:${id} 대회가 활성화 되었습니다`)
+          })
+          .catch(err => {
+            console.log(err)
+            alert(`id:${id} 대회 활성화에 실패하였습니다.`)
+          })
+    }
+
+    async function InActivePatch(id){
+        await axios({
+            method: "patch",
+            headers: {
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}/status/INACTIVE`,
+          })
+          .then(res => {
+            console.log(res)
+            alert(`id:${id} 대회가 비활성화 되었습니다`)
+          })
+          .catch(err => {
+            console.log(err)
+            alert(`id:${id} 대회 비활성화에 실패하였습니다.`)
+          })
     }
 
     
@@ -122,6 +167,7 @@ function AdminCompetitionlist() {
             'registrationDateDay': registrationDateDay,
             'registrationDeadline': registrationDeadline,
             'registrationDeadlineDay': registrationDeadLineDay,
+            'status': competition.status,
         }
     }
 
@@ -129,25 +175,30 @@ function AdminCompetitionlist() {
         return competitions.map((competition, i) => {
             let curcompetition = competitionParsing(competition)
             return(
-                <li class='competition-col' key={i}>
-                    <div class='each-competition'>
-                        <div class='each-competition-top'>
-                            <div class='each-competition-top-date'>
+                <li class='admin-competition-col' key={i}>
+                    <div class='admin-each-competition'>
+                        <div class='admin-each-competition-top'>
+                            <div class='admin-each-competition-top-date'>
                                 <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
                             </div>
-                            <div class='each-competition-top-location'>
-                                <div class='each-competition-top-location-tag'> {/*display:flex써서 세로 가운데 정렬하려고 클래스하나 더 넣은거임 */}
+                            <div class='admin-each-competition-top-location'>
+                                <div class='admin-each-competition-top-location-tag'> {/*display:flex써서 세로 가운데 정렬하려고 클래스하나 더 넣은거임 */}
                                     <h2>{curcompetition.title}</h2><br/>
                                     <h3>{curcompetition.location}</h3>
                                     <h3>대회 id:{curcompetition.id}</h3>
                                 </div>
                             </div>
                         </div>
-                        <div class='each-competition-bottom'>
-                            <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDate}({curcompetition.registrationDateDay})</h4>
-                            <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDeadline}({curcompetition.registrationDeadlineDay})</h4>
-                            <div class='each-competition-bottom-buttons'>
+                        <div class='admin-each-competition-bottom'>
+                            <div class='admin-each-competition-bottom-buttons'>
                                 <button style={{background:'orange', color:'black'}} onClick={()=>{navigate(`/admincompetition/${curcompetition.id}`)}}>대회수정하기</button>
+                                {curcompetition.status === 'ACTIVE' ? <button style={{background:'gray', color:'black'}} onClick={async()=>{
+                                    InActivePatch(curcompetition.id)                                    
+                                    }}>비활성화하기</button> 
+                                : <button style={{background:'red', color:'black'}} onClick={()=>{
+                                    ActivePatch(curcompetition.id)
+                                    }}>활성화하기</button> }
+                                <button style={{background:'lightblue', color:'black'}} onClick={()=>{navigate(`/admincompetition/${curcompetition.id}/imageupload`)}}>포스터업로드하기</button>
                             </div>
                         </div> 
                     </div>
@@ -161,19 +212,19 @@ function AdminCompetitionlist() {
 
 
   return (
-    <div className='competition-schedule-wrapper'>
-        <div className='competition-searchzone'>
-            <div className='competition-searchzone-wrapper'>
-                <div className='competition-searchzone-title'>대회일정</div>
-                <div className='competition-searchzone-fake'>
-                    <img className='competition-searchzone-input-icon' src='Assets/검색돋보기아이콘.svg' alt="돋보기아이콘" onClick={()=>{
+    <div className='admin-competition-schedule-wrapper'>
+        <div className='admin-competition-searchzone'>
+            <div className='admin-competition-searchzone-wrapper'>
+                <div className='admin-competition-searchzone-title'>대회일정</div>
+                <div className='admin-competition-searchzone-fake'>
+                    <img className='admin-competition-searchzone-input-icon' src='Assets/검색돋보기아이콘.svg' alt="돋보기아이콘" onClick={()=>{
                         setTitle(temTitle);
                         listRefresh()
                     }}/>
-                    <input className='competition-searchzone-input' value={temTitle} placeholder='대회 이름 직접 검색하기' onChange={(e)=> setTemTitle(e.target.value)}/>
+                    <input className='admin-competition-searchzone-input' value={temTitle} placeholder='대회 이름 직접 검색하기' onChange={(e)=> setTemTitle(e.target.value)}/>
                 </div>
-                <div className='competition-searchzone-options'>
-                    <div className='competition-searchzone-options-date'>
+                <div className='admin-competition-searchzone-options'>
+                    <div className='admin-competition-searchzone-options-date'>
                     <LocalizationProvider dateAdapter={AdapterDayjs} >
                     <DesktopDatePicker
                     label="시작 날짜"
@@ -202,7 +253,7 @@ function AdminCompetitionlist() {
                     />
                     </LocalizationProvider>
                     </div>
-                    <div className='competition-searchzone-options-location'>
+                    <div className='admin-competition-searchzone-options-location'>
                         <FormControl variant="standard" style={{width:'100%'}}>
                             <InputLabel id="demo-simple-select-standard-label">지역</InputLabel>
                             <Select
@@ -229,8 +280,8 @@ function AdminCompetitionlist() {
                 </div>
             </div>
         </div>
-        <div className='competition-list'>
-            <ul class='competition-row'>
+        <div className='admin-competition-list'>
+            <ul class='admin-competition-row'>
                 {renderCompetitionList()}
                 {isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}>Loading...</div>}
                 {!isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}ref={setLastElement}>해당 대회가 모두 로딩되었습니다.</div>}
