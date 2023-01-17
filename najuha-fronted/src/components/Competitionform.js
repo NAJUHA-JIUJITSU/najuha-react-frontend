@@ -384,7 +384,7 @@ function Competition_form() {
                 </div>
                 <div className='competition_register_top_each'>
                     <h1>대회정보(마크업템플릿맞춰서):</h1>
-                    <input type='text' className='competition_register_top_information' placeholder='대회정보' value={infomation} onChange={(e) => {setInfomation(e.target.value)}}></input>
+                    <textarea type='text' className='competition_register_top_information' placeholder='대회정보' value={infomation} onChange={(e) => {setInfomation(e.target.value)}}></textarea>
                 </div>
                 <div className='competition_register_top_each'>
                     <h1>선수명단오픈날짜:</h1>
