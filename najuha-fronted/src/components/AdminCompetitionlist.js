@@ -198,7 +198,7 @@ function AdminCompetitionlist() {
                                 : <button style={{background:'red', color:'black'}} onClick={()=>{
                                     ActivePatch(curcompetition.id)
                                     }}>활성화하기</button> }
-                                <button style={{background:'lightblue', color:'black'}} onClick={()=>{navigate(`/admincompetition/${curcompetition.id}/imageupload`)}}>포스터업로드하기</button>
+                                <button style={{background:'lightblue', color:'black'}} onClick={()=>{navigate(`/Admincompetition/imageupload/${curcompetition.id}`)}}>포스터업로드하기</button>
                             </div>
                         </div> 
                     </div>

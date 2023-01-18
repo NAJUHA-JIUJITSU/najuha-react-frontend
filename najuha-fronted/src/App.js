@@ -20,6 +20,7 @@ import CompetitionApplyMethodPage from './pages/CompetitionApplyMethodPage'
 import PaymentSuccessPage from './pages/PaymentSuccessPage'
 import PaymentFailPage from './pages/PaymentFailPage'
 import CompetitionPage from './pages/CompetitionPage'
+import AdminCompetitionImagePage from './pages/AdminCompetitionImagePage'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -41,6 +42,7 @@ function App() {
   const AuthoCompetitionApplyMethodPage = Auth(CompetitionApplyMethodPage, true);
   const AuthPaymentSuccessPage = Auth(PaymentSuccessPage, true)
   const AuthPaymentFailPage = Auth(PaymentFailPage, true)
+  const AuthAdminCompetitionImagePage = Auth(AdminCompetitionImagePage, true)
 
 
   return (
@@ -56,6 +58,7 @@ function App() {
         <Route path = '/competition/applyteam/:id' element={<AuthCompetitionApplyTeamPage/>} />
         <Route path = '/Admincompetition/' element={<AuthAdmincompetition/>} />
         <Route path = '/Admincompetition/:id' element={<AuthCompetitionform/>} />
+        <Route path = '/Admincompetition/imageupload/:id' element={< AuthAdminCompetitionImagePage/>} />
         <Route path = '/Profilepage' element={<AuthProfilepage/>} />
         <Route path = '/Profilepage/info/:id' element={<AuthProfileInfopage/>} />
         <Route path = '/UserInfopage' element={<AuthUserInfopage/>} />
