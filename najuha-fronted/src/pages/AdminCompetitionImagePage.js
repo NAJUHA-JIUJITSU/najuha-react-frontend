@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
+import { textAlign } from '@mui/system';
 
 function AdminCompetitionImagePage() {
   const cookies = new Cookies();
@@ -35,10 +36,13 @@ function AdminCompetitionImagePage() {
   }
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <img src={previewUrl} alt="preview" />
-      <button onClick={handleUpload}>Upload</button>
+    <div style={{textAlign:'center'}}>
+      <h1 style={{fontSize:'30px', marginTop:'100px'}}>id:{id} 대회 포스터 등록</h1>
+      <img style={{width:'194px', height:'264px'}} src={previewUrl} alt="preview" />
+      <div style={{textAlign:'center'}}>
+        <input type="file" onChange={handleFileChange} />
+        <button style={{width:'100px', height:'80px'}} onClick={handleUpload}>Upload</button>
+      </div>
     </div>
   );
 }
