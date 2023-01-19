@@ -50,8 +50,18 @@
     box-sizing: border-box;
     font-weight: 500;
 }
+.Profilesection_competitonNavbar {
+    position: sticky;
+    top: 0px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 99;
+    padding-top: 4rem;
+    border-bottom: solid 1px #F0F0F0;
+    box-sizing: border-box;
+}
 
 .Profilesection_competitonNav {
+    color: #B4B4B4;
     display: flex;
     gap: 1rem;
     font-size: 2rem;
@@ -68,17 +78,11 @@
 }
 
 .Profilesection_active {
+    color: #000000;
     font-weight: 600;
 }
 .Profilesection_competitonNav .Profilesection_active:after {
     border-bottom: 4px solid black;
-}
-
-.Profilesection_hr{
-    margin-top: -0.2rem;
-    height:1px;
-    border:0;
-    background-color : #F0F0F0;
 }
 
 .Profilesection_competitonHr {

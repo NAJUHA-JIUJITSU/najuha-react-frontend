@@ -237,13 +237,13 @@ function ProfilesectionToggle() {
         <div className='ProfilesectionToggle_wrapper'>
             <ProfileTap/>
             <section className='ProfilesectionToggle_right'>
-                <h2>신청대회 목록</h2>
-                <ul className='Profilesection_competitonNav'>
-                    <li key='개인 신청' className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
-                    <li key='단체 신청' className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
-                    <li key='지난 신청' className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
-                </ul>
-                <hr className='Profilesection_hr'/>
+                <div className='Profilesection_competitonNavbar'>
+                    <ul className='Profilesection_competitonNav'>
+                        <li key='개인 신청' className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
+                        <li key='단체 신청' className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
+                        <li key='지난 신청' className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
+                    </ul>
+                </div>
                 <div className='Profilesection_competitonList'>
                     {renderCompetition()}
                 </div>
