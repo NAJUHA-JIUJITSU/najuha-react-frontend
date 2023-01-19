@@ -60,6 +60,21 @@ function ProfilesectionToggle() {
         return ;
     }
 
+    //삭제 경고 문구창
+    const onRemove = (id) => {
+
+        if (window.confirm("대회 정보가 모두 삭제됩니다. 해당 대회를 정말 취소하시겠습니까?")) {
+    
+            deleteCompetitionApplication(id)
+    
+        } else {
+    
+        //   alert("취소합니다.");
+    
+        }
+    
+    };
+
     //요일 값 구하기
     function getDayOfWeek(날짜문자열){ //ex) getDayOfWeek('2022-06-13')
 
@@ -119,6 +134,16 @@ function ProfilesectionToggle() {
             let today = new Date();
             curApplication.isPayment = ( curApplication.isCanceled ) ? '환불완료' : curApplication.isPayment;
 
+            let xButton;
+            let xButtonDiv;
+            if(curApplication.isPayment==='결제하기' || curApplication.isPayment==='신청마감') {
+                xButton = 'Profilesection_boxDelete'
+                xButtonDiv = ' '
+            } else {
+                xButton = 'Profilesection_boxDelete Profilesection_boxDeleteHidden'
+                xButtonDiv = 'Profilesection_deleteNone'
+            }
+
             if(clickedList === 'person') {
                 //날짜가 오늘을 기준으로 지났으면 안보여주기
                 if( today > new Date(application.Competition.doreOpen) ) {
@@ -160,8 +185,9 @@ function ProfilesectionToggle() {
                                 <h3>{curApplication.doreOpen}({curApplication.day})</h3>
                             </div>
                             <div className= 'Profilesection_boxRight'>
-                                <img onClick={()=>{deleteCompetitionApplication(curApplication.id)}} 
-                                    src={xIcon} alt='삭제 아이콘' className= 'Profilesection_boxDelete Profilesection_boxDeleteHidden'></img>
+                                <img onClick={()=>{onRemove(curApplication.id)}} 
+                                    src={xIcon} alt='삭제 아이콘' className={xButton}></img>
+                                <div className= {xButtonDiv}></div>
                                 <div className= 'Profilesection_boxRightTitle'>
                                     <h4>신청인<span>{curApplication.host}</span></h4>
                                     <h3>{curApplication.title}</h3>
