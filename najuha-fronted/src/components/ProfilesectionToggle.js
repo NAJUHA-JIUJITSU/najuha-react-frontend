@@ -51,6 +51,7 @@ function ProfilesectionToggle() {
         .then((res) => {
             console.log(res.data.result);
             console.log(res.data.message);
+            alert('대회가 삭제되었습니다.');
             getCompetitionApplication();
         })
         .catch((err) => {

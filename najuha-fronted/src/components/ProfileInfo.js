@@ -83,6 +83,7 @@ function ProfileInfo() {
     
      //신청대회 데이터 파싱
     function applicationParsing(application){
+        let id = application.id;
         let title =  application.Competition.title;
 
         let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
@@ -114,6 +115,7 @@ function ProfileInfo() {
 
       
         return {
+            'id' : id,
             'title': title,
 
             'postUrl' : postUrl,
@@ -139,6 +141,44 @@ function ProfileInfo() {
 
         }
     }
+
+     // 신청 대회 지우기(결제 미완료)
+     async function deleteCompetitionApplication(id) {
+        axios.delete(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${id}`,
+        {
+            headers: {
+                'x-access-token':  xAccessToken
+            }
+        })
+        .then((res) => {
+            console.log('지울 대회 id: ' + id);
+            console.log(res.data.message);
+            alert('대회가 삭제되었습니다.');
+            navigate('/Profilepage')
+        })
+        .catch((err) => {
+            console.log(err);
+            console.log(err.response.data.result);
+            alert(err.response.data.result);
+        })
+        return ;
+    }
+
+    //삭제 경고 문구창
+    const onRemove = (id) => {
+
+        if (window.confirm("대회 정보가 모두 삭제됩니다. 해당 대회를 정말 삭제하시겠습니까?")) {
+    
+            deleteCompetitionApplication(id)
+    
+        } else {
+    
+        //   alert("취소합니다.");
+    
+        }
+    
+    };
+
 
     //버튼 렌더
     function renderButton(application){
@@ -179,7 +219,7 @@ function ProfileInfo() {
             return(
                 //삭제하기 버튼
                 <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
-                    <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>신청마감(삭제하기)</button>
+                    <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={()=>{onRemove(application.id)}}>삭제하기</button>
                 </div>
             )
         }

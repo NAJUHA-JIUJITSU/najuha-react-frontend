@@ -51,7 +51,7 @@ function Profilesection() {
         .then((res) => {
             console.log('지울 대회 id: ' + id);
             console.log(res.data.message);
-            alert('대회 정보가 삭제되었습니다.');
+            alert('대회가 삭제되었습니다.');
             getCompetitionApplication();
         })
         .catch((err) => {
