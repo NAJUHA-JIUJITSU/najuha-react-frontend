@@ -75,6 +75,12 @@
     padding-right: 4.6rem;
 }
 
+/* 오칸 테이블 */
+#ProfileInfo-bottom {
+    text-align: left;
+    margin-left: 0;
+}
+
 /* Components */
 .Profilesection_lastCompetiton {
     color: #8C8C8C;

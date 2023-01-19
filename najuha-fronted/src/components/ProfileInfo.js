@@ -179,7 +179,6 @@ function ProfileInfo() {
     
     };
 
-
     //버튼 렌더
     function renderButton(application){
         //competitionPayment이 null이 아니면
@@ -198,7 +197,7 @@ function ProfileInfo() {
                 return(
                     //환불하기&결제완료 버튼
                     <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
-                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>환불하기</button>
+                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={()=>alert('고객센터(1234-1234)로 문의바랍니다.')}>환불하기</button>
                         <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>결제완료</button>
                     </div>
                 )
@@ -320,7 +319,7 @@ function ProfileInfo() {
                 {/* 오칸 코드 가져온 부분 - 시작 */}
                 <div className='CompetitionApplyTeamForm-bottom'>
                     {/* 오칸 코드 가져온 부분 - 신청명단 테이블*/}
-                    <div className='CompetitionApplyTeamForm-bottom-table'>
+                    <div className='CompetitionApplyTeamForm-bottom-table' id='ProfileInfo-bottom'>
                         <ul className='CompetitionApplyTeamForm-bottom-table-column'>
                             <li>No.</li>
                             <li>이름</li>
