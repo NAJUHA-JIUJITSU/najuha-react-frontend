@@ -65,7 +65,7 @@ function Profilesection() {
     //삭제 경고 문구창
     const onRemove = (id) => {
 
-        if (window.confirm("대회 정보가 모두 삭제됩니다. 해당 대회를 정말 취소하시겠습니까?")) {
+        if (window.confirm("대회 정보가 모두 삭제됩니다. 해당 대회를 정말 삭제하시겠습니까?")) {
     
             deleteCompetitionApplication(id)
     
@@ -130,7 +130,6 @@ function Profilesection() {
             'last' : last,
         }
     }
-
 
     //실시간 대회 렌더
     function renderCompetition(){
@@ -215,7 +214,7 @@ function Profilesection() {
         })
     }
 
-    //탭 클릭
+    //탭 클릭 여부
     function isClicked(list, i) {
         let reset = ['', '', ''];
         reset[i] = 'Profilesection_active';

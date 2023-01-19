@@ -28,9 +28,9 @@ function ProfileInfo() {
             }
         })
         .then((res) => {
-            console.log('불러온 데이터: ' + res.data.result);
             setcompetitionApplicationInfo(applicationParsing(res.data.result));
-            console.log('파싱한 데이터: ' + competitionApplicationInfo)
+            setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos);
+            console.log(res.data.result)
             console.log(res.data.message);
         })
         .catch((err) => {
@@ -97,11 +97,19 @@ function ProfileInfo() {
         let applicantTableOpenDateDay = getDayOfWeek(application.Competition.applicantTableOpenDate);
         let tournamentTableOpenDate = application.Competition.tournamentTableOpenDate.substr(0,10).replace('-','.').replace('-','.');
         let tournamentTableOpenDateDay = getDayOfWeek(application.Competition.tournamentTableOpenDate);
-
         let team = application.CompetitionApplicationInfos[0].team;
         let phoneNumber = autoHypenPhone(application.CompetitionApplicationInfos[0].phoneNumber);
-
         let isGroup = ( application.isGroup ) ?  "단체" : "개인";
+        let amount = application.expectedPrice.normalPrice;
+        let isPay = ( application.competitionPayment===null ) ? "예상 결제금액" : "총 결제금액";
+
+        //버튼 렌더에 필요한 정보
+        let competitionPayment = application.competitionPayment;
+        let status = (application.competitionPayment)? application.competitionPayment.status : ' ';
+        let today = new Date();
+        let CheckRegistrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true; //false면 신청마감
+        let CheckDoreOpen = ( today > new Date(application.Competition.doreOpen) ) ? false : true; //false면 대회날짜 지남
+       
 
 
       
@@ -115,63 +123,95 @@ function ProfileInfo() {
             'registrationDeadline' : registrationDeadline + '(' + registrationDeadlineDay + ')',
             'applicantTableOpenDate' : applicantTableOpenDate + '(' + applicantTableOpenDateDay + ')',
             'tournamentTableOpenDate' : tournamentTableOpenDate + '(' + tournamentTableOpenDateDay + ')',
-
             'team' : team,
             'phoneNumber' : phoneNumber,
             'isGroup' : isGroup,
+            'amount' : amount,
+            'isPay' : isPay,
+
+            //버튼 렌더에 필요한 정보
+            'competitionPayment' : competitionPayment,
+            'status' : status,
+            'CheckRegistrationDeadline' : CheckRegistrationDeadline,
+            'CheckDoreOpen' : CheckDoreOpen,
+
+
+
         }
     }
-    
-    //(오칸 코드) 테이블 렌더
-    function renderCompetitionApplicationList(){
-          return(
-              <div>
-  <ul key='1' className='CompetitionApplyTeamForm-bottom-table-row'>
-                        <li>2</li>
-                        <li>유연아</li>
-                        <li>981127</li>
-                        <li>여자</li>
-                        <li>기</li>
-                        <li>마스터부</li>
-                        <li>화이트</li>
-                        <li>-45kg</li>
-                        <li>50,000원</li>
-            </ul>
-            <ul key='2' className='CompetitionApplyTeamForm-bottom-table-row'>
-                        <li>2</li>
-                        <li>유연아</li>
-                        <li>981127</li>
-                        <li>여자</li>
-                        <li>기</li>
-                        <li>마스터부</li>
-                        <li>화이트</li>
-                        <li>-45kg</li>
-                        <li>50,000원</li>
-            </ul>
-              </div>
-          
-          )
+
+    //버튼 렌더
+    function renderButton(application){
+        //competitionPayment이 null이 아니면
+        if(application.competitionPayment !== null ) {
+            //대회날짜 지났으면
+            if(application.CheckDoreOpen === false) {
+                return (
+                    //결제완료 버튼
+                    <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
+                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>결제완료</button>
+                    </div>
+                )
+            }
+            //결제완료(대회날짜 안지남)
+            if(application.status === "APPROVED") {
+                return(
+                    //환불하기&결제완료 버튼
+                    <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
+                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>환불하기</button>
+                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>결제완료</button>
+                    </div>
+                )
+            }
+            //환불완료
+            if(application.status === "CANCELED") {
+                return(
+                    //환불완료 버튼
+                    <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
+                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>환불완료</button>
+                    </div>
+                )
+            }
+        }
+
+        //신청마감
+        if(application.CheckRegistrationDeadline === false) {
+            return(
+                //삭제하기 버튼
+                <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
+                    <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>신청마감(삭제하기)</button>
+                </div>
+            )
+        }
+        //결제 미완료
+        return(
+            //수정하기&결제하기 버튼
+            <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
+                <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>수정하기</button>
+                <button id='CompetitionApplyTeamForm-bottom-table-buttons-register'>결제하기</button>
+            </div>
+        )
+      
     }
 
-    // //(오칸 코드) 테이블 렌더
-    // function renderCompetitionApplicationList(){
-    //     return competitionApplicationList.map((application, i) => {
-    //       return(
-    //         <ul key={i} className='CompetitionApplyTeamForm-bottom-table-row'>
-    //                     <li>{i+1}</li>
-    //                     <li>{application.playerName}</li>
-    //                     <li>{application.playerBirth}</li>
-    //                     <li>{application.gender == 'female' ? '여자' : '남자'}</li>
-    //                     <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
-    //                     <li>{application.divisionName}</li>
-    //                     <li>{application.belt}</li>
-    //                     <li>{application.weight}</li>
-    //                     <li>50,000원</li>
-    //                     <img id='CompetitionApplyTeamForm-bottom-table-row-deleteicon' src={deleteicon} alt='삭제아이콘' onClick={() => deleteCompetitionApplication(i)}/>
-    //         </ul>
-    //       )
-    //     })
-    // }
+    //(오칸 코드) 테이블 렌더
+    function renderCompetitionApplicationList(){
+        return competitionApplicationList.map((application, i) => {
+          return(
+            <ul key={i} className='CompetitionApplyTeamForm-bottom-table-row'>
+                        <li>{i+1}</li>
+                        <li>{application.playerName}</li>
+                        <li>{application.playerBirth}</li>
+                        <li>{application.gender == 'female' ? '여자' : '남자'}</li>
+                        <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
+                        <li>{application.divisionName}</li>
+                        <li>{application.belt}</li>
+                        <li>{application.weight}</li>
+                        <li>{application.pricingPolicy.normal}원</li>
+            </ul>
+          )
+        })
+    }
 
     useEffect(() => {
         if(decodedToken){ // 레벨 1인 유저가 들어오면 다시 수정페이지로 리다이렉트
@@ -237,7 +277,6 @@ function ProfileInfo() {
             </div>
             <div className='ProfileInfo_userList'>
                 <h2>신청자 명단({competitionApplicationInfo.isGroup})</h2>
-
                 {/* 오칸 코드 가져온 부분 - 시작 */}
                 <div className='CompetitionApplyTeamForm-bottom'>
                     {/* 오칸 코드 가져온 부분 - 신청명단 테이블*/}
@@ -255,10 +294,11 @@ function ProfileInfo() {
                         </ul>
                         {renderCompetitionApplicationList()}
                         <div className='CompetitionApplyTeamForm-bottom-table-result'>
-                            <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
-                            <h3>50,000원</h3>
+                            <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>{competitionApplicationInfo.isPay}</h3>
+                            <h3>{competitionApplicationInfo.amount}원</h3>
                         </div>
                     </div>
+                    {renderButton(competitionApplicationInfo)}
                 </div>
                 {/* 오칸 코드 가져온 부분 - 끝 */}
             </div>
