@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import './competitionlist.css'
 import dropdownicon from '../src_assets/드랍다운아이콘회색.svg'
 import searchicon from '../src_assets/검색돋보기아이콘.svg'
+import sampleposter from '../src_assets/samplePoster.png'
 import dayjs from 'dayjs';
 
 const months = [1,2,3,4,5,6,7,8,9,10,11,12]
@@ -119,6 +120,7 @@ function Competitionlist() {
             'registrationDateDay': registrationDateDay,
             'registrationDeadline': registrationDeadline,
             'registrationDeadlineDay': registrationDeadLineDay,
+            'posterImage': competition.CompetitionPoster != null ? competition.CompetitionPoster.imageUrl : sampleposter
         }
     }
 
@@ -131,18 +133,19 @@ function Competitionlist() {
                     </div>
                     <div className='each-competition-body'> {/* 위쪽 태그공간  */}
                         <div class='each-competition-body-poster'> {/* 카드왼쪽 포스터공간  */}
-                            <img></img>
+                            <img src={curcompetition.posterImage}></img>
+                            <div class='each-competition-body-poster-block'></div>
                             <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
                         </div>
                         <div class='each-competition-body-desc'> {/* 카드오른쪽 설명공간 */}
                             <div class='each-competition-body-desc-top'>
-                                {curcompetition.title}
+                                <p>{curcompetition.title}</p>
                             </div>
                             <div class='each-competition-body-desc-middle'>
-                                {curcompetition.location}
+                                <p>{curcompetition.location}</p>
                             </div>
                             <div class='each-competition-body-desc-bottom'>
-                                <button onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>신청</button>
+                                <button onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>바로 신청</button>
                             </div>
                         </div>                        
                     </div>
