@@ -2,17 +2,12 @@ import axios from 'axios'
 import React, {useState, useEffect, useRef} from 'react'
 import { useNavigate } from "react-router-dom";
 import './competitionlist.css'
-
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dropdownicon from '../src_assets/드랍다운아이콘회색.svg'
+import searchicon from '../src_assets/검색돋보기아이콘.svg'
 import dayjs from 'dayjs';
-import { height } from '@mui/system';
+
+const months = [1,2,3,4,5,6,7,8,9,10,11,12]
+const locationSample=['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북']
 
 function Competitionlist() {
     const [competitions, setCompetitions] = useState([])
@@ -21,7 +16,10 @@ function Competitionlist() {
     const [lastElement, setLastElement] = useState('')
     const [offset, setOffset] = useState(0);
     const [startDate, setStartDate] = useState('');
+    const [temDate, setTemDate] = useState('');
     const [location, setLocation] = useState('');
+    const [dateDropdown, setDateDropdown] = useState(false);
+    const [locationDropdown, setLocationDropdown] = useState(false);
     const [title, setTitle] = useState('')
     const [temTitle, setTemTitle] = useState('')
     const offsetRef = useRef();
@@ -32,10 +30,9 @@ function Competitionlist() {
     locationRef.current = location;
     startDateRef.current = startDate;
     titleRef.current = title;
-    const [locationSample, setLocationSample]=useState(['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북'])
     let navigate = useNavigate();
     
-    
+        
     const observer = useRef(new IntersectionObserver(async (entries)=>{
         const first = entries[0]
         if(first.isIntersecting){
@@ -77,7 +74,7 @@ function Competitionlist() {
                 currentObserver.unobserve(currentElement)
             }
         }
-    }, [lastElement, location, startDate, title])
+    }, [lastElement, location, startDate, title, offset===0])
 
     useEffect(() => {
         console.log(competitions.length)
@@ -131,9 +128,6 @@ function Competitionlist() {
             return(
                 <li class='competition-col'>
                     <div class='each-competition'>
-                        <div style={{fontSize:'20px'}}>
-                            hi
-                        </div>
                         <div class='each-competition-top'>
                             <div class='each-competition-top-date'>
                                 <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
@@ -160,6 +154,13 @@ function Competitionlist() {
         })
     }
 
+    function searchEnterPress (e) {
+        if(e.key == 'Enter'){
+            setTitle(temTitle)
+            listRefresh();
+        }
+    }
+
 
 
 
@@ -167,71 +168,56 @@ function Competitionlist() {
   return (
     <div className='competition-schedule-wrapper'>
         <div className='competition-searchzone'>
-            <div className='competition-searchzone-wrapper'>
-                <div className='competition-searchzone-title'>대회일정</div>
-                <div className='competition-searchzone-fake'>
-                    <img className='competition-searchzone-input-icon' src='Assets/검색돋보기아이콘.svg' alt="돋보기아이콘" onClick={()=>{
-                        setTitle(temTitle);
+            <div className='competition-searchzone-option' onClick={() => setDateDropdown(pre => !pre)}>
+                <p>{startDate == '' ? '대회날짜' : `${temDate}월`}</p>
+                <img src={dropdownicon}/> 
+                {dateDropdown ? <ul>
+                    <li value='' onClick={() => {
+                        setStartDate('')
                         listRefresh()
-                    }}/>
-                    <input className='competition-searchzone-input' value={temTitle} placeholder='대회 이름 직접 검색하기' onChange={(e)=> setTemTitle(e.target.value)}/>
-                </div>
-                <div className='competition-searchzone-options'>
-                    <div className='competition-searchzone-options-date'>
-                    <LocalizationProvider dateAdapter={AdapterDayjs} >
-                    <DesktopDatePicker
-                    label="시작 날짜"
-                    views={['year', 'month', 'day']}
-                    minDate={dayjs('2023-1-1')} // 올해로 한정될수 있게 변수값을 고쳐야함 
-                    maxDate={dayjs('2023-12-31')} // 올해로 한정될수 있게 변수값을 고쳐야함 
-                    inputFormat="MM.DD~" 
-                    componentsProps={{
-                    actionBar: {
-                        actions: ['clear'],
-                    },
-                    }}
-                    value={startDate || null}
-                    onChange={(newvalue)=>{
-                        if(newvalue === null){
-                            setStartDate('')
-                            listRefresh();
-                            return;
-                        }
-                        if(newvalue.format('YYYY-MM-DD') != 'Invalid Date'){
-                            setStartDate(newvalue.format('YYYY-MM-DD'))
-                            listRefresh();
-                        }
-                    }}
-                    renderInput={(params) => <TextField sx={{width: '100%', "& fieldset": {borderRadius: '0', borderTop: 'none', borderLeft: 'none', borderRight: 'none', height: '44px', borderBottom:'1px solid #999999 ' }}}  {...params} />}
-                    />
-                    </LocalizationProvider>
-                    </div>
-                    <div className='competition-searchzone-options-location'>
-                        <FormControl variant="standard" style={{width:'100%'}}>
-                            <InputLabel id="demo-simple-select-standard-label">지역</InputLabel>
-                            <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            value={location}
-                            onChange={(e) => {
-                                setLocation(e.target.value)
-                                listRefresh();
-                            }}
-                            label="지역"
-                            >
-                            <MenuItem value="">
-                                <em>지역</em>
-                            </MenuItem>
-                            {locationSample.map((sample) => {
-                                return(
-                                    <MenuItem value={sample}>{sample}</MenuItem>
-                                )
-                            })}
-                            </Select>
-                        </FormControl>
-                    </div>
-                </div>
+                    }}>전체</li>
+                    {months.map(element => {
+                        return(
+                            <li value={element} onClick={() => {
+                                setStartDate(`2023-${element}-01`)
+                                setTemDate(element)
+                                listRefresh()
+                            }}>{element}월</li>
+                        )
+                    })}
+                </ul> 
+                : ''}
             </div>
+            <div className='competition-searchzone-option' onClick={() => setLocationDropdown(pre => !pre)}>
+                <p>{location == '' ? '지역' : location}</p>
+                <img src={dropdownicon}/>
+                {locationDropdown ? 
+                <ul>
+                    <li value='' onClick={() => {
+                        setLocation('')
+                        listRefresh()
+                    }}>전체</li>
+                    {locationSample.map(element => {
+                        return(
+                            <li value={element} onClick={() => {
+                                setLocation(element)
+                                listRefresh()
+                            }}>{element}</li>
+                        )
+                    })}
+                </ul>
+                : ''}
+            </div>
+            <div className='competition-searchzone-searchbar'>
+                <input  placeholder='대회 이름 직접 검색하기' value={temTitle} onKeyDown={(e) => searchEnterPress(e)} onChange={(e)=>{
+                    setTemTitle(e.target.value)
+                }}/>
+                <img src={searchicon} alt='돋보기아이콘' onClick={() =>{
+                    setTitle(temTitle)
+                    listRefresh();
+                }}/>
+            </div>
+
         </div>
         <div className='competition-list'>
             <ul class='competition-row'>

@@ -1,35 +1,9 @@
-/* UA reset */
-
-
-li {
-    list-style: none;
-}
-
 /* Typography */
 
-:root {
-    font-size: 62.5%; /* 10px */
-  }
-
-.competition-searchzone-title{
-    font-size: 20px;
-    text-align: center;
-}
-
-
-.competition-searchzone-input::placeholder{
+.competition-searchzone-option{
+    font-size: 16px;
+    letter-spacing: -0.1em;
     color: #B1B1B1;
-    font-size: 13px;
-    padding-left: 5%;
-}
-
-.competition-searchzone-input:focus{
-    outline: none;
-    padding-left: 5%;
-}
-
-.competition-searchzone-input:focus::placeholder{
-    color:transparent;
 }
 
 .each-competition-top-date h1{
@@ -76,34 +50,19 @@ li {
 }
 
 .competition-searchzone{
-    height: 20vh;
-    /* padding-top: 3vh; */
-    box-sizing: border-box;
-    display: flex; /* 수직정렬을 위한 3종세트 display, align-items, justify-content */
-    align-items: center;
-    justify-content: center;
-    
-}
-
-.competition-searchzone-wrapper{
-    width: 35%;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-.competition-searchzone-options{
+    height: 10vh;
     display: flex;
-    box-sizing: border-box;
+    align-items: end;
 }
 
-.competition-searchzone-options-location,
-.competition-searchzone-options-date{
-    width: 100%;
-    margin: 0 5%;
+.competition-searchzone-searchbar{
+    margin-left: auto;
+    margin-bottom: 1.2rem;
+    position: relative;
 }
 
 .competition-list{
-    height: 64vh;
+    height: 74vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -125,42 +84,73 @@ li {
 
 /*Component*/
 
-/* .each-competition{
-    background-color: dodgerblue;
-} */
-
-.competition-searchzone-title::after{
-    content:' ';
-    display: block;
-    height: 1.4vh;
-    width: 2px;
-    margin: 0 auto;
-    margin-top: 0.5vh;
-    margin-bottom: 1vh;
-    background-color: white;
-}
-
-.competition-searchzone-input{
-    width: 100%;
-    border: 1px solid #DEDEDE;
-    filter: drop-shadow(0.5px 1px 2px rgba(0, 0, 0, 0.25)); 
-    border-radius: 50px;
-    margin-bottom: 1.5vh;
-    height: 30px;
-    box-sizing: border-box
-}
-
-.competition-searchzone-fake{
+.competition-searchzone-option{
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
     position: relative;
-}
+   
+    width: 100px;
+    height: 36px;
+    border: 1px solid #ADADAD;
+    border-radius: 15px;
 
-.competition-searchzone-input-icon{
-    position: absolute;
-    right: 3%;
-    margin-top: 3px;
-    z-index: 1;
+    padding: 0 1.4rem;
+    margin-right: 0.8rem;
+    margin-bottom: 1.2rem;
     cursor: pointer;
 }
+
+.competition-searchzone-option img{
+    margin-left: auto;
+}
+
+.competition-searchzone-option ul{
+    left: 0;
+    top: 40px;
+    position: absolute;
+    width: 100px;
+    height: 150px;
+    background: #FCFCFC;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding-left: 1.2rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+.competition-searchzone-option ul::-webkit-scrollbar{
+    width: 1px;
+}
+
+.competition-searchzone-option li{
+    height: 35px;
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    letter-spacing: -0.1em;
+    color: #828282;
+}
+
+.competition-searchzone-searchbar input{
+    width: 240px;
+    height: 36px;
+    box-sizing: border-box;
+    border: 1px solid #ADADAD;
+    border-radius: 50px;
+
+    padding-left: 1.4rem;
+}
+
+.competition-searchzone-searchbar img{
+    position: absolute;
+    right: 1.4rem;
+    top: 50%;
+    transform: translate(0, -50%);
+    cursor: pointer;
+}
+
 
 .each-competition-top{
     display: flex;
@@ -198,9 +188,6 @@ li {
     .competition-col{
         width: 50%;
     }
-    .competition-searchzone-wrapper{
-        width: 60%;
-    }
 }
 
 @media(max-width:750px){
@@ -215,10 +202,6 @@ li {
 
     .competition-col{
         width: 100%;
-    }
-
-    .competition-searchzone-wrapper{
-        width: 90%;
     }
     .competition-list{
         height: 68vh;
