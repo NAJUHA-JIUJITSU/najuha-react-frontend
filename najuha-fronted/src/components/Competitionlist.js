@@ -126,28 +126,25 @@ function Competitionlist() {
         return competitions.map((competition, i) => {
             let curcompetition = competitionParsing(competition)
             return(
-                <li class='competition-col'>
-                    <div class='each-competition'>
-                        <div class='each-competition-top'>
-                            <div class='each-competition-top-date'>
-                                <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
-                            </div>
-                            <div class='each-competition-top-location'>
-                                <div class='each-competition-top-location-tag'> {/*display:flex써서 세로 가운데 정렬하려고 클래스하나 더 넣은거임 */}
-                                    <h2>{curcompetition.title}</h2><br/>
-                                    <h3>{curcompetition.location}</h3>
-                                </div>
-                                <button id='each-competition-button-able' onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>신청</button>
-                            </div>
+                <li className='competition-col'>
+                    <div className='each-competition-tag'> 
+                    </div>
+                    <div className='each-competition-body'> {/* 위쪽 태그공간  */}
+                        <div class='each-competition-body-poster'> {/* 카드왼쪽 포스터공간  */}
+                            <img></img>
+                            <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
                         </div>
-                        {/* <div class='each-competition-bottom'>
-                            <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDate}({curcompetition.registrationDateDay})</h4>
-                            <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDeadline}({curcompetition.registrationDeadlineDay})</h4>
-                            <div class='each-competition-bottom-buttons'>
-                                <button>세부정보</button>
-                                
+                        <div class='each-competition-body-desc'> {/* 카드오른쪽 설명공간 */}
+                            <div class='each-competition-body-desc-top'>
+                                {curcompetition.title}
                             </div>
-                        </div>  */}
+                            <div class='each-competition-body-desc-middle'>
+                                {curcompetition.location}
+                            </div>
+                            <div class='each-competition-body-desc-bottom'>
+                                <button onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>신청</button>
+                            </div>
+                        </div>                        
                     </div>
                 </li>
             )

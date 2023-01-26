@@ -6,36 +6,16 @@
     color: #B1B1B1;
 }
 
-.each-competition-top-date h1{
-    font-size: 24px;
-    color: white;
-}
-
-.each-competition-top-date span{
-    font-size: 16px;
-    color: white;
-}
-
-.each-competition-top-location-tag h2{
-    font-size: 20px;
+.each-competition-body-poster h1{
     letter-spacing: -0.12em;
+    font-size: 2.8rem;
+    font-weight: 500;
 }
 
-.each-competition-top-location-tag h3{
-    font-size: 16px;
-    letter-spacing: -0.12em;
-}
-
-#each-competition-button-able{ /*버튼디자인*/
-    position: absolute;
-    width: 74px;
-    height: 34px;
-    background: #FFFFFF;
-    border: 1px solid #F1F1F1;
-    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
-    bottom: 8px;
-    right: 8px;
+.each-competition-body-poster h1 span{
+    font-size: 2rem;
+    margin-left: 0.2rem;
+    letter-spacing: -0.12rem;
 }
 
 
@@ -78,8 +58,8 @@
     flex-shrink: 0;
     padding: 0 1rem;
     box-sizing: border-box;
-    margin-bottom: 2rem;
-    height: 154px;
+    margin-bottom: 2.4rem;
+    height: 162px;
 }
 
 /*Component*/
@@ -151,32 +131,26 @@
     cursor: pointer;
 }
 
-
-.each-competition-top{
-    display: flex;
-    height: 126px;
+.each-competition-tag{
+    height: 20px;
+    margin-bottom: 2px;
 }
 
-.each-competition-top-date{
-    background-image: linear-gradient(
-        rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.6)
-      ),  url(http://localhost:3001/Assets/대회배경.svg);
-    background-position: center;
-    background-size: cover;
-    width: 28%;
+.each-competition-body{
     display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center;   /* align 세로 */
+    height: 140px;
 }
 
-.each-competition-top-location{
-    width: 72%;
-    border: 1px solid #D9E0E4;
-    padding-left: 10px;
-    display: flex;
-    align-items: center;   /* align 세로 */
+.each-competition-body-poster{
+    min-width: 108px;
     position: relative;
+}
+
+.each-competition-body-poster h1{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @media(max-width:1049px){
