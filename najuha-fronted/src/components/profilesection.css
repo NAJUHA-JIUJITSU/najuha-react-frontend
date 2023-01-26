@@ -180,6 +180,10 @@
     z-index: 10;
 }
 
+.Profilesection_boxLeft span {
+    font-size: 2rem;
+}
+
 .Profilesection_boxRight {
     /* border : solid 1px blue; */
     width: 85%;

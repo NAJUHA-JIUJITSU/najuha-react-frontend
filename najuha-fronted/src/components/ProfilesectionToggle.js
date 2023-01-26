@@ -183,7 +183,7 @@ function ProfilesectionToggle() {
                             <div className= 'Profilesection_boxLeft'>
                                 <img src={curApplication.postUrl} alt='대회포스터'></img>
                                 <p className= 'Profilesection_posterBlack'></p>
-                                <h3>{curApplication.doreOpen}({curApplication.day})</h3>
+                                <h3>{curApplication.doreOpen}<span>({curApplication.day})</span></h3>
                             </div>
                             <div className= 'Profilesection_boxRight'>
                                 <img onClick={()=>{onRemove(curApplication.id)}} 
