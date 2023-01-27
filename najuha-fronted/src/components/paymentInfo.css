@@ -1,0 +1,29 @@
+
+/* Layout */
+
+.PaymentInfo_wrapper {
+    width: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem 0 2rem;
+    box-sizing: border-box;
+    display: flex;
+    height: 84vh;
+}
+
+
+@media(max-width:1049px){
+    /* Layout */
+
+    .PaymentInfo_wrapper {
+        max-width : 768px;
+    }
+}
+
+
+@media(max-width:750px) {
+    .PaymentInfo_wrapper {
+        max-width : 650px;
+        height: 88vh;
+    }
+}

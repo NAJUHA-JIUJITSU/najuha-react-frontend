@@ -20,6 +20,7 @@ import CompetitionApplyMethodPage from './pages/CompetitionApplyMethodPage'
 import PaymentSuccessPage from './pages/PaymentSuccessPage'
 import PaymentFailPage from './pages/PaymentFailPage'
 import CompetitionPage from './pages/CompetitionPage'
+import PaymentInfoPage from './pages/PaymentInfoPage'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -41,6 +42,7 @@ function App() {
   const AuthoCompetitionApplyMethodPage = Auth(CompetitionApplyMethodPage, true);
   const AuthPaymentSuccessPage = Auth(PaymentSuccessPage, true)
   const AuthPaymentFailPage = Auth(PaymentFailPage, true)
+  const AuthPaymentInfoPage = Auth(PaymentInfoPage, true)
 
 
   return (
@@ -65,6 +67,7 @@ function App() {
         <Route path="/toss/success" element={<TossSuccess/>} />
         <Route path="/payment/success" element={<AuthPaymentSuccessPage/>} />
         <Route path="/payment/fail" element={<AuthPaymentFailPage/>} />
+        <Route path = '/PaymentInfo/:id' element={<AuthPaymentInfoPage/>} />
       </Routes>
     </BrowserRouter>
     </React.Fragment>
