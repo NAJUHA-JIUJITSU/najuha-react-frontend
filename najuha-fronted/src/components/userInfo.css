@@ -96,7 +96,7 @@
     cursor: pointer;
 }
 
-.UserInfo_right .UserInfo_updateBtn {
+.UserInfo_updateBtn {
     background-color: #F9F9F9;
     color: #7e7e7e;
     border: 1px solid #E2E2E2;
@@ -108,7 +108,7 @@
     margin: 0 auto;
 }
 
-.UserInfo_right .UserInfo_updateBtn:hover {
+.UserInfo_updateBtn:hover {
     cursor: pointer;
     background-color: #E2E2E2;
 }
