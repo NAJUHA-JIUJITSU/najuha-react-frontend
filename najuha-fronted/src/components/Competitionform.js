@@ -167,7 +167,7 @@ function Competition_form() {
                 'registrationDeadline': registrationDeadLine,
                 'location': location,
                 'bankAccount': bankAccount,
-                'earlybirdDeadline': earlybirdDeadline,
+                'earlyBirdDeadline': earlybirdDeadline,
                 'information': infomation,
                 'applicantTableOpenDate': applicantTableOpenDate,
                 'tournamentTableOpenDate': tournamentTableOpenDate,
@@ -202,7 +202,7 @@ function Competition_form() {
                 'registrationDeadline': registrationDeadLine,
                 'location': location,
                 'bankAccount': bankAccount,
-                'earlybirdDeadline': earlybirdDeadline,
+                'earlyBirdDeadline': earlybirdDeadline,
                 'information': infomation,
                 'applicantTableOpenDate': applicantTableOpenDate,
                 'tournamentTableOpenDate': tournamentTableOpenDate,
@@ -225,7 +225,7 @@ function Competition_form() {
         setDoreOpen(competition.doreOpen)
         setRegistrationDate(competition.registrationDate)
         setRegistrationDeadLine(competition.registrationDeadline)
-        setEarlybirdDeadline(competition.earlybirdDeadline)
+        setEarlybirdDeadline(competition.earlyBirdDeadline)
         setLocation(competition.location)
         setBankAccount(competition.bankAccount)
         setInfomation(competition.information)
