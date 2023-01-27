@@ -32,8 +32,12 @@ function Competitionlist() {
     startDateRef.current = startDate;
     titleRef.current = title;
     let navigate = useNavigate();
+    let todaytime = dayjs()
     
-        
+    const date1 = dayjs("2021-10-11 10:30:25.495", "YYYY-MM-DD HH:mm:ss.SSS");
+    const date2 = dayjs("2020-04-08 13:25:30.000", "YYYY-MM-DD HH:mm:ss.SSS");
+    console.log(date2.diff(date1, "d"))
+
     const observer = useRef(new IntersectionObserver(async (entries)=>{
         const first = entries[0]
         if(first.isIntersecting){
@@ -102,6 +106,44 @@ function Competitionlist() {
         setCompetitions([]);
     }
 
+    function makingRegisterTag(registrationDate, registrationDeadline){
+        let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
+        let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
+        console.log(`opendate: ${opendate}`)
+        console.log(`finishidate: ${finishdate}`)
+
+        let deadlineDiff = todaytime.diff(finishdate, 'd')
+        
+
+        if(deadlineDiff > 0){ // 마감날짜(데드라인)이 지났을경우 
+            return (
+                <div className='each-competition-tag-gray'><p>신청마감</p></div>
+            )
+        }
+
+        if(deadlineDiff == 0){ // 오늘이 마감날짜(데드라인)일 경우
+            return(
+                <div className='each-competition-tag-blue'><p>신청마감 D-day</p></div>
+            )
+        }
+
+        let openDiff = todaytime.diff(opendate, 'd')
+
+        if(openDiff < 0){ // 현재날짜가 오픈 전일 경우 ex) 신청오픈 D-20
+            return(
+                <div className='each-competition-tag-gray'><p>신청오픈 D{openDiff}</p></div>
+            )
+        }
+        return(
+            <div className='each-competition-tag-blue'><p>신청마감 D{deadlineDiff}</p></div>
+        )
+        
+    }
+
+    function makingEarlybirdTag(date){
+
+    }
+
 
     function competitionParsing(competition){
         let doreOpenDay = week[new Date(competition.doreOpen).getDay()]
@@ -120,7 +162,8 @@ function Competitionlist() {
             'registrationDateDay': registrationDateDay,
             'registrationDeadline': registrationDeadline,
             'registrationDeadlineDay': registrationDeadLineDay,
-            'posterImage': competition.CompetitionPoster != null ? competition.CompetitionPoster.imageUrl : sampleposter
+            'posterImage': competition.CompetitionPoster != null ? competition.CompetitionPoster.imageUrl : sampleposter,
+            'earlyBirdDeadline': competition.earlyBirdDeadline != null ? competition.earlyBirdDeadline : null,
         }
     }
 
@@ -129,7 +172,8 @@ function Competitionlist() {
             let curcompetition = competitionParsing(competition)
             return(
                 <li className='competition-col'>
-                    <div className='each-competition-tag'> 
+                    <div className='each-competition-tag'>
+                        {makingRegisterTag(competition.registrationDate, competition.registrationDeadline)}
                     </div>
                     <div className='each-competition-body'> {/* 위쪽 태그공간  */}
                         <div class='each-competition-body-poster'> {/* 카드왼쪽 포스터공간  */}

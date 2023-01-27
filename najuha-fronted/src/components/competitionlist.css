@@ -163,6 +163,58 @@
 .each-competition-tag{
     height: 20px;
     margin-bottom: 2px;
+    display: flex;
+}
+
+.each-competition-tag-red{
+    background: #FFF3F3;
+    color: #FF5F5F;
+    font-size: 14px;
+    letter-spacing: -0.1em;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding-left: 2px;
+    padding-right: 3px;
+    margin-right: 5px;
+}
+
+.each-competition-tag-red p{ /*수직정렬 맞췄지만 p태그안에 수직이 뭔가 안맞아서 인위적으로 p태그를 이동시킴 */
+    margin-top: 2px; 
+}
+
+.each-competition-tag-blue{
+    background: #F3F7FF;
+    color: #4E82E5;
+    font-size: 14px;
+    letter-spacing: -0.1em;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding-left: 2px;
+    padding-right: 3px;
+    margin-right: 5px;
+}
+
+.each-competition-tag-blue p{ /*수직정렬 맞췄지만 p태그안에 수직이 뭔가 안맞아서 인위적으로 p태그를 이동시킴 */
+    margin-top: 2px;
+}
+
+.each-competition-tag-gray{
+    background: #F0F0F0;
+    color: #8C8C8C;
+    font-size: 14px;
+    letter-spacing: -0.1em;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding-left: 2px;
+    padding-right: 3px;
+    margin-right: 5px;
+}
+
+.each-competition-tag-gray p{ /*수직정렬 맞췄지만 p태그안에 수직이 뭔가 안맞아서 인위적으로 p태그를 이동시킴 */
+    margin-top: 2px;
 }
 
 .each-competition-body{
