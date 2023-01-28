@@ -140,8 +140,19 @@ function Competitionlist() {
         
     }
 
-    function makingEarlybirdTag(date){
+    function makingEarlybirdTag(registrationDate, registrationDeadline, earlyBirdDeadline){
+        let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
+        let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
+        let earlyBirdDate = dayjs(earlyBirdDeadline, 'YYYY-MM-DD')
 
+        let deadlineDiff = todaytime.diff(finishdate, 'd')
+        let openDiff = todaytime.diff(opendate, 'd')
+        let earlyBirdDiff = todaytime.diff(earlyBirdDate, 'd')
+
+        if(openDiff >= 0 && deadlineDiff <= 0 && earlyBirdDiff <= 0)
+            return(
+                <div className='each-competition-tag-red'><p>얼리버드</p></div>
+            )
     }
 
 
@@ -174,6 +185,7 @@ function Competitionlist() {
                 <li className='competition-col'>
                     <div className='each-competition-tag'>
                         {makingRegisterTag(competition.registrationDate, competition.registrationDeadline)}
+                        {makingEarlybirdTag(competition.registrationDate, competition.registrationDeadline, curcompetition.earlyBirdDeadline)}
                     </div>
                     <div className='each-competition-body'> {/* 위쪽 태그공간  */}
                         <div class='each-competition-body-poster'> {/* 카드왼쪽 포스터공간  */}
