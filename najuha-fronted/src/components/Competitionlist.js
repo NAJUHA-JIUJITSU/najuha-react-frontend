@@ -184,8 +184,8 @@ function Competitionlist() {
             return(
                 <li className='competition-col'>
                     <div className='each-competition-tag'>
-                        {makingRegisterTag(competition.registrationDate, competition.registrationDeadline)}
                         {makingEarlybirdTag(competition.registrationDate, competition.registrationDeadline, curcompetition.earlyBirdDeadline)}
+                        {makingRegisterTag(competition.registrationDate, competition.registrationDeadline)}
                     </div>
                     <div className='each-competition-body'> {/* 위쪽 태그공간  */}
                         <div class='each-competition-body-poster'> {/* 카드왼쪽 포스터공간  */}
