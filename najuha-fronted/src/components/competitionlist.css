@@ -53,6 +53,7 @@
 .competition-schedule-wrapper{
     width: auto;
     max-width: 1200px;
+    min-height: 84vh;
     margin: 0 auto;
     padding: 0 2rem;
     box-sizing: border-box;
@@ -317,13 +318,13 @@
 
     .competition-schedule-wrapper{
         max-width: 650px;
+        height: 88vh;
     }
-
     .competition-col{
         width: 100%;
     }
     .competition-list{
-        height: 68vh;
+        height: 78vh;
     }
 
     /* component */
