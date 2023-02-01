@@ -272,7 +272,7 @@ function AdminCompetitionlist() {
     <div className='competition-schedule-wrapper'>
         <div className='competition-searchzone'>
             <div className='competition-searchzone-option' onClick={() => setDateDropdown(pre => !pre)}>
-                <p>{startDate == '' ? '대회날짜' : `${temDate}월`}</p>
+                <p>{startDate == '' ? '날짜' : `${temDate}월`}</p>
                 <img src={dropdownicon}/> 
                 {dateDropdown ? <ul>
                     <li value='' onClick={() => {
