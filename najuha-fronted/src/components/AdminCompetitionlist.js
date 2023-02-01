@@ -13,12 +13,11 @@ import sampleposter from '../src_assets/samplePoster.png'
 
 const months = [1,2,3,4,5,6,7,8,9,10,11,12]
 const locationSample=['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북']
+const week = ['일', '월', '화', '수', '목', '금', '토']
 
 function AdminCompetitionlist() {
     const cookies = new Cookies();
     const [competitions, setCompetitions] = useState([])
-    const [activeModal, setActiveModal] = useState(false);
-    const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
     const [dateDropdown, setDateDropdown] = useState(false);
     const [locationDropdown, setLocationDropdown] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
@@ -109,8 +108,6 @@ function AdminCompetitionlist() {
           })
     }
 
-    
-
     useEffect(() => {
         const currentElement = lastElement;
         const currentObserver = observer.current;
@@ -197,7 +194,6 @@ function AdminCompetitionlist() {
             )
     }
 
-
     function competitionParsing(competition){
         let doreOpenDay = week[new Date(competition.doreOpen).getDay()]
         let registrationDateDay = week[new Date(competition.registrationDate).getDay()]
@@ -218,6 +214,13 @@ function AdminCompetitionlist() {
             'status': competition.status,
             'posterImage': competition.CompetitionPoster != null ? competition.CompetitionPoster.imageUrl : sampleposter,
             'earlyBirdDeadline': competition.earlyBirdDeadline != null ? competition.earlyBirdDeadline : null,
+        }
+    }
+
+    function searchEnterPress (e) {
+        if(e.key == 'Enter'){
+            setTitle(temTitle)
+            listRefresh();
         }
     }
 
@@ -264,28 +267,6 @@ function AdminCompetitionlist() {
             )
         })
     }
-
-    // <div class='admin-each-competition-bottom'>
-    //                         <div class='admin-each-competition-bottom-buttons'>
-    //                             <button style={{background:'orange', color:'black'}} onClick={()=>{navigate(`/admincompetition/${curcompetition.id}`)}}>대회수정하기</button>
-    //                             {curcompetition.status === 'ACTIVE' ? <button style={{background:'gray', color:'black'}} onClick={async()=>{
-    //                                 InActivePatch(curcompetition.id)                                    
-    //                                 }}>비활성화하기</button> 
-    //                             : <button style={{background:'red', color:'black'}} onClick={()=>{
-    //                                 ActivePatch(curcompetition.id)
-    //                                 }}>활성화하기</button> }
-    //                             <button style={{background:'lightblue', color:'black'}} onClick={()=>{navigate(`/Admincompetition/imageupload/${curcompetition.id}`)}}>포스터업로드하기</button>
-    //                         </div>
-    // </div>
-    function searchEnterPress (e) {
-        if(e.key == 'Enter'){
-            setTitle(temTitle)
-            listRefresh();
-        }
-    }
-
-
-
 
   return (
     <div className='competition-schedule-wrapper'>
@@ -339,7 +320,6 @@ function AdminCompetitionlist() {
                     listRefresh();
                 }}/>
             </div>
-
         </div>
         <div className='competition-list'>
             <ul className='competition-row'>
