@@ -9,10 +9,10 @@ import dayjs from 'dayjs';
 
 const months = [1,2,3,4,5,6,7,8,9,10,11,12]
 const locationSample=['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북']
+const week = ['일', '월', '화', '수', '목', '금', '토']
 
 function Competitionlist() {
     const [competitions, setCompetitions] = useState([])
-    const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
     const [isLoading, setIsLoading] = useState(false)
     const [lastElement, setLastElement] = useState('')
     const [offset, setOffset] = useState(0);
@@ -33,10 +33,6 @@ function Competitionlist() {
     titleRef.current = title;
     let navigate = useNavigate();
     let todaytime = dayjs()
-    
-    const date1 = dayjs("2021-10-11 10:30:25.495", "YYYY-MM-DD HH:mm:ss.SSS");
-    const date2 = dayjs("2020-04-08 13:25:30.000", "YYYY-MM-DD HH:mm:ss.SSS");
-    console.log(date2.diff(date1, "d"))
 
     const observer = useRef(new IntersectionObserver(async (entries)=>{
         const first = entries[0]
@@ -109,8 +105,6 @@ function Competitionlist() {
     function makingRegisterTag(registrationDate, registrationDeadline){
         let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
         let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
-        console.log(`opendate: ${opendate}`)
-        console.log(`finishidate: ${finishdate}`)
 
         let deadlineDiff = todaytime.diff(finishdate, 'd')
         
@@ -217,10 +211,6 @@ function Competitionlist() {
         }
     }
 
-
-
-
-
   return (
     <div className='competition-schedule-wrapper'>
         <div className='competition-searchzone'>
@@ -273,10 +263,9 @@ function Competitionlist() {
                     listRefresh();
                 }}/>
             </div>
-
         </div>
         <div className='competition-list'>
-            <ul class='competition-row'>
+            <ul className='competition-row'>
                 {renderCompetitionList()}
                 {isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}>Loading...</div>}
                 {!isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}ref={setLastElement}>해당 대회가 모두 로딩되었습니다.</div>}
