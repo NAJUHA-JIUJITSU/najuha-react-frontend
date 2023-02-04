@@ -13,8 +13,10 @@ import ProfilepageToggle from './pages/ProfilepageToggle'
 import Redirect from './components/Redirect'
 import KakaoLogin from './components/KakaoLogin'
 import CompetitionApplyTeamPage from './pages/CompetitionApplyTeamPage'
-import Auth from './hoc/auth'
+import CompetitionApplyPatchTeamPage from './pages/CompetitionApplyPatchTeamPage'
 import CompetitionApplyPage from './pages/CompetitionApplyPage'
+import CompetitionApplyPatchPage from './pages/CompetitionApplyPatchPage'
+import Auth from './hoc/auth'
 import TossSuccess from './components/Tosssuccess'
 import CompetitionApplyMethodPage from './pages/CompetitionApplyMethodPage'
 import PaymentSuccessPage from './pages/PaymentSuccessPage'
@@ -30,7 +32,9 @@ function App() {
   const AuthCompetitionSchedule = Auth(CompetitionSchedule, null)
   const AuthCompetitionPage = Auth(CompetitionPage, null);
   const AuthCompetitionApplyPage = Auth(CompetitionApplyPage, true);
+  const AuthCompetitionApplyPatchPage = Auth(CompetitionApplyPatchPage, true);
   const AuthCompetitionApplyTeamPage = Auth(CompetitionApplyTeamPage, true);
+  const AuthCompetitionApplyPatchTeamPage = Auth(CompetitionApplyPatchTeamPage, true);
   const AuthAdmincompetition = Auth(Admincompetition, true, true)
   const AuthCompetitionform = Auth(Competitionform, true, true)
   const AuthProfilepage = Auth(Profilepage, true)
@@ -55,10 +59,12 @@ function App() {
         <Route path = '/competition/:id' element={<AuthCompetitionPage/>} />
         <Route path = '/competition/applymethod/:id' element={<AuthoCompetitionApplyMethodPage/>} />
         <Route path = '/competition/apply/:id' element={<AuthCompetitionApplyPage/>} />
+        <Route path = '/competition/apply/patch/:id' element={<AuthCompetitionApplyPatchPage/>} />
         <Route path = '/competition/applyteam/:id' element={<AuthCompetitionApplyTeamPage/>} />
+        <Route path = '/competition/applyteam/patch/:id' element={<AuthCompetitionApplyPatchTeamPage/>} />
         <Route path = '/Admincompetition/' element={<AuthAdmincompetition/>} />
         <Route path = '/Admincompetition/:id' element={<AuthCompetitionform/>} />
-        <Route path = '/Admincompetition/imageupload/:id' element={< AuthAdminCompetitionImagePage/>} />
+        <Route path = '/Admincompetition/imageupload/:id' element={<AuthAdminCompetitionImagePage/>} />
         <Route path = '/Profilepage' element={<AuthProfilepage/>} />
         <Route path = '/Profilepage/info/:id' element={<AuthProfileInfopage/>} />
         <Route path = '/UserInfopage' element={<AuthUserInfopage/>} />
