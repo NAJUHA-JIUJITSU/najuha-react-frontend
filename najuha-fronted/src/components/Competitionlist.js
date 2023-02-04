@@ -251,7 +251,7 @@ function Competitionlist() {
                                 <p>{curcompetition.location}</p>
                             </div>
                             <div class='each-competition-body-desc-bottom'>
-                                <button style={ (cardGray==='') ? {} : {display:'none'} } onClick={ () => {navigate(`/competition/applymethod/${curcompetition.id}`)} }>바로 신청</button>
+                                <button style={ (cardGray==='') ? {} : {display:'none'} } onClick={ () => {navigate(`/competition/applymethod/${curcompetition.id}`)} }>신청</button>
                             </div>
                         </div>                        
                     </div>
