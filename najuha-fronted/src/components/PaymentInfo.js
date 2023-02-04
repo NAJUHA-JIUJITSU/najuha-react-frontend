@@ -11,6 +11,7 @@ import samplePoster from "../src_assets/samplePoster.png";
 function PaymentInfo() {
     const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState([]); //유저 신청 대회 상세정보 가져오기
     const [competitionApplicationList, setCompetitionApplicationList] = useState([]); //유저 신청 대회 유저 리스트 가져오기
+    const [clickID, setclickID] = useState(0); //클릭한 유저 신청 대회 id
     const cookies = new Cookies();
     const xAccessToken = cookies.get("x-access-token");
     const { decodedToken, isExpired } = useJwt(xAccessToken);
@@ -19,23 +20,26 @@ function PaymentInfo() {
     const params = useParams(); // ex) id: 1
     console.log('대회 id: ' + params.id)
 
+    let competitionPayAmount; //대회 총 결제 금액
+    let userPayAmount; //유저별 결제 금액 합계
+    let userRealPayAmount; //유저별 진짜 총 결제 금액 (할인적용)
+
     //서버에서 대회상세정보 가져오기
     async function getCompetitionApplicationInfo() {
-        axios.get(`${process.env.REACT_APP_BACK_END_API}/admin/competitions/${params.id}`,
+        axios.get(`${process.env.REACT_APP_BACK_END_API}/admin/competitions/${params.id}/competitionApplications`,
         {
             headers: {
                 'x-access-token':  xAccessToken
             }
         })
         .then((res) => {
-            setCompetitionApplicationList(res.data.result);
+            setcompetitionApplicationInfo(applicationParsing(res.data.result));
+            setCompetitionApplicationList(res.data.result.competitionApplications);
             console.log('데이터: '+res.data.result)
             console.log(res.data.message);
         })
         .catch((err) => {
             console.log(err);
-            console.log(err.response.status);
-            console.log(err.response.data.message);
         })
         return ;
     }
@@ -82,82 +86,105 @@ function PaymentInfo() {
     
      //신청대회 데이터 파싱
     function applicationParsing(application){
-        let id = application.id;
-        let title =  application.Competition.title;
+        let id = application.competition.id;
+        let title =  application.competition.title;
 
-        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
-        let doreOpen = application.Competition.doreOpen.substr(0,10).replace('-','.').replace('-','.');
-        let doreOpenDay = getDayOfWeek(application.Competition.doreOpen);
-        let location = application.Competition.location;
-        let earlyBirdDeadline = application.Competition.earlyBirdDeadline.substr(0,10).replace('-','.').replace('-','.');
-        let earlyBirdDeadlineDay = getDayOfWeek(application.Competition.earlyBirdDeadline);
-        let registrationDeadline = application.Competition.registrationDeadline.substr(0,10).replace('-','.').replace('-','.');
-        let registrationDeadlineDay = getDayOfWeek(application.Competition.registrationDeadline);
-        let applicantTableOpenDate = application.Competition.applicantTableOpenDate.substr(0,10).replace('-','.').replace('-','.');
-        let applicantTableOpenDateDay = getDayOfWeek(application.Competition.applicantTableOpenDate);
-        let tournamentTableOpenDate = application.Competition.tournamentTableOpenDate.substr(0,10).replace('-','.').replace('-','.');
-        let tournamentTableOpenDateDay = getDayOfWeek(application.Competition.tournamentTableOpenDate);
-        let team = application.CompetitionApplicationInfos[0].team;
-        let phoneNumber = autoHypenPhone(application.CompetitionApplicationInfos[0].phoneNumber);
-        let isGroup = ( application.isGroup ) ?  "단체" : "개인";
-        let amount = application.expectedPrice.normalPrice;
-        let isPay = ( application.competitionPayment===null ) ? "예상 결제금액" : "총 결제금액";
-
-        //버튼 렌더에 필요한 정보
-        let competitionPayment = application.competitionPayment;
-        let status = (application.competitionPayment)? application.competitionPayment.status : ' ';
-        let today = new Date();
-        let CheckRegistrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true; //false면 신청마감
-        let CheckDoreOpen = ( today > new Date(application.Competition.doreOpen) ) ? false : true; //false면 대회날짜 지남
-       
-
-
+        let postUrl = ( application.competition.CompetitionPoster ) ? application.competition.CompetitionPoster.imageUrl : samplePoster;
+        let doreOpen = application.competition.doreOpen.substr(0,10).replace('-','.').replace('-','.');
+        let doreOpenDay = getDayOfWeek(application.competition.doreOpen);
+        let location = application.competition.location;
+        let earlyBirdDeadline = application.competition.earlyBirdDeadline.substr(0,10).replace('-','.').replace('-','.');
+        let earlyBirdDeadlineDay = getDayOfWeek(application.competition.earlyBirdDeadline);
+        let registrationDeadline = application.competition.registrationDeadline.substr(0,10).replace('-','.').replace('-','.');
+        let registrationDeadlineDay = getDayOfWeek(application.competition.registrationDeadline);
+        let applicantTableOpenDate = application.competition.applicantTableOpenDate.substr(0,10).replace('-','.').replace('-','.');
+        let applicantTableOpenDateDay = getDayOfWeek(application.competition.applicantTableOpenDate);
+        let tournamentTableOpenDate = application.competition.tournamentTableOpenDate.substr(0,10).replace('-','.').replace('-','.');
+        let tournamentTableOpenDateDay = getDayOfWeek(application.competition.tournamentTableOpenDate);
+      
       
         return {
             'id' : id,
             'title': title,
+            'postUrl': postUrl,
 
-            'postUrl' : postUrl,
+            
             'doreOpen' : doreOpen + '(' + doreOpenDay + ')',
-            'location': location + '엄청 엄청 긴 대회라서 두 줄로 표시해야 한다고오오오',
+            'location': location,
             'earlyBirdDeadline' : earlyBirdDeadline + '(' + earlyBirdDeadlineDay + ')',
             'registrationDeadline' : registrationDeadline + '(' + registrationDeadlineDay + ')',
             'applicantTableOpenDate' : applicantTableOpenDate + '(' + applicantTableOpenDateDay + ')',
             'tournamentTableOpenDate' : tournamentTableOpenDate + '(' + tournamentTableOpenDateDay + ')',
-            'team' : team,
-            'phoneNumber' : phoneNumber,
-            'isGroup' : isGroup,
-            'amount' : amount,
-            'isPay' : isPay,
-
-            //버튼 렌더에 필요한 정보
-            'competitionPayment' : competitionPayment,
-            'status' : status,
-            'CheckRegistrationDeadline' : CheckRegistrationDeadline,
-            'CheckDoreOpen' : CheckDoreOpen,
-
-
+        
 
         }
     }
 
-
-    //(오칸 코드) 테이블 렌더
+    //왼쪽 테이블 렌더
     function renderCompetitionApplicationList(){
+        competitionPayAmount = 0
         return competitionApplicationList.map((application, i) => {
+            competitionPayAmount += application.competitionPayment.amount
           return(
-            <ul key={i} className='CompetitionApplyTeamForm-bottom-table-row'>
-                        <li>{i+1}</li>
-                        <li>{application.playerName}</li>
-                        <li>{application.playerBirth}</li>
-                        <li>{application.gender == 'female' ? '여자' : '남자'}</li>
-                        <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
-                        <li>{application.divisionName}</li>
-                        <li>{application.belt}</li>
-                        <li>{application.weight}</li>
-                        <li>{application.pricingPolicy.normal}원</li>
-            </ul>
+            <tr className='PaymentInfo_tableHover' onClick={() =>{idClick(application.id)}}>
+                <td>{i+1}</td>
+                <td>{application.User.UserInfo.fullName}</td>
+                <td>{application.User.UserInfo.phoneNumber}</td>
+                <td>{(application.isGroup) ? '단체' : '개인'}</td>
+                <td>{application.competitionPayment.amount}</td>
+                <td>{application.competitionPayment.id}</td>
+            </tr>
           )
+        })
+    }
+
+    //유저 클릭
+    function idClick(id) {
+        setclickID(id);
+    }
+
+    //오른쪽 테이블 렌더
+    function renderCompetitionApplicationListInfo(){
+        userPayAmount = 0
+        userRealPayAmount = 0
+        return competitionApplicationList.map((application) => {
+            if(application.id == clickID) {
+                userRealPayAmount = application.competitionPayment.amount;
+                return(
+                    application.CompetitionApplicationInfos.map((application, i) => {
+                        userPayAmount += application.pricingPolicy.normal;
+                        return(
+                            <tr>
+                                <td>{i+1}</td>
+                                <td>{application.playerName}</td>
+                                <td>{application.playerBirth}</td>
+                                <td>{(application.gender=='male') ? '남자' : '여자'}</td>
+                                <td>{(application.uniform=='gi') ? '기' : '노기'}</td>
+                                <td>{application.divisionName}</td>
+                                <td>{application.belt}</td>
+                                <td>{application.weight}kg</td>
+                                <td>{application.pricingPolicy.normal}원</td>
+                            </tr>
+                        )
+                    })
+                )
+            }
+           return;
+        })
+    }
+
+    //오른쪽 테이블 대표 정보 렌더
+    function renderCompetitionApplicationListInfoTitle(){
+        return competitionApplicationList.map((application) => {
+            if(application.id == clickID) {
+                return(
+                    <div className='PaymentInfo_listInfoTitle'>
+                        <h2>팀 이름<span>{application.CompetitionApplicationInfos[0].team}</span></h2>
+                        <h2>대표번호<span>{application.CompetitionApplicationInfos[0].phoneNumber}</span></h2>
+                    </div>
+                )
+            }
+           return;
         })
     }
 
@@ -174,7 +201,79 @@ function PaymentInfo() {
 
     return (
         <div className='PaymentInfo_wrapper'>
-            <h2>페이먼트 인포!!</h2>
+            <div className='PaymentInfo_top'>
+                <div className='ProfileInfo_title'>
+                    <h2>{competitionApplicationInfo.title}</h2>
+                </div>
+                <div className='ProfileInfo_competition'>
+                    <div className='ProfileInfo_competition_Left'>
+                        <img src={competitionApplicationInfo.postUrl} alt='대회포스터'></img>
+                    </div>
+                    <div className='ProfileInfo_competition_Right'>
+                        <div className='ProfileInfo_competition_date'>
+                            <h3>대회 날짜</h3>
+                            <p>{competitionApplicationInfo.doreOpen}</p>
+                        </div>
+                        <div className='ProfileInfo_competition_date'>
+                            <h3>대회 장소</h3>
+                            <p>{competitionApplicationInfo.location}</p>
+                        </div>
+                        <div className='ProfileInfo_competition_date'>
+                            <h3>얼리버드 마감</h3>
+                            <p>{competitionApplicationInfo.earlyBirdDeadline}</p>
+                        </div>
+                        <div className='ProfileInfo_competition_date'>
+                            <h3>참가신청 마감</h3>
+                            <p>{competitionApplicationInfo.registrationDeadline}</p>
+                        </div>
+                        <div className='ProfileInfo_competition_date'>
+                            <h3>신청자 명단</h3>
+                            <p>{competitionApplicationInfo.applicantTableOpenDate}</p>
+                        </div>
+                        <div className='ProfileInfo_competition_date'>
+                            <h3>대진표 공개</h3>
+                            <p>{competitionApplicationInfo.tournamentTableOpenDate}</p>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <div className='PaymentInfo_bottom'>
+                <div className='PaymentInfo_list'>
+                    <table>
+                        <tr>
+                            <th>No.</th>
+                            <th>결제자</th>
+                            <th>핸드폰 번호</th>
+                            <th>개인/단체</th>
+                            <th>결제금액</th>
+                            <th>결제ID</th>
+                        </tr>
+                        {renderCompetitionApplicationList()}
+                    </table>
+                    <h2>총 결제금액 <span>{competitionPayAmount}원</span></h2>
+                </div>
+                <div className='PaymentInfo_listInfo'>
+                    {renderCompetitionApplicationListInfoTitle()}
+                    <table>
+                            <tr>
+                                <th>No.</th>
+                                <th>이름</th>
+                                <th>생년월일</th>
+                                <th>성별</th>
+                                <th>기/노기</th>
+                                <th>부문</th>
+                                <th>벨트</th>
+                                <th>체급</th>
+                                <th>참가비</th>
+                            </tr>
+                            {renderCompetitionApplicationListInfo()}
+                    </table>
+                    <div className='PaymentInfo_listInfoPay'>
+                        <h2>할인금액 <span>{userPayAmount-userRealPayAmount}원</span></h2>
+                        <h2>총 합계 <span>{userRealPayAmount}원</span></h2>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import arrowLeftIcon from "../src_assets/arrow_left.svg";
 import samplePoster from "../src_assets/samplePoster.png";
 
+
 function ProfileInfo() {
     const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState([]); //유저 신청 대회 상세정보 가져오기
     const [competitionApplicationList, setCompetitionApplicationList] = useState([]); //유저 신청 대회 유저 리스트 가져오기
@@ -18,6 +19,8 @@ function ProfileInfo() {
 
     const params = useParams(); // ex) id: 1
     console.log('대회 id: ' + params.id)
+    const cursorStyle = {cursor: "default"}
+    
 
     //서버에서 대회상세정보 가져오기
     async function getCompetitionApplicationInfo() {
@@ -84,6 +87,7 @@ function ProfileInfo() {
      //신청대회 데이터 파싱
     function applicationParsing(application){
         let id = application.id;
+        let competitionId = application.Competition.id;
         let title =  application.Competition.title;
 
         let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
@@ -116,6 +120,7 @@ function ProfileInfo() {
       
         return {
             'id' : id,
+            'competitionId' : competitionId,
             'title': title,
 
             'postUrl' : postUrl,
@@ -179,6 +184,19 @@ function ProfileInfo() {
     
     };
 
+    //수정하기 버튼에 넘겨줄 대회ID, 신청정보ID
+    const patchClick = () => {
+        //개인으로 신청한 경우
+        if(competitionApplicationInfo.isGroup === "개인") {
+            navigate(`/competition/apply/patch/${competitionApplicationInfo.competitionId}`, { state: competitionApplicationInfo.id });
+        }
+        //단체로 신청한 경우
+        if(competitionApplicationInfo.isGroup === "단체") {
+            navigate(`/competition/applyteam/patch/${competitionApplicationInfo.competitionId}`, { state: competitionApplicationInfo.id });
+        }
+       
+    }
+
     //버튼 렌더
     function renderButton(application){
         //competitionPayment이 null이 아니면
@@ -188,7 +206,7 @@ function ProfileInfo() {
                 return (
                     //결제완료 버튼
                     <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
-                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>결제완료</button>
+                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' style={cursorStyle}>결제완료</button>
                     </div>
                 )
             }
@@ -198,7 +216,7 @@ function ProfileInfo() {
                     //환불하기&결제완료 버튼
                     <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
                         <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={()=>alert('고객센터(1234-1234)로 문의바랍니다.')}>환불하기</button>
-                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>결제완료</button>
+                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' style={cursorStyle}>결제완료</button>
                     </div>
                 )
             }
@@ -207,7 +225,7 @@ function ProfileInfo() {
                 return(
                     //환불완료 버튼
                     <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
-                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>환불완료</button>
+                        <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' style={cursorStyle}>환불완료</button>
                     </div>
                 )
             }
@@ -226,7 +244,7 @@ function ProfileInfo() {
         return(
             //수정하기&결제하기 버튼
             <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
-                <button id='CompetitionApplyTeamForm-bottom-table-buttons-save'>수정하기</button>
+                <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={()=>{patchClick()}}>수정하기</button>
                 <button id='CompetitionApplyTeamForm-bottom-table-buttons-register'>결제하기</button>
             </div>
         )
