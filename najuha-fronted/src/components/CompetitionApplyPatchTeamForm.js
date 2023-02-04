@@ -1,7 +1,7 @@
 import React from 'react'
 import './competitionApplyTeamForm.css';
 import {useState, useEffect} from 'react'
-import {useParams, useNavigate} from 'react-router-dom';
+import {useParams, useNavigate, useLocation} from 'react-router-dom';
 import dropdownicon from '../src_assets/드랍다운아이콘.svg'
 import deleteicon from '../src_assets/명단삭제로고.svg'
 
@@ -13,6 +13,7 @@ import Paymentmodal from './Paymentmodal'
 import Paymentbridgemodal from './Paymentbridgemodal'
 
 function CompetitionApplyPatchTeamForm() {
+    const {state} = useLocation();
     const {id} = useParams();
     const navigate = useNavigate();
     const [genderDropdown, setGenderDropdown] = useState(false)
@@ -49,9 +50,9 @@ function CompetitionApplyPatchTeamForm() {
     const frontBaseUrl = 'http://localhost:3001';
 
     const cookies = new Cookies();
-
     useEffect(() => {
       getCompetition(id);
+      getCompetitionApplicationInfo();
   }, [])
 
   useEffect(() => {
@@ -66,7 +67,40 @@ function CompetitionApplyPatchTeamForm() {
       console.log(competitionApplicationList);
       if(competitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
     }, [competitionApplicationList])
+
+    function parsingApplicationInfo(infos) {
+        infos.map(info => {
+            delete info.pricingPolicy
+            delete info.earlyBirdDeadline
+            delete info.status
+            delete info.id 
+            info.competitionId = id
+        })
+        return infos
+    }
+
     
+    async function getCompetitionApplicationInfo() {
+        axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${state}`,
+        {
+            headers: {
+                'x-access-token':  cookies.get("x-access-token")
+            }
+        })
+        .then((res) => {
+            setCompetitionApplicationList(parsingApplicationInfo(res.data.result.CompetitionApplicationInfos))
+            // setCompetitionApplicationList();
+            console.log(res.data.result)
+            console.log(res.data.message);
+        })
+        .catch((err) => {
+            console.log(err);
+            console.log(err.response.status);
+            console.log(err.response.data.message);
+        })
+        return ;
+    }
+
     const postPaymentData = async () => {
       const xAccessToken = cookies.get("x-access-token");
       const paymentData = await axios({
@@ -125,25 +159,25 @@ function CompetitionApplyPatchTeamForm() {
       }
     }
 
-    function postCompetitionApply(){
-      axios({
-          method: "post",
-          headers: {
-            "x-access-token":  cookies.get("x-access-token")
-          },
-          url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications`,
-          data: {
-              competitionApplicationList
-          }
-        })
-        .then(res => {
-          console.log(res)
-          setCompetitionApplicationId(res.data.result.competitionApplicationId);
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+    async function patchCompetitionApply(){
+        try{
+        await axios({
+            method: "patch",
+            headers: {
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${state}`,
+            data: {
+                competitionApplicationList
+            }
+          }).then(res => {
+            console.log(res)
+            setCompetitionApplicationId(res.data.result.competitionApplicationId)
+          })
+        } catch (err) {
+          throw err
+        }
+      }
 
     const getCompetition = async (id) => {
       try {
@@ -578,14 +612,24 @@ function CompetitionApplyPatchTeamForm() {
             </div>
           </div>
           <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
-            <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={() => {
-              postCompetitionApply()
-              navigate('/')
-              alert('저장되었습니다.')
+            <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={async () => {
+                try{
+                    await patchCompetitionApply()
+                    navigate('/')
+                    alert('저장되었습니다.')
+                } catch (err) {
+                    console.log(err)
+                    alert('대회 신청 수정에 실패했습니다.')
+                }
             }}>저장하기</button>
-            <button id='CompetitionApplyTeamForm-bottom-table-buttons-register' onClick={() => {
-              postCompetitionApply()
-              setPaymentbridgemodal(pre => !pre);
+            <button id='CompetitionApplyTeamForm-bottom-table-buttons-register' onClick={async () => {
+                try{
+                    await patchCompetitionApply()
+                    setPaymentbridgemodal(pre => !pre);
+                } catch (err) {
+                    console.log(err)
+                    alert('대회 신청 수정에 실패했습니다.')
+                }
             }}>신청하기</button>
           </div>
         </div>
