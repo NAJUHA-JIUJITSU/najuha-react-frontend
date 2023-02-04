@@ -30,6 +30,8 @@ function Competitionlist() {
     const locationRef = useRef();
     const startDateRef = useRef();
     const titleRef = useRef();
+    const dateDropdownRef = useRef(null);
+    const locationDropdownRef = useRef(null);
     offsetRef.current = offset;
     locationRef.current = location;
     startDateRef.current = startDate;
@@ -97,6 +99,35 @@ function Competitionlist() {
     useEffect(() => {
         console.log(`title값은: ${title}`)
     }, [title])
+
+    //외부 클릭시 드랍다운 닫히기
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (dateDropdown && dateDropdownRef.current && !dateDropdownRef.current.contains(event.target)) {
+            setDateDropdown(false);
+          }
+        };
+    
+        document.addEventListener('click', handleClickOutside);
+    
+        return () => {
+          document.removeEventListener('click', handleClickOutside);
+        };
+    }, [dateDropdown]);
+    
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (locationDropdown && locationDropdownRef.current && !locationDropdownRef.current.contains(event.target)) {
+            setLocationDropdown(false);
+          }
+        };
+    
+        document.addEventListener('click', handleClickOutside);
+    
+        return () => {
+          document.removeEventListener('click', handleClickOutside);
+        };
+    }, [locationDropdown]);
 
     function listRefresh(){ // 검색 변수가 바뀔때마다 초기화 해주는 역할.
         setOffset(0)
@@ -220,7 +251,7 @@ function Competitionlist() {
                                 <p>{curcompetition.location}</p>
                             </div>
                             <div class='each-competition-body-desc-bottom'>
-                                <button onClick={ () => { (cardGray==='') ? navigate(`/competition/applymethod/${curcompetition.id}`) : alert('해당 대회의 신청기간이 아닙니다.') } }>바로 신청</button>
+                                <button style={ (cardGray==='') ? {} : {display:'none'} } onClick={ () => {navigate(`/competition/applymethod/${curcompetition.id}`)} }>바로 신청</button>
                             </div>
                         </div>                        
                     </div>
@@ -239,7 +270,7 @@ function Competitionlist() {
   return (
     <div className='competition-schedule-wrapper'>
         <div className='competition-searchzone'>
-            <div className='competition-searchzone-option' onClick={() => setDateDropdown(pre => !pre)}>
+            <div className='competition-searchzone-option' onClick={() => setDateDropdown(pre => !pre)} ref={dateDropdownRef}>
                 <p id= {startDate === '' ? '' : 'competition-searchzone-black'}>{startDate === '' ? '날짜' : `${temDate}월~`}</p>
                 <img src={dropdownicon} alt='아래 화살표'/> 
                 {dateDropdown ? <ul>
@@ -261,7 +292,7 @@ function Competitionlist() {
                 </ul> 
                 : ''}
             </div>
-            <div className='competition-searchzone-option' onClick={() => setLocationDropdown(pre => !pre)}>
+            <div className='competition-searchzone-option' onClick={() => setLocationDropdown(pre => !pre)} ref={locationDropdownRef}>
                 <p id= {location === '' ? '' : 'competition-searchzone-black'}>{location === '' ? '지역' : location}</p>
                 <img src={dropdownicon} alt='아래 화살표'/>
                 {locationDropdown ? 
