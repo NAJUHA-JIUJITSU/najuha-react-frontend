@@ -125,25 +125,49 @@ function CompetitionApplyTeamForm() {
       }
     }
 
-    function postCompetitionApply(){
-      axios({
+    async function postCompetitionApply(){
+      try{
+      await axios({
           method: "post",
           headers: {
             "x-access-token":  cookies.get("x-access-token")
           },
-          url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications`,
+          url: `${process.env.REACT_APP_BACK_END_API}/competitionApplicationsGroup`,
           data: {
               competitionApplicationList
           }
+        }).then(res => {
+          setCompetitionApplicationId(res.data.result.competitionApplicationId)
         })
-        .then(res => {
-          console.log(res)
-          setCompetitionApplicationId(res.data.result.competitionApplicationId);
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      } catch (err) {
+        throw err
+      }
     }
+
+    // async function postCompetitionApply(){
+    //   try{
+    //   axios({
+    //       method: "post",
+    //       headers: {
+    //         "x-access-token":  cookies.get("x-access-token")
+    //       },
+    //       url: `${process.env.REACT_APP_BACK_END_API}/competitionApplicationsGroup`,
+    //       data: {
+    //           competitionApplicationList
+    //       }
+    //     })
+    //     .then(res => {
+    //       console.log(res)
+    //       setCompetitionApplicationId(res.data.result.competitionApplicationId);
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //       throw err;
+    //     })
+    //   } catch (err) {
+    //     throw err
+    //   }
+    // }
 
     const getCompetition = async (id) => {
       try {
@@ -578,14 +602,24 @@ function CompetitionApplyTeamForm() {
             </div>
           </div>
           <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
-            <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={() => {
-              postCompetitionApply()
-              navigate('/')
-              alert('저장되었습니다.')
+            <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={async () => {
+                try{
+                  await postCompetitionApply()
+                  navigate('/')
+                  alert('저장되었습니다.')
+                } catch (err) {
+                  console.log(err)
+                  alert('대회 신청에 실패했습니다.')
+                }
             }}>저장하기</button>
-            <button id='CompetitionApplyTeamForm-bottom-table-buttons-register' onClick={() => {
-              postCompetitionApply()
-              setPaymentbridgemodal(pre => !pre);
+            <button id='CompetitionApplyTeamForm-bottom-table-buttons-register' onClick={async () => {
+                try{
+                  await postCompetitionApply()
+                  setPaymentbridgemodal(pre => !pre);
+                } catch (err) {
+                  console.log(err)
+                  alert('대회 신청에 실패했습니다.')
+                }
             }}>신청하기</button>
           </div>
         </div>
