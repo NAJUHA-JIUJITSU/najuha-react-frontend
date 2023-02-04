@@ -98,8 +98,8 @@
 
 .competition-top-content-info-each p{
     display: block;
-    width: calc(100%-120px);
-    overflow: hidden;
+    min-width: calc(100%-120px);
+    /* overflow: hidden; */
 }
 
 #competition-top-content-info-each-last{

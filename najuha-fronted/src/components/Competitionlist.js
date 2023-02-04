@@ -23,10 +23,15 @@ function Competitionlist() {
     const [locationDropdown, setLocationDropdown] = useState(false);
     const [title, setTitle] = useState('')
     const [temTitle, setTemTitle] = useState('')
+    const [activeMonth, setActiveMonth] = useState(0);
+    const [activeLocation, setActiveLocation] = useState(0);
+
     const offsetRef = useRef();
     const locationRef = useRef();
     const startDateRef = useRef();
     const titleRef = useRef();
+    const dateDropdownRef = useRef(null);
+    const locationDropdownRef = useRef(null);
     offsetRef.current = offset;
     locationRef.current = location;
     startDateRef.current = startDate;
@@ -60,8 +65,6 @@ function Competitionlist() {
         setIsLoading(false)
         return ;
     }
-
-    
 
     useEffect(() => {
         const currentElement = lastElement;
@@ -97,6 +100,35 @@ function Competitionlist() {
         console.log(`title값은: ${title}`)
     }, [title])
 
+    //외부 클릭시 드랍다운 닫히기
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (dateDropdown && dateDropdownRef.current && !dateDropdownRef.current.contains(event.target)) {
+            setDateDropdown(false);
+          }
+        };
+    
+        document.addEventListener('click', handleClickOutside);
+    
+        return () => {
+          document.removeEventListener('click', handleClickOutside);
+        };
+    }, [dateDropdown]);
+    
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+          if (locationDropdown && locationDropdownRef.current && !locationDropdownRef.current.contains(event.target)) {
+            setLocationDropdown(false);
+          }
+        };
+    
+        document.addEventListener('click', handleClickOutside);
+    
+        return () => {
+          document.removeEventListener('click', handleClickOutside);
+        };
+    }, [locationDropdown]);
+
     function listRefresh(){ // 검색 변수가 바뀔때마다 초기화 해주는 역할.
         setOffset(0)
         setCompetitions([]);
@@ -115,7 +147,7 @@ function Competitionlist() {
             )
         }
 
-        if(deadlineDiff == 0){ // 오늘이 마감날짜(데드라인)일 경우
+        if(deadlineDiff === 0){ // 오늘이 마감날짜(데드라인)일 경우
             return(
                 <div className='each-competition-tag-blue'><p>신청마감 D-day</p></div>
             )
@@ -149,6 +181,29 @@ function Competitionlist() {
             )
     }
 
+    //신청마감 & 신청오픈 전 카드 색 변경
+    function competitionCardGray(registrationDate, registrationDeadline){
+        let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
+        let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
+
+        let deadlineDiff = todaytime.diff(finishdate, 'd')
+        let openDiff = todaytime.diff(opendate, 'd')
+
+        if(deadlineDiff > 0){ // 마감날짜(데드라인)이 지났을경우 (전체 그레이)
+            return (
+                "competitionCardGray-all"
+            )
+        }
+      
+        if(openDiff < 0){ // 현재날짜가 오픈 전일 경우 (버튼만 비활성화)
+            return(
+                "competitionCardGray-button"
+            )
+        }
+
+        return ""
+       
+    }
 
     function competitionParsing(competition){
         let doreOpenDay = week[new Date(competition.doreOpen).getDay()]
@@ -175,27 +230,28 @@ function Competitionlist() {
     function renderCompetitionList () {
         return competitions.map((competition, i) => {
             let curcompetition = competitionParsing(competition)
+            let cardGray = competitionCardGray(competition.registrationDate, competition.registrationDeadline)
             return(
                 <li className='competition-col'>
-                    <div className='each-competition-tag'>
+                    <div className='each-competition-tag'> {/* 위쪽 태그공간  */}
                         {makingEarlybirdTag(competition.registrationDate, competition.registrationDeadline, curcompetition.earlyBirdDeadline)}
                         {makingRegisterTag(competition.registrationDate, competition.registrationDeadline)}
                     </div>
-                    <div className='each-competition-body'> {/* 위쪽 태그공간  */}
+                    <div className= "each-competition-body" id={cardGray} >
                         <div class='each-competition-body-poster'> {/* 카드왼쪽 포스터공간  */}
-                            <img src={curcompetition.posterImage}></img>
+                            <img src={curcompetition.posterImage} alt='대회 포스터'></img>
                             <div class='each-competition-body-poster-block'></div>
                             <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
                         </div>
                         <div class='each-competition-body-desc'> {/* 카드오른쪽 설명공간 */}
-                            <div class='each-competition-body-desc-top'>
+                            <div class='each-competition-body-desc-top' onClick={ () => {navigate(`/competition/${curcompetition.id}`)} }>
                                 <p>{curcompetition.title}</p>
                             </div>
                             <div class='each-competition-body-desc-middle'>
                                 <p>{curcompetition.location}</p>
                             </div>
                             <div class='each-competition-body-desc-bottom'>
-                                <button onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>바로 신청</button>
+                                <button style={ (cardGray==='') ? {} : {display:'none'} } onClick={ () => {navigate(`/competition/applymethod/${curcompetition.id}`)} }>바로 신청</button>
                             </div>
                         </div>                        
                     </div>
@@ -205,7 +261,7 @@ function Competitionlist() {
     }
 
     function searchEnterPress (e) {
-        if(e.key == 'Enter'){
+        if(e.key === 'Enter'){
             setTitle(temTitle)
             listRefresh();
         }
@@ -214,40 +270,44 @@ function Competitionlist() {
   return (
     <div className='competition-schedule-wrapper'>
         <div className='competition-searchzone'>
-            <div className='competition-searchzone-option' onClick={() => setDateDropdown(pre => !pre)}>
-                <p>{startDate == '' ? '날짜' : `${temDate}월`}</p>
-                <img src={dropdownicon}/> 
+            <div className='competition-searchzone-option' onClick={() => setDateDropdown(pre => !pre)} ref={dateDropdownRef}>
+                <p id= {startDate === '' ? '' : 'competition-searchzone-black'}>{startDate === '' ? '날짜' : `${temDate}월~`}</p>
+                <img src={dropdownicon} alt='아래 화살표'/> 
                 {dateDropdown ? <ul>
                     <li value='' onClick={() => {
                         setStartDate('')
                         listRefresh()
+                        setActiveMonth('')
                     }}>전체</li>
                     {months.map(element => {
                         return(
-                            <li value={element} onClick={() => {
+                            <li id={(element===activeMonth) ? 'competition-searchzone-active': ''} value={element} onClick={() => {
                                 setStartDate(`2023-${element}-01`)
                                 setTemDate(element)
                                 listRefresh()
+                                setActiveMonth(element)
                             }}>{element}월</li>
                         )
                     })}
                 </ul> 
                 : ''}
             </div>
-            <div className='competition-searchzone-option' onClick={() => setLocationDropdown(pre => !pre)}>
-                <p>{location == '' ? '지역' : location}</p>
-                <img src={dropdownicon}/>
+            <div className='competition-searchzone-option' onClick={() => setLocationDropdown(pre => !pre)} ref={locationDropdownRef}>
+                <p id= {location === '' ? '' : 'competition-searchzone-black'}>{location === '' ? '지역' : location}</p>
+                <img src={dropdownicon} alt='아래 화살표'/>
                 {locationDropdown ? 
                 <ul>
                     <li value='' onClick={() => {
                         setLocation('')
                         listRefresh()
+                        setActiveLocation('')
                     }}>전체</li>
                     {locationSample.map(element => {
                         return(
-                            <li value={element} onClick={() => {
+                            <li  id={(element===activeLocation) ? 'competition-searchzone-active': ''} value={element} onClick={() => {
                                 setLocation(element)
                                 listRefresh()
+                                setActiveLocation(element)
                             }}>{element}</li>
                         )
                     })}

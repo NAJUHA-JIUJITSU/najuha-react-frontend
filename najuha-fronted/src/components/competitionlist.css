@@ -5,6 +5,9 @@
     letter-spacing: -0.1em;
     color: #B1B1B1;
 }
+#competition-searchzone-black {
+    color: black;
+}
 
 .each-competition-body-poster h1{
     letter-spacing: -0.12rem;
@@ -63,6 +66,7 @@
     height: 10vh;
     display: flex;
     align-items: end;
+   
 }
 
 .competition-searchzone-searchbar{
@@ -73,8 +77,18 @@
 
 .competition-list{
     height: 74vh;
+    border-top: 1px solid #E7EAF6;
+    padding-top: 2.4rem;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+.competition-list::-webkit-scrollbar {
+    width: 6px;
+    
+}
+.competition-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: gainsboro;
 }
 
 .competition-row{
@@ -92,6 +106,18 @@
     height: 162px;
 }
 
+/*카드 비활성화*/
+#competitionCardGray-all p,
+#competitionCardGray-all button{
+    color: #8C8C8C;
+    cursor: default;
+}
+
+#competitionCardGray-button button{
+    color: #8C8C8C;
+    cursor: default;
+}
+
 /*Component*/
 
 .competition-searchzone-option{
@@ -103,7 +129,7 @@
     width: 100px;
     height: 36px;
     border: 1px solid #ADADAD;
-    border-radius: 15px;
+    border-radius: 10px;
 
     padding: 0 1.4rem;
     margin-right: 0.8rem;
@@ -124,7 +150,7 @@
     background: #FCFCFC;
     border: 1px solid #000000;
     border-radius: 10px;
-    padding-left: 1.2rem;
+   
     box-sizing: border-box;
     overflow-y: auto;
     z-index: 11;
@@ -141,7 +167,11 @@
     font-size: 1.6rem;
     letter-spacing: -0.1em;
     color: #828282;
+    padding-left: 1.2rem;
     /* background: #FCFCFC; */
+}
+.competition-searchzone-option li:hover{
+    background-color: #F5F5F5;
 }
 
 .competition-searchzone-searchbar input{
@@ -151,8 +181,21 @@
     border: 1px solid #ADADAD;
     border-radius: 50px;
 
+    padding-top: 4px;
     padding-left: 1.4rem;
     padding-right: calc(1.4rem + 24px);
+}
+.competition-searchzone-searchbar input::placeholder {
+    font-size: 1.6rem;
+    letter-spacing: -0.1em;
+    color: #B1B1B1;
+}
+
+/* 검색 드랍다운 활성화 스타일 */
+#competition-searchzone-active {
+    color: #000000;
+    font-weight: 500;
+    background-color: #F5F5F5;
 }
 
 .competition-searchzone-searchbar img{
@@ -334,6 +377,10 @@
         width: 180px;
         padding-left: 1rem;
         padding-right: calc(1rem + 24px);
+        padding-top: 2px;
+    }
+    .competition-searchzone-searchbar input::placeholder {
+        font-size: 1.4rem;
     }
 
     .competition-searchzone-searchbar img{
