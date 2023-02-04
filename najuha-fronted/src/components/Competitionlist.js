@@ -244,7 +244,7 @@ function Competitionlist() {
                             <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
                         </div>
                         <div class='each-competition-body-desc'> {/* 카드오른쪽 설명공간 */}
-                            <div class='each-competition-body-desc-top'>
+                            <div class='each-competition-body-desc-top' onClick={ () => {navigate(`/competition/${curcompetition.id}`)} }>
                                 <p>{curcompetition.title}</p>
                             </div>
                             <div class='each-competition-body-desc-middle'>
