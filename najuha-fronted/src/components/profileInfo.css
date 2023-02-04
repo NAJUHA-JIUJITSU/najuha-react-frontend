@@ -11,7 +11,7 @@
 
 .ProfileInfo_wrapper {
     width: auto;
-    height: 84vh;
+    min-height: 84vh;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem 0 2rem;
@@ -75,6 +75,12 @@
     padding-right: 4.6rem;
 }
 
+/* 오칸 테이블 */
+#ProfileInfo-bottom {
+    text-align: left;
+    margin-left: 0;
+}
+
 /* Components */
 .Profilesection_lastCompetiton {
     color: #8C8C8C;
@@ -132,7 +138,7 @@
 @media(max-width:750px) {
     .ProfileInfo_wrapper {
         max-width:650px;
-        height: 88vh;
+        min-height: 88vh;
     }
 
     .ProfileInfo_competition_Left {

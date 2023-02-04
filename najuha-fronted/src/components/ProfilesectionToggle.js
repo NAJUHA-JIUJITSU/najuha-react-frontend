@@ -11,25 +11,24 @@ import xIcon from "../src_assets/x.svg";
 import samplePoster from "../src_assets/samplePoster.png";
 
 function ProfilesectionToggle() {
-    const [competitionApplications, setCompetitionApplications] = useState([]); //유저 신청 대회 가져오기
-    const [clickedList, setclickedList] = useState('person');
-    const [active, setActive] = useState(['Profilesection_active', '', '']);
+    const [mode, setMode] = useState('READ');
+    const [userInfo, setUserInfo] = useState([]);
+    const [token, setToken] = useState(null);
+    let user = userParsing(userInfo);
+    let content = null
     const cookies = new Cookies();
     const xAccessToken = cookies.get("x-access-token");
     const { decodedToken, isExpired } = useJwt(xAccessToken);
-    const navigate = useNavigate();
 
-    // 신청 대회 가져오기
-    async function getCompetitionApplication() {
-        axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
+    async function getUsers() {
+        axios.get(`${process.env.REACT_APP_BACK_END_API}/users`,
         {
             headers: {
-                'x-access-token':  xAccessToken
+                'x-access-token': cookies.get("x-access-token")
             }
         })
         .then((res) => {
-            console.log(res.data);
-            setCompetitionApplications(res.data.result);
+            setUserInfo(res.data.result.UserInfo);
             console.log(res.data.message);
         })
         .catch((err) => {
@@ -40,187 +39,207 @@ function ProfilesectionToggle() {
         return ;
     }
 
-    // 신청 대회 지우기(결제 미완료)
-    async function deleteCompetitionApplication(id) {
-        axios.delete(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${id}`,
-        {
+    async function updateUser(updateUerinfo) {
+        console.log(updateUerinfo);
+        axios({
+            method: "patch",
             headers: {
-                'x-access-token':  xAccessToken
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/users`,
+            data: updateUerinfo
+          })
+          .then((res) => {
+            if(decodedToken.userLevel === 1){
+                alert('회원가입이 완료되었습니다')
             }
-        })
-        .then((res) => {
-            console.log(res.data.result);
+            cookies.set('x-access-token', res.data.result, { path: '/', overwrite: true})
             console.log(res.data.message);
-            getCompetitionApplication();
-        })
-        .catch((err) => {
-            console.log(err);
-            console.log(err.response.data.result);
-        })
-        return ;
+            console.log(res.data.result);
+            })
+            .catch((err) => {
+                console.log(err);
+                console.log(err.response.data.message);
+            })
+          
+        // axios.patch(`${process.env.REACT_APP_BACK_END_API}/users`,
+        // {
+        //     headers: {
+        //         'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
+        //     },
+        //     data: updateUerinfo
+        // })
+        // .then((res) => {
+        //     console.log(res.data.message);
+        //     console.log(res.data.result);
+        // })
+        // .catch((err) => {
+        //     console.log(err);
+        //     console.log(err.response.data.message);
+        // })
     }
 
-    //요일 값 구하기
-    function getDayOfWeek(날짜문자열){ //ex) getDayOfWeek('2022-06-13')
+    function userParsing(userInfo) {
+        let fullName = userInfo.fullName;
+        let email = userInfo.email;
+        let phoneNumber = userInfo.phoneNumber;
+        let gender = (userInfo.gender === 'female') ? '여자' : '남자';
+        let belt = userInfo.belt;
+        let weight = userInfo.weight;
 
-        const week = ['일', '월', '화', '수', '목', '금', '토'];
-    
-        const dayOfWeek = week[new Date(날짜문자열).getDay()];
-    
-        return dayOfWeek;
-    
-    }
-
-    //신청대회 데이터 파싱
-    function applicationParsing(application){
-        let today = new Date();
-
-        let id = application.id;
-        let host = application.Competition.host;
-        let title = (application.Competition.title.length > 44) ? application.Competition.title.substr(0, 24) + '...' : application.Competition.title;
-        let location = application.Competition.location;
-        let amount = ( today > new Date(application.Competition.earlyBirdDeadline) ) ? application.expectedPrice.earlyBirdFalse : application.expectedPrice.earlyBirdTrue;
-        let doreOpen = application.Competition.doreOpen.substr(5,5).replace('-','.');
-        let day = getDayOfWeek(application.Competition.doreOpen);
-        let registrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true;
-        let postUrl = ( application.Competition.CompetitionPoster ) ? application.Competition.CompetitionPoster.imageUrl : samplePoster;
-        let isPayment = application.isPayment ? '결제완료' : '결제하기';
-        let isCanceled = (application.competitionPayment === null) ? ' ' : application.competitionPayment.status; // 'CANCELED'면 환불완료 
-        let isGroup = application.isGroup;
-        let costMsg = application.isPayment ? '총 결제금액' : '예상 결제금액';
-        let payCss = (isPayment === '결제하기' && registrationDeadline === true) ? 'Profilesection_costLayout Profilesection_payCss' : 'Profilesection_costLayout';
-        // let divisionName = application.divisionName;
-        // let belt = application.belt.charAt(0).toUpperCase() + application.belt.slice(1);
-        // let uniform = (application.uniform = "gi") ? '기-' : '노기-';
-        // let weight = application.weight + 'kg';
-      
         return {
-            'id' : id,
-            'host' : host,
-            'title': title,
-            'location': location,
-            'amount' : amount, //위에서 오늘날짜랑 비교해서 얼리버드 할인 알아서 적용한 값
-            'doreOpen': doreOpen,
-            'day' : day,
-            'registrationDeadline' : registrationDeadline, //false면 신청마감
-            'isPayment': ( registrationDeadline ) ? isPayment : '신청마감',
-            'isCanceled' : ( isCanceled==='CANCELED' ) ? true : false, 
-            'isGroup' : isGroup, //false 면 개인, true면 단체
-            'costMsg' : costMsg,
-            'payCss' : payCss,
-            'postUrl' : postUrl,
+            'fullName' : fullName,
+            'email' : email,
+            'phoneNumber' : phoneNumber,
+            'gender' : gender,
+            'belt' : belt,
+            'weight' : weight
         }
     }
 
-    //실시간 대회 렌더
-    function renderCompetition(){
-        return competitionApplications.map((application) => {
-            let curApplication = applicationParsing(application);
-            let today = new Date();
-            curApplication.isPayment = ( curApplication.isCanceled ) ? '환불완료' : curApplication.isPayment;
+    function Read() {
 
-            if(clickedList === 'person') {
-                //날짜가 오늘을 기준으로 지났으면 안보여주기
-                if( today > new Date(application.Competition.doreOpen) ) {
-                    return ;
-                }
-                //단체신청이면 안보여주기
-                if( curApplication.isGroup ) {
-                    return ;
-                }
-            }
-            if(clickedList === 'group') {
-                //날짜가 오늘을 기준으로 지났으면 안보여주기(오늘은 보여줌)
-                if( today >= new Date(application.Competition.doreOpen) ) {
-                    return ;
-                }
-                //개인신청이면 안보여주기
-                if( !curApplication.isGroup ) {
-                    return ;
-                }
-            }
-            if(clickedList === 'last') {
-                //날짜가 오늘을 기준으로 안지났으면 안보여주기
-                if( today < new Date(application.Competition.doreOpen) ) {
-                    return ;
-                }
-            }
+        return (
+        <div className='UserInfo_Boxs UserInfo_boxsRead'>
+            <div className='UserInfo_infoBox'>
+                <span>이름</span>
+                <p>{user.fullName}</p>
+            </div>
+            <div className='UserInfo_infoBox'>
+                <span>성별</span>
+                <p>{user.gender}</p>
+            </div>
+            <div className='UserInfo_infoBox'>
+                <span>휴대폰</span>
+                <p>{user.phoneNumber}</p>
+            </div>
+            <div className='UserInfo_infoBox'>
+                <span>이메일</span>
+                <p>{user.email}</p>
+            </div>
+            <div className='UserInfo_infoBox'>
+                <span>벨트</span>
+                <p>{user.belt}</p>
+            </div>
+            <div className='UserInfo_infoBox'>
+                <span>체급</span>
+                <p>{user.weight}kg</p>
+            </div>
+            <button className='UserInfo_updateBtn' onClick={(e) => {
+                e.preventDefault()
+                setMode('UPDATE')}}>수정하기</button>
+        </div>
+        )
+    }
 
-            return(
-                <div>
-                    <div>
-                        <div className='Profilesection_competitoninfo'>
-                            <a onClick={()=>{navigate(`/Profilepage/info/${curApplication.id}`)}}>대회신청내역 상세보기</a>
-                            <img src={rightArrow} alt='이동 화살표'></img>
-                        </div>
-                        <div className= 'Profilesection_competitonbox'>
-                            <div className= 'Profilesection_boxLeft'>
-                                <img src={curApplication.postUrl} alt='대회포스터'></img>
-                                <p className= 'Profilesection_posterBlack'></p>
-                                <h3>{curApplication.doreOpen}({curApplication.day})</h3>
-                            </div>
-                            <div className= 'Profilesection_boxRight'>
-                                <img onClick={()=>{deleteCompetitionApplication(curApplication.id)}} 
-                                    src={xIcon} alt='삭제 아이콘' className= 'Profilesection_boxDelete Profilesection_boxDeleteHidden'></img>
-                                <div className= 'Profilesection_boxRightTitle'>
-                                    <h4>신청인<span>{curApplication.host}</span></h4>
-                                    <h3>{curApplication.title}</h3>
-                                    <p>{curApplication.location}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className= 'Profilesection_boxRightCost'>
-                            <div className={curApplication.payCss}>
-                                <h3>{curApplication.costMsg}</h3>
-                                <p>{curApplication.amount}</p>
-                                <button className= 'Profilesection_costBtn'>{curApplication.isPayment}</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <hr className='Profilesection_competitonHr'/>
+    function Update(props) {
+        const [userInfos, setUserInfos] = useState(props.user);
+    
+        const handleChange = (e, title) => {
+            if(title =='phoneNumber' || title=='weight') {
+                e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                if(title =='phoneNumber' && e.target.value.length > 11){
+                    e.target.value = e.target.value.slice(0, 11)
+                }
+                if(title =='weight' && e.target.value.length > 3){
+                    e.target.value = e.target.value.slice(0, 3)
+                }
+            }
+            console.log(userInfos);
+            let newuserInfos = {...userInfos};
+            newuserInfos[title] = e.target.value;
+            setUserInfos(newuserInfos);
+        }
+    
+        const onSumbit = (e)  => {
+            e.preventDefault();
+            let updateUerinfo = {
+                'fullName': e.target.fullName.value,
+                'email': e.target.email.value,
+                'phoneNumber': e.target.phoneNumber.value,
+                'gender': (e.target.male.checked) ? 'male' : 'female',
+                'belt': e.target.belt.value,
+                'weight': e.target.weight.value
+    
+            }
+            setUserInfo(updateUerinfo);
+            updateUser(updateUerinfo);
+            console.log(updateUerinfo);
+            setMode('READ');
+            // getUsers();
+        }
+    
+        return (
+            <form onSubmit={(e)=>onSumbit(e)}>
+                 <div className='UserInfo_infoBox'>
+                <span>이름</span>
+                <p><input type='text' name='fullName' placeholder={userInfos.fullName} value= {userInfos.fullName} onChange={(e)=>handleChange(e, 'fullName')} required/></p>
                 </div>
-               
-            )
-        })
+                <div className='UserInfo_infoBox'>
+                    <span>성별</span>
+                    <div className='UserInfo_genderCategory'>
+                        <p><input type='radio' name='male' value='남자' id='male' checked={userInfos.gender === '남자'} onChange={(e)=>handleChange(e, 'gender')}/><span>남자</span></p>
+                        <p><input type='radio' name='female' value='여자' id='female' checked={userInfos.gender === '여자'} onChange={(e)=>handleChange(e, 'gender')}/><span>여자</span></p>
+                    </div>
+                </div>
+                <div className='UserInfo_infoBox'>
+                    <span>휴대폰</span>
+                    <div className='UserInfo_flexbox UserInfo_phoneNumber'>
+                        <p><input type='tel' name='phoneNumber' placeholder={userInfos.phoneNumber} value={userInfos.phoneNumber} onChange={(e)=>handleChange(e, 'phoneNumber')} required/></p>
+                        <span>'-' 없이 숫자만 입력(12자리)</span>
+                    </div>
+                </div>
+                <div className='UserInfo_infoBox'>
+                    <span>이메일</span>
+                    <p><input type='email' name='email' placeholder={userInfos.email} value={userInfos.email} onChange={(e)=>handleChange(e, 'email')} required/></p>
+                </div>
+                <div className='UserInfo_infoBox'>
+                    <span>벨트</span>
+                    <div className='UserInfo_beltSeclet'>
+                        <select name='belt' onChange={(e)=>handleChange(e, 'belt')}>
+                            <option value="white">화이트</option>
+                            <option value="blue">블루</option>
+                            <option value="purple">퍼플</option>
+                            <option value="brown">브라운</option>
+                            <option value="black">블랙</option>
+                        </select>
+                    </div>
+                </div>
+                <div className='UserInfo_infoBox'>
+                    <span>체급</span>
+                    <div className='UserInfo_flexbox'>
+                        <p><input type='number' name='weight' min="0" max="200" placeholder={userInfos.weight} value={userInfos.weight} onChange={(e)=>handleChange(e, 'weight')}/></p>
+                        <span>숫자만 입력</span>
+                    </div>
+                </div>
+                <button className='UserInfo_updateBtn' type='submit'>저장하기</button>
+            </form>
+        )
     }
-
-    //탭 클릭
-    function isClicked(list, i) {
-        let reset = ['', '', ''];
-        reset[i] = 'Profilesection_active';
-        setActive(reset);
-        setclickedList(list);
-        console.log(clickedList);
-    }
- 
 
     useEffect(() => {
-        if(decodedToken){ // 레벨 1인 유저가 들어오면 다시 수정페이지로 리다이렉트
-            if(decodedToken.userLevel == 1){
-                alert('회원가입을 완료해주세요');
-                navigate('/UserInfopage')
+        if(decodedToken){
+            if(decodedToken.userLevel === 1){
+                setMode('UPDATE')
             }
         }
-        getCompetitionApplication();
+
+        getUsers();
     }, [decodedToken])
 
+    if(mode === 'READ') {
+        content = <Read/>
+    } else if(mode === 'UPDATE') {
+        content = <Update user={user}/>
+    }    
 
     return (
         <div className='ProfilesectionToggle_wrapper'>
             <ProfileTap/>
-            <section className='ProfilesectionToggle_right'>
-                <h2>신청대회 목록</h2>
-                <ul className='Profilesection_competitonNav'>
-                    <li key='개인 신청' className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
-                    <li key='단체 신청' className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
-                    <li key='지난 신청' className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
-                </ul>
-                <hr className='Profilesection_hr'/>
-                <div className='Profilesection_competitonList'>
-                    {renderCompetition()}
-                </div>
-            </section>
+            <div className='ProfilesectionToggle_right'>
+                <h2>내 프로필</h2>
+                {content}    
+            </div>
         </div>
     )
 

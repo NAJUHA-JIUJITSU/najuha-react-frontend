@@ -51,7 +51,7 @@ function Profilesection() {
         .then((res) => {
             console.log('지울 대회 id: ' + id);
             console.log(res.data.message);
-            alert('대회 정보가 삭제되었습니다.');
+            alert('대회가 삭제되었습니다.');
             getCompetitionApplication();
         })
         .catch((err) => {
@@ -65,7 +65,7 @@ function Profilesection() {
     //삭제 경고 문구창
     const onRemove = (id) => {
 
-        if (window.confirm("대회 정보가 모두 삭제됩니다. 해당 대회를 정말 취소하시겠습니까?")) {
+        if (window.confirm("대회 정보가 모두 삭제됩니다. 해당 대회를 정말 삭제하시겠습니까?")) {
     
             deleteCompetitionApplication(id)
     
@@ -137,7 +137,17 @@ function Profilesection() {
             let curApplication = applicationParsing(application);
             let today = new Date();
             curApplication.isPayment = ( curApplication.isCanceled ) ? '환불완료' : curApplication.isPayment;
-            
+
+            let xButton;
+            let xButtonDiv;
+            if(curApplication.isPayment==='결제하기' || curApplication.isPayment==='신청마감') {
+                xButton = 'Profilesection_boxDelete'
+                xButtonDiv = ' '
+            } else {
+                xButton = 'Profilesection_boxDelete Profilesection_boxDeleteHidden'
+                xButtonDiv = 'Profilesection_deleteNone'
+            }
+
             if(clickedList === 'person') {
                 //날짜가 오늘을 기준으로 지났으면 안보여주기
                 if( today > new Date(application.Competition.doreOpen) ) {
@@ -176,13 +186,13 @@ function Profilesection() {
                             <div className= 'Profilesection_boxLeft'>
                                 <img src={curApplication.postUrl} alt='대회포스터'></img>
                                 <p className= 'Profilesection_posterBlack'></p>
-                                <h3>{curApplication.doreOpen}({curApplication.day})</h3>
+                                <h3>{curApplication.doreOpen}<span>({curApplication.day})</span></h3>
                             </div>
                             <div className= 'Profilesection_boxRight'>
                                 <img onClick={()=>{onRemove(curApplication.id)}} 
-                                    src={xIcon} alt='삭제 아이콘' className= 'Profilesection_boxDelete Profilesection_boxDeleteHidden'></img>
+                                    src={xIcon} alt='삭제 아이콘' className={xButton}></img>
+                                <div className= {xButtonDiv}></div>
                                 <div className= 'Profilesection_boxRightTitle'>
-                                    <h4>신청인<span>{curApplication.host}</span></h4>
                                     <h3>{curApplication.title}</h3>
                                     <p>{curApplication.location}</p>
                                 </div>
@@ -204,7 +214,7 @@ function Profilesection() {
         })
     }
 
-    //탭 클릭
+    //탭 클릭 여부
     function isClicked(list, i) {
         let reset = ['', '', ''];
         reset[i] = 'Profilesection_active';
@@ -229,13 +239,14 @@ function Profilesection() {
         <div className='Profilesection_wrapper'>
             <ProfileTap/>
             <section className='Profilesection_right'>
-                <h2>신청대회 목록</h2>
-                <ul className='Profilesection_competitonNav'>
-                    <li key='개인 신청' className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
-                    <li key='단체 신청' className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
-                    <li key='지난 신청' className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
-                </ul>
-                <hr className='Profilesection_hr'/>
+                {/* <h2>신청대회 목록</h2> */}
+                <div className='Profilesection_competitonNavbar'>
+                    <ul className='Profilesection_competitonNav'>
+                        <li key='개인 신청' className={active[0]} onClick={() => isClicked('person', 0)}>개인 신청</li>
+                        <li key='단체 신청' className={active[1]} onClick={() => isClicked('group', 1)}>단체 신청</li>
+                        <li key='지난 신청' className={active[2]} onClick={() => isClicked('last', 2)}>지난 대회</li>
+                    </ul>
+                </div>
                 <div className='Profilesection_competitonList'>
                     {renderCompetition()}
                 </div>

@@ -1,0 +1,123 @@
+
+/* Layout */
+.PaymentInfo_wrapper {
+    width: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem 0 2rem;
+    box-sizing: border-box;
+    height: 84vh;
+}
+
+.PaymentInfo_bottom {
+    display: flex;
+}
+
+.PaymentInfo_listInfoTitle {
+    display: flex;
+}
+
+.PaymentInfo_listInfoPay {
+    display: flex;
+}
+
+/* Comopnent */
+.PaymentInfo_top .ProfileInfo_title h2 {
+    color: black;
+    font-size: 24px;
+}
+
+.PaymentInfo_list {
+    width: 45%;
+    padding-right: 2%;
+    border-right: 10px solid rgb(229, 229, 229);
+}
+
+.PaymentInfo_listInfo {
+    padding-left: 2%;
+    width: 50%;
+}
+
+/* 왼쪽 테이블 */
+.PaymentInfo_list table {
+    width: 100%;
+    border: 2px solid rgb(160, 195, 230);
+    border-collapse: seperate;
+    border-spacing: 20px 30px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.PaymentInfo_list th {
+    font-weight: 700;
+}
+
+.PaymentInfo_list td,
+.PaymentInfo_list th{
+    border-bottom: 1px solid rgb(160, 195, 230);
+    padding: 10px;
+}
+
+
+/* 오른쪽 테이블 타이틀 */
+.PaymentInfo_wrapper  h2 {
+    font-size: 14px;
+    color: #8C8C8C;
+    margin-right: 40px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.PaymentInfo_wrapper span {
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    margin-left: 10px;
+}
+
+.PaymentInfo_listInfoTitle h2 {
+    margin-top: 0px;
+}
+
+/* 오른쪽 테이블 */
+.PaymentInfo_listInfo table {
+    width: 100%;
+    border: 2px solid rgb(209, 209, 209);
+    border-collapse: seperate;
+    border-spacing: 20px 30px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.PaymentInfo_listInfo th {
+    font-weight: 700;
+}
+
+.PaymentInfo_listInfo td,
+.PaymentInfo_listInfo th{
+    border-bottom: 1px solid rgb(209, 209, 209);
+    padding: 10px;
+}
+
+.PaymentInfo_tableHover:hover{
+    background-color: azure;
+    cursor: pointer;
+}
+
+
+/* 오른쪽 테이블 결제정보 */
+@media(max-width:1049px){
+    /* Layout */
+
+    .PaymentInfo_wrapper {
+        max-width : 768px;
+    }
+}
+
+
+@media(max-width:750px) {
+    .PaymentInfo_wrapper {
+        max-width : 650px;
+        height: 88vh;
+    }
+}

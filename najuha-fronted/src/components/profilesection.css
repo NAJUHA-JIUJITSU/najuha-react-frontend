@@ -50,8 +50,18 @@
     box-sizing: border-box;
     font-weight: 500;
 }
+.Profilesection_competitonNavbar {
+    position: sticky;
+    top: 0px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 99;
+    padding-top: 4rem;
+    border-bottom: solid 1px #F0F0F0;
+    box-sizing: border-box;
+}
 
 .Profilesection_competitonNav {
+    color: #B4B4B4;
     display: flex;
     gap: 1rem;
     font-size: 2rem;
@@ -68,17 +78,11 @@
 }
 
 .Profilesection_active {
+    color: #000000;
     font-weight: 600;
 }
 .Profilesection_competitonNav .Profilesection_active:after {
     border-bottom: 4px solid black;
-}
-
-.Profilesection_hr{
-    margin-top: -0.2rem;
-    height:1px;
-    border:0;
-    background-color : #F0F0F0;
 }
 
 .Profilesection_competitonHr {
@@ -137,6 +141,9 @@
     margin-left: 96.5%;
     margin-top: 1rem;
 }
+.Profilesection_boxDeleteHidden {
+    display: none;
+}
 
 .Profilesection_boxLeft {
     /* border : solid 1px red; */
@@ -173,6 +180,10 @@
     z-index: 10;
 }
 
+.Profilesection_boxLeft span {
+    font-size: 2rem;
+}
+
 .Profilesection_boxRight {
     /* border : solid 1px blue; */
     width: 85%;
@@ -184,6 +195,14 @@
 
 .Profilesection_boxRight img {
     cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.Profilesection_deleteNone {
+    display: block;
+    height: 14px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .Profilesection_boxRightTitle {
@@ -195,20 +214,11 @@
     box-sizing: border-box;
 }
 
-.Profilesection_boxRightTitle span {
-    font-weight: 700;
-    margin-left: 0.2rem;
-}
-
-.Profilesection_boxRightTitle h4 {
-    padding-bottom: 1rem;
-}
-
 .Profilesection_boxRightTitle h3 {
     margin-bottom: 1rem;
     font-size: 2.4rem;
 
-    height: 1.9em;
+    height: 1.8em;
     display: block;
     /* white-space: normal; */
     white-space: nowrap;
@@ -339,8 +349,9 @@
         font-size: 2.4rem;
     }
 
-    .Profilesection_boxRightTitle h4 {
-        font-size: 1.4rem;
+
+    .Profilesection_boxRight img {
+        margin-bottom: 0;
     }
 
     .Profilesection_boxRightTitle h3 {

@@ -147,8 +147,8 @@ a {
 
 
     .hamburger{
-    display: block;
-    position: absolute;
+        display: block;
+        position: absolute;
     }
 
     .hamburger.active .bar:nth-child(2){
