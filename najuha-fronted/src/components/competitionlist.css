@@ -1,75 +1,51 @@
-/* UA reset */
-
-
-li {
-    list-style: none;
-}
-
 /* Typography */
 
-:root {
-    font-size: 62.5%; /* 10px */
-  }
-
-.competition-searchzone-title{
-    font-size: 20px;
-    text-align: center;
-}
-
-
-.competition-searchzone-input::placeholder{
+.competition-searchzone-option{
+    font-size: 16px;
+    letter-spacing: -0.1em;
     color: #B1B1B1;
-    font-size: 13px;
-    padding-left: 5%;
 }
 
-.competition-searchzone-input:focus{
-    outline: none;
-    padding-left: 5%;
+.each-competition-body-poster h1{
+    letter-spacing: -0.12rem;
+    font-size: 2.8rem;
+    font-weight: 500;
+    color: #FFFFFF;
+    z-index: 2;
 }
 
-.competition-searchzone-input:focus::placeholder{
-    color:transparent;
+.each-competition-body-poster h1 span{
+    font-size: 2rem;
+    margin-left: 0.2rem;
+    letter-spacing: -0.12rem;
+    color: #FFFFFF;
+    z-index: 2;
 }
 
-.each-competition-top-date h1{
-    font-size: 24px;
-    color: white;
+.each-competition-body-desc-top p{
+    font-weight: 500;
+    font-size: 2rem;
+    letter-spacing: -0.12rem;
+    line-height: 1.1;
+    max-width: calc(100% - 18px);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.each-competition-top-date span{
-    font-size: 16px;
-    color: white;
-}
-
-.each-competition-top-location-tag h2{
-    font-size: 20px;
-    letter-spacing: -0.12em;
-}
-
-.each-competition-top-location-tag h3{
-    font-size: 18px
-}
-
-.each-competition-bottom h4{
-    font-size: 18px;
-
-}
-
-.each-competition-bottom button{ /*버튼디자인 */
-    color: #8C8C8C;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    background: #F9F9F9;
-    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 20px;
-    transition: all 0.3s ease 0s;
-    padding: 8px 10px;
-}
-
-.each-competition-bottom button:hover{
-    transform: scale(1.1);
+.each-competition-body-desc-middle p{
+    /* max-width: 90%; */
+    font-weight: 500;
+    font-size: 1.6rem;
+    letter-spacing: -0.12rem;
+    line-height: 18px;
+    max-width: calc(100% - 24px);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    color: #696969;
 }
 
 /* Layout */
@@ -77,40 +53,26 @@ li {
 .competition-schedule-wrapper{
     width: auto;
     max-width: 1200px;
+    min-height: 84vh;
     margin: 0 auto;
     padding: 0 2rem;
     box-sizing: border-box;
 }
 
 .competition-searchzone{
-    height: 20vh;
-    /* padding-top: 3vh; */
-    box-sizing: border-box;
-    display: flex; /* 수직정렬을 위한 3종세트 display, align-items, justify-content */
-    align-items: center;
-    justify-content: center;
-    
-}
-
-.competition-searchzone-wrapper{
-    width: 35%;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-.competition-searchzone-options{
+    height: 10vh;
     display: flex;
-    box-sizing: border-box;
+    align-items: end;
 }
 
-.competition-searchzone-options-location,
-.competition-searchzone-options-date{
-    width: 100%;
-    margin: 0 5%;
+.competition-searchzone-searchbar{
+    margin-left: auto;
+    margin-bottom: 1.2rem;
+    position: relative;
 }
 
 .competition-list{
-    height: 64vh;
+    height: 74vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -126,95 +88,212 @@ li {
     flex-shrink: 0;
     padding: 0 1rem;
     box-sizing: border-box;
-    margin-bottom: 2rem;
-    height: 180px;
+    margin-bottom: 2.4rem;
+    height: 162px;
 }
 
 /*Component*/
 
-/* .each-competition{
-    background-color: dodgerblue;
-} */
-
-.competition-searchzone-title::after{
-    content:' ';
-    display: block;
-    height: 1.4vh;
-    width: 2px;
-    margin: 0 auto;
-    margin-top: 0.5vh;
-    margin-bottom: 1vh;
-    background-color: white;
-}
-
-.competition-searchzone-input{
-    width: 100%;
-    border: 1px solid #DEDEDE;
-    filter: drop-shadow(0.5px 1px 2px rgba(0, 0, 0, 0.25)); 
-    border-radius: 50px;
-    margin-bottom: 1.5vh;
-    height: 30px;
-    box-sizing: border-box
-}
-
-.competition-searchzone-fake{
+.competition-searchzone-option{
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
     position: relative;
-}
+   
+    width: 100px;
+    height: 36px;
+    border: 1px solid #ADADAD;
+    border-radius: 15px;
 
-.competition-searchzone-input-icon{
-    position: absolute;
-    right: 3%;
-    margin-top: 3px;
-    z-index: 1;
+    padding: 0 1.4rem;
+    margin-right: 0.8rem;
+    margin-bottom: 1.2rem;
     cursor: pointer;
 }
 
-.each-competition-top{
-    display: flex;
-    height: 126px;
+.competition-searchzone-option img{
+    margin-left: auto;
 }
 
-.each-competition-bottom{
-    display: flex;
-    height: 54px;
-    position: relative;
-    align-items: center;   /* align 세로 */
+.competition-searchzone-option ul{
+    left: 0;
+    top: 40px;
+    position: absolute;
+    width: 100px;
+    height: 150px;
+    background: #FCFCFC;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    padding-left: 1.2rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+    z-index: 11;
 }
 
-.each-competition-top-date{
-    background-image: linear-gradient(
-        rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.6)
-      ),  url(http://localhost:3001/Assets/대회배경.svg);
-    background-position: center;
-    background-size: cover;
-    width: 28%;
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center;   /* align 세로 */
+.competition-searchzone-option ul::-webkit-scrollbar{
+    width: 1px;
 }
 
-.each-competition-top-location{
-    width: 72%;
+.competition-searchzone-option li{
+    height: 35px;
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    letter-spacing: -0.1em;
+    color: #828282;
+    /* background: #FCFCFC; */
+}
+
+.competition-searchzone-searchbar input{
+    width: 240px;
+    height: 36px;
+    box-sizing: border-box;
+    border: 1px solid #ADADAD;
+    border-radius: 50px;
+
+    padding-left: 1.4rem;
+    padding-right: calc(1.4rem + 24px);
+}
+
+.competition-searchzone-searchbar img{
+    position: absolute;
+    right: 1.4rem;
+    top: 50%;
+    transform: translate(0, -50%);
+    cursor: pointer;
+}
+
+.each-competition-tag{
+    height: 20px;
+    margin-bottom: 2px;
+    display: flex;
+}
+
+.each-competition-tag-red{
+    background: #FFF3F3;
+    color: #FF5F5F;
+    font-size: 14px;
+    letter-spacing: -0.1em;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding-left: 2px;
+    padding-right: 3px;
+    margin-right: 5px;
+}
+
+.each-competition-tag-red p{ /*수직정렬 맞췄지만 p태그안에 수직이 뭔가 안맞아서 인위적으로 p태그를 이동시킴 */
+    margin-top: 2px; 
+}
+
+.each-competition-tag-blue{
+    background: #F3F7FF;
+    color: #4E82E5;
+    font-size: 14px;
+    letter-spacing: -0.1em;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding-left: 2px;
+    padding-right: 3px;
+    margin-right: 5px;
+}
+
+.each-competition-tag-blue p{ /*수직정렬 맞췄지만 p태그안에 수직이 뭔가 안맞아서 인위적으로 p태그를 이동시킴 */
+    margin-top: 2px;
+}
+
+.each-competition-tag-gray{
+    background: #F0F0F0;
+    color: #8C8C8C;
+    font-size: 14px;
+    letter-spacing: -0.1em;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    padding-left: 2px;
+    padding-right: 3px;
+    margin-right: 5px;
+}
+
+.each-competition-tag-gray p{ /*수직정렬 맞췄지만 p태그안에 수직이 뭔가 안맞아서 인위적으로 p태그를 이동시킴 */
+    margin-top: 2px;
+}
+
+.each-competition-body{
+    display: flex;
+    height: 140px;
     border: 1px solid #D9E0E4;
-    padding-left: 10px;
-    display: flex;
-    align-items: center;   /* align 세로 */
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.each-competition-bottom-buttons{
-    position:absolute;
-    right: 0;
+.each-competition-body-poster{
+    min-width: 108px;
+    position: relative;
 }
 
-.each-competition-bottom-buttons button{
-    margin-right: 5px;    
+.each-competition-body-poster img{
+    width: 100%;
+    height: 100%;
 }
 
-.each-competition-bottom h4{
-    margin-right: 10px;
+.each-competition-body-poster-block{
+    position: absolute;
+    background: rgba(0, 0, 0, 0.432);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
 }
 
+.each-competition-body-poster h1{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.each-competition-body-desc{
+    min-width: calc(100% - 108px);
+    box-sizing: border-box;
+    padding-left: 8px;
+}
+
+.each-competition-body-desc-top{
+    height: 70px;
+    display: flex;  /* 수직 가운데정렬을 위한 2중콤보 */
+    align-items: center;
+    cursor: pointer;
+}
+
+.each-competition-body-desc-middle{
+    height: 20px;
+    display: flex; /* 수직 가운데정렬을 위한 2중콤보 */
+    align-items: center;
+}
+
+.each-competition-body-desc-bottom{
+    height: 50px;
+    position: relative;
+}
+
+.each-competition-body-desc-bottom button{
+    width: 74px;
+    height: 34px;
+    background: #FFFFFF;
+    border: 1px solid #F1F1F1;
+    box-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    color: #4E82E5;
+    font-size: 16px;
+    letter-spacing: -0.1rem;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    cursor: pointer;
+}
 
 @media(max-width:1049px){
     /* Layout */
@@ -225,18 +304,12 @@ li {
     .competition-col{
         width: 50%;
     }
-    .competition-searchzone-wrapper{
-        width: 60%;
-    }
 }
 
 @media(max-width:750px){
     /* Typography */
-    .each-competition-bottom h4{
-        font-size: 16px;
-    }
-    
-    .each-competition-bottom button{ /*버튼디자인 */
+
+    .competition-searchzone-option{
         font-size: 14px;
     }
 
@@ -245,25 +318,31 @@ li {
 
     .competition-schedule-wrapper{
         max-width: 650px;
+        height: 88vh;
     }
-
     .competition-col{
         width: 100%;
     }
-
-    .competition-searchzone-wrapper{
-        width: 90%;
-    }
     .competition-list{
-        height: 68vh;
-    }
-    /*Component*/
-
-
-    
-    .each-competition-bottom h4{
-        margin-right: 5px;
+        height: 78vh;
     }
 
+    /* component */
 
+    .competition-searchzone-searchbar input{
+        height: 30px;
+        width: 180px;
+        padding-left: 1rem;
+        padding-right: calc(1rem + 24px);
+    }
+
+    .competition-searchzone-searchbar img{
+        right: 1rem;
+    }
+
+    .competition-searchzone-option{
+        padding: 0 1rem;
+        width: 85px;
+        height: 30px;
+    }
 }

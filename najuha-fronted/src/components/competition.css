@@ -81,6 +81,7 @@
 
 .competition-top-content-img{
     min-width: 194px;
+    max-width: 194px;
     height: 264px;
     background-color: red;
 }
@@ -261,6 +262,7 @@
 
     .competition-top-content-img{
         min-width: 98px;
+        max-width: 98px;
         height: 144px;
     }
 

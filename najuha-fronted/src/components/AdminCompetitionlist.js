@@ -1,22 +1,25 @@
 import axios from 'axios'
 import React, {useState, useEffect, useRef} from 'react'
 import { useNavigate } from "react-router-dom";
-import './competitionlist.css'
+import './admincompetitionlist.css'
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import { height } from '@mui/system';
+
+import { Cookies } from 'react-cookie';
+
+import dropdownicon from '../src_assets/드랍다운아이콘회색.svg'
+import searchicon from '../src_assets/검색돋보기아이콘.svg'
+import sampleposter from '../src_assets/samplePoster.png'
+
+const months = [1,2,3,4,5,6,7,8,9,10,11,12]
+const locationSample=['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북']
+const week = ['일', '월', '화', '수', '목', '금', '토']
 
 function AdminCompetitionlist() {
+    const cookies = new Cookies();
     const [competitions, setCompetitions] = useState([])
-    const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
+    const [dateDropdown, setDateDropdown] = useState(false);
+    const [locationDropdown, setLocationDropdown] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
     const [lastElement, setLastElement] = useState('')
     const [offset, setOffset] = useState(0);
@@ -24,6 +27,7 @@ function AdminCompetitionlist() {
     const [location, setLocation] = useState('');
     const [title, setTitle] = useState('')
     const [temTitle, setTemTitle] = useState('')
+    const [temDate, setTemDate] = useState('');
     const offsetRef = useRef();
     const locationRef = useRef();
     const startDateRef = useRef();
@@ -33,8 +37,7 @@ function AdminCompetitionlist() {
     startDateRef.current = startDate;
     titleRef.current = title;
     let navigate = useNavigate();
-    const [locationSample, setLocationSample]=useState(['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '울산', '인천', '전남', '전북', '제주', '충남', '충북'])
-    
+    let todaytime = dayjs()
     
     const observer = useRef(new IntersectionObserver(async (entries)=>{
         const first = entries[0]
@@ -48,7 +51,13 @@ function AdminCompetitionlist() {
 
     async function getCompetitionList(startDate, offset, title, location){
         setIsLoading(true)
-        axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`)
+        axios({
+            method: "get",
+            headers: {
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`,
+          })
         .then((res) => {
             console.log(res.data.result);
             let newCompetitions = res.data.result
@@ -63,7 +72,41 @@ function AdminCompetitionlist() {
         return ;
     }
 
-    
+    async function ActivePatch(id){
+        await axios({
+            method: "patch",
+            headers: {
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}/status/ACTIVE`,
+          })
+          .then(res => {
+            console.log(res)
+            alert(`id:${id} 대회가 활성화 되었습니다`)
+          })
+          .catch(err => {
+            console.log(err)
+            alert(`id:${id} 대회 활성화에 실패하였습니다.`)
+          })
+    }
+
+    async function InActivePatch(id){
+        await axios({
+            method: "patch",
+            headers: {
+              "x-access-token":  cookies.get("x-access-token")
+            },
+            url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}/status/INACTIVE`,
+          })
+          .then(res => {
+            console.log(res)
+            alert(`id:${id} 대회가 비활성화 되었습니다`)
+          })
+          .catch(err => {
+            console.log(err)
+            alert(`id:${id} 대회 비활성화에 실패하였습니다.`)
+          })
+    }
 
     useEffect(() => {
         const currentElement = lastElement;
@@ -77,7 +120,7 @@ function AdminCompetitionlist() {
                 currentObserver.unobserve(currentElement)
             }
         }
-    }, [lastElement, location, startDate, title])
+    }, [lastElement, location, startDate, title, offset===0])
 
     useEffect(() => {
         console.log(competitions.length)
@@ -104,6 +147,52 @@ function AdminCompetitionlist() {
         setCompetitions([]);
     }
 
+    function makingRegisterTag(registrationDate, registrationDeadline){
+        let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
+        let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
+
+        let deadlineDiff = todaytime.diff(finishdate, 'd')
+        
+
+        if(deadlineDiff > 0){ // 마감날짜(데드라인)이 지났을경우 
+            return (
+                <div className='each-competition-tag-gray'><p>신청마감</p></div>
+            )
+        }
+
+        if(deadlineDiff == 0){ // 오늘이 마감날짜(데드라인)일 경우
+            return(
+                <div className='each-competition-tag-blue'><p>신청마감 D-day</p></div>
+            )
+        }
+
+        let openDiff = todaytime.diff(opendate, 'd')
+
+        if(openDiff < 0){ // 현재날짜가 오픈 전일 경우 ex) 신청오픈 D-20
+            return(
+                <div className='each-competition-tag-gray'><p>신청오픈 D{openDiff}</p></div>
+            )
+        }
+        return(
+            <div className='each-competition-tag-blue'><p>신청마감 D{deadlineDiff}</p></div>
+        )
+        
+    }
+
+    function makingEarlybirdTag(registrationDate, registrationDeadline, earlyBirdDeadline){
+        let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
+        let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
+        let earlyBirdDate = dayjs(earlyBirdDeadline, 'YYYY-MM-DD')
+
+        let deadlineDiff = todaytime.diff(finishdate, 'd')
+        let openDiff = todaytime.diff(opendate, 'd')
+        let earlyBirdDiff = todaytime.diff(earlyBirdDate, 'd')
+
+        if(openDiff >= 0 && deadlineDiff <= 0 && earlyBirdDiff <= 0)
+            return(
+                <div className='each-competition-tag-red'><p>얼리버드</p></div>
+            )
+    }
 
     function competitionParsing(competition){
         let doreOpenDay = week[new Date(competition.doreOpen).getDay()]
@@ -122,6 +211,16 @@ function AdminCompetitionlist() {
             'registrationDateDay': registrationDateDay,
             'registrationDeadline': registrationDeadline,
             'registrationDeadlineDay': registrationDeadLineDay,
+            'status': competition.status,
+            'posterImage': competition.CompetitionPoster != null ? competition.CompetitionPoster.imageUrl : sampleposter,
+            'earlyBirdDeadline': competition.earlyBirdDeadline != null ? competition.earlyBirdDeadline : null,
+        }
+    }
+
+    function searchEnterPress (e) {
+        if(e.key == 'Enter'){
+            setTitle(temTitle)
+            listRefresh();
         }
     }
 
@@ -129,108 +228,101 @@ function AdminCompetitionlist() {
         return competitions.map((competition, i) => {
             let curcompetition = competitionParsing(competition)
             return(
-                <li class='competition-col' key={i}>
-                    <div class='each-competition'>
-                        <div class='each-competition-top'>
-                            <div class='each-competition-top-date'>
-                                <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
-                            </div>
-                            <div class='each-competition-top-location'>
-                                <div class='each-competition-top-location-tag'> {/*display:flex써서 세로 가운데 정렬하려고 클래스하나 더 넣은거임 */}
-                                    <h2>{curcompetition.title}</h2><br/>
-                                    <h3>{curcompetition.location}</h3>
-                                    <h3>대회 id:{curcompetition.id}</h3>
-                                </div>
-                            </div>
+                <li className='competition-col'>
+                    <div className='each-competition-tag'>
+                        {makingEarlybirdTag(competition.registrationDate, competition.registrationDeadline, curcompetition.earlyBirdDeadline)}
+                        {makingRegisterTag(competition.registrationDate, competition.registrationDeadline)}
+                    </div>
+                    <div className='each-competition-body'> {/* 위쪽 태그공간  */}
+                        <div class='each-competition-body-poster'> {/* 카드왼쪽 포스터공간  */}
+                            <img src={curcompetition.posterImage}></img>
+                            <div class='each-competition-body-poster-block'></div>
+                            <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
                         </div>
-                        <div class='each-competition-bottom'>
-                            <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDate}({curcompetition.registrationDateDay})</h4>
-                            <h4><img src='Assets/타이머.svg' alt='신청기간아이콘'/>{curcompetition.registrationDeadline}({curcompetition.registrationDeadlineDay})</h4>
-                            <div class='each-competition-bottom-buttons'>
-                                <button style={{background:'orange', color:'black'}} onClick={()=>{navigate(`/admincompetition/${curcompetition.id}`)}}>대회수정하기</button>
+                        <div className='each-competition-body-desc'> {/* 카드오른쪽 설명공간 */}
+                            <div className='each-competition-body-desc-top'>
+                                <p>{curcompetition.title}</p>
                             </div>
-                        </div> 
+                            <div className='each-competition-body-desc-middle'>
+                                <p>{curcompetition.location}</p>
+                            </div>
+                            <div className='each-competition-body-desc-bottom'>
+                                <button onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>바로 신청</button>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div className='admin-each-competition-bottom'>
+                            <div className='admin-each-competition-bottom-buttons'>
+                                <button style={{background:'orange', color:'black'}} onClick={()=>{navigate(`/admincompetition/${curcompetition.id}`)}}>대회수정하기</button>
+                                {curcompetition.status === 'ACTIVE' ? <button style={{background:'gray', color:'black'}} onClick={async()=>{
+                                    InActivePatch(curcompetition.id)                                    
+                                    }}>비활성화하기</button> 
+                                : <button style={{background:'red', color:'black'}} onClick={()=>{
+                                    ActivePatch(curcompetition.id)
+                                    }}>활성화하기</button> }
+                                <button style={{background:'lightblue', color:'black'}} onClick={()=>{navigate(`/Admincompetition/imageupload/${curcompetition.id}`)}}>포스터업로드하기</button>
+                            </div>
                     </div>
                 </li>
             )
         })
     }
 
-
-
-
-
   return (
     <div className='competition-schedule-wrapper'>
         <div className='competition-searchzone'>
-            <div className='competition-searchzone-wrapper'>
-                <div className='competition-searchzone-title'>대회일정</div>
-                <div className='competition-searchzone-fake'>
-                    <img className='competition-searchzone-input-icon' src='Assets/검색돋보기아이콘.svg' alt="돋보기아이콘" onClick={()=>{
-                        setTitle(temTitle);
+            <div className='competition-searchzone-option' onClick={() => setDateDropdown(pre => !pre)}>
+                <p>{startDate == '' ? '날짜' : `${temDate}월`}</p>
+                <img src={dropdownicon}/> 
+                {dateDropdown ? <ul>
+                    <li value='' onClick={() => {
+                        setStartDate('')
                         listRefresh()
-                    }}/>
-                    <input className='competition-searchzone-input' value={temTitle} placeholder='대회 이름 직접 검색하기' onChange={(e)=> setTemTitle(e.target.value)}/>
-                </div>
-                <div className='competition-searchzone-options'>
-                    <div className='competition-searchzone-options-date'>
-                    <LocalizationProvider dateAdapter={AdapterDayjs} >
-                    <DesktopDatePicker
-                    label="시작 날짜"
-                    views={['year', 'month', 'day']}
-                    minDate={dayjs('2022-1-1')} // 올해로 한정될수 있게 변수값을 고쳐야함 
-                    maxDate={dayjs('2022-12-31')} // 올해로 한정될수 있게 변수값을 고쳐야함 
-                    inputFormat="MM.DD~" 
-                    componentsProps={{
-                    actionBar: {
-                        actions: ['clear'],
-                    },
-                    }}
-                    value={startDate || null}
-                    onChange={(newvalue)=>{
-                        if(newvalue === null){
-                            setStartDate('')
-                            listRefresh();
-                            return;
-                        }
-                        if(newvalue.format('YYYY-MM-DD') != 'Invalid Date'){
-                            setStartDate(newvalue.format('YYYY-MM-DD'))
-                            listRefresh();
-                        }
-                    }}
-                    renderInput={(params) => <TextField sx={{width: '100%', "& fieldset": {borderRadius: '0', borderTop: 'none', borderLeft: 'none', borderRight: 'none', height: '44px', borderBottom:'1px solid #999999 ' }}}  {...params} />}
-                    />
-                    </LocalizationProvider>
-                    </div>
-                    <div className='competition-searchzone-options-location'>
-                        <FormControl variant="standard" style={{width:'100%'}}>
-                            <InputLabel id="demo-simple-select-standard-label">지역</InputLabel>
-                            <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            value={location}
-                            onChange={(e) => {
-                                setLocation(e.target.value)
-                                listRefresh();
-                            }}
-                            label="지역"
-                            >
-                            <MenuItem value="">
-                                <em>지역</em>
-                            </MenuItem>
-                            {locationSample.map((sample) => {
-                                return(
-                                    <MenuItem value={sample}>{sample}</MenuItem>
-                                )
-                            })}
-                            </Select>
-                        </FormControl>
-                    </div>
-                </div>
+                    }}>전체</li>
+                    {months.map(element => {
+                        return(
+                            <li value={element} onClick={() => {
+                                setStartDate(`2023-${element}-01`)
+                                setTemDate(element)
+                                listRefresh()
+                            }}>{element}월</li>
+                        )
+                    })}
+                </ul> 
+                : ''}
+            </div>
+            <div className='competition-searchzone-option' onClick={() => setLocationDropdown(pre => !pre)}>
+                <p>{location == '' ? '지역' : location}</p>
+                <img src={dropdownicon}/>
+                {locationDropdown ? 
+                <ul>
+                    <li value='' onClick={() => {
+                        setLocation('')
+                        listRefresh()
+                    }}>전체</li>
+                    {locationSample.map(element => {
+                        return(
+                            <li value={element} onClick={() => {
+                                setLocation(element)
+                                listRefresh()
+                            }}>{element}</li>
+                        )
+                    })}
+                </ul>
+                : ''}
+            </div>
+            <div className='competition-searchzone-searchbar'>
+                <input  placeholder='대회 이름 직접 검색하기' value={temTitle} onKeyDown={(e) => searchEnterPress(e)} onChange={(e)=>{
+                    setTemTitle(e.target.value)
+                }}/>
+                <img src={searchicon} alt='돋보기아이콘' onClick={() =>{
+                    setTitle(temTitle)
+                    listRefresh();
+                }}/>
             </div>
         </div>
         <div className='competition-list'>
-            <ul class='competition-row'>
+            <ul className='competition-row'>
                 {renderCompetitionList()}
                 {isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}>Loading...</div>}
                 {!isLoading && <div style={{fontsize: '200px', margin: '0 2rem'}}ref={setLastElement}>해당 대회가 모두 로딩되었습니다.</div>}
