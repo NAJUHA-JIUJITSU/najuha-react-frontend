@@ -6,7 +6,7 @@ import notcomplete from '../src_assets/미완료아이콘.svg'
 import plus from '../src_assets/대회추가아이콘.svg';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
-import {useParams} from 'react-router-dom';
+import {useParams, useLocation} from 'react-router-dom';
 import ApplyModal from './ApplyModal'
 import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
@@ -14,6 +14,7 @@ import { loadTossPayments } from '@tosspayments/payment-sdk';
 
 
 function CompetitionApplyPatchForm() {
+    const {state} = useLocation();
     const {id} = useParams();
     const [discountedprice, setDiscountedprice] = useState(0);
     const [normalprice, setNormalprice] = useState(0);
@@ -43,7 +44,7 @@ function CompetitionApplyPatchForm() {
     const [paymentmethod, setPaymentmethod] = useState(null);
     const [easypaymethod, setEasypaymethod] = useState(null);
     const frontBaseUrl = 'http://localhost:3001';
-
+    console.log(state);
 
     const parsingbeforeapplypost = (viewcompetitionApplicationList) => {
         let copyList = JSON.parse(JSON.stringify(viewcompetitionApplicationList))
@@ -69,6 +70,39 @@ function CompetitionApplyPatchForm() {
         return copyList
     } 
 
+    function parsingApplicationInfo(infos) {
+        infos.map(info => {
+            delete info.earlyBirdDeadline
+            delete info.status
+            delete info.id 
+            info.price = info.pricingPolicy.normal
+            delete info.pricingPolicy
+            info.competitionId = id
+            info.check = 0
+        })
+        return infos
+    }
+
+    function getCompetitionApplicationInfo() {
+        axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${state}`,
+        {
+            headers: {
+                'x-access-token':  cookies.get("x-access-token")
+            }
+        })
+        .then((res) => {
+            setviewCompetitionApplicationList(parsingApplicationInfo(res.data.result.CompetitionApplicationInfos))
+            // setCompetitionApplicationList();
+            console.log(res.data.result)
+            console.log(res.data.message);
+        })
+        .catch((err) => {
+            console.log(err);
+            console.log(err.response.status);
+            console.log(err.response.data.message);
+        })
+        return ;
+    }
 
     const getCompetition = async (id) => {
         try {
@@ -109,14 +143,14 @@ function CompetitionApplyPatchForm() {
           })
     }
 
-    function postCompetition(){
+    function patchCompetitionApply(){
         let competitionApplicationList = parsingbeforeapplypost(viewcompetitionApplicationList);
         axios({
-            method: "post",
+            method: "patch",
             headers: {
               "x-access-token":  cookies.get("x-access-token")
             },
-            url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications`,
+            url: `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${state}`,
             data: {
                 competitionApplicationList
             }
@@ -129,6 +163,7 @@ function CompetitionApplyPatchForm() {
           })
           .catch(err => {
             console.log(err)
+            alert('대회 신청에 실패하였습니다.')
           })
     }
 
@@ -192,6 +227,7 @@ function CompetitionApplyPatchForm() {
 
     useEffect(() => {
         getCompetition(id);
+        getCompetitionApplicationInfo();
     }, [])
 
     useEffect(() => {
@@ -502,7 +538,7 @@ function CompetitionApplyPatchForm() {
             }}>결제하기</button>
             {
                 applymodal && (
-                    <ApplyModal closeModal={() => setapplymodal(pre => !pre)} changePlayerName={changePlayerName} changePlayerBirth={changePlayerBirth} changephoneNumber={changephoneNumber} changeTeam={changeTeam} postCompetition={postCompetition}/>
+                    <ApplyModal closeModal={() => setapplymodal(pre => !pre)} changePlayerName={changePlayerName} changePlayerBirth={changePlayerBirth} changephoneNumber={changephoneNumber} changeTeam={changeTeam} postCompetition={patchCompetitionApply}/>
                 )
             }
             {

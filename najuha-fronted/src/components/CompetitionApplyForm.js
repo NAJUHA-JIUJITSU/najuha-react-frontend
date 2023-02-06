@@ -68,7 +68,6 @@ function CompetitionApplyForm() {
         return copyList
     } 
 
-
     const getCompetition = async (id) => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions/${id}`, {
