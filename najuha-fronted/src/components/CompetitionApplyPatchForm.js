@@ -11,6 +11,7 @@ import ApplyModal from './ApplyModal'
 import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
 import { loadTossPayments } from '@tosspayments/payment-sdk';
+import deleteicon from '../src_assets/명단삭제로고.svg'
 
 
 function CompetitionApplyPatchForm() {
@@ -57,7 +58,11 @@ function CompetitionApplyPatchForm() {
     
     const parsingbeforegetprice = (viewcompetitionApplicationList) => {
         let copyList = JSON.parse(JSON.stringify(viewcompetitionApplicationList))
-        copyList.map((competitionapply) => {
+        copyList.map((competitionapply, i) => {
+            if(competitionapply.price === null){
+                copyList.splice(i, 1)
+                return true
+            }
             delete competitionapply['price']
             delete competitionapply['check']
             delete competitionapply['playerName']
@@ -65,7 +70,7 @@ function CompetitionApplyPatchForm() {
             delete competitionapply['competitionId']
             delete competitionapply['playerBirth']
             delete competitionapply['phoneNumber']
-
+            
         })
         return copyList
     } 
@@ -243,6 +248,11 @@ function CompetitionApplyPatchForm() {
     }, [fillteredcompetition])
 
     useEffect(() => {
+        if(viewcompetitionApplicationList[0].price != null)
+            getTotalPrice(id);
+    }, [viewcompetitionApplicationList, viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price])
+
+    useEffect(() => {
         console.log(viewcompetitionApplicationList)
     }, [viewcompetitionApplicationList])
 
@@ -271,7 +281,6 @@ function CompetitionApplyPatchForm() {
         let cal = [...viewcompetitionApplicationList];
         cal[i].price = fillteredcompetition[0].pricingPolicy.normal;
         setviewCompetitionApplicationList(cal);
-        getTotalPrice(id);
     }
 
     const addApplication = (i) => {
@@ -312,6 +321,12 @@ function CompetitionApplyPatchForm() {
         
     }
 
+    function deleteCompetitionApplication(i){
+        let copy = [...viewcompetitionApplicationList]
+        copy.splice(i, 1);
+        setviewCompetitionApplicationList(copy);
+      }
+
     const applicationDetailUI = () => {
         return viewcompetitionApplicationList.map((application, i) => {
             return(
@@ -323,6 +338,7 @@ function CompetitionApplyPatchForm() {
                     <li>{application.belt}</li>
                     <li>{application.weight}</li>
                     <li>{application.price}</li>
+                    {viewcompetitionApplicationList.length > 1 ? (application.price != null ? <img src={deleteicon} onClick={() => deleteCompetitionApplication(i)}></img> : '') : ''}
                 </ul>
                 </>
             )
@@ -511,7 +527,9 @@ function CompetitionApplyPatchForm() {
         <>
             <div className='CompetitionApplyForm-middle-function'>
             <div className='CompetitionApplyForm-middle-function-re'>
-                <img src={reseticon} style={{cursor: 'pointer'}} onClick={() => curApplicationReset(viewcompetitionApplicationList.length-1)}/>
+                {viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price != null ? 
+                <img src={reseticon}/> : 
+                <img src={reseticon} style={{cursor: 'pointer'}} onClick={() => curApplicationReset(viewcompetitionApplicationList.length-1)}/>}
                 <p>다시하기</p>
             </div>
             <div className='CompetitionApplyForm-middle-function-complete'>

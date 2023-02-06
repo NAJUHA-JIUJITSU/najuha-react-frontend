@@ -89,11 +89,18 @@
     /* border: 1px solid red; */
     width: 60%;
     margin-bottom: 15px;
+    position: relative;
 }
 
 .CompetitionApplyForm-top-table-item li{
     width: 20%;
     text-align: center;
+}
+
+.CompetitionApplyForm-top-table-item img{
+    position: absolute;
+    right: 0;
+    transform: translate(100%, 0);
 }
 
 .CompetitionApplyForm-middle {
@@ -206,6 +213,11 @@
 
     .CompetitionApplyForm-middle {
     width: 80%;
+    }
+
+    .CompetitionApplyForm-top-table-item img{
+        left: 0;
+        transform: translate(-60%, 0);
     }
     /* Typography */
 
