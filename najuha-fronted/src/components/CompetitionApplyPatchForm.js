@@ -479,30 +479,54 @@ function CompetitionApplyPatchForm() {
         } 
     }
 
+    // const optionUI = () => {
+    //     return viewcompetitionApplicationList.map((application, i) => {
+    //         return(
+    //         <>
+    //             {!application.check ? <>
+    //                 <div className='CompetitionApplyForm-middle-function'>
+    //                 <div className='CompetitionApplyForm-middle-function-re'>
+    //                     <img src={reseticon} style={{cursor: 'pointer'}} onClick={() => curApplicationReset(i)}/>
+    //                     <p>다시하기</p>
+    //                 </div>
+    //                 <div className='CompetitionApplyForm-middle-function-complete'>
+    //                     {application.price  ? <><img src={plus} style={{cursor: 'pointer'}} onClick={() => addApplication(i)}/>
+    //                     <p>대회추가</p></> : 
+    //                     (application.weight ? <><img src={notcomplete} style={{cursor: 'pointer'}} onClick={() => curApplicationcomplete(i)}/><p>선택완료</p></> 
+    //                     : <><img src={notcomplete}/><p>선택완료</p></>)}
+    //                 </div>
+    //             </div>
+    //             <ul className='CompetitionApplyForm-middle-option'>
+    //                 {fillteredcompetition != null ? (application.check == 0 ? chooseOptionUI(application, i) : '') : ''}
+    //             </ul>
+    //             {application.price  ? <h2 className='CompetitionApplyForm-middle-info-checkmessage'>대회를 더 신청하고자 한다면<br/> + 버튼을 클릭해주세요</h2> : application.weight == null ? <h2 className='CompetitionApplyForm-middle-info'>신청할 대회를 선택하세요</h2> : <h2 className='CompetitionApplyForm-middle-info-checkmessage'>해당 대회를 신청하고자 한다면 <br/> 선택완료를 클릭해주세요</h2>}
+    //             </> : ''}
+    //         </>
+    //         )
+    //     })
+    // }
+
     const optionUI = () => {
-        return viewcompetitionApplicationList.map((application, i) => {
-            return(
-            <>
-                {!application.check ? <>
-                    <div className='CompetitionApplyForm-middle-function'>
-                    <div className='CompetitionApplyForm-middle-function-re'>
-                        <img src={reseticon} style={{cursor: 'pointer'}} onClick={() => curApplicationReset(i)}/>
-                        <p>다시하기</p>
-                    </div>
-                    <div className='CompetitionApplyForm-middle-function-complete'>
-                        {application.price  ? <><img src={plus} style={{cursor: 'pointer'}} onClick={() => addApplication(i)}/>
-                        <p>대회추가</p></> : <><img src={notcomplete} style={{cursor: 'pointer'}} onClick={() => curApplicationcomplete(i)}/>
-                        <p>선택완료</p></>}
-                    </div>
-                </div>
-                <ul className='CompetitionApplyForm-middle-option'>
-                    {fillteredcompetition != null ? (application.check == 0 ? chooseOptionUI(application, i) : '') : ''}
-                </ul>
-                {application.price  ? <h2 className='CompetitionApplyForm-middle-info-checkmessage'>대회를 더 신청하고자 한다면<br/> + 버튼을 클릭해주세요</h2> : application.weight == null ? <h2 className='CompetitionApplyForm-middle-info'>신청할 대회를 선택하세요</h2> : <h2 className='CompetitionApplyForm-middle-info-checkmessage'>해당 대회를 신청하고자 한다면 <br/> 선택완료를 클릭해주세요</h2>}
-                </> : ''}
-            </>
-            )
-        })
+        return(
+        <>
+            <div className='CompetitionApplyForm-middle-function'>
+            <div className='CompetitionApplyForm-middle-function-re'>
+                <img src={reseticon} style={{cursor: 'pointer'}} onClick={() => curApplicationReset(viewcompetitionApplicationList.length-1)}/>
+                <p>다시하기</p>
+            </div>
+            <div className='CompetitionApplyForm-middle-function-complete'>
+                {viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price  ? <><img src={plus} style={{cursor: 'pointer'}} onClick={() => addApplication(viewcompetitionApplicationList.length-1)}/>
+                <p>대회추가</p></> : 
+                (viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].weight ? <><img src={notcomplete} style={{cursor: 'pointer'}} onClick={() => curApplicationcomplete(viewcompetitionApplicationList.length-1)}/><p>선택완료</p></> 
+                : <><img src={notcomplete}/><p>선택완료</p></>)}
+            </div>
+            </div>
+            <ul className='CompetitionApplyForm-middle-option'>
+                {fillteredcompetition != null ? (viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].check == 0 ? chooseOptionUI(viewcompetitionApplicationList[viewcompetitionApplicationList.length-1], viewcompetitionApplicationList.length-1) : '') : ''}
+            </ul>
+            {viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price  ? <h2 className='CompetitionApplyForm-middle-info-checkmessage'>대회를 더 신청하고자 한다면<br/> + 버튼을 클릭해주세요</h2> : viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].weight == null ? <h2 className='CompetitionApplyForm-middle-info'>신청할 대회를 선택하세요</h2> : <h2 className='CompetitionApplyForm-middle-info-checkmessage'>해당 대회를 신청하고자 한다면 <br/> 선택완료를 클릭해주세요</h2>}
+        </>
+        )
     }
 
 
