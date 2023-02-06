@@ -128,6 +128,7 @@ function CompetitionApplyForm() {
           })
           .catch(err => {
             console.log(err)
+            alert('대회 신청에 실패하였습니다.')
           })
     }
 
