@@ -354,6 +354,12 @@ function CompetitionApplyTeamForm() {
       let check = validationcheck(competitionApplication)
       if(check){
         let newCompetitionApplicationList = [...competitionApplicationList]
+        if(newCompetitionApplicationList.length > 0){ // 팀이름과 핸드폰 번호를 마지막 신청자에 것으로 통일해주는 역할 
+          newCompetitionApplicationList.map((copycompetitionApplication, i) => {
+            copycompetitionApplication.team = competitionApplication.team
+            copycompetitionApplication.phoneNumber = competitionApplication.phoneNumber
+          })
+        }
         newCompetitionApplicationList.push(competitionApplication);
         setCompetitionApplicationList(newCompetitionApplicationList);
       } else{
