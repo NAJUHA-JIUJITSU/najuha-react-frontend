@@ -24,7 +24,7 @@ import PaymentFailPage from './pages/PaymentFailPage'
 import CompetitionPage from './pages/CompetitionPage'
 import PaymentInfoPage from './pages/PaymentInfoPage'
 import AdminCompetitionImagePage from './pages/AdminCompetitionImagePage'
-
+import ScrollPage from './pages/ScrollPage'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -50,7 +50,7 @@ function App() {
   const AuthPaymentFailPage = Auth(PaymentFailPage, true)
   const AuthPaymentInfoPage = Auth(PaymentInfoPage, true)
   const AuthAdminCompetitionImagePage = Auth(AdminCompetitionImagePage, true)
-
+  const AuthScrollPage = Auth(ScrollPage, true);
 
   return (
     <React.Fragment>
@@ -78,6 +78,7 @@ function App() {
         <Route path="/payment/success" element={<AuthPaymentSuccessPage/>} />
         <Route path="/payment/fail" element={<AuthPaymentFailPage/>} />
         <Route path = '/PaymentInfo/:id' element={<AuthPaymentInfoPage/>} />
+        <Route path="/scroll" element={<AuthScrollPage/>} />
       </Routes>
     </BrowserRouter>
     </React.Fragment>

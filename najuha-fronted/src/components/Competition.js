@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom';
 import './competition.css'
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
+import sampleposter from '../src_assets/samplePoster.png'
 
 function Competition() {
     const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
@@ -10,6 +11,7 @@ function Competition() {
     const [viewCompetition, setViewCompetition] = useState(false)
     const {id} = useParams();
     const [markdown, setMarkdown] = useState('')
+    
 //     let markdown = `
 // # 참가자 명단
 // ## 세부 정보
@@ -129,7 +131,7 @@ useEffect(() => {
             </div>
             <div className='competition-top-content'>
                 {/* <div className='competition-top-content-img'></div> */}
-                <img className='competition-top-content-img' src={competition ? (competition.CompetitionPoster ? competition.CompetitionPoster.imageUrl : '') : ''} alt='대회이미지' />
+                <img className='competition-top-content-img' src={competition ? (competition.CompetitionPoster ? competition.CompetitionPoster.imageUrl : sampleposter) : ''} alt='대회이미지' />
                 <div className='competition-top-content-info'>
                     <div className='competition-top-content-info-each'>
                         <h3>대회 날짜</h3>
