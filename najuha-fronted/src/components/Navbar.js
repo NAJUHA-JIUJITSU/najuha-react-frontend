@@ -14,7 +14,6 @@ function Navbar() {
     const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`;
     const [cookies, setCookie, removeCookie] = useCookies(["x-access-token"]);
    
-    const [beltDropdown, setBeltDropdown] = useState(false);
     const beltDropdownRef = useRef(null);
 
     let navigate = useNavigate();
@@ -40,8 +39,7 @@ function Navbar() {
     //외부 클릭시 드랍다운 닫히기
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (beltDropdown && beltDropdownRef.current && !beltDropdownRef.current.contains(event.target)) {
-                setBeltDropdown(false);
+            if (dropdownVisibility && beltDropdownRef.current && !beltDropdownRef.current.contains(event.target)) {
                 setDropdownVisibility(false);
             }
          };
@@ -51,7 +49,7 @@ function Navbar() {
         return () => {
             document.removeEventListener('click', handleClickOutside);
         };
-    }, [beltDropdown]);
+    }, [dropdownVisibility]);
     
 
 
@@ -73,7 +71,6 @@ function Navbar() {
         </ul> 
         <img class='login-icon' alt="벨트모양 로그인 아이콘" src={belticon} onClick={()=>{
             setDropdownVisibility(!dropdownVisibility)
-            setBeltDropdown(pre => !pre)
             console.log(dropdownVisibility);
             }} ref={beltDropdownRef}/>
         <div id='navbar-dropdown'>
