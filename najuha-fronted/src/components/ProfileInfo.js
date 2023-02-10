@@ -8,6 +8,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import arrowLeftIcon from "../src_assets/arrow_left.svg";
 import samplePoster from "../src_assets/samplePoster.png";
 
+// 결제에 필요한
+import Paymentmodal from './Paymentmodal'
+import { loadTossPayments } from '@tosspayments/payment-sdk';
 
 function ProfileInfo() {
     const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState([]); //유저 신청 대회 상세정보 가져오기
@@ -17,11 +20,78 @@ function ProfileInfo() {
     const { decodedToken, isExpired } = useJwt(xAccessToken);
     const navigate = useNavigate();
 
+        // 결제에 필요한 state값
+    const [paymentmodal, setPaymentmodal] = useState(false);
+    const [competitionApplicationId, setCompetitionApplicationId] = useState(null);
+    const [paymentmethod, setPaymentmethod] = useState(null);
+    const [easypaymethod, setEasypaymethod] = useState(null);
+    const [discountedprice, setDiscountedprice] = useState(0);
+    const [normalprice, setNormalprice] = useState(0);
+    const frontBaseUrl = 'http://localhost:3001';
+
     const params = useParams(); // ex) id: 1
     console.log('대회 id: ' + params.id)
     const cursorStyle = {cursor: "default"}
-    
 
+        // 토스결제에 필요한 데이터 post 
+    const postPaymentData = async () => {
+        const xAccessToken = cookies.get("x-access-token");
+        const paymentData = await axios({
+            method: "post",
+            url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications/${competitionApplicationId}/payments`,
+            headers: {
+            "x-access-token": xAccessToken,
+            },
+        });
+        console.log(paymentData);
+        return paymentData;
+        };
+    // 토스결제 
+    const tossPay = async () => {
+        const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
+        const res = await postPaymentData();
+        const data = res.data.result;
+        if(paymentmethod == '카드'){
+            loadTossPayments(clientkey).then((tossPayments)=> {
+                tossPayments.requestPayment("카드", {
+                    amount: data.amount,
+                    orderId: data.orderId,
+                    orderName: data.orderName,
+                    customerName: data.customerName,
+                    customerEmail: data.customerEmail,
+                    successUrl: frontBaseUrl + "/toss/success",
+                    failUrl: frontBaseUrl + "/toss/fail",
+                    });
+            })
+        } else if(paymentmethod == '간편결제'){
+            loadTossPayments(clientkey).then((tossPayments) => {
+                tossPayments.requestPayment("카드", {
+                    amount: data.amount,
+                    orderId: data.orderId,
+                    orderName: data.orderName,
+                    customerName: data.customerName,
+                    customerEmail: data.customerEmail,
+                    successUrl: frontBaseUrl + "/toss/success",
+                    failUrl: frontBaseUrl + "/toss/fail",
+                    flowMode: "DIRECT",
+                    easyPay: easypaymethod,
+                });
+            });
+        } else if(paymentmethod == '계좌이체'){
+            loadTossPayments(clientkey).then((tossPayments) => {
+                tossPayments.requestPayment("계좌이체", {
+                    amount: data.amount,
+                    orderId: data.orderId,
+                    orderName: data.orderName,
+                    customerName: data.customerName,
+                    customerEmail: data.customerEmail,
+                    successUrl: frontBaseUrl + "/toss/success",
+                    failUrl: frontBaseUrl + "/toss/fail",
+                })
+            });
+        }
+    }
+    
     //서버에서 대회상세정보 가져오기
     async function getCompetitionApplicationInfo() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${params.id}`,
@@ -359,6 +429,11 @@ function ProfileInfo() {
                 </div>
                 {/* 오칸 코드 가져온 부분 - 끝 */}
             </div>
+            {
+                paymentmodal && (
+                    <Paymentmodal closeModal={() => setPaymentmodal(pre => !pre)} paymentmethod={paymentmethod} setPaymentmethod={setPaymentmethod} easypaymethod={easypaymethod} setEasypaymethod={setEasypaymethod} discountedprice={discountedprice} normalprice={normalprice} tossPay={tossPay}/>
+                )
+            }
         </div>
     )
 }

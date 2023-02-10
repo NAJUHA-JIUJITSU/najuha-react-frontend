@@ -202,6 +202,7 @@ function Profilesection() {
                             <div className={curApplication.payCss}>
                                 <h3>{curApplication.costMsg}</h3>
                                 <p>{curApplication.amount}</p>
+                                {/* curApplication.isPayment==='결제하기' 일때만 대회신청내역 상세보기로 이동 실행하기 */}
                                 <button className= 'Profilesection_costBtn'>{curApplication.isPayment}</button>
                             </div>
                         </div>
