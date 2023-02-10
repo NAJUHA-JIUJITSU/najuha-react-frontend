@@ -48,7 +48,7 @@
     padding-top: 4rem;
     padding-bottom: 4rem;
     box-sizing: border-box;
-    font-weight: 500;
+    font-weight: 400;
 }
 .Profilesection_competitonNavbar {
     position: sticky;
@@ -79,7 +79,7 @@
 
 .Profilesection_active {
     color: #000000;
-    font-weight: 600;
+    font-weight: 500;
 }
 .Profilesection_competitonNav .Profilesection_active:after {
     border-bottom: 4px solid black;

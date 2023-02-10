@@ -284,7 +284,7 @@ function ProfileInfo() {
 
     return (
         <div className='ProfileInfo_wrapper'>
-            <div className='ProfileInfo_title'>
+            <div className=''>
                 <a onClick={()=>{navigate(`/Profilepage/`)}}><img src={arrowLeftIcon} alt='이전으로 돌아가기'></img></a>
                 <h2>{competitionApplicationInfo.title}</h2>
             </div>
