@@ -37,6 +37,7 @@
     height: 35px;
     font-size: 15px;
     margin: 0 7px;
+    cursor: pointer;
   }
 
   .Paymentbridgemodal_button_later{

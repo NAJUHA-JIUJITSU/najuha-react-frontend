@@ -26,6 +26,7 @@
     font-size: 2.2rem;
     letter-spacing: -0.1em;
     color: #8C8C8C;
+    cursor: pointer;
 }
 
 #PaymentSuccess-blue-button{
@@ -60,6 +61,7 @@
     /* 버튼그림자 */
     box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
     border-radius: 30px;
+    cursor: pointer;
 }
 
 @media(max-width:750px){
