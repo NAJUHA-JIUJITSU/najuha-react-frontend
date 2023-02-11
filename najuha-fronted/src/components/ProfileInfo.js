@@ -13,6 +13,7 @@ import Paymentmodal from './Paymentmodal'
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 
 function ProfileInfo() {
+    const [rawCompetitionApplicationInfo, setRawCompetitionApplicationInfo] = useState({})
     const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState([]); //유저 신청 대회 상세정보 가져오기
     const [competitionApplicationList, setCompetitionApplicationList] = useState([]); //유저 신청 대회 유저 리스트 가져오기
     const cookies = new Cookies();
@@ -101,6 +102,7 @@ function ProfileInfo() {
             }
         })
         .then((res) => {
+            setRawCompetitionApplicationInfo(res.data.result);
             setcompetitionApplicationInfo(applicationParsing(res.data.result));
             setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos);
             console.log(res.data.result)
@@ -351,6 +353,9 @@ function ProfileInfo() {
         getCompetitionApplicationInfo();
     }, [decodedToken])
 
+    useEffect(() => {
+        console.log(rawCompetitionApplicationInfo)
+    }, [rawCompetitionApplicationInfo])
 
     return (
         <div className='ProfileInfo_wrapper'>
@@ -420,9 +425,15 @@ function ProfileInfo() {
                             <li>참가비</li>
                         </ul>
                         {renderCompetitionApplicationList()}
+                    </div>
+                    <div className='CompetitionApplyTeamForm-bottom-table-results'>
+                        <div className='CompetitionApplyTeamForm-bottom-table-result CompetitionApplyTeamForm-bottom-table-result-red'>
+                        <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 할인금액</h3>
+                        <h3>{rawCompetitionApplicationInfo.expectedPrice ? rawCompetitionApplicationInfo.expectedPrice.normalPrice - competitionApplicationInfo.amount : 0}원</h3>
+                        </div>
                         <div className='CompetitionApplyTeamForm-bottom-table-result'>
-                            <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>{competitionApplicationInfo.isPay}</h3>
-                            <h3>{competitionApplicationInfo.amount}원</h3>
+                        <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
+                        <h3>{competitionApplicationInfo.amount}원</h3>
                         </div>
                     </div>
                     {renderButton(competitionApplicationInfo)}

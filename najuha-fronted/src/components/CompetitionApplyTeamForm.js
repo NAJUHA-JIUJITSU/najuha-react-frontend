@@ -160,31 +160,6 @@ function CompetitionApplyTeamForm() {
       }
     }
 
-    // async function postCompetitionApply(){
-    //   try{
-    //   axios({
-    //       method: "post",
-    //       headers: {
-    //         "x-access-token":  cookies.get("x-access-token")
-    //       },
-    //       url: `${process.env.REACT_APP_BACK_END_API}/competitionApplicationsGroup`,
-    //       data: {
-    //           viewCompetitionApplicationList
-    //       }
-    //     })
-    //     .then(res => {
-    //       console.log(res)
-    //       setCompetitionApplicationId(res.data.result.competitionApplicationId);
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //       throw err;
-    //     })
-    //   } catch (err) {
-    //     throw err
-    //   }
-    // }
-
     const getCompetition = async (id) => {
       try {
           const response = await axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions/${id}`, {
@@ -198,7 +173,7 @@ function CompetitionApplyTeamForm() {
       } catch(err) {
           console.log(err);
       }
-  }
+    }
 
     function genderDropdownToggle(){
       setGenderDropdown((pre) => (!pre));
