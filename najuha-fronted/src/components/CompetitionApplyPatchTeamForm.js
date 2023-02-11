@@ -612,6 +612,12 @@ function CompetitionApplyPatchTeamForm() {
                       <li>참가비</li>
             </ul>
             {renderCompetitionApplicationList()}
+          </div>
+          <div className='CompetitionApplyTeamForm-bottom-table-results'>
+            <div className='CompetitionApplyTeamForm-bottom-table-result CompetitionApplyTeamForm-bottom-table-result-red'>
+              <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 할인금액</h3>
+              <h3>{normalPrice - discountedPrice}원</h3>
+            </div>
             <div className='CompetitionApplyTeamForm-bottom-table-result'>
               <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
               <h3>{discountedPrice}원</h3>
