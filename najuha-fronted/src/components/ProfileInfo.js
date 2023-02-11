@@ -23,15 +23,12 @@ function ProfileInfo() {
 
         // 결제에 필요한 state값
     const [paymentmodal, setPaymentmodal] = useState(false);
-    const [competitionApplicationId, setCompetitionApplicationId] = useState(null);
     const [paymentmethod, setPaymentmethod] = useState(null);
     const [easypaymethod, setEasypaymethod] = useState(null);
-    const [discountedprice, setDiscountedprice] = useState(0);
-    const [normalprice, setNormalprice] = useState(0);
     const frontBaseUrl = 'http://localhost:3001';
 
-    const params = useParams(); // ex) id: 1
-    console.log('대회 id: ' + params.id)
+    const competitionApplicationId = useParams().id; // ex) id: 1
+    console.log('대회 id: ' + competitionApplicationId)
     const cursorStyle = {cursor: "default"}
 
         // 토스결제에 필요한 데이터 post 
@@ -95,7 +92,7 @@ function ProfileInfo() {
     
     //서버에서 대회상세정보 가져오기
     async function getCompetitionApplicationInfo() {
-        axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${params.id}`,
+        axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${competitionApplicationId}`,
         {
             headers: {
                 'x-access-token':  xAccessToken
@@ -317,7 +314,7 @@ function ProfileInfo() {
             //수정하기&결제하기 버튼
             <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
                 <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={()=>{patchClick()}}>수정하기</button>
-                <button id='CompetitionApplyTeamForm-bottom-table-buttons-register'>결제하기</button>
+                <button id='CompetitionApplyTeamForm-bottom-table-buttons-register' onClick={()=>{setPaymentmodal(pre => !pre)}}>결제하기</button>
             </div>
         )
       
@@ -442,7 +439,7 @@ function ProfileInfo() {
             </div>
             {
                 paymentmodal && (
-                    <Paymentmodal closeModal={() => setPaymentmodal(pre => !pre)} paymentmethod={paymentmethod} setPaymentmethod={setPaymentmethod} easypaymethod={easypaymethod} setEasypaymethod={setEasypaymethod} discountedprice={discountedprice} normalprice={normalprice} tossPay={tossPay}/>
+                    <Paymentmodal closeModal={() => setPaymentmodal(pre => !pre)} paymentmethod={paymentmethod} setPaymentmethod={setPaymentmethod} easypaymethod={easypaymethod} setEasypaymethod={setEasypaymethod} discountedprice={competitionApplicationInfo ? competitionApplicationInfo.amount : 0} normalprice={rawCompetitionApplicationInfo.expectedPrice ? rawCompetitionApplicationInfo.expectedPrice.normalPrice : 0} tossPay={tossPay}/>
                 )
             }
         </div>
