@@ -156,6 +156,7 @@ function ProfileInfo() {
     
      //신청대회 데이터 파싱
     function applicationParsing(application){
+        let today = new Date();
         let id = application.id;
         let competitionId = application.Competition.id;
         let title =  application.Competition.title;
@@ -175,13 +176,12 @@ function ProfileInfo() {
         let team = application.CompetitionApplicationInfos[0].team;
         let phoneNumber = autoHypenPhone(application.CompetitionApplicationInfos[0].phoneNumber);
         let isGroup = ( application.isGroup ) ?  "단체" : "개인";
-        let amount = application.expectedPrice.normalPrice;
+        let amount = ( today > new Date(application.Competition.earlyBirdDeadline) ) ? application.expectedPrice.earlyBirdFalse : application.expectedPrice.earlyBirdTrue
         let isPay = ( application.competitionPayment===null ) ? "예상 결제금액" : "총 결제금액";
 
         //버튼 렌더에 필요한 정보
         let competitionPayment = application.competitionPayment;
         let status = (application.competitionPayment)? application.competitionPayment.status : ' ';
-        let today = new Date();
         let CheckRegistrationDeadline = ( today > new Date(application.Competition.registrationDeadline) ) ? false : true; //false면 신청마감
         let CheckDoreOpen = ( today > new Date(application.Competition.doreOpen) ) ? false : true; //false면 대회날짜 지남
        
