@@ -17,6 +17,16 @@
 /* Layout */
 .ChooseApplyMethod-wrapper{
     margin: 0 auto;
+    align-items: center;
+    min-height: 84vh;
+    max-width: 900px;
+    display: block;
+}
+
+.ChooseApplyMethod-cardWrapper{
+    margin: 0 auto;
+    justify-content: center;
+    display: flex;
 }
 
 .ChooseApplyMethod-card-middle li{
@@ -37,20 +47,24 @@
     filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.72));
 } */
 
-.ChooseApplyMethod-wrapper{
-    min-height: 84vh;
-    max-width: 900px;
+.ChooseApplyMethod-title h2 {
+    margin: 0 auto;
+    font-size: 3rem;
+    font-weight: 500;
+    letter-spacing: -0.1em;
     display: flex;
     justify-content: center;
+    margin-top: 3.8rem;
+    margin-bottom: 1.8rem;
 }
 
 .ChooseApplyMethod-card{
     width: 363px;
-    height: 463px;
+    height: 482px;
     border: 1px solid #F0F0F0;
     border-radius: 10px;
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
-    margin: 40px 20px;
+    margin: 40px 40px;
     box-sizing: border-box;
     position: relative;
 }
@@ -73,8 +87,8 @@
 }
 
 .ChooseApplyMethod-card-top img{
-    margin-top: 51px;
-    margin-bottom: 51px;
+    margin-top: 44px;
+    margin-bottom: 40px;
 }
 
 .ChooseApplyMethod-card-top::after{
@@ -119,6 +133,7 @@
     width: 329px;
     height: 57px;
     background: #FFFFFF;
+    cursor: pointer;
     /* left: 17px;
     bottom: 42px; */
 }
@@ -150,41 +165,53 @@
     }
 
     .ChooseApplyMethod-card-bottom button{
-        width: 300px;
+        width: 280px;
+        height: 50px
     }
 
 }
 
 
 @media(max-width:750px){
+    .ChooseApplyMethod-cardWrapper{
+        display: block;
+    }
 
-.ChooseApplyMethod-wrapper{
-    min-height: 88vh;
-}
+    .ChooseApplyMethod-title h2 {
+        font-size: 2.4rem;
+    }
+        
+    .ChooseApplyMethod-wrapper{
+        min-height: 88vh;
+    }
 
-.ChooseApplyMethod-wrapper{
-    flex-direction: column;
-}
+    .ChooseApplyMethod-wrapper{
+        flex-direction: column;
+    }
 
-.ChooseApplyMethod-card{
-    width: 310px;
-    margin: 0 auto;
-    margin-top: 40px;
-}
+    .ChooseApplyMethod-card{
+        width: 310px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
 
-.ChooseApplyMethod-card-top-title{
-    left: 155px;
-}
+    .ChooseApplyMethod-card-top-title{
+        left: 155px;
+    }
 
-.ChooseApplyMethod-card-top::after{
-    width: 270px;
-    height: 1px;
-    left: 20px;
-}
+    .ChooseApplyMethod-card-top::after{
+        width: 270px;
+        height: 1px;
+        left: 20px;
+    }
 
-.ChooseApplyMethod-card-bottom{
-    left: 4px;
-}
+    .ChooseApplyMethod-card-bottom{
+        left: 4px;
+    }
 
+    .ChooseApplyMethod-card-bottom button{
+        width: 268px;
+        height: 47px
+    }
 
 }
