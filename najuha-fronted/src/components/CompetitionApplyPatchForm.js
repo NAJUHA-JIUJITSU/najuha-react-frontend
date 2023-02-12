@@ -36,7 +36,7 @@ function CompetitionApplyPatchForm() {
             gender: null,
             belt: null,
             weight: null,
-            team: "김포 골든라이언",
+            team: null,
             competitionId: id,
             price: null,
             check: 0, 
@@ -338,7 +338,7 @@ function CompetitionApplyPatchForm() {
                     <li>{application.belt}</li>
                     <li>{application.weight}</li>
                     <li>{application.price}</li>
-                    {viewcompetitionApplicationList.length > 1 ? (application.price != null ? <img src={deleteicon} onClick={() => deleteCompetitionApplication(i)}></img> : '') : ''}
+                    {viewcompetitionApplicationList.length > 1 ? (application.price != null ? <img style={{cursor:'pointer'}} src={deleteicon} onClick={() => deleteCompetitionApplication(i)}></img> : '') : ''}
                 </ul>
                 </>
             )
@@ -570,9 +570,15 @@ function CompetitionApplyPatchForm() {
             {optionUI()}
         </div>
         <div className='CompetitionApplyForm-bottom'>
-            <div className='CompetitionApplyForm-bottom-sum'>
-                <p>총 결제금액</p>
-                <h3>{discountedprice}원</h3>
+            <div className='CompetitionApplyTeamForm-bottom-table-results'>
+                <div className='CompetitionApplyTeamForm-bottom-table-result CompetitionApplyTeamForm-bottom-table-result-red'>
+                    <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 할인금액</h3>
+                    <h3>{normalprice - discountedprice}원</h3>
+                </div>
+                <div className='CompetitionApplyTeamForm-bottom-table-result'>
+                    <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
+                    <h3>{discountedprice}원</h3>
+                </div>
             </div>
             <button className='CompetitionApplyForm-bottom-payment' onClick={() => {
                 if(checkInvaildApply())
