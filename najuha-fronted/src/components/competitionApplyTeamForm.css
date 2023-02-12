@@ -53,12 +53,21 @@
     color: #8C8C8C;
     font-size: 1.4rem;
 }
+#CompetitionApplyTeamForm-bottom-table-buttons-save:hover{
+    border: 0px;
+    background-color: #E2E2E2;
+}
 
 #CompetitionApplyTeamForm-bottom-table-buttons-register{
     color: #4E82E5;
     font-size: 1.4rem;
 }
 
+#CompetitionApplyTeamForm-bottom-table-buttons-register:hover{
+    background-color: #4E82E5;
+    border: 1px solid #4E82E5;
+    color: white;
+}
 
 /* Layout */
 
@@ -268,12 +277,17 @@
     color: #4E82E5;
     border: 1px solid #F1F1F1;
     border-radius: 30px;
-    height: 30px;
+    height: 34px;
+    width: 70px;
     right: 60px;
     bottom: 0px;
     cursor: pointer;
 }
-
+.CompetitionApplyTeamForm-button-add:hover{
+    background-color: #4E82E5;
+    border: 1px solid #4E82E5;
+    color: white;
+}
 
 /* .CompetitionApplyTeamForm-teaminfo input::placeholder{
     padding-left: 5px;

@@ -125,7 +125,7 @@ function ProfileInfo() {
 
             'postUrl' : postUrl,
             'doreOpen' : doreOpen + '(' + doreOpenDay + ')',
-            'location': location + '엄청 엄청 긴 대회라서 두 줄로 표시해야 한다고오오오',
+            'location': location,
             'earlyBirdDeadline' : earlyBirdDeadline + '(' + earlyBirdDeadlineDay + ')',
             'registrationDeadline' : registrationDeadline + '(' + registrationDeadlineDay + ')',
             'applicantTableOpenDate' : applicantTableOpenDate + '(' + applicantTableOpenDateDay + ')',

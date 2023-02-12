@@ -137,6 +137,13 @@
     /* left: 17px;
     bottom: 42px; */
 }
+
+.ChooseApplyMethod-card-bottom button:hover{
+    background-color: #4E82E5;
+    border: 1px solid #4E82E5;
+    color: white;
+}
+
 .ChooseApplyMethod-card-bottom p{
     margin-top: 14px;
 }

@@ -286,6 +286,12 @@
 .Profilesection_payCss .Profilesection_costBtn{
     color: #4E82E5;
 }
+.Profilesection_payCss .Profilesection_costBtn:hover
+{
+    background-color: #4E82E5;
+    border: 1px solid #4E82E5;
+    color: white;
+}
 
 @media(max-width:1049px){
     /* Layout */

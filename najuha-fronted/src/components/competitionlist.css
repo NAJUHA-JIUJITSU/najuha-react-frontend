@@ -342,8 +342,10 @@
 }
 
 .each-competition-body-desc-bottom button:hover {
+    background-color: #4E82E5;
     border: 1px solid #4E82E5;
-    font-weight: 600;
+    color: white;
+    /* font-weight: 600; */
 }
 
 @media(max-width:1049px){
