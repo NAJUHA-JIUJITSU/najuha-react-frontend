@@ -30,7 +30,8 @@ function CompetitionApplyPatchTeamForm() {
     const [competition, setCompetition] = useState(null);
     const [fillteredcompetition, setFillteredCompetition] = useState(null);
 
-    const [competitionApplicationList, setCompetitionApplicationList] = useState([]);
+    const [test, setTest] = useState({})
+    const [viewCompetitionApplicationList, setViewCompetitionApplicationList] = useState([]);
     const [competitionApplication, setCompetitionApplication] = useState({
       playerName: '',
       playerBirth: '',
@@ -41,6 +42,7 @@ function CompetitionApplyPatchTeamForm() {
       belt: '',
       weight: '',
       team: '',
+      price: '',
       competitionId: id,
     })
     const [competitionApplicationId, setCompetitionApplicationId] = useState(null);
@@ -59,27 +61,36 @@ function CompetitionApplyPatchTeamForm() {
     console.log(competition);
 }, [competition])
 
+useEffect(() => {
+  console.log(test);
+}, [test])
+
+useEffect(() => {
+  if(competitionApplication.weight !== '')
+    findApplicationPrice()
+}, [competitionApplication.weight])
+
     useEffect(() => {
       console.log(competitionApplication);
     }, [competitionApplication])
 
     useEffect(() => {
-      console.log(competitionApplicationList);
-      if(competitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
-    }, [competitionApplicationList])
+      console.log(viewCompetitionApplicationList);
+      if(viewCompetitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
+    }, [viewCompetitionApplicationList])
 
     function parsingApplicationInfo(infos) {
         infos.map(info => {
+            info.competitionId = id
+            info.price = info.pricingPolicy.normal
             delete info.pricingPolicy
             delete info.earlyBirdDeadline
             delete info.status
             delete info.id 
-            info.competitionId = id
         })
         return infos
     }
 
-    
     async function getCompetitionApplicationInfo() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${state}`,
         {
@@ -88,9 +99,7 @@ function CompetitionApplyPatchTeamForm() {
             }
         })
         .then((res) => {
-            setCompetitionApplicationList(parsingApplicationInfo(res.data.result.CompetitionApplicationInfos))
-            // setCompetitionApplicationList();
-            console.log(res.data.result)
+            setViewCompetitionApplicationList(parsingApplicationInfo(res.data.result.CompetitionApplicationInfos))
             console.log(res.data.message);
         })
         .catch((err) => {
@@ -159,7 +168,16 @@ function CompetitionApplyPatchTeamForm() {
       }
     }
 
+    function parsingBeforePatch (viewCompetitionApplicationList){
+      let copyCompetitionApplicationList = JSON.parse(JSON.stringify(viewCompetitionApplicationList))
+      copyCompetitionApplicationList.map(application => {
+        delete application.price
+      })
+      return copyCompetitionApplicationList
+    }
+
     async function patchCompetitionApply(){
+        let competitionApplicationList = parsingBeforePatch (viewCompetitionApplicationList)
         try{
         await axios({
             method: "patch",
@@ -168,7 +186,7 @@ function CompetitionApplyPatchTeamForm() {
             },
             url: `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${state}`,
             data: {
-                competitionApplicationList
+              competitionApplicationList
             }
           }).then(res => {
             console.log(res)
@@ -328,6 +346,16 @@ function CompetitionApplyPatchTeamForm() {
             })
     }
 
+    function findApplicationPrice(){
+      let newfillteredcompetition = JSON.parse(JSON.stringify(fillteredcompetition))
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.gender, 'gender')
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.uniform, 'uniform')
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.divisionName, 'divisionName')
+      newfillteredcompetition = varfillteringcompetition(newfillteredcompetition, competitionApplication.belt, 'belt')
+      newfillteredcompetition = varfillteringcompetition(newfillteredcompetition, competitionApplication.weight, 'weight')
+      changeCompetitionApplication(newfillteredcompetition[0].pricingPolicy.normal, 'price')
+    }
+
     function stateRefresh(key, copycompetitionApplication){
       if(key == 'gender'){
         copycompetitionApplication.uniform = '';
@@ -363,7 +391,7 @@ function CompetitionApplyPatchTeamForm() {
     function addCompetitionApplication(){
       let check = validationcheck(competitionApplication)
       if(check){
-        let newCompetitionApplicationList = [...competitionApplicationList]
+        let newCompetitionApplicationList = [...viewCompetitionApplicationList]
         if(newCompetitionApplicationList.length > 0){ // 팀이름과 핸드폰 번호를 마지막 신청자에 것으로 통일해주는 역할 
             newCompetitionApplicationList.map((copycompetitionApplication, i) => {
               copycompetitionApplication.team = competitionApplication.team
@@ -371,7 +399,7 @@ function CompetitionApplyPatchTeamForm() {
             })
         }
         newCompetitionApplicationList.push(competitionApplication);
-        setCompetitionApplicationList(newCompetitionApplicationList);
+        setViewCompetitionApplicationList(newCompetitionApplicationList);
       } else{
         alert('신청서를 빈 항목 없이 끝까지 작성해주세요');
       }
@@ -379,13 +407,13 @@ function CompetitionApplyPatchTeamForm() {
     }
 
     function deleteCompetitionApplication(i){
-      let copy = [...competitionApplicationList]
+      let copy = [...viewCompetitionApplicationList]
       copy.splice(i, 1);
-      setCompetitionApplicationList(copy);
+      setViewCompetitionApplicationList(copy);
     }
 
     function renderCompetitionApplicationList(){
-      return competitionApplicationList.map((application, i) => {
+      return viewCompetitionApplicationList.map((application, i) => {
         return(
           <ul key={i} className='CompetitionApplyTeamForm-bottom-table-row'>
                       <li>{i+1}</li>
@@ -396,13 +424,12 @@ function CompetitionApplyPatchTeamForm() {
                       <li>{application.divisionName}</li>
                       <li>{application.belt}</li>
                       <li>{application.weight}</li>
-                      <li>50,000원</li>
+                      <li>{application.price}원</li>
                       <img id='CompetitionApplyTeamForm-bottom-table-row-deleteicon' src={deleteicon} alt='삭제아이콘' onClick={() => deleteCompetitionApplication(i)}/>
           </ul>
         )
       })
     }
-
 
     const getTotalPrice = async () => {
       axios({
@@ -413,7 +440,7 @@ function CompetitionApplyPatchTeamForm() {
           url: `${process.env.REACT_APP_BACK_END_API}/competitions/${id}/prices`,
           data: {
               isGroup: true,
-              divisions: competitionApplicationList
+              divisions: viewCompetitionApplicationList
           }
         })
         .then(res => {
