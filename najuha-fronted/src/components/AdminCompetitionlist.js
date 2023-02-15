@@ -262,7 +262,7 @@ function AdminCompetitionlist() {
                                     }}>활성화하기</button> }
                                 <button style={{background:'lightblue', color:'black'}} onClick={()=>{navigate(`/Admincompetition/imageupload/${curcompetition.id}`)}}>포스터업로드하기</button>
                                 <button style={{background:'pink', color:'black'}} onClick={()=>{navigate(`/paymentinfo/${curcompetition.id}`)}}>결제정보</button>
-                                <button style={{background:'yellow', color:'black'}} onClick={()=>{navigate(`/paymentinfo/${curcompetition.id}`)}}>참가선수명단</button>
+                                <button style={{background:'yellow', color:'black'}} onClick={()=>{navigate(`/Admincompetition/csv/${curcompetition.id}`)}}>참가선수명단</button>
                             </div>
                     </div>
                 </li>
