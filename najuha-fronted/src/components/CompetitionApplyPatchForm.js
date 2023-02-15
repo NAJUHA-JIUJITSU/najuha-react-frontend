@@ -250,7 +250,7 @@ function CompetitionApplyPatchForm() {
     useEffect(() => {
         if(viewcompetitionApplicationList[0].price != null)
             getTotalPrice(id);
-    }, [viewcompetitionApplicationList, viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price])
+    }, [viewcompetitionApplicationList.length, viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price])
 
     useEffect(() => {
         console.log(viewcompetitionApplicationList)
