@@ -423,11 +423,20 @@ function CompetitionApplyTeamForm() {
             <div className='CompetitionApplyTeamForm-teaminfo'>
                 <div className='CompetitionApplyTeamForm-teaminfo-element'>
                   <label>팀이름</label>
-                  <input placeholder='팀 이름을 입력해주세요' value={competitionApplication.team} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'team')}}></input>
+                  <input placeholder='팀 이름을 입력해주세요' value={competitionApplication.team} onChange={(e)=>{
+                  let pattern = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+                  e.target.value = e.target.value.replace(pattern, ''); 
+                  if(e.target.value.length > 50)
+                    e.target.value = e.target.value.slice(0, 50)
+                  changeCompetitionApplication(e.target.value, 'team')}}></input>
                 </div>
                 <div className='CompetitionApplyTeamForm-teaminfo-element'>
                   <label>대표자 번호</label>
-                  <input placeholder="'-' 없이 번호만 입력해주세요" value={competitionApplication.phoneNumber} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'phoneNumber')}}></input>
+                  <input placeholder="'-' 없이 번호만 입력해주세요" value={competitionApplication.phoneNumber} onChange={(e)=>{
+                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                    if(e.target.value.length > 11)
+                      e.target.value = e.target.value.slice(0, 11)
+                  changeCompetitionApplication(e.target.value, 'phoneNumber')}}></input>
                 </div>
             </div>
             <div className='CompetitionApplyTeamForm-top-table'>
@@ -439,10 +448,23 @@ function CompetitionApplyTeamForm() {
                         <li>기/노기</li>
                 </ul>
                 <ul className='CompetitionApplyTeamForm-top-table-row'>
-                        <li><input placeholder='이름' value={competitionApplication.playerName} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerName')}}></input> </li>
-                        {competitionApplication.playerName != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> 
+                        <li><input placeholder='이름' value={competitionApplication.playerName} onChange={(e)=>{
+                        let pattern = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+                        e.target.value = e.target.value.replace(pattern, ''); 
+                        if(e.target.value.length > 10)
+                          e.target.value = e.target.value.slice(0, 10)
+                        changeCompetitionApplication(e.target.value, 'playerName')}}></input> </li>
+                        {competitionApplication.playerName != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{
+                        e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                        if(e.target.value.length > 6)
+                            e.target.value = e.target.value.slice(0, 6)
+                        changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> 
                         : 
-                        competitionApplication.playerBirth != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> : <li className='CompetitionApplyTeamForm-top-table-row-disable'>ex) 900404</li>}
+                        competitionApplication.playerBirth != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{
+                        e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                        if(e.target.value.length > 6)
+                            e.target.value = e.target.value.slice(0, 6)
+                        changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> : <li className='CompetitionApplyTeamForm-top-table-row-disable'>ex) 900404</li>}
                         
                         {competitionApplication.gender != '' ?  // 본인값있으면 본인값 보여주고 
                         <li onClick={genderDropdownToggle}>
