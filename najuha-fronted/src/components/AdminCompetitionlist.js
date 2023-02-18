@@ -265,7 +265,7 @@ function AdminCompetitionlist() {
                             <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
                         </div>
                         <div className='each-competition-body-desc'> {/* 카드오른쪽 설명공간 */}
-                            <div className='each-competition-body-desc-top'>
+                            <div class='each-competition-body-desc-top' onClick={ () => {navigate(`/competition/${curcompetition.id}`)} }>
                                 <p>{curcompetition.title}</p>
                             </div>
                             <div className='each-competition-body-desc-middle'>
