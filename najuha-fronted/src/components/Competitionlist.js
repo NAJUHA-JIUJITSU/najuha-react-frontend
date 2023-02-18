@@ -232,30 +232,33 @@ function Competitionlist() {
             let curcompetition = competitionParsing(competition)
             let cardGray = competitionCardGray(competition.registrationDate, competition.registrationDeadline)
             return(
-                <li className='competition-col'>
-                    <div className='each-competition-tag'> {/* 위쪽 태그공간  */}
-                        {makingEarlybirdTag(competition.registrationDate, competition.registrationDeadline, curcompetition.earlyBirdDeadline)}
-                        {makingRegisterTag(competition.registrationDate, competition.registrationDeadline)}
-                    </div>
-                    <div className= "each-competition-body" id={cardGray} >
-                        <div class='each-competition-body-poster'> {/* 카드왼쪽 포스터공간  */}
-                            <img src={curcompetition.posterImage} alt='대회 포스터'></img>
-                            <div class='each-competition-body-poster-block'></div>
-                            <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
+                    <li className='competition-col'>
+                        <div className='each-competition-tag'> {/* 위쪽 태그공간  */}
+                            {makingEarlybirdTag(competition.registrationDate, competition.registrationDeadline, curcompetition.earlyBirdDeadline)}
+                            {makingRegisterTag(competition.registrationDate, competition.registrationDeadline)}
                         </div>
-                        <div class='each-competition-body-desc'> {/* 카드오른쪽 설명공간 */}
-                            <div class='each-competition-body-desc-top' onClick={ () => {navigate(`/competition/${curcompetition.id}`)} }>
-                                <p>{curcompetition.title}</p>
+                        <div className= "each-competition-body" id={cardGray} >
+                            <div class='each-competition-body-poster'> {/* 카드왼쪽 포스터공간  */}
+                                <img src={curcompetition.posterImage} alt='대회 포스터'></img>
+                                <div class='each-competition-body-poster-block'></div>
+                                <h1>{curcompetition.doreOpen}<span>({curcompetition.doreOpenDay})</span></h1>
                             </div>
-                            <div class='each-competition-body-desc-middle'>
-                                <p>{curcompetition.location}</p>
-                            </div>
-                            <div class='each-competition-body-desc-bottom'>
-                                <button style={ (cardGray==='') ? {} : {display:'none'} } onClick={ () => {navigate(`/competition/applymethod/${curcompetition.id}`)} }>신청</button>
-                            </div>
-                        </div>                        
-                    </div>
-                </li>
+                            <div class='each-competition-body-desc'> {/* 카드오른쪽 설명공간 */}
+                                <div class='each-competition-body-desc-top' onClick={ () => {navigate(`/competition/${curcompetition.id}`)} }>
+                                    <p>{curcompetition.title}</p>
+                                </div>
+                                <div class='each-competition-body-desc-middle'>
+                                    <p>{curcompetition.location}</p>
+                                </div>
+                                <div class='each-competition-body-desc-bottom'>
+                                    {competition.isPartnership === true ? 
+                                    <button style={ (cardGray==='') ? {} : {display:'none'} } onClick={ () => {navigate(`/competition/applymethod/${curcompetition.id}`)} }>신청</button>
+                                    :
+                                    <button style={ (cardGray==='') ? {} : {display:'none'} } onClick={ () => {window.location.href = competition.nonPartnershipPageLink} }>신청</button>}
+                                </div>
+                            </div>                        
+                        </div>
+                    </li>
             )
         })
     }

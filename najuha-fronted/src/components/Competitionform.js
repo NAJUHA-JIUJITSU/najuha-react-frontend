@@ -19,6 +19,8 @@ function Competition_form() {
     const [infomation, setInfomation] = useState("")
     const [applicantTableOpenDate, setApplicantTableOpenDate] = useState("")
     const [tournamentTableOpenDate, setTournamentTableOpenDate] = useState("")
+    const [isPartnership, setIsPartnership] = useState("")
+    const [nonPartnershipPageLink, setNonPartnershipPageLink] = useState("")
     const [mode, setMode] = useState("post")
     const [competition, setCompetition] = useState(null)
     let navigate = useNavigate();
@@ -171,7 +173,9 @@ function Competition_form() {
                 'information': infomation,
                 'applicantTableOpenDate': applicantTableOpenDate,
                 'tournamentTableOpenDate': tournamentTableOpenDate,
-                'division': JSON.stringify(divisions),
+                'division': divisions,
+                'isPartnership' : isPartnership === 'true' ? true : false,
+                'nonPartnershipPageLink': nonPartnershipPageLink,
             }
           })
           .then(res => {
@@ -207,6 +211,8 @@ function Competition_form() {
                 'applicantTableOpenDate': applicantTableOpenDate,
                 'tournamentTableOpenDate': tournamentTableOpenDate,
                 'division': divisions,
+                'isPartnership' : isPartnership === 'true' ? true : false,
+                'nonPartnershipPageLink': nonPartnershipPageLink,
             }
           })
           .then(res => {
@@ -232,6 +238,8 @@ function Competition_form() {
         setApplicantTableOpenDate(competition.applicantTableOpenDate)
         setTournamentTableOpenDate(competition.tournamentTableOpenDate)
         setDivisions(competition.division)
+        setIsPartnership(competition.isPartnership.toString())
+        setNonPartnershipPageLink(competition.nonPartnershipPageLink)
     }
 
     // async/await 를 활용하는 수정된 방식
@@ -343,6 +351,10 @@ function Competition_form() {
         }
     },[competition])
 
+    useEffect(() => {
+        console.log(isPartnership)
+    }, [isPartnership])
+
 
 
 
@@ -393,6 +405,21 @@ function Competition_form() {
                 <div className='competition_register_top_each'>
                     <h1>대진표오픈날짜:</h1>
                     <input type='text' className='competition_register_top_tournamentTableLink' placeholder='대진표오픈 ex)2022-08-27 00:00:00' value={tournamentTableOpenDate} onChange={(e) => {setTournamentTableOpenDate(e.target.value)}}></input>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>파트너쉽 유무</h1>
+                    <h4 id='competition_register_top_isPartnership-true'>true</h4>
+                            <input id='competition_register_top_isPartnership' type='radio' value={'true'} checked={isPartnership === 'true'} onChange={(e) =>{
+                                // console.log(e.target.value)
+                                setIsPartnership(e.target.value)}}/>
+                            <input id='competition_register_top_isPartnership' type='radio' value={'false'} checked={isPartnership === 'false'} onChange={(e) =>{
+                                // console.log(e.target.value)
+                                setIsPartnership(e.target.value)}}/>
+                    <h4 id='competition_register_top_isPartnership-false'>false</h4>
+                </div>
+                <div className='competition_register_top_each'>
+                    <h1>대회사링크(파트너X)</h1>
+                    <input type='text' className='competition_register_top_nonPartnershipPageLink' placeholder='대회사 홈페이지 링크 ex)https://www.najuha.com' value={nonPartnershipPageLink} onChange={(e) => {setNonPartnershipPageLink(e.target.value)}}></input>
                 </div>
             </div>
         </div>

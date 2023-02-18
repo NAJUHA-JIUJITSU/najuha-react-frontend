@@ -194,6 +194,30 @@ function AdminCompetitionlist() {
             )
     }
 
+        //신청마감 & 신청오픈 전 카드 색 변경
+    function competitionCardGray(registrationDate, registrationDeadline){
+        let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
+        let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
+
+        let deadlineDiff = todaytime.diff(finishdate, 'd')
+        let openDiff = todaytime.diff(opendate, 'd')
+
+        if(deadlineDiff > 0){ // 마감날짜(데드라인)이 지났을경우 (전체 그레이)
+            return (
+                "competitionCardGray-all"
+            )
+        }
+        
+        if(openDiff < 0){ // 현재날짜가 오픈 전일 경우 (버튼만 비활성화)
+            return(
+                "competitionCardGray-button"
+            )
+        }
+
+        return ""
+        
+    }
+
     function competitionParsing(competition){
         let doreOpenDay = week[new Date(competition.doreOpen).getDay()]
         let registrationDateDay = week[new Date(competition.registrationDate).getDay()]
@@ -227,6 +251,7 @@ function AdminCompetitionlist() {
     function renderCompetitionList () {
         return competitions.map((competition, i) => {
             let curcompetition = competitionParsing(competition)
+            let cardGray = competitionCardGray(competition.registrationDate, competition.registrationDeadline)
             return(
                 <li className='competition-col'>
                     <div className='each-competition-tag'>
@@ -247,7 +272,10 @@ function AdminCompetitionlist() {
                                 <p>{curcompetition.location}</p>
                             </div>
                             <div className='each-competition-body-desc-bottom'>
-                                <button onClick={()=>{navigate(`/competition/applymethod/${curcompetition.id}`)}}>바로 신청</button>
+                                {competition.isPartnership === true ? 
+                                <button style={ (cardGray==='') ? {} : {display:'none'} } onClick={ () => {navigate(`/competition/applymethod/${curcompetition.id}`)} }>신청</button>
+                                :
+                                <button style={ (cardGray==='') ? {} : {display:'none'} } onClick={ () => {window.location.href = competition.nonPartnershipPageLink} }>신청</button>}
                             </div>
                         </div>                        
                     </div>
