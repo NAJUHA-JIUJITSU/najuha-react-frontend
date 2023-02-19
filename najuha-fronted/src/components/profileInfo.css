@@ -10,7 +10,7 @@
 .ProfileInfo_competition_Left h2{
     letter-spacing: -0.12em;
     color: #8C8C8C;
-    font-size: 14px;
+    font-size: 1.4rem;
     text-align: right;
     cursor: pointer;
 }
@@ -183,5 +183,9 @@
     .ProfileInfo_competition_Left {
         min-width: 11rem;
         height: 138px;
+    }
+
+    .ProfileInfo_competition_Left h2{
+        font-size: 1.2rem;
     }
 }
