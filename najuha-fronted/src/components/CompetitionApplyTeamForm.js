@@ -31,15 +31,15 @@ function CompetitionApplyTeamForm() {
 
     const [viewCompetitionApplicationList, setViewCompetitionApplicationList] = useState([]);
     const [competitionApplication, setCompetitionApplication] = useState({
+      team: '',
+      phoneNumber: '',
       playerName: '',
       playerBirth: '',
-      phoneNumber: '',
+      gender: '',
       uniform: '',
       divisionName: '',
-      gender: '',
       belt: '',
       weight: '',
-      team: '',
       price: '',
       competitionId: id,
     })
@@ -345,14 +345,45 @@ function CompetitionApplyTeamForm() {
     function validationcheck(application){
       let tmp = Object.values(application)
       let ret = true
-      tmp.forEach(x => {
-        if(x == '') ret = false;
-      })
-      return ret;
+      for(let i =0; tmp.length; i++){
+        if(tmp[i] === ''){
+          let keyName = Object.keys(application)[i]
+          if(keyName === 'team'){
+            alert('팀이름을 입력해주세요')
+          }else if(keyName === 'phoneNumber'){
+            alert('대표자번호를 입력해주세요')
+          }
+          else if(keyName === 'playerName'){
+            alert('선수이름을 입력해주세요')
+          }
+          else if(keyName === 'playerBirth'){
+            alert('생년월일을 입력해주세요')
+          }
+          else if(keyName === 'gender'){
+            alert('성별을 선택해주세요')
+          }
+          else if(keyName === 'uniform'){
+            alert('기/노기를 선택해주세요')
+          }
+          else if(keyName === 'divisionName'){
+            alert('부문을 선택해주세요')
+          }
+          else if(keyName === 'belt'){
+            alert('벨트를 선택해주세요')
+          }
+          else if(keyName === 'weight'){
+            alert('체급을 선택해주세요')
+          }
+          ret = false
+          break;
+        }
+      }
+      return ret
     }
 
     function addCompetitionApplication(){
       let check = validationcheck(competitionApplication)
+      console.log(check)
       if(check){
         let newCompetitionApplicationList = [...viewCompetitionApplicationList]
         if(newCompetitionApplicationList.length > 0){ // 팀이름과 핸드폰 번호를 마지막 신청자에 것으로 통일해주는 역할 
@@ -363,10 +394,7 @@ function CompetitionApplyTeamForm() {
         }
         newCompetitionApplicationList.push(competitionApplication);
         setViewCompetitionApplicationList(newCompetitionApplicationList);
-      } else{
-        alert('신청서를 빈 항목 없이 끝까지 작성해주세요');
       }
-      
     }
 
     function deleteCompetitionApplication(i){
