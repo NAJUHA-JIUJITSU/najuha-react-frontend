@@ -541,7 +541,7 @@ function CompetitionApplyForm() {
             <button className='CompetitionApplyForm-bottom-payment' onClick={() => {
                 if(checkInvaildApply())
                     setapplymodal(!applymodal);
-            }}>결제하기</button>
+            }}>신청하기</button>
             {
                 applymodal && (
                     <ApplyModal closeModal={() => setapplymodal(pre => !pre)} changePlayerName={changePlayerName} changePlayerBirth={changePlayerBirth} changephoneNumber={changephoneNumber} changeTeam={changeTeam} postCompetition={postCompetition}/>

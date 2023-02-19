@@ -246,7 +246,7 @@ function Competition_form() {
         
     const getCompetition = async (id) => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions/${id}`, {
+            const response = await axios.get(`${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}`, {
                 headers: {
                     "x-access-token":  cookies.get("x-access-token")
                 }
