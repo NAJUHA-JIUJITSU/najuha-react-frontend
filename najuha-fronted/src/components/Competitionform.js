@@ -43,6 +43,7 @@ function Competition_form() {
                 earlyBird: "",
                 normal: "",
                 withGi: "",
+                withOther: "",
             }
         }
     ])
@@ -132,23 +133,30 @@ function Competition_form() {
 
     function changeEarlybirdPrice(text, i){
         let newDiv = [...divisions]
-        newDiv[i].pricingPolicy.earlyBird = text;
+        newDiv[i].pricingPolicy.earlyBird = Number(text);
         setDivisions(newDiv);
         console.log(newDiv[i].pricingPolicy.earlyBird)
     }
 
     function changeNormalPrice(text, i){
         let newDiv = [...divisions]
-        newDiv[i].pricingPolicy.normal = text;
+        newDiv[i].pricingPolicy.normal = Number(text);
+        console.log(newDiv[i].pricingPolicy.normal)
         setDivisions(newDiv);
-        console.log(newDiv[i].pricingPolicy.normal = text)
     }
 
     function changewithGiPrice(text, i){
         let newDiv = [...divisions]
-        newDiv[i].pricingPolicy.withGi = text;
+        newDiv[i].pricingPolicy.withGi = Number(text);
         setDivisions(newDiv);
         console.log(newDiv[i].pricingPolicy.withGi)
+    }
+
+    function changewithOtherPrice(text, i){
+        let newDiv = [...divisions]
+        newDiv[i].pricingPolicy.withOther = Number(text);
+        setDivisions(newDiv);
+        console.log(newDiv[i].pricingPolicy.withOther)
     }
 
 
@@ -325,6 +333,11 @@ function Competition_form() {
                     <div className='pricingPolicy'>
                         <h3>withGiPrice</h3>
                         <input className='withGi_price' type='number' placeholder='withGi ex)-10000' value={divs.pricingPolicy.withGi} onChange={(e) => {changewithGiPrice(e.target.value, i)}}></input>
+                    </div>
+
+                    <div className='pricingPolicy'>
+                        <h3>withOther</h3>
+                        <input className='withOther_price' type='number' placeholder='withOther ex)-10000' value={divs.pricingPolicy.withOther} onChange={(e) => {changewithOtherPrice(e.target.value, i)}}></input>
                     </div>
 
                     <button onClick={addMoreDivision}>디비전추가하기</button>
