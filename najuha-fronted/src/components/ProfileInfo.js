@@ -90,7 +90,7 @@ function ProfileInfo() {
         }
     }
     
-    //서버에서 대회상세정보 가져오기
+    //서버에서 신청상세정보 가져오기
     async function getCompetitionApplicationInfo() {
         axios.get(`${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${competitionApplicationId}`,
         {
@@ -363,6 +363,7 @@ function ProfileInfo() {
             <div className='ProfileInfo_competition'>
                 <div className='ProfileInfo_competition_Left'>
                     <img src={competitionApplicationInfo.postUrl} alt='대회포스터'></img>
+                    <h2 onClick={ () => {navigate(`/competition/${competitionApplicationInfo.competitionId}`)}}>대회상세보기 ></h2>
                 </div>
                 <div className='ProfileInfo_competition_Right'>
                     <div className='ProfileInfo_competition_date'>

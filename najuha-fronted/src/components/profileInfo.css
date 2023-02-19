@@ -7,6 +7,14 @@
     font-size: 62.5%; /* 10px */
   }
 
+.ProfileInfo_competition_Left h2{
+    letter-spacing: -0.12em;
+    color: #8C8C8C;
+    font-size: 14px;
+    text-align: right;
+    cursor: pointer;
+}
+
 /* Layout */
 
 .ProfileInfo_wrapper {
