@@ -5,9 +5,9 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { Cookies } from 'react-cookie'
 
-function ProfileTap() {
-  const [username, setUsername] = useState('나주하')
-  const [competitionApplications, setCompetitionApplications] = useState([])
+function ProfileTap(props) {
+  const [username, setUsername] = useState('')
+  let competitionApplications = props.competitionApplications
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
 
@@ -52,32 +52,8 @@ function ProfileTap() {
     return <p className="ProfileTap_competitionCount-box-num">{totalCnt}</p>
   }
 
-  //User 대회 정보 가져오기
-  async function getCompetitionApplication() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        setCompetitionApplications(res.data.result)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
-      })
-    return
-  }
-
   useEffect(() => {
     getUsers()
-    getCompetitionApplication()
   }, [])
 
   return (
@@ -116,14 +92,16 @@ function ProfileTap() {
             className="ProfileTap_information-btn"
             onClick={() => {
               navigate('/Profilepage')
-            }}>
+            }}
+          >
             신청대회 목록
           </div>
           <div
             className="ProfileTap_information-btn"
             onClick={() => {
               navigate('/UserInfopage')
-            }}>
+            }}
+          >
             내 프로필
           </div>
           <div className="ProfileTap_information-btn">개인정보처리방침</div>
