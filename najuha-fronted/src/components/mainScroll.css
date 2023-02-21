@@ -37,12 +37,14 @@
     line-height: 72px;
     z-index: 999;
     color: var(--white-color);
-    max-width: 821px; 
+    /* max-width: 821px;  */
+    padding: 0 30rem;
     box-sizing: border-box;
     position: fixed;
     margin: 0 auto;
     left: 0;
     right: 0;
+    /* border-bottom: 1px solid #EDEDED; */
 }
 
 .MainScroll_section1, .MainScroll_section1-1 {
@@ -181,4 +183,88 @@
     background-color:white;
     z-index: 100;
     position: relative;
+}
+
+/* section 2 */
+.MainScroll_section2 {
+    align-items: center;
+    text-align: center;
+    height: 150vh;
+}
+
+.MainScroll_title1 {
+    margin-top: 30px;
+}
+
+.MainScroll_section2 h1 {
+    position: relative;
+    font-size: var( --font-size-title1);
+    line-height: 70px;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.MainScroll_section2 h2 {
+    font-size: var(--font-size-subtitle1);
+    color: var(--gray-subtitle-color);
+    line-height: 36px;
+    font-weight: 400;
+    margin-top: 82px;
+    margin-bottom: 40px;
+}
+
+
+.MainScroll_blueLine {
+    background: #90CCF8;
+    width: 200px;
+    height: 20px;
+    border-radius: 25px;
+    position: absolute;
+    top: 198px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.MainScroll_linear1 {
+    position: relative;
+    z-index: 888;
+    height: 184px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F2F7FF 100%);
+}
+
+/* section 3 */
+
+.MainScroll_section3 {
+    position: relative;
+    z-index: 888;
+    background-color: var( --blue-background-color);
+    height: 150vh;
+}
+
+.MainScroll_section3 h1 {
+    position: relative;
+    font-size: var( --font-size-title1);
+    line-height: 70px;
+    font-weight: 700;
+    z-index: 2;
+    /* max-width: 821px; */
+}
+
+.MainScroll_title2 {
+    max-width: 821px;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+
+.MainScroll_blueLine2 {
+    background: #90CCF8;
+    width: 200px;
+    height: 20px;
+    border-radius: 25px;
+    position: absolute;
+    top: 258px;
+    left: 80px;
+    transform: translate(-50%, -50%);
+    z-index: 1;
 }

@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import './mainScroll.css'
+import AOS from "aos";
+import "aos/dist/aos.css";
 import gymFront from '../src_assets/체육관_앞.png'
 import gymBackground from '../src_assets/체육관_뒤.png'
 import players from '../src_assets/선수들.png'
@@ -7,7 +9,10 @@ import competitionBackgruond from '../src_assets/대회장.png'
 import competitionFull from '../src_assets/대회장전체.png'
 import phone from '../src_assets/폰목업.png'
 import whiteBelt from '../src_assets/whiteBelt.svg';
+import grayBelt from '../src_assets/grayBelt.svg';
 import backgroundImg from '../src_assets/jiujitsuGuys.jpg'
+import monitor from '../src_assets/모니터.png'
+import phone1 from '../src_assets/폰1.png'
 
 function  MainScroll() {
     const [ScrollActive, setScrollActive] = useState(false);
@@ -55,20 +60,25 @@ function  MainScroll() {
         return () => { window.removeEventListener("scroll", handleScroll); }; //  window 에서 스크롤을 감시를 종료
     });
 
+    useEffect(() => {
+        AOS.init();
+      })
    
     return (
         
         <div className='MainScroll_wrapper'>
-          <div className='MainScroll_nav'>
-                <h1 className='MainScroll_logo'>NAJUHA</h1>
+
+            <div className='MainScroll_nav' style={ (ScrollY > 3600) ? {backgroundColor:'white'} : {} }>
+                <h1 className='MainScroll_logo' style={ (ScrollY > 3600) ? {color:'black'} : {} }>NAJUHA</h1>
                 <div className='MainScroll_list'>
-                    <ul className='MainScroll_menu'>
+                    <ul className='MainScroll_menu' style={ (ScrollY > 3600) ? {color:'#888888'} : {} }>
                         <li>대회일정</li>
                         <li>세미나</li>
                     </ul>
-                    <img class='MainScroll_belt' alt="벨트모양 로그인 아이콘" src={whiteBelt} />
+                    <img class='MainScroll_belt' alt="벨트모양 로그인 아이콘" src={ (ScrollY > 3600) ? grayBelt : whiteBelt } style={ (ScrollY > 3600) ? {backgroundColor:'rgba(238, 238, 238, 0.48)'} : {backgroundColor:'rgba(238, 238, 238, 0.01)'} }/>
                 </div>
             </div>
+
             <div className='MainScroll_section1'>
                 <img style={ {transform: `scale(${zoom})`} } className='MainScroll_bgImg' src={backgroundImg} alt="배경 이미지"></img>
                 <div className='MainScroll_black'></div>
@@ -86,9 +96,34 @@ function  MainScroll() {
                 <div className='MainScroll_black2' style={{ backgroundColor: bgColorW }} ></div>
             </div>
             <div className='MainScroll_section1-1'></div>
+
             <div className='MainScroll_section2'>
-                <h1>여기</h1>
+                <div data-aos="fade-up" className='MainScroll_title1'>
+                    <h1>전국에 있는</h1>
+                    <h1>주짓수 대회를</h1>
+                    <h1>한 눈에.</h1>
+                    <div className='MainScroll_blueLine'></div>
+                </div>
+                <div data-aos="fade-up">
+                    <h2> 대회조회부터 상세정보까지 간편하게 확인해보세요.</h2>
+                </div>
+                <div>
+                    <img data-aos="fade-up" src={monitor} alt='모니터'></img>
+                </div>
             </div>
+
+            <div className='MainScroll_linear1'></div>
+
+            <div className='MainScroll_section3'>
+                <div data-aos="fade-up" className='MainScroll_title2'>
+                    <h1>대회신청부터</h1>
+                    <h1>대회결제까지</h1>
+                    <h1>한 번에.</h1>
+                    <div className='MainScroll_blueLine2'></div>
+                </div>
+                <img data-aos="fade-up" src={phone1} alt='핸드폰사진'></img>
+            </div>
+
         </div>
     )
 }
