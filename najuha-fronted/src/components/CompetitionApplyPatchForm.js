@@ -307,6 +307,14 @@ function CompetitionApplyPatchForm() {
         setFillteredCompetition(competition.division);
     }
 
+    const checkGender = (cal) => {
+        for(let i =0; i < cal.length; i++){
+            if(cal[0].gender != cal[i].gender)
+                return false
+        }
+        return true
+    }
+
     const checkInvaildApply = () => {
         let cal = [...viewcompetitionApplicationList];
         cal.forEach((x, i) => {
@@ -315,13 +323,15 @@ function CompetitionApplyPatchForm() {
             }
         })
         if(cal.length >= 1){
-            setviewCompetitionApplicationList(cal);
-            return true; 
-        } else {
-            alert('신청을 끝까지 완료해주셔야 합니다.')
-            return false; 
-        }
-        
+            if(checkGender(cal)){
+                setviewCompetitionApplicationList(cal);
+                return true; 
+            } 
+            alert('신청하는 디비전의 성별이 동일해야 합니다.')
+            return false;
+        } 
+        alert('신청을 끝까지 완료해주셔야 합니다.')
+        return false; 
     }
 
     function priceRefresh() {
