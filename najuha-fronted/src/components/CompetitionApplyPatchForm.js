@@ -248,8 +248,11 @@ function CompetitionApplyPatchForm() {
     }, [fillteredcompetition])
 
     useEffect(() => {
-        if(viewcompetitionApplicationList[0].price != null)
+        if(viewcompetitionApplicationList[0].price != null){
             getTotalPrice(id);
+        }  else {
+            priceRefresh()
+        }
     }, [viewcompetitionApplicationList.length, viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price])
 
     useEffect(() => {
@@ -321,8 +324,31 @@ function CompetitionApplyPatchForm() {
         
     }
 
+    function priceRefresh() {
+        setNormalprice(0)
+        setDiscountedprice(0)
+    }
+
     function deleteCompetitionApplication(i){
         let copy = [...viewcompetitionApplicationList]
+        if(viewcompetitionApplicationList.length === 1){
+            copy[0] = {
+                playerName: "",
+                playerBirth: "",
+                phoneNumber: "",
+                uniform: null,
+                divisionName: null,
+                gender: null,
+                belt: null,
+                weight: null,
+                team: null,
+                competitionId: id,
+                price: null,
+                check: 0, 
+            }
+            setviewCompetitionApplicationList(copy);
+            return ;
+        }
         copy.splice(i, 1);
         setviewCompetitionApplicationList(copy);
       }
@@ -338,7 +364,7 @@ function CompetitionApplyPatchForm() {
                     <li>{application.belt}</li>
                     <li>{application.weight}</li>
                     <li>{application.price}</li>
-                    {viewcompetitionApplicationList.length > 1 ? (application.price != null ? <img style={{cursor:'pointer'}} src={deleteicon} onClick={() => deleteCompetitionApplication(i)}></img> : '') : ''}
+                    {application.price != null ? <img style={{cursor:'pointer'}} src={deleteicon} onClick={() => deleteCompetitionApplication(i)}></img> : ''}
                 </ul>
                 </>
             )
