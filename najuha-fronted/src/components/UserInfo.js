@@ -192,12 +192,12 @@ function  UserInfo() {
                 <div className='UserInfo_infoBox'>
                     <span>벨트</span>
                     <div className='UserInfo_beltSeclet'>
-                        <select name='belt' onChange={(e)=>handleChange(e, 'belt')}>
-                            <option value="white">화이트</option>
-                            <option value="blue">블루</option>
-                            <option value="purple">퍼플</option>
-                            <option value="brown">브라운</option>
-                            <option value="black">블랙</option>
+                        <select value={userInfos.belt} name='belt' onChange={(e)=>handleChange(e, 'belt')}>
+                            <option value="화이트">화이트</option>
+                            <option value="블루">블루</option>
+                            <option value="퍼플">퍼플</option>
+                            <option value="브라운">브라운</option>
+                            <option value="블랙">블랙</option>
                         </select>
                     </div>
                 </div>

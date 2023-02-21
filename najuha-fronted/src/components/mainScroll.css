@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+KR&display=swap');
+
+/* Typography */
+:root {
+    --gray-nav-color: #888888;
+
+    --black-title-color: #000000;
+    --gray-subtitle-color: #3D3D3D;
+    --gray-info-color: #A0A0A0;
+    --blue-background-color: #F2F7FF;
+    --blue-impact-color: #90CCF8;
+    --white-color: white;
+    --gray-buttonStroke-color: #ACACAC;
+    --gray-belt-color: #D7D7D7;
+
+    font-size: 62.5%; /* 10px */
+
+
+    --font-size-navlogo: 4rem;
+    --font-size-navlist: 2rem;
+    --font-size-title1: 5rem;
+    --font-size-subtitle1: 2.4rem;
+    --font-size-subinfo: 1.6rem;
+    --font-size-title2: 3.6rem;
+    --font-size-subtitle2: 1.8rem;
+}
+
+/* Layout */
+.MainScroll_wrapper {
+    justify-content: center;
+    scroll-behavior: smooth;
+}
+
+.MainScroll_nav {
+    display: flex;
+    height: 72px;
+    line-height: 72px;
+    z-index: 999;
+    color: var(--white-color);
+    /* max-width: 821px;  */
+    padding: 0 30rem;
+    box-sizing: border-box;
+    position: fixed;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    /* border-bottom: 1px solid #EDEDED; */
+}
+
+.MainScroll_section1, .MainScroll_section1-1 {
+    position: fixed;
+}
+
+
+
+/* Components */
+
+/* nav 바 */
+.MainScroll_logo {
+    font-family: 'Anton', sans-serif;
+    font-size: var( --font-size-navlogo);
+    margin-right: auto
+}
+
+.MainScroll_list {
+    display: flex;
+    letter-spacing: -0.12rem;
+    font-weight: 400;
+}
+
+.MainScroll_list li{
+    margin-right: 5rem;
+}
+
+.MainScroll_menu {
+    display: flex;
+    font-size: var(--font-size-navlist);
+}
+
+.MainScroll_belt {
+    background-color: var( --gray-belt-colo);
+    border-radius: 50px;
+    width: 48px;
+    height: 46px;
+    margin: auto 0;
+    box-sizing: border-box;
+}
+
+/* section 1 */
+
+.MainScroll_section1 {
+    /* background-image: url(../src_assets/jiujitsuGuys.jpg); */
+    /* background-size: cover;
+    background-position: 50% 90%; */
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.MainScroll_bgImg {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: fixed;
+    z-index: 10;
+}
+
+.MainScroll_black {
+    position: absolute;
+    height: 100vh;
+    z-index: 20;
+    left: 20vw;
+    width: 80vw;
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0.6) 0%, rgba(6, 0, 0, 0) 100%);
+}
+.MainScroll_black2 {
+    position: absolute;
+    height: 100vh;
+    z-index: 20;
+    width: 100vw;
+}
+
+/* 나는 주짓수가 하고싶다 */
+.MainScroll_message {
+    position: absolute;
+    top: 20%;
+    left: 58%;
+    z-index: 30;
+}
+
+.MainScroll_message h1{
+    color: var(--white-color);
+    font-weight: 700;
+    font-size: 6.4rem;
+    line-height: 11rem;
+}
+
+.MainScroll_message2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 30;
+    text-align: center;
+}
+
+.MainScroll_message2 h2{
+    color: var(--white-color);
+    font-weight: 500;
+    font-size: 4rem;
+    line-height: 8rem;
+}
+
+.MainScroll_none {
+    opacity: 0;
+}
+
+.MainScroll_fadein {
+    opacity: 1;
+    transition: 0.5s;
+}
+
+.MainScroll_fadeout {
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.MainScroll_message span{
+    font-weight: 900;
+    font-size: 10rem;
+    line-height: 11rem;
+}
+
+.MainScroll_section1-1 {
+    height: 580vh;
+    position: relative;
+    background-color: #000000;
+}
+
+.MainScroll_section2 {
+    height: 100vh;
+    background-color:white;
+    z-index: 100;
+    position: relative;
+}
+
+/* section 2 */
+.MainScroll_section2 {
+    align-items: center;
+    text-align: center;
+    height: 150vh;
+}
+
+.MainScroll_title1 {
+    margin-top: 30px;
+}
+
+.MainScroll_section2 h1 {
+    position: relative;
+    font-size: var( --font-size-title1);
+    line-height: 70px;
+    font-weight: 700;
+    z-index: 2;
+}
+
+.MainScroll_section2 h2 {
+    font-size: var(--font-size-subtitle1);
+    color: var(--gray-subtitle-color);
+    line-height: 36px;
+    font-weight: 400;
+    margin-top: 82px;
+    margin-bottom: 40px;
+}
+
+
+.MainScroll_blueLine {
+    background: #90CCF8;
+    width: 200px;
+    height: 20px;
+    border-radius: 25px;
+    position: absolute;
+    top: 198px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.MainScroll_linear1 {
+    position: relative;
+    z-index: 888;
+    height: 184px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F2F7FF 100%);
+}
+
+/* section 3 */
+
+.MainScroll_section3 {
+    position: relative;
+    z-index: 888;
+    background-color: var( --blue-background-color);
+    height: 150vh;
+}
+
+.MainScroll_section3 h1 {
+    position: relative;
+    font-size: var( --font-size-title1);
+    line-height: 70px;
+    font-weight: 700;
+    z-index: 2;
+    /* max-width: 821px; */
+}
+
+.MainScroll_title2 {
+    max-width: 821px;
+    margin: 0 auto;
+    padding-top: 60px;
+}
+
+.MainScroll_blueLine2 {
+    background: #90CCF8;
+    width: 200px;
+    height: 20px;
+    border-radius: 25px;
+    position: absolute;
+    top: 258px;
+    left: 80px;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}

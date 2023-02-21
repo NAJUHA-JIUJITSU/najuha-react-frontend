@@ -48,12 +48,12 @@
     padding-top: 4rem;
     padding-bottom: 4rem;
     box-sizing: border-box;
-    font-weight: 500;
+    font-weight: 400;
 }
 .Profilesection_competitonNavbar {
     position: sticky;
     top: 0px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 1);
     z-index: 99;
     padding-top: 4rem;
     border-bottom: solid 1px #F0F0F0;
@@ -79,7 +79,7 @@
 
 .Profilesection_active {
     color: #000000;
-    font-weight: 600;
+    font-weight: 500;
 }
 .Profilesection_competitonNav .Profilesection_active:after {
     border-bottom: 4px solid black;
@@ -286,6 +286,12 @@
 }
 .Profilesection_payCss .Profilesection_costBtn{
     color: #4E82E5;
+}
+.Profilesection_payCss .Profilesection_costBtn:hover
+{
+    background-color: #4E82E5;
+    border: 1px solid #4E82E5;
+    color: white;
 }
 
 @media(max-width:1049px){
