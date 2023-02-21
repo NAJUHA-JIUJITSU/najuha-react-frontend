@@ -6,9 +6,9 @@ import Footer from '../components/Footer'
 function PaymentSuccessPage() {
   return (
     <>
-        <Navbar/>
-        <PaymentSuccess/>
-        <Footer/>
+      <Navbar />
+      <PaymentSuccess />
+      <Footer />
     </>
   )
 }

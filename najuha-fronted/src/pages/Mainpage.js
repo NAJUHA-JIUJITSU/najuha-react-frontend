@@ -5,9 +5,9 @@ import Footer from '../components/Footer'
 function Mainpage() {
   return (
     <>
-        <Navbar/>
-        <Mainsection />
-        <Footer />
+      <Navbar />
+      <Mainsection />
+      <Footer />
     </>
   )
 }

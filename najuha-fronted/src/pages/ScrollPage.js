@@ -4,7 +4,7 @@ import ScrollPageOne from '../components/ScrollPageOne'
 function ScrollPage() {
   return (
     <>
-        <ScrollPageOne/>
+      <ScrollPageOne />
     </>
   )
 }

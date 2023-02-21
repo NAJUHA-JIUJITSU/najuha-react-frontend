@@ -6,9 +6,9 @@ import Footer from '../components/Footer'
 function CompetitionPage() {
   return (
     <>
-        <Navbar/>
-        <Competition/>
-        <Footer/>
+      <Navbar />
+      <Competition />
+      <Footer />
     </>
   )
 }

@@ -6,9 +6,9 @@ import Footer from '../components/Footer'
 function AdminCompetitionInfoPage() {
   return (
     <>
-        <Navbar/>
-        <AdminCompetition/>
-        <Footer/>
+      <Navbar />
+      <AdminCompetition />
+      <Footer />
     </>
   )
 }

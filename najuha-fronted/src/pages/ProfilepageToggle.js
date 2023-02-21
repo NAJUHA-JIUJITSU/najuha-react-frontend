@@ -6,9 +6,9 @@ import Footer from '../components/Footer'
 function ProfilepageToggle() {
   return (
     <>
-        <Navbar/>
-        <ProfilesectionToggle/>
-        <Footer />
+      <Navbar />
+      <ProfilesectionToggle />
+      <Footer />
     </>
   )
 }

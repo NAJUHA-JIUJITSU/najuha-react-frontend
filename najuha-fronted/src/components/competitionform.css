@@ -1,100 +1,101 @@
 /*typography*/
 
 .division h1 {
-    font-size: 3rem;
+  font-size: 3rem;
 }
 
 .division h3 {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .uniform h4,
 .gender h4 {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
-.competition_register_top_each h1{
-    font-size: 2.5rem;
+.competition_register_top_each h1 {
+  font-size: 2.5rem;
 }
 
-#competition_register_top_isPartnership-true{
-    margin-left: 2rem;
-    font-size: 2rem;
-    color: green;
+#competition_register_top_isPartnership-true {
+  margin-left: 2rem;
+  font-size: 2rem;
+  color: green;
 }
 
-#competition_register_top_isPartnership-false{
-    font-size: 2rem;
-    color: red;
+#competition_register_top_isPartnership-false {
+  font-size: 2rem;
+  color: red;
 }
 
-.competition_register_top_each input{
-    font-size: 2rem;
+.competition_register_top_each input {
+  font-size: 2rem;
 }
 
-.competition_register_top_each textarea{
-    font-size: 2rem;
+.competition_register_top_each textarea {
+  font-size: 2rem;
 }
-
 
 /*Layout*/
 
-.competition_register_top_each{
-    display: flex;   
-    align-items: center;
-    margin-bottom: 1rem;
+.competition_register_top_each {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .competition_register_top {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-.division input{
-    width: 600px;
+.division input {
+  width: 600px;
 }
 
 .competition_register_top input {
-    width: 600px;
+  width: 600px;
 }
 
-#competition_register_top_isPartnership{
-    width: 60px;
+#competition_register_top_isPartnership {
+  width: 60px;
 }
 
 .division {
-    border: 5px solid red;
-    text-align: center;
-    margin-top: 30px;
+  border: 5px solid red;
+  text-align: center;
+  margin-top: 30px;
 }
 
-.constantFactor, .variableFactor, .pricingPolicy, .normalPrice{
-    width: 800px;
-    margin: 0 auto;
-    margin-bottom: 20px;
+.constantFactor,
+.variableFactor,
+.pricingPolicy,
+.normalPrice {
+  width: 800px;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .uniform input,
-.gender input{
-    width: 100px;
+.gender input {
+  width: 100px;
 }
 
 .uniform h4,
-.gender h4{
-    display: inline;
+.gender h4 {
+  display: inline;
 }
 
-
-#save{
-    display: block;
-    font-size: 50px;
-    background-color: green;
-    margin: 20px auto;
+#save {
+  display: block;
+  font-size: 50px;
+  background-color: green;
+  margin: 20px auto;
 }
 
-#patch{
-    display: block;
-    font-size: 50px;
-    background-color: blue;
-    margin: 20px auto;
+#patch {
+  display: block;
+  font-size: 50px;
+  background-color: blue;
+  margin: 20px auto;
 }

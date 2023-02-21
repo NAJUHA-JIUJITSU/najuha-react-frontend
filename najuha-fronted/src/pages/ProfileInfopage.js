@@ -6,9 +6,9 @@ import Footer from '../components/Footer'
 function ProfileInfopage() {
   return (
     <>
-        <Navbar/>
-        <ProfileInfo/>
-        <Footer />
+      <Navbar />
+      <ProfileInfo />
+      <Footer />
     </>
   )
 }

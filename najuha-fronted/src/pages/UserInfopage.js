@@ -6,9 +6,9 @@ import UserInfo from '../components/UserInfo'
 function UserInfopage() {
   return (
     <>
-        <Navbar/>
-        <UserInfo/>
-        <Footer />
+      <Navbar />
+      <UserInfo />
+      <Footer />
     </>
   )
 }

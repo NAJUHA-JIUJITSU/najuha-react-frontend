@@ -1,156 +1,147 @@
 /* Typography */
 
 :root {
-    font-size: 62.5%; /* 10px */
+  font-size: 62.5%; /* 10px */
 }
 
 .company-wrapper h3 {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
-.footer-info{
-    color: #888888;
+.footer-info {
+  color: #888888;
 }
-
-.footer-wrapper{
-    color: #444444;
-}
-
-.company-menu-list{
-    font-size: 1.1rem;
-    cursor: pointer;   
-}
-
-
-/* Layout */
-
 
 .footer-wrapper {
-    width: auto;
-    max-width: 1200px; 
-    margin: 0 auto;
-    display: flex;
-    box-sizing: border-box;
-    padding: 0 5rem;
-    margin-top: 8vh;
-}
-
-.company-menu{
-    margin-left: auto;
+  color: #444444;
 }
 
 .company-menu-list {
-    display: flex;
-    margin-top: 6rem;
+  font-size: 1.1rem;
+  cursor: pointer;
 }
 
-.company-menu-list li{
-    padding: 0 2em;
-    position: relative;
+/* Layout */
+
+.footer-wrapper {
+  width: auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 5rem;
+  margin-top: 8vh;
 }
 
-
-.company-wrapper p,h3 {
-    padding: 0.3em 0;
+.company-menu {
+  margin-left: auto;
 }
 
-.footer-info{
+.company-menu-list {
+  display: flex;
+  margin-top: 6rem;
+}
+
+.company-menu-list li {
+  padding: 0 2em;
+  position: relative;
+}
+
+.company-wrapper p,
+h3 {
+  padding: 0.3em 0;
+}
+
+.footer-info {
+  text-align: center;
+  margin-top: 4vh;
+  margin-bottom: 2vh;
+}
+
+.footer-info p {
+  padding: 0.2em 0;
+}
+
+.company-menu-list li::after {
+  content: ' ';
+  display: inline-block;
+  width: 1.5px;
+  height: 100%;
+  background-color: #888888;
+  position: absolute;
+  right: 0;
+  bottom: 1px;
+}
+
+#company-menu-list-last::after {
+  display: none;
+}
+
+@media (max-width: 1049px) {
+  /* Typography */
+
+  /* Layout */
+
+  .company-menu {
+    width: 100%;
+    /* border: 2px solid green; */
+  }
+
+  .company-menu-list li {
+    width: 20%;
     text-align: center;
-    margin-top: 4vh;
-    margin-bottom: 2vh;
-}
+  }
 
-.footer-info p{
-    padding: 0.2em 0;
-}
+  .footer-wrapper {
+    max-width: 768px;
+    margin-top: 8vh;
+  }
 
-.company-menu-list li::after{
-    content: ' ';
-    display: inline-block;
-    width: 1.5px;
-    height: 100%;
-    background-color: #888888;
-    position: absolute;
-    right: 0;
-    bottom: 1px
-}
+  .company-menu {
+    margin: 0 auto;
+  }
 
-#company-menu-list-last::after{
+  .company-menu-list {
+    margin: auto 0;
+  }
+
+  .company-wrapper {
     display: none;
+  }
 }
 
+@media (max-width: 750px) {
+  /* Typography */
+  .company-menu-list {
+    font-size: 1rem;
+    color: #444444;
+    letter-spacing: -0.1em;
+  }
 
-@media(max-width:1049px){
-    /* Typography */
+  /* Layout */
 
+  .footer-wrapper {
+    max-width: none;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 8vh;
+    margin-bottom: 2vh;
+    padding: 0;
+  }
 
+  .company-menu {
+    width: auto;
+    /* border: 2px solid green; */
+    margin: 0 auto;
+  }
 
-    /* Layout */
+  .company-menu-list li {
+    width: auto;
+    text-align: center;
+    padding: 0 10px;
+  }
 
-    .company-menu{
-        width: 100%;
-        /* border: 2px solid green; */
-    }
-
-    .company-menu-list li{
-        width: 20%;
-        text-align: center;
-
-    }
-
-    .footer-wrapper {
-        max-width: 768px;
-        margin-top: 8vh;
-    }
-
-    .company-menu{
-        margin: 0 auto;
-    }
-
-    .company-menu-list {
-        margin: auto 0;
-    }
-
-
-    .company-wrapper{
-        display: none;
-    }
-}
-
-@media(max-width:750px){
-    /* Typography */
-    .company-menu-list{
-        font-size: 1rem;
-        color: #444444;
-        letter-spacing: -0.1em;
-    }
-
-
-    /* Layout */
-
-
-    .footer-wrapper {
-        max-width: none;
-        width: 100%;
-        margin: 0 auto;
-        margin-top: 8vh;
-        margin-bottom: 2vh;
-        padding: 0;
-    }
-
-    .company-menu{
-        width: auto;
-        /* border: 2px solid green; */
-        margin: 0 auto;
-    }
-
-    .company-menu-list li{
-        width: auto;
-        text-align: center;
-        padding: 0 10px;
-    }
-
-    .footer-info{
-        display: none;
-    }
+  .footer-info {
+    display: none;
+  }
 }

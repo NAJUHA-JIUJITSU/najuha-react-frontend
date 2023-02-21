@@ -6,9 +6,9 @@ import ChooseApplyMethod from '../components/ChooseApplyMethod'
 function CompetitionApplyMethodPage() {
   return (
     <>
-        <Navbar/>
-        <ChooseApplyMethod/>
-        <Footer/>
+      <Navbar />
+      <ChooseApplyMethod />
+      <Footer />
     </>
   )
 }
