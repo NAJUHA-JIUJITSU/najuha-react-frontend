@@ -2,25 +2,16 @@ import React, { useEffect, useState } from 'react'
 import './mainScroll.css'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import gymFront from '../src_assets/체육관_앞.png'
-import gymBackground from '../src_assets/체육관_뒤.png'
-import players from '../src_assets/선수들.png'
-import competitionBackgruond from '../src_assets/대회장.png'
-import competitionFull from '../src_assets/대회장전체.png'
-import phone from '../src_assets/폰목업.png'
-import whiteBelt from '../src_assets/whiteBelt.svg'
-import grayBelt from '../src_assets/grayBelt.svg'
 import backgroundImg from '../src_assets/jiujitsuGuys.jpg'
 import monitor from '../src_assets/모니터.png'
 import phone1 from '../src_assets/폰1.png'
+import phone2 from '../src_assets/폰2.png'
 
 function MainScroll() {
   const [ScrollActive, setScrollActive] = useState(false)
   const [ScrollY, setScrollY] = useState(0) // window 의 pageYOffset값을 저장
-  const [width, setWidth] = useState('100vw')
-  const [height, setHeight] = useState('100vh')
   const [zoom, setZoom] = useState(1)
-  const [bgColor, setBgColor] = useState('rgba(0, 0, 0, 0.5)')
+  const [bgColor, setBgColor] = useState('rgba(0, 0, 0, 0)')
   const [bgColorW, setBgColorW] = useState('rgba(255, 255, 255, 0)')
 
   function handleScroll() {
@@ -68,34 +59,6 @@ function MainScroll() {
 
   return (
     <div className="MainScroll_wrapper">
-      <div
-        className="MainScroll_nav"
-        style={ScrollY > 3600 ? { backgroundColor: 'white' } : {}}>
-        <h1
-          className="MainScroll_logo"
-          style={ScrollY > 3600 ? { color: 'black' } : {}}>
-          NAJUHA
-        </h1>
-        <div className="MainScroll_list">
-          <ul
-            className="MainScroll_menu"
-            style={ScrollY > 3600 ? { color: '#888888' } : {}}>
-            <li>대회일정</li>
-            <li>세미나</li>
-          </ul>
-          <img
-            class="MainScroll_belt"
-            alt="벨트모양 로그인 아이콘"
-            src={ScrollY > 3600 ? grayBelt : whiteBelt}
-            style={
-              ScrollY > 3600
-                ? { backgroundColor: 'rgba(238, 238, 238, 0.48)' }
-                : { backgroundColor: 'rgba(238, 238, 238, 0.01)' }
-            }
-          />
-        </div>
-      </div>
-
       <div className="MainScroll_section1">
         <img
           style={{ transform: `scale(${zoom})` }}
@@ -200,7 +163,20 @@ function MainScroll() {
           <h1>한 번에.</h1>
           <div className="MainScroll_blueLine2"></div>
         </div>
-        <img data-aos="fade-up" src={phone1} alt="핸드폰사진"></img>
+        <div className="MainScroll_phone" data-aos="fade-up">
+          <div className="MainScroll_phone1">
+            <img src={phone1} alt="핸드폰사진1"></img>
+            <p data-aos="fade-up">
+              *나주하와 협약된 대회만 간편결제를 이용하실 수 있습니다.
+            </p>
+          </div>
+          <div className="MainScroll_phone2">
+            <img src={phone2} alt="핸드폰사진2"></img>
+            <h2 data-aos="fade-up">
+              대회조회부터 상세정보까지<br></br>간편하게 확인하세요.
+            </h2>
+          </div>
+        </div>
       </div>
     </div>
   )

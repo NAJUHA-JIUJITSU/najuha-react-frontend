@@ -1,0 +1,51 @@
+.MainScroll_wrapper {
+  justify-content: center;
+  scroll-behavior: smooth;
+}
+
+.MainScroll_nav {
+  display: flex;
+  height: 72px;
+  line-height: 72px;
+  z-index: 999;
+  color: var(--white-color);
+  max-width: 821px;
+  /* padding: 0 30rem; */
+  box-sizing: border-box;
+  position: fixed;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  /* border-bottom: 1px solid #EDEDED; */
+}
+
+/* nav 바 */
+.MainScroll_logo {
+  font-family: 'Anton', sans-serif;
+  font-size: var(--font-size-navlogo);
+  margin-right: auto;
+}
+
+.MainScroll_list {
+  display: flex;
+  letter-spacing: -0.12rem;
+  font-weight: 400;
+}
+
+.MainScroll_list li {
+  margin-right: 5rem;
+}
+
+.MainScroll_menu {
+  display: flex;
+  font-size: var(--font-size-navlist);
+}
+
+.MainScroll_belt {
+  background-color: var(--gray-belt-colo);
+  border-radius: 50px;
+  width: 48px;
+  height: 46px;
+  margin: auto 0;
+  box-sizing: border-box;
+}
