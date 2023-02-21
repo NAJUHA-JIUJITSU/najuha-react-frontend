@@ -6,9 +6,9 @@ import CompetitionApplyPatchTeamForm from '../components/CompetitionApplyPatchTe
 function CompetitionApplyTeampage() {
   return (
     <>
-    <Navbar/>
-    <CompetitionApplyPatchTeamForm />
-    <Footer/>
+      <Navbar />
+      <CompetitionApplyPatchTeamForm />
+      <Footer />
     </>
   )
 }

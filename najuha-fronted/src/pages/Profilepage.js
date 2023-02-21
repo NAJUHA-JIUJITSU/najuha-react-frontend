@@ -6,9 +6,9 @@ import Footer from '../components/Footer'
 function Profilepage() {
   return (
     <>
-        <Navbar/>
-        <Profilesection/>
-        <Footer />
+      <Navbar />
+      <Profilesection />
+      <Footer />
     </>
   )
 }

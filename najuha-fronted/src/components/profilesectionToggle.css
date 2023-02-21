@@ -1,77 +1,75 @@
 /* UA reset */
 
-
 /* Typography */
 
 :root {
-    font-size: 62.5%; /* 10px */
-  }
+  font-size: 62.5%; /* 10px */
+}
 
 /* Layout */
 
 .ProfilesectionToggle_wrapper {
-    width: auto;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem 0 2rem;
-    box-sizing: border-box;
-    display: flex;
+  width: auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 0 2rem;
+  box-sizing: border-box;
+  display: flex;
 }
 
 #ProfilesectionTap_wrapper {
-    /* border: 2px solid yellow; */
-    width: 28%;
-    height: 84vh;
+  /* border: 2px solid yellow; */
+  width: 28%;
+  height: 84vh;
 }
 
 .ProfilesectionToggle_right {
-    width: 68%;
-    height: 84vh;
-    margin-left: 4%;
-    overflow-y: auto;
+  width: 68%;
+  height: 84vh;
+  margin-left: 4%;
+  overflow-y: auto;
 }
 .ProfilesectionToggle_right::-webkit-scrollbar {
-    width: 6px;
-    background-color: #f3f3f3;
-    border-radius: 10px;
+  width: 6px;
+  background-color: #f3f3f3;
+  border-radius: 10px;
 }
 .ProfilesectionToggle_right::-webkit-scrollbar-thumb {
-    background-color: #DEDEDE;
-    border-radius: 10px;
-    height: 3%;
+  background-color: #dedede;
+  border-radius: 10px;
+  height: 3%;
 }
 
- /* Component */
+/* Component */
 
 .ProfilesectionToggle_right h2 {
-    font-size: 3rem;
-    padding-top: 4rem;
-    padding-bottom: 4rem;
-    box-sizing: border-box;
-    font-weight: 500;
+  font-size: 3rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  box-sizing: border-box;
+  font-weight: 500;
 }
 
-@media(max-width:1049px){
-    /* Layout */
+@media (max-width: 1049px) {
+  /* Layout */
 
-    .ProfilesectionToggle_wrapper {
-        max-width : 768px;
-    }
-        
-    .ProfilesectionToggle_right {
-        display: none;
-    }
+  .ProfilesectionToggle_wrapper {
+    max-width: 768px;
+  }
 
-    #ProfilesectionTap_wrapper {
-        display: block;
-        height: 88vh;
-        width: 100%;
-    }
-   
+  .ProfilesectionToggle_right {
+    display: none;
+  }
+
+  #ProfilesectionTap_wrapper {
+    display: block;
+    height: 88vh;
+    width: 100%;
+  }
 }
 
-@media(max-width:750px) {
-    .ProfilesectionToggle_wrapper {
-        max-width : 650px;
-    }
+@media (max-width: 750px) {
+  .ProfilesectionToggle_wrapper {
+    max-width: 650px;
+  }
 }

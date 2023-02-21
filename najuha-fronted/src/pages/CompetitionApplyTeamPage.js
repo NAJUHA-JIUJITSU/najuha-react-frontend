@@ -6,9 +6,9 @@ import CompetitionApplyTeamForm from '../components/CompetitionApplyTeamForm'
 function CompetitionApplyTeampage() {
   return (
     <>
-    <Navbar/>
-    <CompetitionApplyTeamForm />
-    <Footer/>
+      <Navbar />
+      <CompetitionApplyTeamForm />
+      <Footer />
     </>
   )
 }

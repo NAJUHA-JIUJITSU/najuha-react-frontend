@@ -3,54 +3,53 @@
 /* UA Reset */
 
 a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
-
 
 /* Typography */
 
 :root {
-    font-size: 62.5%; /* 10px */
-  }
-
-.navbar .logo{
-    font-size: 5rem;
-    line-height: 1;
-    font-family: 'Anton', sans-serif;
+  font-size: 62.5%; /* 10px */
 }
 
-.logo{
-    font-family: 'Roboto', sans-serif;
-    cursor: pointer;
+.navbar .logo {
+  font-size: 5rem;
+  line-height: 1;
+  font-family: 'Anton', sans-serif;
+}
+
+.logo {
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
 }
 
 .category-competition,
 .category-seminar {
-    font-size: 2rem;
-    font-family: 'Noto Sans KR', sans-serif;
-    font-weight: 400;
-    line-height: 1;
-    cursor: pointer;
+  font-size: 2rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  line-height: 1;
+  cursor: pointer;
 }
 
 /* Layout */
 
-.navbar{
-    width: auto;
-    height: 16vh;
-    max-width: 1200px; 
-    display: flex;
-    margin: 0 auto;
-    padding: 8vh 2rem;
-    box-sizing: border-box;
-    z-index: 999;
-    /* border: 10px red solid; */
+.navbar {
+  width: auto;
+  height: 16vh;
+  max-width: 1200px;
+  display: flex;
+  margin: 0 auto;
+  padding: 8vh 2rem;
+  box-sizing: border-box;
+  z-index: 999;
+  /* border: 10px red solid; */
 }
-.category{
-    display: inline-flex;
-    width: 70%;
-    box-sizing: border-box;
+.category {
+  display: inline-flex;
+  width: 70%;
+  box-sizing: border-box;
 }
 
 /* .category::before{
@@ -60,175 +59,163 @@ a {
     background-color: #333;
 
 } */
-.logo{
-    width: 30%;
+.logo {
+  width: 30%;
 }
 
 .category-competition,
-.category-seminar{
-    padding: 0 1.5em;
-    margin-top: auto;
-    margin-bottom: auto;
+.category-seminar {
+  padding: 0 1.5em;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 /* Components */
 
-.navbar{
-    align-items: center;
-    position: relative;
+.navbar {
+  align-items: center;
+  position: relative;
 }
 
-.hamburger{
-    display: none;
-    cursor:pointer;
+.hamburger {
+  display: none;
+  cursor: pointer;
 }
-.bar{
-    display: block;
-    width: 35px;
-    height: 3px;
-    margin: 5px auto;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    background-color: black;
-}
-
-.login-icon{
-    position: absolute;
-    right: 2rem;
-    cursor: pointer;
+.bar {
+  display: block;
+  width: 35px;
+  height: 3px;
+  margin: 5px auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  background-color: black;
 }
 
-#navbar-dropdown{
-    background: #FFFFFF;
-    border: 1px solid #EEEEEE;
-    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
-    position: absolute;
-    right: 4rem;
-    top: 10vh;
+.login-icon {
+  position: absolute;
+  right: 2rem;
+  cursor: pointer;
 }
 
-#navbar-dropdown li{
-    width: 105px;
-    height: 40px;
-    font-size: 1.4rem;
-    text-align: left;
-    display: flex; /* 수직정렬을 위한 3종세트 display, align-items, justify-content */
-    align-items: center;
-    justify-content:left;
-    padding-left: 14px;
+#navbar-dropdown {
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  right: 4rem;
+  top: 10vh;
+}
+
+#navbar-dropdown li {
+  width: 105px;
+  height: 40px;
+  font-size: 1.4rem;
+  text-align: left;
+  display: flex; /* 수직정렬을 위한 3종세트 display, align-items, justify-content */
+  align-items: center;
+  justify-content: left;
+  padding-left: 14px;
 }
 
 #navbar-dropdown li:hover {
-    background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
-@media(max-width:1049px){
-    /* Layout */
-    .navbar {
-        max-width: 768px;
-    }
-    .navbar .logo{
-        width: auto;
-        margin: 0 auto;
-    }
+@media (max-width: 1049px) {
+  /* Layout */
+  .navbar {
+    max-width: 768px;
+  }
+  .navbar .logo {
+    width: auto;
+    margin: 0 auto;
+  }
 
+  /* navbar 가상요소 제거 */
+  .category::before {
+    content: ' ';
+    width: 0;
+    height: 0;
+    background-color: 333;
+  }
 
+  /* component */
 
+  .hamburger {
+    display: block;
+    position: absolute;
+  }
 
-    /* navbar 가상요소 제거 */
-    .category::before{
-        content: ' ';
-        width: 0;
-        height: 0;
-        background-color: 333;
-    }
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
 
-       /* component */
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
 
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
 
-    .hamburger{
-        display: block;
-        position: absolute;
-    }
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 16vh;
+    gap: 0;
+    flex-direction: column;
+    background-color: whitesmoke;
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+  }
 
-    .hamburger.active .bar:nth-child(2){
-        opacity: 0;
-    }
+  .nav-item {
+    margin: 16px 0;
+  }
 
-    .hamburger.active .bar:nth-child(1){
-        transform: translateY(8px) rotate(45deg);
-    }
-
-    .hamburger.active .bar:nth-child(3){
-        transform: translateY(-8px) rotate(-45deg);
-    }
-
-    .nav-menu{
-        position:fixed;
-        left: -100%;
-        top: 16vh;
-        gap: 0;
-        flex-direction: column;
-        background-color: whitesmoke;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-    }
-
-    .nav-item{
-        margin: 16px 0;
-    }
-
-    .nav-menu.active{
-        left: 0;
-    }
-
-
+  .nav-menu.active {
+    left: 0;
+  }
 }
 
+@media (max-width: 750px) {
+  /* layout */
+  .navbar {
+    max-width: 650px;
+    padding: 6vh 2rem;
+    height: 12vh;
+  }
 
+  .nav-menu {
+    top: 12vh;
+  }
 
+  #navbar-dropdown {
+    top: 7.5vh;
+  }
 
-@media(max-width:750px){
+  #navbar-dropdown li {
+    width: 80px;
+    height: 30px;
+    font-size: 1.2rem;
+    padding-left: 10px;
+  }
 
-    /* layout */
-    .navbar{
-        max-width: 650px;
-        padding: 6vh 2rem;
-        height: 12vh;
-    }
+  /* typography */
+  .bar {
+    display: block;
+    width: 30px;
+    height: 2.5px;
+    margin: 5.4px auto;
+  }
 
-    .nav-menu{
-        top: 12vh;
-    }
+  .login-icon {
+    width: 40px;
+    height: 39.5;
+  }
 
-    #navbar-dropdown{
-        top: 7.5vh;
-    }
-
-    #navbar-dropdown li{
-        width: 80px;
-        height: 30px;
-        font-size: 1.2rem;
-        padding-left: 10px;
-    }
-
-    /* typography */
-    .bar{
-        display: block;
-        width: 30px;
-        height: 2.5px;
-        margin: 5.4px auto;
-    }
-
-    .login-icon{
-        width: 40px;
-        height: 39.5;
-    }
-
-    .navbar .logo{
+  .navbar .logo {
     font-size: 3.5rem;
-    }
-
-
+  }
 }

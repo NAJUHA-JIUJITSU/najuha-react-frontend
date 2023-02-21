@@ -5,10 +5,10 @@ import Competitionlist from '../components/Competitionlist'
 
 function CompetitionSchedule() {
   return (
-    <div class=''>
-        <Navbar />
-        <Competitionlist />
-        <Footer />
+    <div class="">
+      <Navbar />
+      <Competitionlist />
+      <Footer />
     </div>
   )
 }

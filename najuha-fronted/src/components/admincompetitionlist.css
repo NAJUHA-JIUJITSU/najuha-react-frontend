@@ -1,126 +1,123 @@
 /* UA reset */
 
-
 li {
-    list-style: none;
+  list-style: none;
 }
 
 /* Typography */
 
 :root {
-    font-size: 62.5%; /* 10px */
-  }
-
-.admin-competition-searchzone-title{
-    font-size: 20px;
-    text-align: center;
+  font-size: 62.5%; /* 10px */
 }
 
-
-.admin-competition-searchzone-input::placeholder{
-    color: #B1B1B1;
-    font-size: 13px;
-    padding-left: 5%;
+.admin-competition-searchzone-title {
+  font-size: 20px;
+  text-align: center;
 }
 
-.admin-competition-searchzone-input:focus{
-    outline: none;
-    padding-left: 5%;
+.admin-competition-searchzone-input::placeholder {
+  color: #b1b1b1;
+  font-size: 13px;
+  padding-left: 5%;
 }
 
-.admin-competition-searchzone-input:focus::placeholder{
-    color:transparent;
+.admin-competition-searchzone-input:focus {
+  outline: none;
+  padding-left: 5%;
 }
 
-.admin-each-competition-top-date h1{
-    font-size: 24px;
-    color: white;
+.admin-competition-searchzone-input:focus::placeholder {
+  color: transparent;
 }
 
-.admin-each-competition-top-date span{
-    font-size: 16px;
-    color: white;
+.admin-each-competition-top-date h1 {
+  font-size: 24px;
+  color: white;
 }
 
-.admin-each-competition-top-location-tag h2{
-    font-size: 20px;
-    letter-spacing: -0.12em;
+.admin-each-competition-top-date span {
+  font-size: 16px;
+  color: white;
 }
 
-.admin-each-competition-top-location-tag h3{
-    font-size: 16px;
-    letter-spacing: -0.12em;
+.admin-each-competition-top-location-tag h2 {
+  font-size: 20px;
+  letter-spacing: -0.12em;
 }
 
-#admin-each-competition-button-able{ /*버튼디자인*/
-    position: absolute;
-    width: 74px;
-    height: 34px;
-    background: #FFFFFF;
-    border: 1px solid #F1F1F1;
-    box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
-    border-radius: 30px;
-    bottom: 8px;
-    right: 8px;
+.admin-each-competition-top-location-tag h3 {
+  font-size: 16px;
+  letter-spacing: -0.12em;
 }
 
+#admin-each-competition-button-able {
+  /*버튼디자인*/
+  position: absolute;
+  width: 74px;
+  height: 34px;
+  background: #ffffff;
+  border: 1px solid #f1f1f1;
+  box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  bottom: 8px;
+  right: 8px;
+}
 
 /* Layout */
 
-.admin-competition-schedule-wrapper{
-    width: auto;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    box-sizing: border-box;
+.admin-competition-schedule-wrapper {
+  width: auto;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  box-sizing: border-box;
 }
 
-.admin-competition-searchzone{
-    height: 20vh;
-    /* padding-top: 3vh; */
-    box-sizing: border-box;
-    display: flex; /* 수직정렬을 위한 3종세트 display, align-items, justify-content */
-    align-items: center;
-    justify-content: center;
-    
+.admin-competition-searchzone {
+  height: 20vh;
+  /* padding-top: 3vh; */
+  box-sizing: border-box;
+  display: flex; /* 수직정렬을 위한 3종세트 display, align-items, justify-content */
+  align-items: center;
+  justify-content: center;
 }
 
-.admin-competition-searchzone-wrapper{
-    width: 35%;
-    margin: 0 auto;
-    box-sizing: border-box;
+.admin-competition-searchzone-wrapper {
+  width: 35%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-.admin-competition-searchzone-options{
-    display: flex;
-    box-sizing: border-box;
+.admin-competition-searchzone-options {
+  display: flex;
+  box-sizing: border-box;
 }
 
 .admin-competition-searchzone-options-location,
-.admin-competition-searchzone-options-date{
-    width: 100%;
-    margin: 0 5%;
+.admin-competition-searchzone-options-date {
+  width: 100%;
+  margin: 0 5%;
 }
 
-.admin-competition-list{
-    height: 64vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
+.admin-competition-list {
+  height: 64vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
-.admin-competition-row{
-    display: flex;
-    flex-wrap: wrap;
-    margin:0 -1rem; /* 이거중요 */
+.admin-competition-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -1rem; /* 이거중요 */
 }
 
-.admin-competition-col{
-    width: 33.3%;
-    flex-shrink: 0;
-    padding: 0 1rem;
-    box-sizing: border-box;
-    margin-bottom: 2rem;
-    height: 154px;
+.admin-competition-col {
+  width: 33.3%;
+  flex-shrink: 0;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  margin-bottom: 2rem;
+  height: 154px;
 }
 
 /*Component*/
@@ -129,107 +126,104 @@ li {
     background-color: dodgerblue;
 } */
 
-.admin-competition-searchzone-title::after{
-    content:' ';
-    display: block;
-    height: 1.4vh;
-    width: 2px;
-    margin: 0 auto;
-    margin-top: 0.5vh;
-    margin-bottom: 1vh;
-    background-color: white;
+.admin-competition-searchzone-title::after {
+  content: ' ';
+  display: block;
+  height: 1.4vh;
+  width: 2px;
+  margin: 0 auto;
+  margin-top: 0.5vh;
+  margin-bottom: 1vh;
+  background-color: white;
 }
 
-.admin-competition-searchzone-input{
+.admin-competition-searchzone-input {
+  width: 100%;
+  border: 1px solid #dedede;
+  filter: drop-shadow(0.5px 1px 2px rgba(0, 0, 0, 0.25));
+  border-radius: 50px;
+  margin-bottom: 1.5vh;
+  height: 30px;
+  box-sizing: border-box;
+}
+
+.admin-competition-searchzone-fake {
+  position: relative;
+}
+
+.admin-competition-searchzone-input-icon {
+  position: absolute;
+  right: 3%;
+  margin-top: 3px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.admin-each-competition-top {
+  display: flex;
+  height: 126px;
+}
+
+.admin-each-competition-top-date {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url(http://localhost:3001/Assets/대회배경.svg);
+  background-position: center;
+  background-size: cover;
+  width: 28%;
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align 세로 */
+}
+
+.admin-each-competition-top-location {
+  width: 72%;
+  border: 1px solid #d9e0e4;
+  padding-left: 10px;
+  display: flex;
+  align-items: center; /* align 세로 */
+  position: relative;
+}
+
+.admin-each-competition-bottom {
+  display: flex;
+}
+
+.admin-each-competition-bottom-buttons button {
+  letter-spacing: -0.1rem;
+  padding: 0;
+}
+
+@media (max-width: 1049px) {
+  /* Layout */
+  .admin-competition-schedule-wrapper {
+    max-width: 768px;
+  }
+
+  .admin-competition-col {
+    width: 50%;
+  }
+  .admin-competition-searchzone-wrapper {
+    width: 60%;
+  }
+}
+
+@media (max-width: 750px) {
+  /* Typography */
+
+  /* Layout */
+
+  .admin-competition-schedule-wrapper {
+    max-width: 650px;
+  }
+
+  .admin-competition-col {
     width: 100%;
-    border: 1px solid #DEDEDE;
-    filter: drop-shadow(0.5px 1px 2px rgba(0, 0, 0, 0.25)); 
-    border-radius: 50px;
-    margin-bottom: 1.5vh;
-    height: 30px;
-    box-sizing: border-box
-}
+  }
 
-.admin-competition-searchzone-fake{
-    position: relative;
-}
-
-.admin-competition-searchzone-input-icon{
-    position: absolute;
-    right: 3%;
-    margin-top: 3px;
-    z-index: 1;
-    cursor: pointer;
-}
-
-.admin-each-competition-top{
-    display: flex;
-    height: 126px;
-}
-
-.admin-each-competition-top-date{
-    background-image: linear-gradient(
-        rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.6)
-      ),  url(http://localhost:3001/Assets/대회배경.svg);
-    background-position: center;
-    background-size: cover;
-    width: 28%;
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center;   /* align 세로 */
-}
-
-.admin-each-competition-top-location{
-    width: 72%;
-    border: 1px solid #D9E0E4;
-    padding-left: 10px;
-    display: flex;
-    align-items: center;   /* align 세로 */
-    position: relative;
-}
-
-.admin-each-competition-bottom{
-    display: flex;
-}
-
-.admin-each-competition-bottom-buttons button{
-    letter-spacing: -0.1rem;
-    padding: 0;
-}
-
-@media(max-width:1049px){
-    /* Layout */
-    .admin-competition-schedule-wrapper{
-        max-width: 768px;
-    }
-
-    .admin-competition-col{
-        width: 50%;
-    }
-    .admin-competition-searchzone-wrapper{
-        width: 60%;
-    }
-}
-
-@media(max-width:750px){
-    /* Typography */
-
-
-    /* Layout */
-
-    .admin-competition-schedule-wrapper{
-        max-width: 650px;
-    }
-
-    .admin-competition-col{
-        width: 100%;
-    }
-
-    .admin-competition-searchzone-wrapper{
-        width: 90%;
-    }
-    .admin-competition-list{
-        height: 68vh;
-    }
+  .admin-competition-searchzone-wrapper {
+    width: 90%;
+  }
+  .admin-competition-list {
+    height: 68vh;
+  }
 }
