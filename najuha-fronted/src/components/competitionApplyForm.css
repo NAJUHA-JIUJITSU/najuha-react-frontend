@@ -29,16 +29,6 @@
     font-size: 1.5rem;
 }
 
-
-.CompetitionApplyForm-bottom-sum p{
-    font-size: 1.5rem;
-    color: #8C8C8C;
-}
-
-.CompetitionApplyForm-bottom-sum h3 {
-    font-size: 2rem
-}
-
 /* Layout */
 
 .CompetitionApplyForm-wrapper{
@@ -89,6 +79,7 @@
     /* border: 1px solid red; */
     width: 60%;
     margin-bottom: 15px;
+    position: relative;
 }
 
 .CompetitionApplyForm-top-table-item li{
@@ -96,10 +87,17 @@
     text-align: center;
 }
 
+.CompetitionApplyForm-top-table-item img{
+    position: absolute;
+    right: 0;
+    transform: translate(100%, 0);
+}
+
 .CompetitionApplyForm-middle {
     width: 60%;
     margin: 0 auto;
     margin-top: 6vh;
+    margin-bottom: 44px;
     background-color: #F8FBFF;
     
 }
@@ -160,20 +158,6 @@
     text-align: center;
 }
 
-.CompetitionApplyForm-bottom-sum{
-    display: flex;
-    padding-top: 5vh;
-}
-
-.CompetitionApplyForm-bottom-sum p {
-    margin-left: auto;
-    margin-right: 2%;
-}
-
-.CompetitionApplyForm-bottom-sum h3 {
-    margin-right: auto;
-}
-
 .CompetitionApplyForm-bottom-payment{
     border: 1px solid #F1F1F1;
     box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
@@ -213,6 +197,11 @@
 
     .CompetitionApplyForm-middle {
     width: 80%;
+    }
+
+    .CompetitionApplyForm-top-table-item img{
+        left: 0;
+        transform: translate(-60%, 0);
     }
     /* Typography */
 

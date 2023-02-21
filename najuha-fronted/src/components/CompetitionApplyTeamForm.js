@@ -29,17 +29,18 @@ function CompetitionApplyTeamForm() {
     const [competition, setCompetition] = useState(null);
     const [fillteredcompetition, setFillteredCompetition] = useState(null);
 
-    const [competitionApplicationList, setCompetitionApplicationList] = useState([]);
+    const [viewCompetitionApplicationList, setViewCompetitionApplicationList] = useState([]);
     const [competitionApplication, setCompetitionApplication] = useState({
+      team: '',
+      phoneNumber: '',
       playerName: '',
       playerBirth: '',
-      phoneNumber: '',
+      gender: '',
       uniform: '',
       divisionName: '',
-      gender: '',
       belt: '',
       weight: '',
-      team: '',
+      price: '',
       competitionId: id,
     })
     const [competitionApplicationId, setCompetitionApplicationId] = useState(null);
@@ -55,6 +56,11 @@ function CompetitionApplyTeamForm() {
   }, [])
 
   useEffect(() => {
+    if(competitionApplication.weight !== '')
+      findApplicationPrice()
+}, [competitionApplication.weight])
+    
+  useEffect(() => {
     console.log(competition);
 }, [competition])
 
@@ -63,9 +69,9 @@ function CompetitionApplyTeamForm() {
     }, [competitionApplication])
 
     useEffect(() => {
-      console.log(competitionApplicationList);
-      if(competitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
-    }, [competitionApplicationList])
+      console.log(viewCompetitionApplicationList);
+      if(viewCompetitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
+    }, [viewCompetitionApplicationList])
     
     const postPaymentData = async () => {
       const xAccessToken = cookies.get("x-access-token");
@@ -125,24 +131,33 @@ function CompetitionApplyTeamForm() {
       }
     }
 
-    function postCompetitionApply(){
-      axios({
+    function parsingBeforePost (viewCompetitionApplicationList){
+      let copyCompetitionApplicationList = JSON.parse(JSON.stringify(viewCompetitionApplicationList))
+      copyCompetitionApplicationList.map(application => {
+        delete application.price
+      })
+      return copyCompetitionApplicationList
+    }
+
+    async function postCompetitionApply(){
+      let competitionApplicationList = parsingBeforePost(viewCompetitionApplicationList)
+      console.log(competitionApplicationList)
+      try{
+      await axios({
           method: "post",
           headers: {
             "x-access-token":  cookies.get("x-access-token")
           },
-          url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications`,
+          url: `${process.env.REACT_APP_BACK_END_API}/competitionApplicationsGroup`,
           data: {
-              competitionApplicationList
+            competitionApplicationList
           }
+        }).then(res => {
+          setCompetitionApplicationId(res.data.result.competitionApplicationId)
         })
-        .then(res => {
-          console.log(res)
-          setCompetitionApplicationId(res.data.result.competitionApplicationId);
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      } catch (err) {
+        throw err
+      }
     }
 
     const getCompetition = async (id) => {
@@ -158,7 +173,7 @@ function CompetitionApplyTeamForm() {
       } catch(err) {
           console.log(err);
       }
-  }
+    }
 
     function genderDropdownToggle(){
       setGenderDropdown((pre) => (!pre));
@@ -294,6 +309,16 @@ function CompetitionApplyTeamForm() {
             })
     }
 
+    function findApplicationPrice(){
+      let newfillteredcompetition = JSON.parse(JSON.stringify(fillteredcompetition))
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.gender, 'gender')
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.uniform, 'uniform')
+      newfillteredcompetition = constfillteringcompetition(newfillteredcompetition, competitionApplication.divisionName, 'divisionName')
+      newfillteredcompetition = varfillteringcompetition(newfillteredcompetition, competitionApplication.belt, 'belt')
+      newfillteredcompetition = varfillteringcompetition(newfillteredcompetition, competitionApplication.weight, 'weight')
+      changeCompetitionApplication(newfillteredcompetition[0].pricingPolicy.normal, 'price')
+    }
+
     function stateRefresh(key, copycompetitionApplication){
       if(key == 'gender'){
         copycompetitionApplication.uniform = '';
@@ -320,32 +345,66 @@ function CompetitionApplyTeamForm() {
     function validationcheck(application){
       let tmp = Object.values(application)
       let ret = true
-      tmp.forEach(x => {
-        if(x == '') ret = false;
-      })
-      return ret;
+      for(let i =0; tmp.length; i++){
+        if(tmp[i] === ''){
+          let keyName = Object.keys(application)[i]
+          if(keyName === 'team'){
+            alert('팀이름을 입력해주세요')
+          }else if(keyName === 'phoneNumber'){
+            alert('대표자번호를 입력해주세요')
+          }
+          else if(keyName === 'playerName'){
+            alert('선수이름을 입력해주세요')
+          }
+          else if(keyName === 'playerBirth'){
+            alert('생년월일을 입력해주세요')
+          }
+          else if(keyName === 'gender'){
+            alert('성별을 선택해주세요')
+          }
+          else if(keyName === 'uniform'){
+            alert('기/노기를 선택해주세요')
+          }
+          else if(keyName === 'divisionName'){
+            alert('부문을 선택해주세요')
+          }
+          else if(keyName === 'belt'){
+            alert('벨트를 선택해주세요')
+          }
+          else if(keyName === 'weight'){
+            alert('체급을 선택해주세요')
+          }
+          ret = false
+          break;
+        }
+      }
+      return ret
     }
 
     function addCompetitionApplication(){
       let check = validationcheck(competitionApplication)
+      console.log(check)
       if(check){
-        let newCompetitionApplicationList = [...competitionApplicationList]
+        let newCompetitionApplicationList = [...viewCompetitionApplicationList]
+        if(newCompetitionApplicationList.length > 0){ // 팀이름과 핸드폰 번호를 마지막 신청자에 것으로 통일해주는 역할 
+          newCompetitionApplicationList.map((copycompetitionApplication, i) => {
+            copycompetitionApplication.team = competitionApplication.team
+            copycompetitionApplication.phoneNumber = competitionApplication.phoneNumber
+          })
+        }
         newCompetitionApplicationList.push(competitionApplication);
-        setCompetitionApplicationList(newCompetitionApplicationList);
-      } else{
-        alert('신청서를 빈 항목 없이 끝까지 작성해주세요');
+        setViewCompetitionApplicationList(newCompetitionApplicationList);
       }
-      
     }
 
     function deleteCompetitionApplication(i){
-      let copy = [...competitionApplicationList]
+      let copy = [...viewCompetitionApplicationList]
       copy.splice(i, 1);
-      setCompetitionApplicationList(copy);
+      setViewCompetitionApplicationList(copy);
     }
 
     function renderCompetitionApplicationList(){
-      return competitionApplicationList.map((application, i) => {
+      return viewCompetitionApplicationList.map((application, i) => {
         return(
           <ul key={i} className='CompetitionApplyTeamForm-bottom-table-row'>
                       <li>{i+1}</li>
@@ -356,13 +415,12 @@ function CompetitionApplyTeamForm() {
                       <li>{application.divisionName}</li>
                       <li>{application.belt}</li>
                       <li>{application.weight}</li>
-                      <li>50,000원</li>
+                      <li>{application.price}원</li>
                       <img id='CompetitionApplyTeamForm-bottom-table-row-deleteicon' src={deleteicon} alt='삭제아이콘' onClick={() => deleteCompetitionApplication(i)}/>
           </ul>
         )
       })
     }
-
 
     const getTotalPrice = async () => {
       axios({
@@ -373,7 +431,7 @@ function CompetitionApplyTeamForm() {
           url: `${process.env.REACT_APP_BACK_END_API}/competitions/${id}/prices`,
           data: {
               isGroup: true,
-              divisions: competitionApplicationList
+              divisions: viewCompetitionApplicationList
           }
         })
         .then(res => {
@@ -393,11 +451,20 @@ function CompetitionApplyTeamForm() {
             <div className='CompetitionApplyTeamForm-teaminfo'>
                 <div className='CompetitionApplyTeamForm-teaminfo-element'>
                   <label>팀이름</label>
-                  <input placeholder='팀 이름을 입력해주세요' value={competitionApplication.team} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'team')}}></input>
+                  <input placeholder='팀 이름을 입력해주세요' value={competitionApplication.team} onChange={(e)=>{
+                  let pattern = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+                  e.target.value = e.target.value.replace(pattern, ''); 
+                  if(e.target.value.length > 50)
+                    e.target.value = e.target.value.slice(0, 50)
+                  changeCompetitionApplication(e.target.value, 'team')}}></input>
                 </div>
                 <div className='CompetitionApplyTeamForm-teaminfo-element'>
                   <label>대표자 번호</label>
-                  <input placeholder="'-' 없이 번호만 입력해주세요" value={competitionApplication.phoneNumber} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'phoneNumber')}}></input>
+                  <input placeholder="'-' 없이 번호만 입력해주세요" value={competitionApplication.phoneNumber} onChange={(e)=>{
+                    e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                    if(e.target.value.length > 11)
+                      e.target.value = e.target.value.slice(0, 11)
+                  changeCompetitionApplication(e.target.value, 'phoneNumber')}}></input>
                 </div>
             </div>
             <div className='CompetitionApplyTeamForm-top-table'>
@@ -409,10 +476,23 @@ function CompetitionApplyTeamForm() {
                         <li>기/노기</li>
                 </ul>
                 <ul className='CompetitionApplyTeamForm-top-table-row'>
-                        <li><input placeholder='이름' value={competitionApplication.playerName} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerName')}}></input> </li>
-                        {competitionApplication.playerName != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> 
+                        <li><input placeholder='이름' value={competitionApplication.playerName} onChange={(e)=>{
+                        let pattern = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+                        e.target.value = e.target.value.replace(pattern, ''); 
+                        if(e.target.value.length > 10)
+                          e.target.value = e.target.value.slice(0, 10)
+                        changeCompetitionApplication(e.target.value, 'playerName')}}></input> </li>
+                        {competitionApplication.playerName != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{
+                        e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                        if(e.target.value.length > 6)
+                            e.target.value = e.target.value.slice(0, 6)
+                        changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> 
                         : 
-                        competitionApplication.playerBirth != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> : <li className='CompetitionApplyTeamForm-top-table-row-disable'>ex) 900404</li>}
+                        competitionApplication.playerBirth != '' ? <li><input placeholder='ex) 900404' value={competitionApplication.playerBirth} onChange={(e)=>{
+                        e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                        if(e.target.value.length > 6)
+                            e.target.value = e.target.value.slice(0, 6)
+                        changeCompetitionApplication(e.target.value, 'playerBirth')}}></input></li> : <li className='CompetitionApplyTeamForm-top-table-row-disable'>ex) 900404</li>}
                         
                         {competitionApplication.gender != '' ?  // 본인값있으면 본인값 보여주고 
                         <li onClick={genderDropdownToggle}>
@@ -572,20 +652,36 @@ function CompetitionApplyTeamForm() {
                       <li>참가비</li>
             </ul>
             {renderCompetitionApplicationList()}
+          </div>
+          <div className='CompetitionApplyTeamForm-bottom-table-results'>
+            <div className='CompetitionApplyTeamForm-bottom-table-result CompetitionApplyTeamForm-bottom-table-result-red'>
+              <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 할인금액</h3>
+              <h3>{normalPrice - discountedPrice}원</h3>
+            </div>
             <div className='CompetitionApplyTeamForm-bottom-table-result'>
               <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
               <h3>{discountedPrice}원</h3>
             </div>
           </div>
           <div className='CompetitionApplyTeamForm-bottom-table-buttons'>
-            <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={() => {
-              postCompetitionApply()
-              navigate('/')
-              alert('저장되었습니다.')
+            <button id='CompetitionApplyTeamForm-bottom-table-buttons-save' onClick={async () => {
+                try{
+                  await postCompetitionApply()
+                  navigate('/')
+                  alert('저장되었습니다.')
+                } catch (err) {
+                  console.log(err)
+                  alert('대회 신청에 실패했습니다.')
+                }
             }}>저장하기</button>
-            <button id='CompetitionApplyTeamForm-bottom-table-buttons-register' onClick={() => {
-              postCompetitionApply()
-              setPaymentbridgemodal(pre => !pre);
+            <button id='CompetitionApplyTeamForm-bottom-table-buttons-register' onClick={async () => {
+                try{
+                  await postCompetitionApply()
+                  setPaymentbridgemodal(pre => !pre);
+                } catch (err) {
+                  console.log(err)
+                  alert('대회 신청에 실패했습니다.')
+                }
             }}>신청하기</button>
           </div>
         </div>

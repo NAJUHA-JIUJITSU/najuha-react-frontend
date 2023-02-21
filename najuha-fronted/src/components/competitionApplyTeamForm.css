@@ -49,6 +49,14 @@
     font-weight: 700;
 }
 
+.CompetitionApplyTeamForm-bottom-table-result-red{
+    color: #FF5F5F;
+}
+
+#CompetitionApplyTeamForm-bottom-table-result-key{
+    font-size: 1.4rem;
+}
+
 #CompetitionApplyTeamForm-bottom-table-buttons-save{
     color: #8C8C8C;
     font-size: 1.4rem;
@@ -154,12 +162,7 @@
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 30px;
-}
-
-.CompetitionApplyTeamForm-bottom-table-result h3{
-    margin-left: 15px;
-    margin-right: 10px;
+    margin-bottom: 44px;
 }
 
 .CompetitionApplyTeamForm-bottom-table-buttons button{
@@ -352,11 +355,17 @@
     width: 4.8%;
 }
 
+.CompetitionApplyTeamForm-bottom-table-results{
+    width: 240px;
+    margin: 0 auto;
+    margin-bottom: 32px;
+}
+
 .CompetitionApplyTeamForm-bottom-table-result{
     display: flex;
+    align-items: center;
+    margin-bottom: 12px;
     justify-content: space-between;
-    height: 45px;
-    align-items: center
 }
 
 .CompetitionApplyTeamForm-bottom-table-buttons{
@@ -525,7 +534,7 @@
     }
 
     .CompetitionApplyTeamForm-bottom-table-result{
-        justify-content: space-around;
+        justify-content: space-between;
         font-size: 1.8rem;   
     }
 

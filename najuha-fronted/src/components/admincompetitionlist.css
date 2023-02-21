@@ -193,6 +193,11 @@ li {
     display: flex;
 }
 
+.admin-each-competition-bottom-buttons button{
+    letter-spacing: -0.1rem;
+    padding: 0;
+}
+
 @media(max-width:1049px){
     /* Layout */
     .admin-competition-schedule-wrapper{

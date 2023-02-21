@@ -1,56 +1,61 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import './Paymentmodal.css';
 import { useNavigate } from 'react-router-dom'
 
 function Paymentmodal(props) {
     let navigate = useNavigate();
+    let [lastCheck, setLastCheck] = useState(false)
+
 
     function closeModal() {
         props.closeModal();
     }
 
-    function easypaymentUI() {
-        return (
-            <div className='Paymentmodal_secondsection_esaypaymethods'>
-                <div className='Paymentmodal_secondsection_esaypaymethod'>
-                    <input type='radio' value='토스페이' checked={props.easypaymethod == '토스페이'} onChange={(e) => props.setEasypaymethod(e.target.value)}></input>
-                    <p>토스페이</p>
-                </div>
-                <div className='Paymentmodal_secondsection_esaypaymethod'>
-                    <input type='radio' value='카카오페이' checked={props.easypaymethod == '카카오페이'} onChange={(e) => props.setEasypaymethod(e.target.value)}></input>
-                    <p>카카오페이</p>
-                </div>
-                <div className='Paymentmodal_secondsection_esaypaymethod'>
-                    <input type='radio' value='삼성페이' checked={props.easypaymethod == '삼성페이'} onChange={(e) => props.setEasypaymethod(e.target.value)}></input>
-                    <p>삼성페이</p>
-                </div>
-                <div className='Paymentmodal_secondsection_esaypaymethod'>
-                    <input type='radio' value='네이버페이' checked={props.easypaymethod == '네이버페이'} onChange={(e) => props.setEasypaymethod(e.target.value)}></input>
-                    <p>네이버페이</p>
-                </div>
-                <div className='Paymentmodal_secondsection_esaypaymethod'>
-                    <input type='radio' value='페이코' checked={props.easypaymethod == '페이코'} onChange={(e) => props.setEasypaymethod(e.target.value)}></input>
-                    <p>페이코</p>
-                </div>
-                <div className='Paymentmodal_secondsection_esaypaymethod'>
-                    <input type='radio' value='엘페이' checked={props.easypaymethod == '엘페이'} onChange={(e) => props.setEasypaymethod(e.target.value)}></input>
-                    <p>엘페이</p>
-                </div>
-                <div className='Paymentmodal_secondsection_esaypaymethod'>
-                    <input type='radio' value='LG페이' checked={props.easypaymethod == 'LG페이'} onChange={(e) => props.setEasypaymethod(e.target.value)}></input>
-                    <p>LG페이</p>
-                </div>
-                <div className='Paymentmodal_secondsection_esaypaymethod'>
-                    <input type='radio' value='SSG페이' checked={props.easypaymethod == 'SSG페이'} onChange={(e) => props.setEasypaymethod(e.target.value)}></input>
-                    <p>SSG페이</p>
-                </div>
-            </div>
-        )
+    function checkPaymentOption() {
+        if (!lastCheck || props.paymentmethod === null) {
+            return false;
+          }
+          
+          if (props.paymentmethod === '간편결제' && props.easypaymethod === null) {
+            return false;
+          }
+          
+          return true;     
     }
+
+    function easypaymentUI() {
+        const easyPayMethods = [
+          { value: '토스페이', label: '토스페이' },
+          { value: '카카오페이', label: '카카오페이' },
+          { value: '삼성페이', label: '삼성페이' },
+          { value: '네이버페이', label: '네이버페이' },
+          { value: '페이코', label: '페이코' },
+          { value: '엘페이', label: '엘페이' },
+          { value: 'LG페이', label: 'LG페이' },
+          { value: 'SSG페이', label: 'SSG페이' },
+        ];
+    
+        return (
+          <div className="Paymentmodal_secondsection_esaypaymethods">
+            {easyPayMethods.map((method) => (
+              <div className="Paymentmodal_secondsection_esaypaymethod" key={method.value}>
+                <input
+                  type="radio"
+                  value={method.value}
+                  checked={props.easypaymethod === method.value}
+                  onChange={(e) => props.setEasypaymethod(e.target.value)}
+                />
+                <p>{method.label}</p>
+              </div>
+            ))}
+          </div>
+        );
+      }
+    
 
   return (
     <div className="Paymentmodal_Modal" >
-            <div className="Paymentmodal_modalBody" onClick={(e) => e.stopPropagation()}>
+            <div className="Paymentmodal_modalBody" onClick={(e) => e.stopPropagation()}>  
                 <h2 id="Paymentmodal_modaltitle">결제방식 선택 </h2>
                 <button id="Paymentmodal_modalCloseBtn" onClick={() => navigate('/Profilepage')}>
                 ✖
@@ -93,11 +98,16 @@ function Paymentmodal(props) {
                 </div>
                 <div className= 'Paymentmodal_thirdsection'>
                     <div className='Paymentmodal_thirdsection_lastcheck'>
-                        <input type='radio'></input>
+                        <input type='radio' checked={lastCheck === true} onClick={() => setLastCheck(pre => !pre)}></input>
                         <p>주문내용 확인 및 결제 동의</p>
                     </div>
                     <p className='Paymentmodal_thirdsection_lastinfo'>나주하는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br/> 대회 신청, 환불의 의무와 책임은 각 판매업체에 있습니다</p>
-                    <button className='Paymentmodal_thirdsection_paybutton' onClick={props.tossPay}>결제하기</button>
+                    <button className='Paymentmodal_thirdsection_paybutton' onClick={() => {
+                        if(checkPaymentOption())
+                            props.tossPay()
+                        else
+                            alert('옵션을 선택해주세요')
+                    }}>결제하기</button>
                 </div>
             </div>
     </div>

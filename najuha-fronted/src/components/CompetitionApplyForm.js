@@ -11,6 +11,7 @@ import ApplyModal from './ApplyModal'
 import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
 import { loadTossPayments } from '@tosspayments/payment-sdk';
+import deleteicon from '../src_assets/명단삭제로고.svg'
 
 function CompetitionApplyForm() {
     const {id} = useParams();
@@ -33,7 +34,7 @@ function CompetitionApplyForm() {
             gender: null,
             belt: null,
             weight: null,
-            team: "김포 골든라이언",
+            team: null,
             competitionId: id,
             price: null,
             check: 0, 
@@ -55,7 +56,11 @@ function CompetitionApplyForm() {
     
     const parsingbeforegetprice = (viewcompetitionApplicationList) => {
         let copyList = JSON.parse(JSON.stringify(viewcompetitionApplicationList))
-        copyList.map((competitionapply) => {
+        copyList.map((competitionapply, i) => {
+            if(competitionapply.price === null){
+                copyList.splice(i, 1)
+                return true
+            }
             delete competitionapply['price']
             delete competitionapply['check']
             delete competitionapply['playerName']
@@ -67,7 +72,6 @@ function CompetitionApplyForm() {
         })
         return copyList
     } 
-
 
     const getCompetition = async (id) => {
         try {
@@ -128,6 +132,7 @@ function CompetitionApplyForm() {
           })
           .catch(err => {
             console.log(err)
+            alert('대회 신청에 실패하였습니다.')
           })
     }
 
@@ -206,8 +211,13 @@ function CompetitionApplyForm() {
     }, [fillteredcompetition])
 
     useEffect(() => {
-        console.log(viewcompetitionApplicationList)
-    }, [viewcompetitionApplicationList])
+        if(viewcompetitionApplicationList[0].price != null){
+            if(viewcompetitionApplicationList.length > 0)
+                getTotalPrice(id);
+        } else {
+            priceRefresh()
+        }
+    }, [viewcompetitionApplicationList.length, viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price])
 
     const curApplicationReset = (i) => {
         console.log(i);
@@ -234,7 +244,6 @@ function CompetitionApplyForm() {
         let cal = [...viewcompetitionApplicationList];
         cal[i].price = fillteredcompetition[0].pricingPolicy.normal;
         setviewCompetitionApplicationList(cal);
-        getTotalPrice(id);
     }
 
     const addApplication = (i) => {
@@ -258,6 +267,14 @@ function CompetitionApplyForm() {
         setFillteredCompetition(competition.division);
     }
 
+    const checkGender = (cal) => {
+        for(let i =0; i < cal.length; i++){
+            if(cal[0].gender != cal[i].gender)
+                return false
+        }
+        return true
+    }
+
     const checkInvaildApply = () => {
         let cal = [...viewcompetitionApplicationList];
         cal.forEach((x, i) => {
@@ -266,14 +283,45 @@ function CompetitionApplyForm() {
             }
         })
         if(cal.length >= 1){
-            setviewCompetitionApplicationList(cal);
-            return true; 
-        } else {
-            alert('신청을 끝까지 완료해주셔야 합니다.')
-            return false; 
-        }
-        
+            if(checkGender(cal)){
+                setviewCompetitionApplicationList(cal);
+                return true; 
+            } 
+            alert('신청하는 디비전의 성별이 동일해야 합니다.')
+            return false;
+        } 
+        alert('신청을 끝까지 완료해주셔야 합니다.')
+        return false; 
     }
+
+    function priceRefresh() {
+        setNormalprice(0)
+        setDiscountedprice(0)
+    }
+
+    function deleteCompetitionApplication(i){
+        let copy = [...viewcompetitionApplicationList]
+        if(viewcompetitionApplicationList.length === 1){
+            copy[0] = {
+                playerName: "",
+                playerBirth: "",
+                phoneNumber: "",
+                uniform: null,
+                divisionName: null,
+                gender: null,
+                belt: null,
+                weight: null,
+                team: null,
+                competitionId: id,
+                price: null,
+                check: 0, 
+            }
+            setviewCompetitionApplicationList(copy);
+            return ;
+        }
+        copy.splice(i, 1);
+        setviewCompetitionApplicationList(copy);
+      }
 
     const applicationDetailUI = () => {
         return viewcompetitionApplicationList.map((application, i) => {
@@ -286,6 +334,7 @@ function CompetitionApplyForm() {
                     <li>{application.belt}</li>
                     <li>{application.weight}</li>
                     <li>{application.price}</li>
+                    {application.price != null ? <img style={{cursor:'pointer'}} src={deleteicon} onClick={() => deleteCompetitionApplication(i)}></img> : ''}
                 </ul>
                 </>
             )
@@ -303,7 +352,6 @@ function CompetitionApplyForm() {
         let newfillteredcompetition = fillteredcompetition.filter((div) => div.variableFactor[part].includes(value));
         setFillteredCompetition(newfillteredcompetition);
     }
-
 
     const chooseUniformOption = (value, i) => {
         console.log(value);
@@ -442,30 +490,55 @@ function CompetitionApplyForm() {
         } 
     }
 
+    // const optionUI = () => {
+    //     return viewcompetitionApplicationList.map((application, i) => {
+    //         return(
+    //         <>
+    //             {!application.check ? <>
+    //                 <div className='CompetitionApplyForm-middle-function'>
+    //                 <div className='CompetitionApplyForm-middle-function-re'>
+    //                     <img src={reseticon} style={{cursor: 'pointer'}} onClick={() => curApplicationReset(i)}/>
+    //                     <p>다시하기</p>
+    //                 </div>
+    //                 <div className='CompetitionApplyForm-middle-function-complete'>
+    //                     {application.price  ? <><img src={plus} style={{cursor: 'pointer'}} onClick={() => addApplication(i)}/>
+    //                     <p>대회추가</p></> : 
+    //                     (application.weight ? <><img src={notcomplete} style={{cursor: 'pointer'}} onClick={() => curApplicationcomplete(i)}/><p>선택완료</p></> 
+    //                     : <><img src={notcomplete}/><p>선택완료</p></>)}
+    //                 </div>
+    //             </div>
+    //             <ul className='CompetitionApplyForm-middle-option'>
+    //                 {fillteredcompetition != null ? (application.check == 0 ? chooseOptionUI(application, i) : '') : ''}
+    //             </ul>
+    //             {application.price  ? <h2 className='CompetitionApplyForm-middle-info-checkmessage'>대회를 더 신청하고자 한다면<br/> + 버튼을 클릭해주세요</h2> : application.weight == null ? <h2 className='CompetitionApplyForm-middle-info'>신청할 대회를 선택하세요</h2> : <h2 className='CompetitionApplyForm-middle-info-checkmessage'>해당 대회를 신청하고자 한다면 <br/> 선택완료를 클릭해주세요</h2>}
+    //             </> : ''}
+    //         </>
+    //         )
+    //     })
+    // }
     const optionUI = () => {
-        return viewcompetitionApplicationList.map((application, i) => {
-            return(
-            <>
-                {!application.check ? <>
-                    <div className='CompetitionApplyForm-middle-function'>
-                    <div className='CompetitionApplyForm-middle-function-re'>
-                        <img src={reseticon} style={{cursor: 'pointer'}} onClick={() => curApplicationReset(i)}/>
-                        <p>다시하기</p>
-                    </div>
-                    <div className='CompetitionApplyForm-middle-function-complete'>
-                        {application.price  ? <><img src={plus} style={{cursor: 'pointer'}} onClick={() => addApplication(i)}/>
-                        <p>대회추가</p></> : <><img src={notcomplete} style={{cursor: 'pointer'}} onClick={() => curApplicationcomplete(i)}/>
-                        <p>선택완료</p></>}
-                    </div>
-                </div>
-                <ul className='CompetitionApplyForm-middle-option'>
-                    {fillteredcompetition != null ? (application.check == 0 ? chooseOptionUI(application, i) : '') : ''}
-                </ul>
-                {application.price  ? <h2 className='CompetitionApplyForm-middle-info-checkmessage'>대회를 더 신청하고자 한다면<br/> + 버튼을 클릭해주세요</h2> : application.weight == null ? <h2 className='CompetitionApplyForm-middle-info'>신청할 대회를 선택하세요</h2> : <h2 className='CompetitionApplyForm-middle-info-checkmessage'>해당 대회를 신청하고자 한다면 <br/> 선택완료를 클릭해주세요</h2>}
-                </> : ''}
-            </>
-            )
-        })
+        return(
+        <>
+            <div className='CompetitionApplyForm-middle-function'>
+            <div className='CompetitionApplyForm-middle-function-re'>
+                {viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price != null ? 
+                <img src={reseticon}/> : 
+                <img src={reseticon} style={{cursor: 'pointer'}} onClick={() => curApplicationReset(viewcompetitionApplicationList.length-1)}/>}
+                <p>다시하기</p>
+            </div>
+            <div className='CompetitionApplyForm-middle-function-complete'>
+                {viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price  ? <><img src={plus} style={{cursor: 'pointer'}} onClick={() => addApplication(viewcompetitionApplicationList.length-1)}/>
+                <p>대회추가</p></> : 
+                (viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].weight ? <><img src={notcomplete} style={{cursor: 'pointer'}} onClick={() => curApplicationcomplete(viewcompetitionApplicationList.length-1)}/><p>선택완료</p></> 
+                : <><img src={notcomplete}/><p>선택완료</p></>)}
+            </div>
+            </div>
+            <ul className='CompetitionApplyForm-middle-option'>
+                {fillteredcompetition != null ? (viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].check == 0 ? chooseOptionUI(viewcompetitionApplicationList[viewcompetitionApplicationList.length-1], viewcompetitionApplicationList.length-1) : '') : ''}
+            </ul>
+            {viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].price  ? <h2 className='CompetitionApplyForm-middle-info-checkmessage'>대회를 더 신청하고자 한다면<br/> + 버튼을 클릭해주세요</h2> : viewcompetitionApplicationList[viewcompetitionApplicationList.length-1].weight == null ? <h2 className='CompetitionApplyForm-middle-info'>신청할 대회를 선택하세요</h2> : <h2 className='CompetitionApplyForm-middle-info-checkmessage'>해당 대회를 신청하고자 한다면 <br/> 선택완료를 클릭해주세요</h2>}
+        </>
+        )
     }
 
 
@@ -491,14 +564,20 @@ function CompetitionApplyForm() {
             {optionUI()}
         </div>
         <div className='CompetitionApplyForm-bottom'>
-            <div className='CompetitionApplyForm-bottom-sum'>
-                <p>총 결제금액</p>
-                <h3>{discountedprice}원</h3>
+            <div className='CompetitionApplyTeamForm-bottom-table-results'>
+                <div className='CompetitionApplyTeamForm-bottom-table-result CompetitionApplyTeamForm-bottom-table-result-red'>
+                    <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 할인금액</h3>
+                    <h3>{normalprice - discountedprice}원</h3>
+                </div>
+                <div className='CompetitionApplyTeamForm-bottom-table-result'>
+                    <h3 id='CompetitionApplyTeamForm-bottom-table-result-key'>총 결제금액</h3>
+                    <h3>{discountedprice}원</h3>
+                </div>
             </div>
             <button className='CompetitionApplyForm-bottom-payment' onClick={() => {
                 if(checkInvaildApply())
                     setapplymodal(!applymodal);
-            }}>결제하기</button>
+            }}>신청하기</button>
             {
                 applymodal && (
                     <ApplyModal closeModal={() => setapplymodal(pre => !pre)} changePlayerName={changePlayerName} changePlayerBirth={changePlayerBirth} changephoneNumber={changephoneNumber} changeTeam={changeTeam} postCompetition={postCompetition}/>

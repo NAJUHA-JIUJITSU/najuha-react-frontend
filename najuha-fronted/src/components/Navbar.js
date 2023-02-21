@@ -78,7 +78,7 @@ function Navbar() {
             <ul>
                 <li onClick={()=>{navigate('/ProfilepageToggle')}}>내 프로필</li>
                 <li onClick={()=>{navigate('/Profilepage')}}>신청대회 목록</li>
-                {cookies['x-access-token'] == undefined ? <li onClick={()=>{navigate("/redirect", { state: { url: `${kakaoAuthURL}` } })}}>로그인 하기</li> 
+                {cookies['x-access-token'] == undefined ? <li onClick={()=>{window.location.href = kakaoAuthURL}}>로그인 하기</li> 
                 : <li onClick={logout}>로그아웃 하기</li>}
             </ul>
         </Dropdown>

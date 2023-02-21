@@ -179,8 +179,8 @@ function Profilesection() {
                 <div>
                     <div className={curApplication.last}>
                         <div className='Profilesection_competitoninfo'>
-                            <a onClick={()=>{navigate(`/Profilepage/info/${curApplication.id}`)}}>대회신청내역 상세보기</a>
-                            <img src={rightArrow} alt='이동 화살표'></img>
+                            {/* <a onClick={()=>{navigate(`/Profilepage/info/${curApplication.id}`)}}>대회신청내역 상세보기</a>
+                            <img src={rightArrow} alt='이동 화살표'></img> */}
                         </div>
                         <div className= 'Profilesection_competitonbox'>
                             <div className= 'Profilesection_boxLeft'>
@@ -193,7 +193,7 @@ function Profilesection() {
                                     src={xIcon} alt='삭제 아이콘' className={xButton}></img>
                                 <div className= {xButtonDiv}></div>
                                 <div className= 'Profilesection_boxRightTitle'>
-                                    <h3>{curApplication.title}</h3>
+                                    <h3 onClick={() => {navigate(`/Profilepage/info/${curApplication.id}`)}}>{curApplication.title}</h3>
                                     <p>{curApplication.location}</p>
                                 </div>
                             </div>
@@ -202,7 +202,8 @@ function Profilesection() {
                             <div className={curApplication.payCss}>
                                 <h3>{curApplication.costMsg}</h3>
                                 <p>{curApplication.amount}</p>
-                                <button className= 'Profilesection_costBtn'>{curApplication.isPayment}</button>
+                                {/* curApplication.isPayment==='결제하기' 일때만 대회신청내역 상세보기로 이동 실행하기 */}
+                                <button className= 'Profilesection_costBtn' onClick={() => {navigate(`/Profilepage/info/${curApplication.id}`)}}>{curApplication.isPayment}</button>
                             </div>
                         </div>
                     </div>

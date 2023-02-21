@@ -24,6 +24,8 @@ import PaymentFailPage from './pages/PaymentFailPage'
 import CompetitionPage from './pages/CompetitionPage'
 import PaymentInfoPage from './pages/PaymentInfoPage'
 import AdminCompetitionImagePage from './pages/AdminCompetitionImagePage'
+import AdminCsvDownload from './components/AdminCsvDownload'
+import AdminCompetitionInfoPage from './pages/AdminCompetitionInfoPage'
 import ScrollPage from './pages/ScrollPage'
 import MainScrollPage from './pages/MainScrollPage'
 
@@ -39,6 +41,8 @@ function App() {
   const AuthCompetitionApplyTeamPage = Auth(CompetitionApplyTeamPage, true);
   const AuthCompetitionApplyPatchTeamPage = Auth(CompetitionApplyPatchTeamPage, true);
   const AuthAdmincompetition = Auth(Admincompetition, true, true)
+  const AuthCompetitionInfoPage = Auth(AdminCompetitionInfoPage, null);
+  const AuthAdminCsvDownload = Auth(AdminCsvDownload, true, true)
   const AuthCompetitionform = Auth(Competitionform, true, true)
   const AuthProfilepage = Auth(Profilepage, true)
   const AuthProfileInfopage = Auth(ProfileInfopage, true)
@@ -69,6 +73,8 @@ function App() {
         <Route path = '/competition/applyteam/patch/:id' element={<AuthCompetitionApplyPatchTeamPage/>} />
         <Route path = '/Admincompetition/' element={<AuthAdmincompetition/>} />
         <Route path = '/Admincompetition/:id' element={<AuthCompetitionform/>} />
+        <Route path = '/Admincompetition/info/:id' element={<AuthCompetitionInfoPage/>} />
+        <Route path = '/Admincompetition/csv/:id' element={<AuthAdminCsvDownload/>} />
         <Route path = '/Admincompetition/imageupload/:id' element={<AuthAdminCompetitionImagePage/>} />
         <Route path = '/Profilepage' element={<AuthProfilepage/>} />
         <Route path = '/Profilepage/info/:id' element={<AuthProfileInfopage/>} />

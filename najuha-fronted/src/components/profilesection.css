@@ -225,6 +225,7 @@
     line-height: 1;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor: pointer;
 }
 
 .Profilesection_boxRightTitle p {

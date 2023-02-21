@@ -17,6 +17,17 @@
     font-size: 2.5rem;
 }
 
+#competition_register_top_isPartnership-true{
+    margin-left: 2rem;
+    font-size: 2rem;
+    color: green;
+}
+
+#competition_register_top_isPartnership-false{
+    font-size: 2rem;
+    color: red;
+}
+
 .competition_register_top_each input{
     font-size: 2rem;
 }
@@ -46,6 +57,11 @@
 .competition_register_top input {
     width: 600px;
 }
+
+#competition_register_top_isPartnership{
+    width: 60px;
+}
+
 .division {
     border: 5px solid red;
     text-align: center;
