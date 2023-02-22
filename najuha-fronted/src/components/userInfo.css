@@ -8,12 +8,6 @@
 
 /* Layout */
 
-.UserInfo_left {
-  /* border: 2px solid yellow; */
-  width: 28%;
-  height: 84vh;
-}
-
 .UserInfo_right {
   width: 68%;
   height: 84vh;
@@ -121,7 +115,6 @@
 
 @media (max-width: 1049px) {
   /* Layout */
-
   .UserInfo_right {
     width: 100%;
     margin-left: 0%;

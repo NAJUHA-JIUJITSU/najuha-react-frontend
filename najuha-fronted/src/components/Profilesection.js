@@ -10,7 +10,9 @@ import UserInfo from './UserInfo'
 
 function Profilesection() {
   const [userInfo, setUserInfo] = useState([])
-  const [componentSelected, setComponentSelected] = useState('')
+  const [componentSelected, setComponentSelected] = useState(
+    'UserApplicationList'
+  )
   const [competitionApplications, setCompetitionApplications] = useState([]) //유저 신청 대회 가져오기
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
@@ -76,7 +78,10 @@ function Profilesection() {
           getCompetitionApplication={getCompetitionApplication}
         />
       )
-    } else if (componentSelected === 'UserInfo') {
+    } else if (
+      componentSelected === 'UserInfo' ||
+      componentSelected === 'UserInfoToggle'
+    ) {
       return (
         <UserInfo
           xAccessToken={xAccessToken}
@@ -84,6 +89,7 @@ function Profilesection() {
           setUserInfo={setUserInfo}
           getUsers={getUsers}
           userInfo={userInfo}
+          componentSelected={componentSelected}
         />
       )
     }
@@ -94,6 +100,7 @@ function Profilesection() {
       <ProfileTap
         competitionApplications={competitionApplications}
         userName={userInfo.fullName}
+        disapper={componentSelected === 'UserInfoToggle' ? false : true}
       />
       {selectedComponentRender()}
     </div>

@@ -8,21 +8,6 @@
 
 /* Layout */
 
-.UserApplicationList_wrapper {
-  width: auto;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem 0 2rem;
-  box-sizing: border-box;
-  display: flex;
-}
-
-.UserApplicationList_left {
-  /* border: 2px solid yellow; */
-  width: 28%;
-  height: 84vh;
-}
-
 .UserApplicationList_right {
   width: 68%;
   height: 84vh;
@@ -294,14 +279,6 @@
 @media (max-width: 1049px) {
   /* Layout */
 
-  .UserApplicationList_wrapper {
-    max-width: 768px;
-  }
-
-  .UserApplicationList_wrapper #UserApplicationListTap_wrapper {
-    display: none;
-  }
-
   .UserApplicationList_right {
     width: 100%;
     margin-left: 0%;
@@ -316,10 +293,6 @@
 }
 
 @media (max-width: 750px) {
-  .UserApplicationList_wrapper {
-    max-width: 650px;
-  }
-
   .UserApplicationList_right {
     height: 88vh;
   }

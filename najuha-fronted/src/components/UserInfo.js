@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import './userInfo.css'
 import axios from 'axios'
 import { useJwt } from 'react-jwt'
+import './profilesectionToggle.css'
 
 const beltEngtoKor = {
   black: '블랙',
@@ -201,6 +202,7 @@ function Update({ userInfo, setUserInfo, setMode, updateUser }) {
 function UserInfo(props) {
   const [mode, setMode] = useState('READ')
   const [userInfo, setUserInfo] = useState(props.userInfo)
+  const [switchClassName, setSwitchClassName] = useState('UserInfo')
   const cookies = props.cookies
   const xAccessToken = props.xAccessToken
   const { decodedToken, isExpired } = useJwt(xAccessToken)
@@ -244,9 +246,15 @@ function UserInfo(props) {
     setUserInfo(props.userInfo)
   }, [props.userInfo])
 
+  useEffect(() => {
+    if (props.componentSelected === 'UserInfoToggle')
+      setSwitchClassName('ProfilesectionToggle')
+    else setSwitchClassName('UserInfo')
+  }, [props.componentSelected])
+
   return (
     <>
-      <div className="UserInfo_right">
+      <div className={`${switchClassName}_right`}>
         <h2>내 프로필</h2>
         {mode === 'READ' ? (
           <Read userInfo={userInfo} setMode={setMode} />

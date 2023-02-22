@@ -1,9 +1,6 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './profileTap.css'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { Cookies } from 'react-cookie'
 
 function ProfileTap(props) {
   let userName = props.userName
@@ -30,7 +27,10 @@ function ProfileTap(props) {
   }
 
   return (
-    <section className="ProfileTap_wrapper" id="ProfilesectionTap_wrapper">
+    <section
+      className="ProfileTap_wrapper"
+      id={props?.disapper ? 'ProfileTap_dissaper' : 'ProfileTap_live'}
+    >
       <div className="ProfileTap_welcome">
         <div className="ProfileTap_welcome-center">
           <p>
