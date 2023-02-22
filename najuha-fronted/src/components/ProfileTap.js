@@ -6,32 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import { Cookies } from 'react-cookie'
 
 function ProfileTap(props) {
-  const [username, setUsername] = useState('')
+  let userName = props.userName
   let competitionApplications = props.competitionApplications
-  const cookies = new Cookies()
-  const xAccessToken = cookies.get('x-access-token')
-
-  let navigate = useNavigate()
-
-  //User 프로필 정보 가져오기
-  async function getUsers() {
-    axios
-      .get(`${process.env.REACT_APP_BACK_END_API}/users`, {
-        headers: {
-          'x-access-token': xAccessToken,
-        },
-      })
-      .then(res => {
-        setUsername(res.data.result.UserInfo.fullName)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
-      })
-    return
-  }
+  const navigate = useNavigate()
 
   //실시간 대회 수 그리기
   function renderCompetitonNowCount() {
@@ -52,17 +29,13 @@ function ProfileTap(props) {
     return <p className="ProfileTap_competitionCount-box-num">{totalCnt}</p>
   }
 
-  useEffect(() => {
-    getUsers()
-  }, [])
-
   return (
     <section className="ProfileTap_wrapper" id="ProfilesectionTap_wrapper">
       <div className="ProfileTap_welcome">
         <div className="ProfileTap_welcome-center">
           <p>
             <span className="ProfileTap_welcome-center-username">
-              {username}
+              {userName}
             </span>
             님<br></br>
             안녕하세요
@@ -91,7 +64,7 @@ function ProfileTap(props) {
           <div
             className="ProfileTap_information-btn"
             onClick={() => {
-              navigate('/Profilepage')
+              navigate('/Profilepage', { state: 'UserApplicationList' })
             }}
           >
             신청대회 목록
@@ -99,7 +72,7 @@ function ProfileTap(props) {
           <div
             className="ProfileTap_information-btn"
             onClick={() => {
-              navigate('/UserInfopage')
+              navigate('/Profilepage', { state: 'UserInfo' })
             }}
           >
             내 프로필
