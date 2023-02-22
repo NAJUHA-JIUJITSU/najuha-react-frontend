@@ -2,45 +2,30 @@ import React from 'react'
 import { useState, useEffect, useRef } from 'react'
 import './userInfo.css'
 import axios from 'axios'
-import ProfileTap from '../components/ProfileTap'
-import { Cookies } from 'react-cookie'
 import { useJwt } from 'react-jwt'
 
-function UserInfo() {
+function UserInfo(props) {
+  const beltEngtoKor = {
+    black: '블랙',
+    brown: '브라운',
+    purple: '퍼플',
+    blue: '블루',
+    white: '화이트',
+  }
   const [mode, setMode] = useState('READ')
-  const [userInfo, setUserInfo] = useState([])
-  const [token, setToken] = useState(null)
+  const userInfo = props.userInfo
   let user = userParsing(userInfo)
   let content = null
-  const cookies = new Cookies()
-  const xAccessToken = cookies.get('x-access-token')
+  const cookies = props.cookies
+  const xAccessToken = props.xAccessToken
   const { decodedToken, isExpired } = useJwt(xAccessToken)
-
-  async function getUsers() {
-    axios
-      .get(`${process.env.REACT_APP_BACK_END_API}/users`, {
-        headers: {
-          'x-access-token': cookies.get('x-access-token'),
-        },
-      })
-      .then(res => {
-        setUserInfo(res.data.result.UserInfo)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
-      })
-    return
-  }
 
   async function updateUser(updateUerinfo) {
     console.log(updateUerinfo)
     axios({
       method: 'patch',
       headers: {
-        'x-access-token': cookies.get('x-access-token'),
+        'x-access-token': xAccessToken,
       },
       url: `${process.env.REACT_APP_BACK_END_API}/users`,
       data: updateUerinfo,
@@ -54,28 +39,12 @@ function UserInfo() {
           overwrite: true,
         })
         console.log(res.data.message)
-        console.log(res.data.result)
+        props.getUsers()
       })
       .catch(err => {
         console.log(err)
         console.log(err.response.data.message)
       })
-
-    // axios.patch(`${process.env.REACT_APP_BACK_END_API}/users`,
-    // {
-    //     headers: {
-    //         'x-access-token':  process.env.REACT_APP_BACK_END_TOKEN
-    //     },
-    //     data: updateUerinfo
-    // })
-    // .then((res) => {
-    //     console.log(res.data.message);
-    //     console.log(res.data.result);
-    // })
-    // .catch((err) => {
-    //     console.log(err);
-    //     console.log(err.response.data.message);
-    // })
   }
 
   function userParsing(userInfo) {
@@ -83,9 +52,8 @@ function UserInfo() {
     let email = userInfo.email
     let phoneNumber = userInfo.phoneNumber
     let gender = userInfo.gender === 'female' ? '여자' : '남자'
-    let belt = userInfo.belt
     let weight = userInfo.weight
-
+    let belt = userInfo.belt
     return {
       fullName: fullName,
       email: email,
@@ -101,43 +69,42 @@ function UserInfo() {
       <div className="UserInfo_Boxs UserInfo_boxsRead">
         <div className="UserInfo_infoBox">
           <span>이름</span>
-          <p>{user.fullName}</p>
+          <p>{user?.fullName}</p>
         </div>
         <div className="UserInfo_infoBox">
           <span>성별</span>
-          <p>{user.gender}</p>
+          <p>{user?.gender}</p>
         </div>
         <div className="UserInfo_infoBox">
           <span>휴대폰</span>
-          <p>{user.phoneNumber}</p>
+          <p>{user?.phoneNumber}</p>
         </div>
         <div className="UserInfo_infoBox">
           <span>이메일</span>
-          <p>{user.email}</p>
+          <p>{user?.email}</p>
         </div>
         <div className="UserInfo_infoBox">
           <span>벨트</span>
-          <p>{user.belt}</p>
+          <p>{beltEngtoKor[user?.belt]}</p>
         </div>
         <div className="UserInfo_infoBox">
           <span>체급</span>
-          <p>{user.weight}kg</p>
+          <p>{user?.weight}kg</p>
         </div>
         <button
           className="UserInfo_updateBtn"
           onClick={e => {
             e.preventDefault()
             setMode('UPDATE')
-          }}>
+          }}
+        >
           수정하기
         </button>
       </div>
     )
   }
 
-  function Update(props) {
-    const [userInfos, setUserInfos] = useState(props.user)
-
+  function Update() {
     const handleChange = (e, title) => {
       if (title == 'phoneNumber' || title == 'weight') {
         e.target.value = e.target.value.replace(/[^0-9]/g, '')
@@ -148,10 +115,9 @@ function UserInfo() {
           e.target.value = e.target.value.slice(0, 3)
         }
       }
-      console.log(userInfos)
-      let newuserInfos = { ...userInfos }
-      newuserInfos[title] = e.target.value
-      setUserInfos(newuserInfos)
+      let newuser = { ...user }
+      newuser[title] = e.target.value
+      props.setUserInfo(newuser)
     }
 
     const onSumbit = e => {
@@ -164,11 +130,8 @@ function UserInfo() {
         belt: e.target.belt.value,
         weight: e.target.weight.value,
       }
-      setUserInfo(updateUerinfo)
       updateUser(updateUerinfo)
-      console.log(updateUerinfo)
       setMode('READ')
-      // getUsers();
     }
 
     return (
@@ -179,8 +142,8 @@ function UserInfo() {
             <input
               type="text"
               name="fullName"
-              placeholder={userInfos.fullName}
-              value={userInfos.fullName}
+              placeholder={user?.fullName}
+              value={user?.fullName}
               onChange={e => handleChange(e, 'fullName')}
               required
             />
@@ -195,7 +158,7 @@ function UserInfo() {
                 name="male"
                 value="남자"
                 id="male"
-                checked={userInfos.gender === '남자'}
+                checked={user?.gender === '남자'}
                 onChange={e => handleChange(e, 'gender')}
               />
               <span>남자</span>
@@ -206,7 +169,7 @@ function UserInfo() {
                 name="female"
                 value="여자"
                 id="female"
-                checked={userInfos.gender === '여자'}
+                checked={user?.gender === '여자'}
                 onChange={e => handleChange(e, 'gender')}
               />
               <span>여자</span>
@@ -220,8 +183,8 @@ function UserInfo() {
               <input
                 type="tel"
                 name="phoneNumber"
-                placeholder={userInfos.phoneNumber}
-                value={userInfos.phoneNumber}
+                placeholder={user?.phoneNumber}
+                value={user?.phoneNumber}
                 onChange={e => handleChange(e, 'phoneNumber')}
                 required
               />
@@ -235,8 +198,8 @@ function UserInfo() {
             <input
               type="email"
               name="email"
-              placeholder={userInfos.email}
-              value={userInfos.email}
+              placeholder={user?.email}
+              value={user?.email}
               onChange={e => handleChange(e, 'email')}
               required
             />
@@ -246,14 +209,15 @@ function UserInfo() {
           <span>벨트</span>
           <div className="UserInfo_beltSeclet">
             <select
-              value={userInfos.belt}
+              value={user?.belt}
               name="belt"
-              onChange={e => handleChange(e, 'belt')}>
-              <option value="화이트">화이트</option>
-              <option value="블루">블루</option>
-              <option value="퍼플">퍼플</option>
-              <option value="브라운">브라운</option>
-              <option value="블랙">블랙</option>
+              onChange={e => handleChange(e, 'belt')}
+            >
+              <option value="white">화이트</option>
+              <option value="blue">블루</option>
+              <option value="purple">퍼플</option>
+              <option value="brown">브라운</option>
+              <option value="black">블랙</option>
             </select>
           </div>
         </div>
@@ -266,8 +230,8 @@ function UserInfo() {
                 name="weight"
                 min="0"
                 max="200"
-                placeholder={userInfos.weight}
-                value={userInfos.weight}
+                placeholder={user?.weight}
+                value={user?.weight}
                 onChange={e => handleChange(e, 'weight')}
               />
             </p>
@@ -287,24 +251,21 @@ function UserInfo() {
         setMode('UPDATE')
       }
     }
-
-    getUsers()
   }, [decodedToken])
 
   if (mode === 'READ') {
     content = <Read />
   } else if (mode === 'UPDATE') {
-    content = <Update user={user} />
+    content = <Update />
   }
 
   return (
-    <div className="UserInfo_wrapper">
-      <ProfileTap />
+    <>
       <div className="UserInfo_right">
         <h2>내 프로필</h2>
         {content}
       </div>
-    </div>
+    </>
   )
 }
 
