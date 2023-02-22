@@ -160,8 +160,8 @@ function UserApplicationList(props) {
       }
 
       if (clickedList === 'person') {
-        //날짜가 오늘을 기준으로 지났으면 안보여주기
-        if (today > new Date(application.Competition.doreOpen)) {
+        //날짜가 오늘을 기준으로 지났으면 안보여주기(오늘은 보여줌)
+        if (today >= new Date(application.Competition.doreOpen)) {
           return
         }
         //단체신청이면 안보여주기
