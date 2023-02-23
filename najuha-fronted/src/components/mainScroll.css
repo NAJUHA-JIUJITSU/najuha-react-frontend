@@ -148,13 +148,13 @@
 }
 
 .MainScroll_title1 {
-  margin-top: 30px;
+  margin-top: 3rem;
 }
 
 .MainScroll_section2 h1 {
   position: relative;
   font-size: var(--font-size-title1);
-  line-height: 70px;
+  line-height: 7rem;
   font-weight: 700;
   z-index: 2;
 }
@@ -162,28 +162,29 @@
 .MainScroll_section2 h2 {
   font-size: var(--font-size-subtitle1);
   color: var(--gray-subtitle-color);
-  line-height: 36px;
+  line-height: 3.6rem;
   font-weight: 400;
-  margin-top: 82px;
-  margin-bottom: 40px;
+  margin-top: 8.2rem;
+  margin-bottom: 4rem;
 }
 
 .MainScroll_blueLine {
   background: #90ccf8;
-  width: 200px;
-  height: 20px;
+  width: 20rem;
+  height: 2rem;
   border-radius: 25px;
   position: absolute;
-  top: 198px;
+  top: 19.8rem;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
 }
 
+/* 중간 그라데이션 */
 .MainScroll_linear1 {
   position: relative;
   z-index: 888;
-  height: 184px;
+  height: 18.4rem;
   background: linear-gradient(180deg, #ffffff 0%, #f2f7ff 100%);
 }
 
@@ -193,32 +194,32 @@
   position: relative;
   z-index: 888;
   background-color: var(--blue-background-color);
-  height: 200vh;
+  height: 170vh;
 }
 
 .MainScroll_section3 h1 {
   position: relative;
   font-size: var(--font-size-title1);
-  line-height: 70px;
+  line-height: 7rem;
   font-weight: 700;
   z-index: 2;
   /* max-width: 821px; */
 }
 
 .MainScroll_title2 {
-  max-width: 821px;
+  max-width: 82.1rem;
   margin: 0 auto;
-  padding-top: 60px;
+  padding-top: 6rem;
 }
 
 .MainScroll_blueLine2 {
   background: #90ccf8;
-  width: 200px;
-  height: 20px;
+  width: 20rem;
+  height: 2rem;
   border-radius: 25px;
   position: absolute;
-  top: 258px;
-  left: 80px;
+  top: 25.8rem;
+  left: 8rem;
   transform: translate(-50%, -50%);
   z-index: 1;
 }
@@ -229,27 +230,103 @@
 }
 
 .MainScroll_phone img {
-  height: 800px;
+  height: 80rem;
 }
 
 .MainScroll_phone1 {
-  margin-top: 86px;
+  margin-top: 8.6rem;
 }
 
 .MainScroll_phone2 {
-  margin-left: 90px;
-  margin-top: -200px;
+  margin-left: 9rem;
+  margin-top: -20rem;
 }
 
 .MainScroll_phone1 p {
   font-size: var(--font-size-subinfo);
   color: var(--gray-info-color);
-  margin-left: 20px;
+  margin-left: 2rem;
 }
 
 .MainScroll_phone2 h2 {
   font-size: var(--font-size-subtitle1);
   color: var(--gray-subtitle-color);
-  line-height: 36px;
-  margin-left: 20px;
+  line-height: 3.6rem;
+  margin-left: 2rem;
+}
+
+/* 중간 그라데이션 */
+.MainScroll_linear2 {
+  position: relative;
+  z-index: 888;
+  height: 18.4rem;
+  background: linear-gradient(180deg, #f2f7ff 0%, #ffffff 100%);
+}
+
+/* section 4 */
+
+.MainScroll_section4 {
+  position: relative;
+  z-index: 888;
+  background-color: white;
+  height: 100vh;
+  /* align-items: center; */
+  text-align: center;
+}
+
+.MainScroll_section4 h1 {
+  position: relative;
+  font-size: var(--font-size-title2);
+  line-height: 4.6rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  z-index: 2;
+}
+
+.MainScroll_blueLine3 {
+  background: #90ccf8;
+  width: 21.7rem;
+  height: 1rem;
+  border-radius: 25px;
+  position: absolute;
+  top: 12.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.MainScroll_title3 h2 {
+  font-size: var(--font-size-subtitle2);
+  color: var(--gray-subtitle-color);
+  margin-top: 2.7rem;
+}
+
+/* 카드 슬라이드 디자인 */
+.MainScroll_slide {
+  margin-top: 67px;
+}
+
+.MainScroll_card {
+  display: flex;
+  border: 2px solid black;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: auto;
+  max-width: 520px;
+}
+
+#card {
+  position: static;
+  text-align: center;
+  justify-content: center;
+}
+
+.MainScroll_card img {
+  width: 227px;
+  height: 296px;
+}
+
+.arrow {
+  position: absolute;
+  z-index: 999;
 }

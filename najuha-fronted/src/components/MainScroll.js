@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Component, useRef } from 'react'
 import './mainScroll.css'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -6,6 +6,12 @@ import backgroundImg from '../src_assets/jiujitsuGuys.jpg'
 import monitor from '../src_assets/모니터.png'
 import phone1 from '../src_assets/폰1.png'
 import phone2 from '../src_assets/폰2.png'
+import samplePoster from '../src_assets/samplePoster.png'
+import cardRigthArrow from '../src_assets/카드오른쪽화살표.svg'
+
+import Slider from 'react-slick'
+import './slick.css'
+import './slick-theme.css'
 
 function MainScroll() {
   const [ScrollActive, setScrollActive] = useState(false)
@@ -43,6 +49,7 @@ function MainScroll() {
       setScrollActive(false)
     }
   }
+
   useEffect(() => {
     function scrollListener() {
       window.addEventListener('scroll', handleScroll)
@@ -56,6 +63,49 @@ function MainScroll() {
   useEffect(() => {
     AOS.init()
   })
+
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: 'block', background: 'red' }}
+        onClick={onClick}
+      />
+    )
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: 'block', background: 'green' }}
+        onClick={onClick}
+      />
+    )
+  }
+  const [settings, setSettings] = useState({
+    dots: true,
+    infinite: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    speed: 500,
+    centerMode: true,
+    centerPadding: '28%',
+    nextArrow: <SampleNextArrow className="arrow" />,
+    prevArrow: <SamplePrevArrow className="arrow" />,
+  })
+
+  const images = [
+    { src: samplePoster, title: 1 },
+    { src: samplePoster, title: 2 },
+    { src: samplePoster, title: 3 },
+    { src: samplePoster, title: 4 },
+    { src: samplePoster, title: 5 },
+    { src: samplePoster, title: 6 },
+    { src: samplePoster, title: 7 },
+  ]
 
   return (
     <div className="MainScroll_wrapper">
@@ -176,6 +226,30 @@ function MainScroll() {
               대회조회부터 상세정보까지<br></br>간편하게 확인하세요.
             </h2>
           </div>
+        </div>
+      </div>
+
+      <div className="MainScroll_linear2"></div>
+
+      <div className="MainScroll_section4">
+        <div data-aos="fade-up" className="MainScroll_title3">
+          <h1>나주하와</h1>
+          <h1>함께하는 대회를</h1>
+          <h1>신청해보세요!</h1>
+          <div className="MainScroll_blueLine3"></div>
+          <h2>간편결제로 결제하고 내 프로필에서 바로 확인까지</h2>
+        </div>
+        <div data-aos="fade-up" className="MainScroll_slide">
+          <Slider {...settings}>
+            {images.map(el => (
+              <div key={el.title} id="card">
+                <div className="MainScroll_card">
+                  <img src={el.src} />
+                  <h1>{el.title}</h1>
+                </div>
+              </div>
+            ))}
+          </Slider>
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@
   z-index: 999;
   color: var(--white-color);
   max-width: 821px;
+  /* background-color: white; */
   /* padding: 0 30rem; */
   box-sizing: border-box;
   position: fixed;
