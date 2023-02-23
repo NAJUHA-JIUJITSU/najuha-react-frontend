@@ -77,9 +77,9 @@ function ProfileTap(props) {
           >
             내 프로필
           </div>
-          <div className="ProfileTap_information-btn">개인정보처리방침</div>
+          {/* <div className="ProfileTap_information-btn">개인정보처리방침</div>
           <div className="ProfileTap_information-btn">이용약관</div>
-          <div className="ProfileTap_information-btn">버전정보</div>
+          <div className="ProfileTap_information-btn">버전정보</div> */}
         </li>
       </div>
     </section>
