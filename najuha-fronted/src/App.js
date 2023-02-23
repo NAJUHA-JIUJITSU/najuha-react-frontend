@@ -8,7 +8,6 @@ import Competitionform from './components/Competitionform'
 import CompetitionSchedule from './pages/CompetitionSchedule'
 import Profilepage from './pages/Profilepage'
 import ProfileInfopage from './pages/ProfileInfopage'
-import Redirect from './components/Redirect'
 import KakaoLogin from './components/KakaoLogin'
 import CompetitionApplyTeamPage from './pages/CompetitionApplyTeamPage'
 import CompetitionApplyPatchTeamPage from './pages/CompetitionApplyPatchTeamPage'
@@ -47,7 +46,6 @@ function App() {
   const AuthCompetitionform = Auth(Competitionform, true, true)
   const AuthProfilepage = Auth(Profilepage, true)
   const AuthProfileInfopage = Auth(ProfileInfopage, true)
-  const AuthRedirect = Auth(Redirect, null)
   const Authkakao = Auth(KakaoLogin, null)
   const AuthoCompetitionApplyMethodPage = Auth(CompetitionApplyMethodPage, true)
   const AuthPaymentSuccessPage = Auth(PaymentSuccessPage, true)
@@ -107,7 +105,6 @@ function App() {
             path="/Profilepage/info/:id"
             element={<AuthProfileInfopage />}
           />
-          <Route path="/redirect" element={<AuthRedirect />} />
           <Route path="/oauth/callback/kakao" element={<Authkakao />} />
           <Route path="/toss/success" element={<TossSuccess />} />
           <Route path="/payment/success" element={<AuthPaymentSuccessPage />} />
