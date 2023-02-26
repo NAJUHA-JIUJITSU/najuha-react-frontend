@@ -39,6 +39,7 @@ function PaymentInfo() {
         }
       )
       .then(res => {
+        console.log(res.data.result)
         setcompetitionApplicationInfo(applicationParsing(res.data.result))
         setCompetitionApplicationList(res.data.result.competitionApplications)
         console.log('데이터: ' + res.data.result)
@@ -60,35 +61,6 @@ function PaymentInfo() {
     const dayOfWeek = week[new Date(날짜문자열).getDay()]
 
     return dayOfWeek
-  }
-
-  //핸드폰 숫자 사이 하이픈 넣기
-  function autoHypenPhone(str) {
-    let tmp = ''
-    if (str.length < 4) {
-      return str
-    } else if (str.length < 7) {
-      tmp += str.substr(0, 3)
-      tmp += '-'
-      tmp += str.substr(3)
-      return tmp
-    } else if (str.length < 11) {
-      tmp += str.substr(0, 3)
-      tmp += '-'
-      tmp += str.substr(3, 3)
-      tmp += '-'
-      tmp += str.substr(6)
-      return tmp
-    } else {
-      tmp += str.substr(0, 3)
-      tmp += '-'
-      tmp += str.substr(3, 4)
-      tmp += '-'
-      tmp += str.substr(7)
-      return tmp
-    }
-
-    return str
   }
 
   //신청대회 데이터 파싱
@@ -170,6 +142,15 @@ function PaymentInfo() {
           <td>{application.isGroup ? '단체' : '개인'}</td>
           <td>{application.competitionPayment.amount}</td>
           <td>{application.competitionPayment.id}</td>
+          <button
+            onClick={() => {
+              if (window.confirm('정말로 환불하시겠습니까?'))
+                refund(application.competitionPayment.orderId)
+            }}
+            style={{ color: 'red' }}
+          >
+            환불
+          </button>
         </tr>
       )
     })
@@ -184,31 +165,33 @@ function PaymentInfo() {
   function renderCompetitionApplicationListInfo() {
     userPayAmount = 0
     userRealPayAmount = 0
-    return competitionApplicationList.map(application => {
-      if (application.id == clickID) {
-        userRealPayAmount = application.competitionPayment.amount
-        return application.CompetitionApplicationInfos.map((application, i) => {
-          userPayAmount += application.pricingPolicy.normal
-          return (
-            <tr>
-              <td>{i + 1}</td>
-              <td>{application.playerName}</td>
-              <td>{application.playerBirth}</td>
-              <td>{application.gender == 'male' ? '남자' : '여자'}</td>
-              <td>{application.uniform == 'gi' ? '기' : '노기'}</td>
-              <td>{application.divisionName}</td>
-              <td>{application.belt}</td>
-              <td>{application.weight}kg</td>
-              <td>{application.pricingPolicy.normal}원</td>
-            </tr>
-          )
-        })
+    return competitionApplicationList.map(parentApplication => {
+      if (parentApplication.id == clickID) {
+        userRealPayAmount = parentApplication.competitionPayment.amount
+        return parentApplication.CompetitionApplicationInfos.map(
+          (application, i) => {
+            userPayAmount += application.pricingPolicy.normal
+            return (
+              <tr>
+                <td>{i + 1}</td>
+                <td>{application.playerName}</td>
+                <td>{application.playerBirth}</td>
+                <td>{application.gender == 'male' ? '남자' : '여자'}</td>
+                <td>{application.uniform == 'gi' ? '기' : '노기'}</td>
+                <td>{application.divisionName}</td>
+                <td>{application.belt}</td>
+                <td>{application.weight}kg</td>
+                <td>{application.pricingPolicy.normal}원</td>
+              </tr>
+            )
+          }
+        )
       }
       return
     })
   }
 
-  //오른쪽 테이블 대표 정보 렌더
+  //오른쪽 대표 정보 렌더
   function renderCompetitionApplicationListInfoTitle() {
     return competitionApplicationList.map(application => {
       if (application.id == clickID) {
@@ -229,6 +212,27 @@ function PaymentInfo() {
       }
       return
     })
+  }
+
+  //환불 함수
+  function refund(orderId) {
+    console.log(orderId)
+    axios
+      .delete(
+        `${process.env.REACT_APP_BACK_END_API}/admin/payments/${orderId}/`,
+        {
+          headers: {
+            'x-access-token': xAccessToken,
+          },
+        }
+      )
+      .then(res => {
+        console.log(res.data.message)
+        getCompetitionApplicationInfo()
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   useEffect(() => {
