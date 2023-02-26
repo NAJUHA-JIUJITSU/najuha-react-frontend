@@ -28,6 +28,7 @@
 .MainScroll_wrapper {
   justify-content: center;
   scroll-behavior: smooth;
+  overflow: hidden;
 }
 
 .MainScroll_section1,
@@ -269,7 +270,7 @@
   position: relative;
   z-index: 888;
   background-color: white;
-  height: 100vh;
+  height: 90vh;
   /* align-items: center; */
   text-align: center;
 }
@@ -308,11 +309,60 @@
 
 .MainScroll_card {
   display: flex;
-  border: 2px solid black;
   border-radius: 20px;
   overflow: hidden;
   margin: auto;
   max-width: 520px;
+
+  box-shadow: 0 0 0 2px #dbdbdb inset;
+}
+
+.MainScroll_cardInfo {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  margin-left: 10px;
+}
+
+.MainScroll_cardInfo p {
+  font-size: 24px;
+  margin-bottom: 5%;
+  margin-top: 14%;
+  height: 10%;
+}
+
+.MainScroll_cardInfo h2 {
+  font-size: 30px;
+  font-weight: 500;
+  width: 96%;
+  height: 34%;
+}
+
+.MainScroll_cardInfo h3 {
+  font-size: 18px;
+  height: 10%;
+  margin-bottom: 5%;
+  color: #696969;
+  width: 96%;
+}
+
+.MainScroll_cardInfo button {
+  margin-right: 10px;
+  width: 120px;
+  height: 46px;
+  background: rgba(255, 255, 255, 0.26);
+  border: 1px solid #acacac;
+  border-radius: 25px;
+  font-size: 18px;
+}
+
+.MainScroll_apply {
+  margin-left: auto;
 }
 
 #card {
@@ -329,4 +379,25 @@
 .arrow {
   position: absolute;
   z-index: 999;
+}
+
+/* section 5 */
+
+.MainScroll_section5 {
+  position: relative;
+  z-index: 888;
+  background-color: white;
+  height: 10vh;
+  /* align-items: center; */
+  text-align: center;
+  margin-top: -60px;
+}
+
+.MainScroll_listBtn {
+  display: inline-block;
+  font-size: 16px;
+  color: #a6a6a6;
+  letter-spacing: -0.04em;
+  text-decoration: underline;
+  cursor: pointer;
 }

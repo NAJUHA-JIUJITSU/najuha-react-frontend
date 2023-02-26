@@ -7,6 +7,8 @@ import monitor from '../src_assets/모니터.png'
 import phone1 from '../src_assets/폰1.png'
 import phone2 from '../src_assets/폰2.png'
 import samplePoster from '../src_assets/samplePoster.png'
+import samplePoster2 from '../src_assets/포스터2.png'
+import samplePoster3 from '../src_assets/포스터3.png'
 import cardRigthArrow from '../src_assets/카드오른쪽화살표.svg'
 
 import Slider from 'react-slick'
@@ -69,9 +71,8 @@ function MainScroll() {
     return (
       <div
         className={className}
-        style={{ ...style, display: 'block', background: 'red' }}
-        onClick={onClick}
-      />
+        style={{ ...style, display: 'block' }}
+        onClick={onClick}></div>
     )
   }
 
@@ -80,7 +81,7 @@ function MainScroll() {
     return (
       <div
         className={className}
-        style={{ ...style, display: 'block', background: 'green' }}
+        style={{ ...style, display: 'block' }}
         onClick={onClick}
       />
     )
@@ -98,13 +99,55 @@ function MainScroll() {
   })
 
   const images = [
-    { src: samplePoster, title: 1 },
-    { src: samplePoster, title: 2 },
-    { src: samplePoster, title: 3 },
-    { src: samplePoster, title: 4 },
-    { src: samplePoster, title: 5 },
-    { src: samplePoster, title: 6 },
-    { src: samplePoster, title: 7 },
+    {
+      src: samplePoster,
+      id: 1,
+      doreOpen: '2023.02.08(월)',
+      title: '나주하 후원 챔피언십',
+      location: '사우동 시민회관',
+    },
+    {
+      src: samplePoster2,
+      id: 2,
+      doreOpen: '2023.02.15(토)',
+      title: 'JUCA 주짓수 카니발 대회',
+      location: '카니발 체육관',
+    },
+    {
+      src: samplePoster3,
+      id: 3,
+      doreOpen: '2023.02.23(일)',
+      title: '모래밭 주짓수 챔피언십',
+      location: '해운대 모래밭',
+    },
+    {
+      src: samplePoster,
+      id: 4,
+      doreOpen: '2023.03.01(금)',
+      title: '나주하 후원 챔피언십',
+      location: '사우동 시민회관',
+    },
+    {
+      src: samplePoster2,
+      id: 5,
+      doreOpen: '2023.03.09(토)',
+      title: '나주하 후원 챔피언십',
+      location: '사우동 시민회관',
+    },
+    {
+      src: samplePoster3,
+      id: 6,
+      doreOpen: '2023.03.16(일)',
+      title: '나주하 후원 챔피언십',
+      location: '사우동 시민회관',
+    },
+    {
+      src: samplePoster,
+      id: 7,
+      doreOpen: '2023.04.01(월)',
+      title: '나주하 후원 챔피언십',
+      location: '사우동 시민회관',
+    },
   ]
 
   return (
@@ -242,14 +285,24 @@ function MainScroll() {
         <div data-aos="fade-up" className="MainScroll_slide">
           <Slider {...settings}>
             {images.map(el => (
-              <div key={el.title} id="card">
+              <div key={el.id} id="card">
                 <div className="MainScroll_card">
                   <img src={el.src} />
-                  <h1>{el.title}</h1>
+                  <div className="MainScroll_cardInfo">
+                    <p>{el.doreOpen}</p>
+                    <h2>{el.title}</h2>
+                    <h3>{el.location}</h3>
+                    <button className="MainScroll_apply">바로 신청</button>
+                  </div>
                 </div>
               </div>
             ))}
           </Slider>
+        </div>
+      </div>
+      <div className="MainScroll_section5">
+        <div className="MainScroll_listBtn">
+          <p>모든 대회 보러가기</p>
         </div>
       </div>
     </div>

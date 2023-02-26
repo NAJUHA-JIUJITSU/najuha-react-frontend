@@ -1,6 +1,9 @@
-.MainScroll_wrapper {
-  justify-content: center;
-  scroll-behavior: smooth;
+.MainScroll_navWrapper {
+  position: relative;
+  z-index: 999;
+  width: 100%;
+  position: fixed;
+  border-bottom: 1px solid #ededed;
 }
 
 .MainScroll_nav {
@@ -13,7 +16,7 @@
   /* background-color: white; */
   /* padding: 0 30rem; */
   box-sizing: border-box;
-  position: fixed;
+
   margin: 0 auto;
   left: 0;
   right: 0;

@@ -28,8 +28,8 @@
 
   /* display: flex; */
 
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   padding: 0;
   -webkit-transform: translate(0, -50%);
   -ms-transform: translate(0, -50%);
@@ -47,14 +47,14 @@
   position: absolute;
   top: 50%;
   left: 25%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   z-index: 999;
 }
 .slick-next {
   position: absolute;
   top: 50%;
   left: 75%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 }
 
 .slick-prev:hover,
@@ -97,7 +97,7 @@
   left: auto;
 }
 .slick-prev:before {
-  content: '←';
+  content: url(../src_assets/카드왼쪽화살표.svg);
 }
 [dir='rtl'] .slick-prev:before {
   content: '→';
@@ -110,8 +110,9 @@
   right: auto;
   left: -25px;
 }
+
 .slick-next:before {
-  content: '→';
+  content: url(../src_assets/카드오른쪽화살표.svg);
 }
 [dir='rtl'] .slick-next:before {
   content: '←';
@@ -124,7 +125,7 @@
 
 .slick-dots {
   position: absolute;
-  bottom: -60px;
+  bottom: -50px;
 
   display: block;
 
@@ -189,12 +190,12 @@
   text-align: center;
 
   opacity: 0.25;
-  color: black;
+  color: #abb2bd;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 .slick-dots li.slick-active button:before {
   opacity: 0.75;
-  color: black;
+  color: #212121;
 }

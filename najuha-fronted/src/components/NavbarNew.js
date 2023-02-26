@@ -24,30 +24,36 @@ function NavbarNew() {
 
   return (
     <div
-      className="MainScroll_nav"
-      style={ScrollY > 3600 ? { backgroundColor: '' } : {}}>
-      <h1
-        className="MainScroll_logo"
-        style={ScrollY > 3600 ? { color: 'black' } : {}}>
-        NAJUHA
-      </h1>
-      <div className="MainScroll_list">
-        <ul
-          className="MainScroll_menu"
-          style={ScrollY > 3600 ? { color: '#888888' } : {}}>
-          <li>대회일정</li>
-          <li>세미나</li>
-        </ul>
-        <img
-          class="MainScroll_belt"
-          alt="벨트모양 로그인 아이콘"
-          src={ScrollY > 3600 ? grayBelt : whiteBelt}
-          style={
-            ScrollY > 3600
-              ? { backgroundColor: 'rgba(238, 238, 238, 0.48)' }
-              : { backgroundColor: 'rgba(238, 238, 238, 0.01)' }
-          }
-        />
+      className="MainScroll_navWrapper"
+      style={
+        ScrollY > 3600
+          ? { backgroundColor: 'white' }
+          : { backgroundColor: '', border: 'none' }
+      }>
+      <div className="MainScroll_nav">
+        <h1
+          className="MainScroll_logo"
+          style={ScrollY > 3600 ? { color: 'black' } : {}}>
+          NAJUHA
+        </h1>
+        <div className="MainScroll_list">
+          <ul
+            className="MainScroll_menu"
+            style={ScrollY > 3600 ? { color: '#888888' } : {}}>
+            <li>대회일정</li>
+            <li>세미나</li>
+          </ul>
+          <img
+            class="MainScroll_belt"
+            alt="벨트모양 로그인 아이콘"
+            src={ScrollY > 3600 ? grayBelt : whiteBelt}
+            style={
+              ScrollY > 3600
+                ? { backgroundColor: 'rgba(238, 238, 238, 0.48)' }
+                : { backgroundColor: 'rgba(238, 238, 238, 0.01)' }
+            }
+          />
+        </div>
       </div>
     </div>
   )
