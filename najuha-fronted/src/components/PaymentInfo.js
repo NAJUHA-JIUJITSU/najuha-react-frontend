@@ -46,6 +46,7 @@ function PaymentInfo() {
       })
       .catch(err => {
         console.log(err)
+        alert(`${err.message}\n Message:${err.response.data.result} `)
       })
     return
   }
@@ -161,7 +162,8 @@ function PaymentInfo() {
           className="PaymentInfo_tableHover"
           onClick={() => {
             idClick(application.id)
-          }}>
+          }}
+        >
           <td>{i + 1}</td>
           <td>{application.User.UserInfo.fullName}</td>
           <td>{application.User.UserInfo.phoneNumber}</td>
@@ -250,7 +252,8 @@ function PaymentInfo() {
           <div className="ProfileInfo_competition_Left">
             <img
               src={competitionApplicationInfo.postUrl}
-              alt="대회포스터"></img>
+              alt="대회포스터"
+            ></img>
           </div>
           <div className="ProfileInfo_competition_Right">
             <div className="ProfileInfo_competition_date">
