@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import './competition.css'
 import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
@@ -12,6 +12,7 @@ function AdminCompetition() {
   const { id } = useParams()
   const [markdown, setMarkdown] = useState('')
   const cookies = new Cookies()
+  const navigate = useNavigate()
   //     let markdown = `
   // # 참가자 명단
   // ## 세부 정보
@@ -206,7 +207,8 @@ function AdminCompetition() {
             </div>
             <div
               id="competition-top-content-info-each-last"
-              className="competition-top-content-info-each">
+              className="competition-top-content-info-each"
+            >
               <h3>대진표 공개</h3>
               <p>
                 {viewCompetition ? viewCompetition.tournamentTableOpenDate : ''}{' '}
@@ -219,7 +221,14 @@ function AdminCompetition() {
             </div>
           </div>
         </div>
-        <button id="competition-top-button">대회 신청</button>
+        <button
+          id="competition-top-button"
+          onClick={() => {
+            navigate(`/competition/applymethod/${id}`)
+          }}
+        >
+          대회 신청
+        </button>
       </div>
       <div className="competition-bottom">
         <ReactMarkdown
