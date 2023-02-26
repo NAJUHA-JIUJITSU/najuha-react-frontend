@@ -4,6 +4,7 @@ import './competition.css'
 import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
+import sampleposter from '../src_assets/samplePoster.png'
 
 function AdminCompetition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
@@ -162,7 +163,7 @@ function AdminCompetition() {
               competition
                 ? competition.CompetitionPoster
                   ? competition.CompetitionPoster.imageUrl
-                  : ''
+                  : sampleposter
                 : ''
             }
             alt="대회이미지"
