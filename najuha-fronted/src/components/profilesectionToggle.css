@@ -1,27 +1,4 @@
-/* UA reset */
-
-/* Typography */
-
-:root {
-  font-size: 62.5%; /* 10px */
-}
-
 /* Layout */
-
-.ProfilesectionToggle_wrapper {
-  width: auto;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem 0 2rem;
-  box-sizing: border-box;
-  display: flex;
-}
-
-#ProfilesectionTap_wrapper {
-  /* border: 2px solid yellow; */
-  width: 28%;
-  height: 84vh;
-}
 
 .ProfilesectionToggle_right {
   width: 68%;
@@ -53,23 +30,7 @@
 @media (max-width: 1049px) {
   /* Layout */
 
-  .ProfilesectionToggle_wrapper {
-    max-width: 768px;
-  }
-
   .ProfilesectionToggle_right {
     display: none;
-  }
-
-  #ProfilesectionTap_wrapper {
-    display: block;
-    height: 88vh;
-    width: 100%;
-  }
-}
-
-@media (max-width: 750px) {
-  .ProfilesectionToggle_wrapper {
-    max-width: 650px;
   }
 }

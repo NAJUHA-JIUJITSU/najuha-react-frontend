@@ -8,21 +8,6 @@
 
 /* Layout */
 
-.UserInfo_wrapper {
-  width: auto;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem 0 2rem;
-  box-sizing: border-box;
-  display: flex;
-}
-
-.UserInfo_left {
-  /* border: 2px solid yellow; */
-  width: 28%;
-  height: 84vh;
-}
-
 .UserInfo_right {
   width: 68%;
   height: 84vh;
@@ -130,15 +115,6 @@
 
 @media (max-width: 1049px) {
   /* Layout */
-
-  .UserInfo_wrapper {
-    max-width: 768px;
-  }
-
-  .UserInfo_wrapper #ProfilesectionTap_wrapper {
-    display: none;
-  }
-
   .UserInfo_right {
     width: 100%;
     margin-left: 0%;
@@ -157,10 +133,6 @@
 }
 
 @media (max-width: 750px) {
-  .UserInfo_wrapper {
-    max-width: 650px;
-  }
-
   .UserInfo_right {
     height: 88vh;
   }

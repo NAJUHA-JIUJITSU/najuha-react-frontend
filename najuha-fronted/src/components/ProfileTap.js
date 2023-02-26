@@ -1,37 +1,11 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './profileTap.css'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { Cookies } from 'react-cookie'
 
-function ProfileTap() {
-  const [username, setUsername] = useState('나주하')
-  const [competitionApplications, setCompetitionApplications] = useState([])
-  const cookies = new Cookies()
-  const xAccessToken = cookies.get('x-access-token')
-
-  let navigate = useNavigate()
-
-  //User 프로필 정보 가져오기
-  async function getUsers() {
-    axios
-      .get(`${process.env.REACT_APP_BACK_END_API}/users`, {
-        headers: {
-          'x-access-token': xAccessToken,
-        },
-      })
-      .then(res => {
-        setUsername(res.data.result.UserInfo.fullName)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
-      })
-    return
-  }
+function ProfileTap(props) {
+  let userName = props.userName
+  let competitionApplications = props.competitionApplications
+  const navigate = useNavigate()
 
   //실시간 대회 수 그리기
   function renderCompetitonNowCount() {
@@ -52,41 +26,16 @@ function ProfileTap() {
     return <p className="ProfileTap_competitionCount-box-num">{totalCnt}</p>
   }
 
-  //User 대회 정보 가져오기
-  async function getCompetitionApplication() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        setCompetitionApplications(res.data.result)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
-      })
-    return
-  }
-
-  useEffect(() => {
-    getUsers()
-    getCompetitionApplication()
-  }, [])
-
   return (
-    <section className="ProfileTap_wrapper" id="ProfilesectionTap_wrapper">
+    <section
+      className="ProfileTap_wrapper"
+      id={props?.disapper ? 'ProfileTap_dissaper' : 'ProfileTap_live'}
+    >
       <div className="ProfileTap_welcome">
         <div className="ProfileTap_welcome-center">
           <p>
             <span className="ProfileTap_welcome-center-username">
-              {username}
+              {userName}
             </span>
             님<br></br>
             안녕하세요
@@ -115,20 +64,22 @@ function ProfileTap() {
           <div
             className="ProfileTap_information-btn"
             onClick={() => {
-              navigate('/Profilepage')
-            }}>
+              navigate('/Profilepage', { state: 'UserApplicationList' })
+            }}
+          >
             신청대회 목록
           </div>
           <div
             className="ProfileTap_information-btn"
             onClick={() => {
-              navigate('/UserInfopage')
-            }}>
+              navigate('/Profilepage', { state: 'UserInfo' })
+            }}
+          >
             내 프로필
           </div>
-          <div className="ProfileTap_information-btn">개인정보처리방침</div>
+          {/* <div className="ProfileTap_information-btn">개인정보처리방침</div>
           <div className="ProfileTap_information-btn">이용약관</div>
-          <div className="ProfileTap_information-btn">버전정보</div>
+          <div className="ProfileTap_information-btn">버전정보</div> */}
         </li>
       </div>
     </section>

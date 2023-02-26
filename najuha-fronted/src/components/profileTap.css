@@ -126,7 +126,19 @@
 @media (max-width: 1049px) {
   /* Layout */
 
-  .ProfileTap_wrapper {
-    display: none;
+  #ProfileTap_dissaper {
+    display: none !important;
+    background-color: red;
+  }
+
+  #ProfileTap_live {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media (max-width: 750px) {
+  #ProfileTap_live {
+    height: 88vh;
   }
 }
