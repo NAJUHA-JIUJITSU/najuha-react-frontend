@@ -26,14 +26,14 @@ function NavbarNew() {
     <div
       className="MainScroll_navWrapper"
       style={
-        ScrollY > 3600
+        ScrollY > 4100
           ? { backgroundColor: 'white' }
           : { backgroundColor: '', border: 'none' }
       }>
       <div className="MainScroll_nav">
         <h1
           className="MainScroll_logo"
-          style={ScrollY > 3600 ? { color: 'black' } : {}}>
+          style={ScrollY > 4100 ? { color: 'black' } : {}}>
           NAJUHA
         </h1>
         <div className="MainScroll_list">

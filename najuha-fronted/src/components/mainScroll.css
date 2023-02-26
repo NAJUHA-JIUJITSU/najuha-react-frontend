@@ -129,7 +129,7 @@
 }
 
 .MainScroll_section1-1 {
-  height: 580vh;
+  height: 650vh;
   position: relative;
   background-color: #000000;
 }
@@ -400,4 +400,10 @@
   letter-spacing: -0.04em;
   text-decoration: underline;
   cursor: pointer;
+}
+
+@media (max-width: 1049px) {
+}
+
+@media (max-width: 750px) {
 }

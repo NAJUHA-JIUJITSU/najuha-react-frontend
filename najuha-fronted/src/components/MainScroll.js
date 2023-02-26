@@ -39,9 +39,9 @@ function MainScroll() {
       if (scrollTop < 3100) {
         const newBgColor = `rgba(0, 0, 0, ${(scrollTop - 1700) / 1000})`
         setBgColor(newBgColor)
-      } else if (scrollTop >= 3100) {
+      } else if (scrollTop >= 3600) {
         setBgColor('rgba(0, 0, 0, 0.4)')
-        const newBgColor = `rgba(255, 255, 255, ${(scrollTop - 3100) / 500})`
+        const newBgColor = `rgba(255, 255, 255, ${(scrollTop - 3600) / 500})`
         setBgColorW(newBgColor)
       }
 
@@ -195,22 +195,22 @@ function MainScroll() {
           <h2
             className={
               ScrollY > 2000
-                ? ScrollY > 3100
+                ? ScrollY > 3600
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            대회를 한 번에 보고싶었던 경험
+            이번 달 주짓수 대회 좀 한 눈에 보고싶은데..
           </h2>
           <h2
             className={
               ScrollY > 2400
-                ? ScrollY > 3100
+                ? ScrollY > 3600
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            내가 신청한 대회를 바로 확인하고 싶던 경험
+            신청부터 결제까지 한 번에 할 수 없나..
           </h2>
           <h2
             className={
@@ -220,7 +220,17 @@ function MainScroll() {
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            나주하에서는 다 가능합니다
+            (수근수근)
+          </h2>
+          <h2
+            className={
+              ScrollY > 3100
+                ? ScrollY > 3600
+                  ? 'MainScroll_fadeout'
+                  : 'MainScroll_fadein'
+                : 'MainScroll_none'
+            }>
+            뭐? 나주하에서는 가능하다고?
           </h2>
         </div>
         <div
