@@ -315,12 +315,11 @@ function MainScroll() {
               <div key={el.id} id="card">
                 <div className="MainScroll_card">
                   <img src={el.src} />
-
                   <div className="MainScroll_cardInfo">
                     <p>{el.doreOpen}</p>
                     <h2>{el.title}</h2>
                     <h3>{el.location}</h3>
-                    <button className="MainScroll_apply">바로 신청</button>
+                    {/* <button className="MainScroll_apply">바로가기</button> */}
                   </div>
                 </div>
               </div>
