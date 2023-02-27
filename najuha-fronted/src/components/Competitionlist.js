@@ -298,7 +298,7 @@ function Competitionlist() {
         competition.registrationDeadline
       )
       return (
-        <li className="competition-col">
+        <li className="competition-col" key={competition.id}>
           <div className="each-competition-tag">
             {' '}
             {/* 위쪽 태그공간  */}
