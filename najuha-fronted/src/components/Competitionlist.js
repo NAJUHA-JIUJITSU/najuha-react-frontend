@@ -313,36 +313,38 @@ function Competitionlist() {
             )}
           </div>
           <div className="each-competition-body" id={cardGray}>
-            <div class="each-competition-body-poster">
+            <div className="each-competition-body-poster">
               {' '}
               {/* 카드왼쪽 포스터공간  */}
               <img src={curcompetition.posterImage} alt="대회 포스터"></img>
-              <div class="each-competition-body-poster-block"></div>
+              <div className="each-competition-body-poster-block"></div>
               <h1>
                 {curcompetition.doreOpen}
                 <span>({curcompetition.doreOpenDay})</span>
               </h1>
             </div>
-            <div class="each-competition-body-desc">
+            <div className="each-competition-body-desc">
               {' '}
               {/* 카드오른쪽 설명공간 */}
               <div
-                class="each-competition-body-desc-top"
+                className="each-competition-body-desc-top"
                 onClick={() => {
                   navigate(`/competition/${curcompetition.id}`)
-                }}>
+                }}
+              >
                 <p>{curcompetition.title}</p>
               </div>
-              <div class="each-competition-body-desc-middle">
+              <div className="each-competition-body-desc-middle">
                 <p>{curcompetition.location}</p>
               </div>
-              <div class="each-competition-body-desc-bottom">
+              <div className="each-competition-body-desc-bottom">
                 {competition.isPartnership === true ? (
                   <button
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
                       navigate(`/competition/applymethod/${curcompetition.id}`)
-                    }}>
+                    }}
+                  >
                     신청
                   </button>
                 ) : (
@@ -350,7 +352,8 @@ function Competitionlist() {
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
                       window.location.href = competition.nonPartnershipPageLink
-                    }}>
+                    }}
+                  >
                     신청
                   </button>
                 )}
@@ -375,7 +378,8 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setDateDropdown(pre => !pre)}
-          ref={dateDropdownRef}>
+          ref={dateDropdownRef}
+        >
           <p id={startDate === '' ? '' : 'competition-searchzone-black'}>
             {startDate === '' ? '날짜' : `${temDate}월~`}
           </p>
@@ -388,7 +392,8 @@ function Competitionlist() {
                   setStartDate('')
                   listRefresh()
                   setActiveMonth('')
-                }}>
+                }}
+              >
                 전체
               </li>
               {months.map(element => {
@@ -405,7 +410,8 @@ function Competitionlist() {
                       setTemDate(element)
                       listRefresh()
                       setActiveMonth(element)
-                    }}>
+                    }}
+                  >
                     {element}월
                   </li>
                 )
@@ -418,7 +424,8 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setLocationDropdown(pre => !pre)}
-          ref={locationDropdownRef}>
+          ref={locationDropdownRef}
+        >
           <p id={location === '' ? '' : 'competition-searchzone-black'}>
             {location === '' ? '지역' : location}
           </p>
@@ -431,7 +438,8 @@ function Competitionlist() {
                   setLocation('')
                   listRefresh()
                   setActiveLocation('')
-                }}>
+                }}
+              >
                 전체
               </li>
               {locationSample.map(element => {
@@ -447,7 +455,8 @@ function Competitionlist() {
                       setLocation(element)
                       listRefresh()
                       setActiveLocation(element)
-                    }}>
+                    }}
+                  >
                     {element}
                   </li>
                 )
@@ -487,7 +496,8 @@ function Competitionlist() {
           {!isLoading && (
             <div
               style={{ fontsize: '200px', margin: '0 2rem' }}
-              ref={setLastElement}>
+              ref={setLastElement}
+            >
               해당 대회가 모두 로딩되었습니다.
             </div>
           )}
