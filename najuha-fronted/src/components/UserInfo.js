@@ -25,7 +25,7 @@ function Read({ userInfo, setMode }) {
       </div>
       <div className="UserInfo_infoBox">
         <span>성별</span>
-        <p>{userInfo?.gender}</p>
+        <p>{genderEngtoKor[userInfo?.gender]}</p>
       </div>
       <div className="UserInfo_infoBox">
         <span>휴대폰</span>
