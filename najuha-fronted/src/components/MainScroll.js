@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Component, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './mainScroll.css'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -9,7 +10,6 @@ import phone2 from '../src_assets/폰2.png'
 import samplePoster from '../src_assets/samplePoster.png'
 import samplePoster2 from '../src_assets/포스터2.png'
 import samplePoster3 from '../src_assets/포스터3.png'
-import cardRigthArrow from '../src_assets/카드오른쪽화살표.svg'
 
 import Slider from 'react-slick'
 import './slick.css'
@@ -17,10 +17,14 @@ import './slick-theme.css'
 
 function MainScroll() {
   const [ScrollActive, setScrollActive] = useState(false)
-  const [ScrollY, setScrollY] = useState(0) // window 의 pageYOffset값을 저장
+  const [ScrollY, setScrollY] = useState(
+    Number(localStorage.getItem('scrollY')) || 0
+  ) // window 의 pageYOffset값을 저장
   const [zoom, setZoom] = useState(1)
   const [bgColor, setBgColor] = useState('rgba(0, 0, 0, 0)')
   const [bgColorW, setBgColorW] = useState('rgba(255, 255, 255, 0)')
+
+  let navigate = useNavigate()
 
   function handleScroll() {
     console.log('스크롤 ' + ScrollY)
@@ -327,7 +331,11 @@ function MainScroll() {
           </Slider>
         </div>
 
-        <div className="MainScroll_listBtn">
+        <div
+          className="MainScroll_listBtn"
+          onClick={() => {
+            navigate('/competition')
+          }}>
           <p>모든 대회 보러가기</p>
         </div>
       </div>

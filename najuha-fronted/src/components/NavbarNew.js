@@ -40,8 +40,8 @@ function NavbarNew() {
           <ul
             className="MainScroll_menu"
             style={ScrollY > 4100 ? { color: '#888888' } : {}}>
-            {/* <li>대회일정</li>
-            <li>세미나</li> */}
+            <li>대회일정</li>
+            <li>세미나</li>
           </ul>
           <img
             class="MainScroll_belt"
