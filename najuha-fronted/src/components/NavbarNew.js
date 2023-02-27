@@ -39,16 +39,16 @@ function NavbarNew() {
         <div className="MainScroll_list">
           <ul
             className="MainScroll_menu"
-            style={ScrollY > 3600 ? { color: '#888888' } : {}}>
-            <li>대회일정</li>
-            <li>세미나</li>
+            style={ScrollY > 4100 ? { color: '#888888' } : {}}>
+            {/* <li>대회일정</li>
+            <li>세미나</li> */}
           </ul>
           <img
             class="MainScroll_belt"
             alt="벨트모양 로그인 아이콘"
-            src={ScrollY > 3600 ? grayBelt : whiteBelt}
+            src={ScrollY > 4100 ? grayBelt : whiteBelt}
             style={
-              ScrollY > 3600
+              ScrollY > 4100
                 ? { backgroundColor: 'rgba(238, 238, 238, 0.48)' }
                 : { backgroundColor: 'rgba(238, 238, 238, 0.01)' }
             }

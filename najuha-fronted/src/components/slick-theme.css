@@ -90,6 +90,9 @@
 }
 
 .slick-prev {
+  /* background: #ffffff;
+  border: 1px solid red;
+  border-radius: 25px; */
   /* left: -25px; */
 }
 [dir='rtl'] .slick-prev {
@@ -198,4 +201,30 @@
 .slick-dots li.slick-active button:before {
   opacity: 0.75;
   color: #212121;
+}
+
+@media (max-width: 1049px) {
+  .slick-prev {
+    left: 15%;
+  }
+  .slick-next {
+    left: 85%;
+  }
+}
+
+@media (max-width: 750px) {
+  .slick-prev {
+    left: 7%;
+  }
+  .slick-next {
+    left: 93%;
+  }
+
+  .slick-dots li {
+    width: 16px;
+    height: 20px;
+  }
+  .slick-dots li button:before {
+    font-size: 34px;
+  }
 }

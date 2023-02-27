@@ -96,6 +96,20 @@ function MainScroll() {
     centerPadding: '28%',
     nextArrow: <SampleNextArrow className="arrow" />,
     prevArrow: <SamplePrevArrow className="arrow" />,
+    responsive: [
+      {
+        breakpoint: 1049,
+        settings: {
+          centerPadding: '18%',
+        },
+      },
+      {
+        breakpoint: 750,
+        settings: {
+          centerPadding: '12%',
+        },
+      },
+    ],
   })
 
   const images = [
@@ -162,7 +176,7 @@ function MainScroll() {
         <div className="MainScroll_message">
           <h1
             className={
-              ScrollY > 350
+              ScrollY > 100
                 ? ScrollY > 1700
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
@@ -200,7 +214,7 @@ function MainScroll() {
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            이번 달 주짓수 대회 좀 한 눈에 보고싶은데..
+            이번 달 주짓수 대회 한 눈에 보고싶은데..
           </h2>
           <h2
             className={
@@ -230,7 +244,7 @@ function MainScroll() {
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            뭐? 나주하에서는 가능하다고?
+            뭐? 나주하에서는 다 가능하다고?
           </h2>
         </div>
         <div
@@ -249,7 +263,7 @@ function MainScroll() {
           <h1>한 눈에.</h1>
           <div className="MainScroll_blueLine"></div>
         </div>
-        <div data-aos="fade-up">
+        <div data-aos="fade-up" className="MainScroll_subtitle1">
           <h2> 대회조회부터 상세정보까지 간편하게 확인해보세요.</h2>
         </div>
         <div>
@@ -269,6 +283,9 @@ function MainScroll() {
         <div className="MainScroll_phone" data-aos="fade-up">
           <div className="MainScroll_phone1">
             <img src={phone1} alt="핸드폰사진1"></img>
+            <h2 data-aos="fade-up" className="MainScroll_phoneMsg">
+              간편결제를 이용하여 <br></br>쉽고 빠르게 결제해보세요.
+            </h2>
             <p data-aos="fade-up">
               *나주하와 협약된 대회만 간편결제를 이용하실 수 있습니다.
             </p>
@@ -276,7 +293,7 @@ function MainScroll() {
           <div className="MainScroll_phone2">
             <img src={phone2} alt="핸드폰사진2"></img>
             <h2 data-aos="fade-up">
-              대회조회부터 상세정보까지<br></br>간편하게 확인하세요.
+              간편결제를 이용하여 쉽고 빠르게 결제해보세요.
             </h2>
           </div>
         </div>
@@ -298,6 +315,7 @@ function MainScroll() {
               <div key={el.id} id="card">
                 <div className="MainScroll_card">
                   <img src={el.src} />
+
                   <div className="MainScroll_cardInfo">
                     <p>{el.doreOpen}</p>
                     <h2>{el.title}</h2>
@@ -309,8 +327,7 @@ function MainScroll() {
             ))}
           </Slider>
         </div>
-      </div>
-      <div className="MainScroll_section5">
+
         <div className="MainScroll_listBtn">
           <p>모든 대회 보러가기</p>
         </div>
