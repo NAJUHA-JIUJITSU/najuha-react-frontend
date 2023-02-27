@@ -25,8 +25,6 @@ export default function (
       if (xAccessToken) {
         // 토큰 확인하기
         decodedToken = jwt_decode(xAccessToken)
-        console.log(decodedToken)
-        tokenTime.setUTCSeconds(decodedToken.exp)
       }
 
       if (!decodedToken) {
@@ -37,8 +35,8 @@ export default function (
         }
       } else {
         //로그인한상태
-        tokenTime = new Date(decodedToken.exp * 1000)
-        tokenTime.setMinutes(tokenTime.getMinutes() - 15)
+        tokenTime = new Date(decodedToken.exp * 1000) // 토큰만료시간
+        tokenTime.setMinutes(tokenTime.getMinutes() - 15) // 토큰만료시간에 15분 빼기
         if (nowTime >= tokenTime) {
           cookies.remove('x-access-token', { path: '/' })
           alert('로그인시간이 만료되었습니다.')
