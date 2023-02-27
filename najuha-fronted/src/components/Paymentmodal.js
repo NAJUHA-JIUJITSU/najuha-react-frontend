@@ -58,12 +58,14 @@ function Paymentmodal(props) {
     <div className="Paymentmodal_Modal">
       <div
         className="Paymentmodal_modalBody"
-        onChange={e => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         <h2 id="Paymentmodal_modaltitle">결제방식 선택 </h2>
         <button
           id="Paymentmodal_modalCloseBtn"
-          onChange={() => navigate('/Profilepage')}
+          onClick={() => {
+            navigate('/Profilepage', { state: 'UserApplicationList' })
+          }}
         >
           ✖
         </button>
@@ -133,7 +135,7 @@ function Paymentmodal(props) {
           </p>
           <button
             className="Paymentmodal_thirdsection_paybutton"
-            onChange={() => {
+            onClick={() => {
               if (checkPaymentOption()) props.tossPay()
               else alert('옵션을 선택해주세요')
             }}
