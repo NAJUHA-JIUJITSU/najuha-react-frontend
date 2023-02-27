@@ -334,6 +334,7 @@ function MainScroll() {
         <div
           className="MainScroll_listBtn"
           onClick={() => {
+            window.scrollTo(0, 0)
             navigate('/competition')
           }}>
           <p>모든 대회 보러가기</p>

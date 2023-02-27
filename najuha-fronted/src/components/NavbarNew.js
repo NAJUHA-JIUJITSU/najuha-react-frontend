@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './navbarNew.css'
-import whiteBelt from '../src_assets/whiteBelt.svg'
-import grayBelt from '../src_assets/grayBelt.svg'
+import whiteProfile from '../src_assets/whiteProfile.svg'
+import grayProfile from '../src_assets/grayProfile.svg'
 
 function NavbarNew() {
   const [ScrollActive, setScrollActive] = useState(false)
   const [ScrollY, setScrollY] = useState(0) // window 의 pageYOffset값을 저장
+
+  let navigate = useNavigate()
 
   function handleScroll() {
     console.log('스크롤 ' + ScrollY)
@@ -33,6 +36,9 @@ function NavbarNew() {
       <div className="MainScroll_nav">
         <h1
           className="MainScroll_logo"
+          onClick={() => {
+            navigate('/')
+          }}
           style={ScrollY > 4100 ? { color: 'black' } : {}}>
           NAJUHA
         </h1>
@@ -40,19 +46,25 @@ function NavbarNew() {
           <ul
             className="MainScroll_menu"
             style={ScrollY > 4100 ? { color: '#888888' } : {}}>
-            <li>대회일정</li>
-            <li>세미나</li>
+            <li
+              onClick={() => {
+                window.scrollTo(0, 0)
+                navigate('/competition')
+              }}>
+              대회일정
+            </li>
+            <li
+              onClick={() => {
+                alert('세미나 일정은 아직 준비중입니다.')
+              }}>
+              세미나
+            </li>
           </ul>
+
           <img
-            class="MainScroll_belt"
+            class="MainScroll_profile"
             alt="벨트모양 로그인 아이콘"
-            src={ScrollY > 4100 ? grayBelt : whiteBelt}
-            style={
-              ScrollY > 4100
-                ? { backgroundColor: 'rgba(238, 238, 238, 0.48)' }
-                : { backgroundColor: 'rgba(238, 238, 238, 0.01)' }
-            }
-          />
+            src={ScrollY > 4100 ? grayProfile : whiteProfile}></img>
         </div>
       </div>
     </div>

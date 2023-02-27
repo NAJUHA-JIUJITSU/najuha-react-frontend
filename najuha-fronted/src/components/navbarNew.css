@@ -28,6 +28,7 @@
   font-family: 'Anton', sans-serif;
   font-size: var(--font-size-navlogo);
   margin-right: auto;
+  cursor: pointer;
 }
 
 .MainScroll_list {
@@ -38,6 +39,7 @@
 
 .MainScroll_list li {
   margin-right: 5rem;
+  cursor: pointer;
 }
 
 .MainScroll_menu {
@@ -45,11 +47,9 @@
   font-size: var(--font-size-navlist);
 }
 
-.MainScroll_belt {
-  background-color: var(--gray-belt-colo);
-  border-radius: 50px;
-  width: 48px;
-  height: 46px;
+.MainScroll_profile {
   margin: auto 0;
-  box-sizing: border-box;
+  width: 42px;
+  height: 42px;
+  cursor: pointer;
 }
