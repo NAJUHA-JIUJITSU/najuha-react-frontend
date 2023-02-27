@@ -69,7 +69,6 @@ function UserApplicationList(props) {
   //신청대회 데이터 파싱
   function applicationParsing(application) {
     let today = new Date()
-
     let id = application.id
     let host = application.Competition.host
     let title =
@@ -186,7 +185,7 @@ function UserApplicationList(props) {
       }
 
       return (
-        <div>
+        <div key={curApplication.id}>
           <div className={curApplication.last}>
             <div className="UserApplicationList_competitoninfo">
               {/* <a onClick={()=>{navigate(`/Profilepage/info/${curApplication.id}`)}}>대회신청내역 상세보기</a>
