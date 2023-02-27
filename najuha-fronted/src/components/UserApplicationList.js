@@ -12,10 +12,9 @@ import samplePoster from '../src_assets/samplePoster.png'
 function UserApplicationList(props) {
   const [clickedList, setclickedList] = useState('person')
   const [active, setActive] = useState(['UserApplicationList_active', '', ''])
-  const cookies = new Cookies()
-  const xAccessToken = cookies.get('x-access-token')
-  const { decodedToken, isExpired } = useJwt(xAccessToken)
   const navigate = useNavigate()
+  const xAccessToken = props.xAccessToken
+  const userLevel = props.userLevel
   let competitionApplications = props.competitionApplications
 
   // 신청 대회 지우기(결제 미완료)
@@ -257,14 +256,11 @@ function UserApplicationList(props) {
   }
 
   useEffect(() => {
-    if (decodedToken) {
-      // 레벨 1인 유저가 들어오면 다시 수정페이지로 리다이렉트
-      if (decodedToken.userLevel == 1) {
-        alert('회원가입을 완료해주세요')
-        navigate('/UserInfopage')
-      }
+    if (userLevel == 1) {
+      alert('회원가입을 완료해주세요')
+      navigate('/profilepage', { state: 'UserInfo' })
     }
-  }, [decodedToken])
+  }, [userLevel])
 
   return (
     <>

@@ -7,15 +7,16 @@ import UserApplicationList from './UserApplicationList'
 import { Cookies } from 'react-cookie'
 import { useLocation } from 'react-router-dom'
 import UserInfo from './UserInfo'
+import jwt_decode from 'jwt-decode'
 
 function Profilesection() {
   const [userInfo, setUserInfo] = useState([])
-  const [componentSelected, setComponentSelected] = useState(
-    'UserApplicationList'
-  )
+  const [componentSelected, setComponentSelected] = useState('UserInfo')
   const [competitionApplications, setCompetitionApplications] = useState([]) //유저 신청 대회 가져오기
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
+  const decodedToken = jwt_decode(xAccessToken)
+  const userLevel = decodedToken?.userLevel
   const paramComponentSelected = useLocation().state
 
   //User 프로필 정보 가져오기
@@ -31,9 +32,9 @@ function Profilesection() {
         console.log(res.data.message)
       })
       .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
+        // console.log(err)
+        // console.log(err.response.status)
+        // console.log(err.response.data.message)
       })
     return
   }
@@ -54,16 +55,20 @@ function Profilesection() {
         console.log(res.data.message)
       })
       .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
+        // console.log(err)
+        // console.log(err.response.status)
+        // console.log(err.response.data.message)
       })
     return
   }
   useEffect(() => {
-    getCompetitionApplication()
-    getUsers()
-  }, [])
+    if (xAccessToken) {
+      if (userLevel > 1) {
+        getCompetitionApplication()
+        getUsers()
+      }
+    }
+  }, [userLevel])
 
   useEffect(() => {
     if (paramComponentSelected !== null)
@@ -76,6 +81,9 @@ function Profilesection() {
         <UserApplicationList
           competitionApplications={competitionApplications}
           getCompetitionApplication={getCompetitionApplication}
+          userLevel={userLevel}
+          xAccessToken={xAccessToken}
+          cookies={cookies}
         />
       )
     } else if (
@@ -90,6 +98,7 @@ function Profilesection() {
           getUsers={getUsers}
           userInfo={userInfo}
           componentSelected={componentSelected}
+          userLevel={userLevel}
         />
       )
     }
