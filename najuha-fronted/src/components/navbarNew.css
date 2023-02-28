@@ -16,7 +16,7 @@
   /* background-color: white; */
   /* padding: 0 30rem; */
   box-sizing: border-box;
-
+  padding: 0 6px;
   margin: 0 auto;
   left: 0;
   right: 0;
@@ -35,9 +35,21 @@
   display: flex;
   letter-spacing: -0.12rem;
   font-weight: 400;
+  position: relative;
 }
 
-.MainScroll_list li {
+.MainScroll_bar {
+  display: block;
+  width: 32px;
+  height: 2px;
+  margin: 6px auto;
+  border-radius: 25px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0s ease-in-out;
+  /* background-color: #888888; */
+}
+
+.MainScroll_menu li {
   margin-right: 5rem;
   cursor: pointer;
 }
@@ -52,4 +64,73 @@
   width: 42px;
   height: 42px;
   cursor: pointer;
+}
+
+/* 메뉴 햄버거 */
+.MainScroll_hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+/* 프로필 드랍다운 */
+#profile-dropdown {
+  background: #ffffff;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  left: 22rem;
+  top: 72px;
+  border-radius: 5px;
+}
+
+#profile-dropdown li {
+  color: black;
+  width: 110px;
+  height: 46px;
+  font-size: 1.5rem;
+  text-align: left;
+  display: flex; /* 수직정렬을 위한 3종세트 display, align-items, justify-content */
+  align-items: center;
+  justify-content: left;
+  padding-left: 14px;
+  margin-right: 0px;
+}
+
+#profile-dropdown li:hover {
+  background-color: #eeeeee;
+}
+
+@media (max-width: 1049px) {
+  .MainScroll_nav {
+    margin: 0 10px;
+  }
+
+  .MainScroll_hamburger {
+    display: inline-block;
+    margin: auto 0;
+    /* position: absolute; */
+  }
+
+  .MainScroll_hamburger.active .MainScroll_bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .MainScroll_hamburger.active .MainScroll_bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .MainScroll_hamburger.active .MainScroll_bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .MainScroll_logo {
+    margin: 0 auto;
+  }
+
+  .MainScroll_menu li {
+    display: none;
+  }
+
+  #profile-dropdown {
+    left: -8rem;
+  }
 }
