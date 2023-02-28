@@ -8,9 +8,9 @@ function Mainsection() {
 
   return (
     <>
-      <div class="wrapper">
-        <section class="left-content">
-          <div class="content-title">
+      <div className="wrapper">
+        <section className="left-content">
+          <div className="content-title">
             <h1>
               <strong>나</strong>는
             </h1>
@@ -23,22 +23,23 @@ function Mainsection() {
               <strong>하</strong>고싶다
             </h1>
           </div>
-          <div class="left-content-bar"></div>
+          <div className="left-content-bar"></div>
           <div
-            class="content-button"
+            className="content-button"
             onClick={() => {
               navigate('/competition')
-            }}>
+            }}
+          >
             <h2>대회일정바로가기</h2>
             <img
-              class="competition-icon"
+              className="competition-icon"
               src={arrow}
               alt="대회일정바로가기아이콘"
             />
           </div>
         </section>
-        <section class="right-content">
-          <div class="right-content-img"></div>
+        <section className="right-content">
+          <div className="right-content-img"></div>
         </section>
       </div>
     </>
