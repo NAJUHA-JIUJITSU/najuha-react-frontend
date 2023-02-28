@@ -332,24 +332,23 @@ function CompetitionApplyForm() {
   const applicationDetailUI = () => {
     return viewcompetitionApplicationList.map((application, i) => {
       return (
-        <>
-          <ul className="CompetitionApplyForm-top-table-item">
-            <li>{application.uniform}</li>
-            <li>{application.divisionName}</li>
-            <li>{application.gender}</li>
-            <li>{application.belt}</li>
-            <li>{application.weight}</li>
-            <li>{application.price}</li>
-            {application.price != null ? (
-              <img
-                style={{ cursor: 'pointer' }}
-                src={deleteicon}
-                onClick={() => deleteCompetitionApplication(i)}></img>
-            ) : (
-              ''
-            )}
-          </ul>
-        </>
+        <ul className="CompetitionApplyForm-top-table-item" key={i}>
+          <li>{application.uniform}</li>
+          <li>{application.divisionName}</li>
+          <li>{application.gender}</li>
+          <li>{application.belt}</li>
+          <li>{application.weight}</li>
+          <li>{application.price}</li>
+          {application.price != null ? (
+            <img
+              style={{ cursor: 'pointer' }}
+              src={deleteicon}
+              onClick={() => deleteCompetitionApplication(i)}
+            ></img>
+          ) : (
+            ''
+          )}
+        </ul>
       )
     })
   }
@@ -451,7 +450,7 @@ function CompetitionApplyForm() {
       comuniform = [...new Set(comuniform)]
       return comuniform.map((el, h) => {
         return (
-          <li onClick={() => chooseUniformOption(el, i)}>
+          <li key={h} onClick={() => chooseUniformOption(el, i)}>
             {el == 'gi' ? '기' : '노기'}
           </li>
         )
@@ -463,7 +462,11 @@ function CompetitionApplyForm() {
       })
       comdi = [...new Set(comdi)]
       return comdi.map((el, h) => {
-        return <li onClick={() => chooseDivisionOption(el, i)}>{el}</li>
+        return (
+          <li key={h} onClick={() => chooseDivisionOption(el, i)}>
+            {el}
+          </li>
+        )
       })
     } else if (application.gender == null) {
       let comgender = []
@@ -472,7 +475,11 @@ function CompetitionApplyForm() {
       })
       comgender = [...new Set(comgender)]
       return comgender.map((el, h) => {
-        return <li onClick={() => chooseGenderOption(el, i)}>{el}</li>
+        return (
+          <li key={h} onClick={() => chooseGenderOption(el, i)}>
+            {el}
+          </li>
+        )
       })
     } else if (application.belt == null) {
       let combelt = []
@@ -483,7 +490,11 @@ function CompetitionApplyForm() {
       })
       combelt = [...new Set(combelt)]
       return combelt.map((el, h) => {
-        return <li onClick={() => chooseBeltOption(el, i)}>{el}</li>
+        return (
+          <li key={h} onClick={() => chooseBeltOption(el, i)}>
+            {el}
+          </li>
+        )
       })
     } else if (application.weight == null) {
       let comweight = []
@@ -494,7 +505,11 @@ function CompetitionApplyForm() {
       })
       comweight = [...new Set(comweight)]
       return comweight.map((el, h) => {
-        return <li onClick={() => chooseWeightOption(el, i)}>{el}</li>
+        return (
+          <li key={h} onClick={() => chooseWeightOption(el, i)}>
+            {el}
+          </li>
+        )
       })
     }
   }
@@ -656,7 +671,8 @@ function CompetitionApplyForm() {
           className="CompetitionApplyForm-bottom-payment"
           onClick={() => {
             if (checkInvaildApply()) setapplymodal(!applymodal)
-          }}>
+          }}
+        >
           신청하기
         </button>
         {applymodal && (
