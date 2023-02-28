@@ -1,18 +1,21 @@
 /* modal창 외부화면 */
 .Paymentmodal_Modal {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 130vh;
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
+  letter-spacing: -0.06rem;
+  z-index: 200;
 }
 
 /* modal창 */
 .Paymentmodal_modalBody {
+  margin-top: -30vh;
   position: relative;
   width: 270px;
   min-height: 400px;
@@ -31,9 +34,11 @@
 }
 
 .Paymentmodal_firstsection_title {
-  font-size: 13px;
-  color: #8c8c8c;
-  font-weight: 700;
+  font-size: 18px;
+  color: black;
+  font-weight: 500;
+  height: 28px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .Paymentmodal_firstsection_infos {
@@ -44,7 +49,7 @@
   margin: 10px 0;
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .Paymentmodal_firstsection_info h4 {
@@ -54,12 +59,12 @@
 .Paymentmodal_firstsection_totalprice {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .Paymentmodal_firstsection::after {
+  margin-top: 20px;
   content: '';
   position: absolute;
   height: 4px;
@@ -71,24 +76,26 @@
 
 .Paymentmodal_secondsection {
   /* position: absolute; */
-  margin-top: 30px;
+  margin-top: 44px;
   margin-left: -20px;
   width: 310px;
 }
 
 .Paymentmodal_secondsection_title {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 500;
+  height: 28px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .Paymentmodal_secondsection_method {
   display: flex;
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .Paymentmodal_secondsection_method p {
-  font-size: 13px;
-  margin-left: 10px;
+  font-size: 16px;
+  margin-left: 12px;
 }
 
 .Paymentmodal_secondsection_method input[type='radio'] {
@@ -124,7 +131,7 @@
 }
 
 .Paymentmodal_thirdsection_lastcheck p {
-  font-size: 13px;
+  font-size: 16px;
   margin-left: 10px;
 }
 
@@ -136,7 +143,7 @@
 
 .Paymentmodal_thirdsection_lastinfo {
   margin: 25px 0;
-  font-size: 10px;
+  font-size: 12px;
   color: #8c8c8c;
   text-align: center;
 }
@@ -157,21 +164,23 @@
 
 .Paymentmodal_secondsection_esaypaymethods {
   margin-top: 10px;
-  width: 290px;
+  width: 270px;
   margin-left: 20px;
   border: 1px solid #f0f0f0;
   border-radius: 10px;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .Paymentmodal_secondsection_esaypaymethod {
-  margin: 4%;
+  margin: 4% 4%;
   box-sizing: border-box;
   display: inline-flex;
-  width: 25%;
+  width: 42%;
 }
 
 .Paymentmodal_secondsection_esaypaymethod p {
-  font-size: 12px;
+  font-size: 14px;
   margin-left: 4px;
 }
 
@@ -185,7 +194,7 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 24px;
 }
 
@@ -202,3 +211,9 @@
 #Paymentmodal_modalCloseBtn:hover {
   cursor: pointer;
 }
+
+/* @media (max-width: 750px) {
+  .Paymentmodal_modalBody {
+    margin-top: 0vh;
+  }
+} */

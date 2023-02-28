@@ -28,10 +28,10 @@ function Paymentmodal(props) {
       { value: '카카오페이', label: '카카오페이' },
       { value: '삼성페이', label: '삼성페이' },
       { value: '네이버페이', label: '네이버페이' },
-      { value: '페이코', label: '페이코' },
-      { value: '엘페이', label: '엘페이' },
-      { value: 'LG페이', label: 'LG페이' },
-      { value: 'SSG페이', label: 'SSG페이' },
+      // { value: '페이코', label: '페이코' },
+      // { value: '엘페이', label: '엘페이' },
+      // { value: 'LG페이', label: 'LG페이' },
+      // { value: 'SSG페이', label: 'SSG페이' },
     ]
 
     return (
