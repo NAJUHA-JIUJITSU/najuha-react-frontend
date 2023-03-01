@@ -82,29 +82,58 @@ function NavbarNew() {
       }>
       <div className="MainScroll_nav">
         <div
-          class={`MainScroll_hamburger ${isHamburgerActive ? 'active' : ''}`}
+          className={`MainScroll_hamburger ${
+            isHamburgerActive ? 'active' : ''
+          }`}
           onClick={hamburgerClick}>
           <span
             className="MainScroll_bar"
             style={
-              ScrollY > 4100
+              ScrollY > 4100 || isHamburgerActive
                 ? { backgroundColor: '#888888' }
                 : { backgroundColor: 'white' }
             }></span>
           <span
             className="MainScroll_bar"
             style={
-              ScrollY > 4100
+              ScrollY > 4100 || isHamburgerActive
                 ? { backgroundColor: '#888888' }
                 : { backgroundColor: 'white' }
             }></span>
           <span
             className="MainScroll_bar"
             style={
-              ScrollY > 4100
+              ScrollY > 4100 || isHamburgerActive
                 ? { backgroundColor: '#888888' }
                 : { backgroundColor: 'white' }
             }></span>
+        </div>
+        <div
+          className={`MainScroll_hamburgerblack ${
+            isHamburgerActive ? 'active' : ''
+          }`}>
+          <div
+            className={`MainScroll_hamburgermenu ${
+              isHamburgerActive ? 'active' : ''
+            }`}>
+            <div className="MainScroll_hamburgerlist">
+              <ul>
+                <li
+                  onClick={() => {
+                    window.scrollTo(0, 0)
+                    navigate('/competition')
+                  }}>
+                  대회일정
+                </li>
+                <li
+                  onClick={() => {
+                    alert('세미나 일정은 준비중입니다.')
+                  }}>
+                  세미나
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
         <h1
           className="MainScroll_logo"

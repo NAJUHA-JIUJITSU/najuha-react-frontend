@@ -121,7 +121,7 @@ function MainScroll() {
       src: samplePoster,
       id: 1,
       doreOpen: '2023.02.08(월)',
-      title: '나주하 후원 챔피언십',
+      title: '나주하가 잘 후원한 챔피언십',
       location: '사우동 시민회관',
     },
     {

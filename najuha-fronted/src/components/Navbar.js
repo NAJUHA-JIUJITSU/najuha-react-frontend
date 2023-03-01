@@ -59,8 +59,7 @@ function Navbar() {
     <header class="navbar">
       <div
         class={`hamburger ${isHamburgerActive ? 'active' : ''}`}
-        onClick={hamburgerClick}
-      >
+        onClick={hamburgerClick}>
         <span class="bar"></span>
         <span class="bar"></span>
         <span class="bar"></span>
@@ -69,8 +68,7 @@ function Navbar() {
         class="logo"
         onClick={() => {
           navigate('/')
-        }}
-      >
+        }}>
         NAJUHA
       </h1>
       <ul class={`category nav-menu ${isnavmenuActive ? 'active' : ''}`}>
@@ -78,8 +76,7 @@ function Navbar() {
           <p
             onClick={() => {
               navigate('/competition')
-            }}
-          >
+            }}>
             대회일정
           </p>
         </li>
@@ -103,23 +100,20 @@ function Navbar() {
             <li
               onClick={() => {
                 navigate('/Profilepage', { state: 'UserInfoToggle' })
-              }}
-            >
+              }}>
               내 프로필
             </li>
             <li
               onClick={() => {
                 navigate('/Profilepage', { state: 'UserApplicationList' })
-              }}
-            >
+              }}>
               신청대회 목록
             </li>
             {cookies['x-access-token'] == undefined ? (
               <li
                 onClick={() => {
                   window.location.href = kakaoAuthURL
-                }}
-              >
+                }}>
                 로그인 하기
               </li>
             ) : (
