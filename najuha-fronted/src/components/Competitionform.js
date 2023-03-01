@@ -104,14 +104,14 @@ function Competition_form() {
 
   function changeBirthStart(text, i) {
     let newDiv = [...divisions]
-    newDiv[i].constantFactor.birth[0] = text
+    newDiv[i].constantFactor.birth[0] = Number(text)
     setDivisions(newDiv)
     console.log(divisions[i].constantFactor.birth[0])
   }
 
   function changeBirthEnd(text, i) {
     let newDiv = [...divisions]
-    newDiv[i].constantFactor.birth[1] = text
+    newDiv[i].constantFactor.birth[1] = Number(text)
     setDivisions(newDiv)
     console.log(divisions[i].constantFactor.birth[1])
   }
@@ -323,7 +323,7 @@ function Competition_form() {
   function divisionsUI() {
     return divisions.map((divs, i) => {
       return (
-        <div className="division">
+        <div className="division" key={i}>
           <h1>{i + 1} 디비전</h1>
           <div className="constantFactor">
             <h3>constantFactor</h3>
@@ -334,7 +334,7 @@ function Competition_form() {
                 type="radio"
                 value="gi"
                 checked={divs.constantFactor.uniform === 'gi'}
-                onClick={e => {
+                onChange={e => {
                   changeUniform(e.target.value, i)
                 }}
               />
@@ -342,7 +342,7 @@ function Competition_form() {
                 type="radio"
                 value="no-gi"
                 checked={divs.constantFactor.uniform === 'no-gi'}
-                onClick={e => {
+                onChange={e => {
                   changeUniform(e.target.value, i)
                 }}
               />
@@ -355,7 +355,7 @@ function Competition_form() {
                 type="radio"
                 value="male"
                 checked={divs.constantFactor.gender === 'male'}
-                onClick={e => {
+                onChange={e => {
                   changeGender(e.target.value, i)
                 }}
               />
@@ -363,7 +363,7 @@ function Competition_form() {
                 type="radio"
                 value="female"
                 checked={divs.constantFactor.gender === 'female'}
-                onClick={e => {
+                onChange={e => {
                   changeGender(e.target.value, i)
                 }}
               />
@@ -373,24 +373,24 @@ function Competition_form() {
               className="divisionName"
               type="text"
               placeholder="나이 ex)초등부, 중등부, 마스터부, 어덜트"
-              value={divs.constantFactor.divisionName}
+              value={divs.constantFactor.divisionName || ''}
               onChange={e => {
                 changeName(e.target.value, i)
               }}
             ></input>
             <div>
               <input
-                type="number"
+                type="text"
                 placeholder="몇년생부터 ex)2010"
-                value={divs.constantFactor.birth[0]}
+                value={divs.constantFactor.birth[0] || 0}
                 onChange={e => {
                   changeBirthStart(e.target.value, i)
                 }}
               ></input>
               <input
-                type="number"
+                type="text"
                 placeholder="몇년생까지 ex)2015"
-                value={divs.constantFactor.birth[1]}
+                value={divs.constantFactor.birth[1] || 9999}
                 onChange={e => {
                   changeBirthEnd(e.target.value, i)
                 }}
@@ -404,7 +404,7 @@ function Competition_form() {
               className="weight"
               type="text"
               placeholder="체급 ex)-30,-35,-40,-45,-50,-55,+55"
-              value={divs.variableFactor.weight}
+              value={divs.variableFactor.weight || []}
               onChange={e => {
                 changeWeight(e.target.value, i)
               }}
@@ -424,9 +424,9 @@ function Competition_form() {
             <h3>normalPrice</h3>
             <input
               className="price"
-              type="number"
+              type="text"
               placeholder="일반가격 ex)40000"
-              value={divs.pricingPolicy.normal}
+              value={divs.pricingPolicy.normal || 0}
               onChange={e => {
                 changeNormalPrice(e.target.value, i)
               }}
@@ -437,9 +437,9 @@ function Competition_form() {
             <h3>earlyBirdPrice</h3>
             <input
               className="earlybird_price"
-              type="number"
+              type="text"
               placeholder="얼리버드할인률 ex)10%하고싶으면 10"
-              value={divs.pricingPolicy.earlyBird}
+              value={divs.pricingPolicy.earlyBird || 0}
               onChange={e => {
                 changeEarlybirdPrice(e.target.value, i)
               }}
@@ -450,9 +450,9 @@ function Competition_form() {
             <h3>withGiPrice</h3>
             <input
               className="withGi_price"
-              type="number"
+              type="text"
               placeholder="withGi ex)-10000"
-              value={divs.pricingPolicy.withGi}
+              value={divs.pricingPolicy.withGi || 0}
               onChange={e => {
                 changewithGiPrice(e.target.value, i)
               }}
@@ -463,9 +463,9 @@ function Competition_form() {
             <h3>withOther</h3>
             <input
               className="withOther_price"
-              type="number"
+              type="text"
               placeholder="withOther ex)-10000"
-              value={divs.pricingPolicy.withOther}
+              value={divs.pricingPolicy.withOther || 0}
               onChange={e => {
                 changewithOtherPrice(e.target.value, i)
               }}
