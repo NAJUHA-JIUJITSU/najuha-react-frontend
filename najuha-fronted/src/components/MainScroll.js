@@ -15,6 +15,9 @@ import Slider from 'react-slick'
 import './slick.css'
 import './slick-theme.css'
 
+import { Cookies } from 'react-cookie'
+import axios from 'axios'
+
 function MainScroll() {
   const [ScrollActive, setScrollActive] = useState(false)
   const [ScrollY, setScrollY] = useState(
@@ -23,9 +26,70 @@ function MainScroll() {
   const [zoom, setZoom] = useState(1)
   const [bgColor, setBgColor] = useState('rgba(0, 0, 0, 0)')
   const [bgColorW, setBgColorW] = useState('rgba(255, 255, 255, 0)')
+  const [competitions, setCompetitions] = useState([])
 
   let navigate = useNavigate()
 
+  const cookies = new Cookies()
+  const xAccessToken = cookies.get('x-access-token')
+
+  //대회 정보 가져오기
+  async function getCompetitons() {
+    axios
+      .get(
+        `${process.env.REACT_APP_BACK_END_API}/competitionsPartnershipTrue`,
+        {
+          headers: {
+            'x-access-token': cookies.get('x-access-token'),
+          },
+        }
+      )
+      .then(res => {
+        setCompetitions(res.data.result)
+        console.log(res.data.result)
+        console.log(res.data.message)
+      })
+      .catch(err => {
+        console.log(err)
+        console.log(err.response.status)
+        console.log(err.response.data.message)
+      })
+    return
+  }
+  //요일 값 구하기
+  function getDayOfWeek(날짜문자열) {
+    //ex) getDayOfWeek('2022-06-13')
+
+    const week = ['일', '월', '화', '수', '목', '금', '토']
+
+    const dayOfWeek = week[new Date(날짜문자열).getDay()]
+
+    return dayOfWeek
+  }
+  //대회 정보 데이터 파싱
+  function competitionsParsing(competition) {
+    let id = competition.id
+    let title = competition.title
+    let doreOpen = competition.doreOpen
+      .substr(0, 10)
+      .replace('-', '.')
+      .replace('-', '.')
+    let doreOpenDay = getDayOfWeek(competition.doreOpen)
+    let location = competition.location
+    let postUrl = competition.CompetitionPoster
+      ? competition.CompetitionPoster.imageUrl
+      : samplePoster
+
+    return {
+      id: id,
+      title: title,
+      postUrl: postUrl,
+      doreOpen: doreOpen + '(' + doreOpenDay + ')',
+      location: location,
+    }
+  }
+
+  //스크롤 값 구하기 && 그에 따른 이벤트 추가
   function handleScroll() {
     console.log('스크롤 ' + ScrollY)
     if (ScrollY <= 1700) {
@@ -56,6 +120,7 @@ function MainScroll() {
     }
   }
 
+  //스크롤 감시
   useEffect(() => {
     function scrollListener() {
       window.addEventListener('scroll', handleScroll)
@@ -66,10 +131,16 @@ function MainScroll() {
     } //  window 에서 스크롤을 감시를 종료
   })
 
+  //슬라이드 라이브러리 추가
   useEffect(() => {
     AOS.init()
   })
 
+  useEffect(() => {
+    getCompetitons()
+  }, [])
+
+  //슬라이드 오른쪽 화살표 컴포넌트
   function SampleNextArrow(props) {
     const { className, style, onClick } = props
     return (
@@ -80,6 +151,7 @@ function MainScroll() {
     )
   }
 
+  //슬라이드 왼쪽 화살표 컴포넌트
   function SamplePrevArrow(props) {
     const { className, style, onClick } = props
     return (
@@ -90,6 +162,8 @@ function MainScroll() {
       />
     )
   }
+
+  //슬라이드 설정값
   const [settings, setSettings] = useState({
     dots: true,
     infinite: false,
@@ -315,19 +389,22 @@ function MainScroll() {
         </div>
         <div data-aos="fade-up" className="MainScroll_slide">
           <Slider {...settings}>
-            {images.map(el => (
-              <div key={el.id} id="card">
-                <div className="MainScroll_card">
-                  <img src={el.src} />
-                  <div className="MainScroll_cardInfo">
-                    <p>{el.doreOpen}</p>
-                    <h2>{el.title}</h2>
-                    <h3>{el.location}</h3>
-                    {/* <button className="MainScroll_apply">바로가기</button> */}
+            {competitions.map(el => {
+              let competition = competitionsParsing(el)
+              return (
+                <div key={competition.id} id="card">
+                  <div className="MainScroll_card">
+                    <img src={competition.imageUrl} />
+                    <div className="MainScroll_cardInfo">
+                      <p>{competition.doreOpen}</p>
+                      <h2>{competition.title}</h2>
+                      <h3>{competition.location}</h3>
+                      {/* <button className="MainScroll_apply">바로가기</button> */}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </Slider>
         </div>
 
