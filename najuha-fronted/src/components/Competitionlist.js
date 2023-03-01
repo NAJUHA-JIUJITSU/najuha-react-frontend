@@ -177,9 +177,9 @@ function Competitionlist() {
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
 
-    let deadlineDiff = todaytime.diff(finishdate, 'd')
+    let deadlineDiffM = todaytime.diff(finishdate, 'm')
 
-    if (deadlineDiff > 0) {
+    if (deadlineDiffM > 0) {
       // 마감날짜(데드라인)이 지났을경우
       return (
         <div className="each-competition-tag-gray">
@@ -187,6 +187,9 @@ function Competitionlist() {
         </div>
       )
     }
+
+    let openDiff = todaytime.diff(opendate, 'd')
+    let deadlineDiff = todaytime.diff(finishdate, 'd')
 
     if (deadlineDiff === 0) {
       // 오늘이 마감날짜(데드라인)일 경우
@@ -196,8 +199,6 @@ function Competitionlist() {
         </div>
       )
     }
-
-    let openDiff = todaytime.diff(opendate, 'd')
 
     if (openDiff < 0) {
       // 현재날짜가 오픈 전일 경우 ex) 신청오픈 D-20
@@ -240,8 +241,8 @@ function Competitionlist() {
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
 
-    let deadlineDiff = todaytime.diff(finishdate, 'd')
-    let openDiff = todaytime.diff(opendate, 'd')
+    let deadlineDiff = todaytime.diff(finishdate, 'm')
+    let openDiff = todaytime.diff(opendate, 'm')
 
     if (deadlineDiff > 0) {
       // 마감날짜(데드라인)이 지났을경우 (전체 그레이)
