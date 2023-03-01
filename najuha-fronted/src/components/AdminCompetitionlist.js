@@ -308,7 +308,7 @@ function AdminCompetitionlist() {
         competition.registrationDeadline
       )
       return (
-        <li className="competition-col">
+        <li className="competition-col" key={i}>
           <div className="each-competition-tag">
             {makingEarlybirdTag(
               competition.registrationDate,
@@ -453,6 +453,7 @@ function AdminCompetitionlist() {
               {months.map(element => {
                 return (
                   <li
+                    key={element}
                     value={element}
                     onClick={() => {
                       setStartDate(`2023-${element}-01`)
@@ -489,6 +490,7 @@ function AdminCompetitionlist() {
               {locationSample.map(element => {
                 return (
                   <li
+                    key={element}
                     value={element}
                     onClick={() => {
                       setLocation(element)
