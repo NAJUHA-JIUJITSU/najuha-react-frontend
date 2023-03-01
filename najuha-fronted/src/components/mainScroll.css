@@ -184,6 +184,10 @@
   z-index: 1;
 }
 
+.MainScroll_section2 img {
+  width: 60%;
+}
+
 /* 중간 그라데이션 */
 .MainScroll_linear1 {
   position: relative;
@@ -316,7 +320,7 @@
   border-radius: 20px;
   overflow: hidden;
   margin: auto;
-  max-width: 520px;
+  max-width: 580px;
 
   box-shadow: 0 0 0 1px #dbdbdb inset;
   cursor: pointer;

@@ -392,7 +392,13 @@ function MainScroll() {
             {competitions.map(el => {
               let competition = competitionsParsing(el)
               return (
-                <div key={competition.id} id="card">
+                <div
+                  key={competition.id}
+                  id="card"
+                  onClick={() => {
+                    window.scrollTo(0, 0)
+                    navigate(`/competition/${competition.id}`)
+                  }}>
                   <div className="MainScroll_card">
                     <img src={competition.postUrl} />
                     <div className="MainScroll_cardInfo">
