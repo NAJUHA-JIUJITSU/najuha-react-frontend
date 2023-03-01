@@ -394,7 +394,7 @@ function MainScroll() {
               return (
                 <div key={competition.id} id="card">
                   <div className="MainScroll_card">
-                    <img src={competition.imageUrl} />
+                    <img src={competition.postUrl} />
                     <div className="MainScroll_cardInfo">
                       <p>{competition.doreOpen}</p>
                       <h2>{competition.title}</h2>
