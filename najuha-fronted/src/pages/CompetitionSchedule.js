@@ -5,7 +5,7 @@ import Competitionlist from '../components/Competitionlist'
 
 function CompetitionSchedule() {
   return (
-    <div class="">
+    <div>
       <Navbar />
       <Competitionlist />
       <Footer />

@@ -2,7 +2,6 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import './userInfo.css'
 import axios from 'axios'
-import { useJwt } from 'react-jwt'
 import './profilesectionToggle.css'
 
 const beltEngtoKor = {
@@ -26,7 +25,7 @@ function Read({ userInfo, setMode }) {
       </div>
       <div className="UserInfo_infoBox">
         <span>성별</span>
-        <p>{userInfo?.gender}</p>
+        <p>{genderEngtoKor[userInfo?.gender]}</p>
       </div>
       <div className="UserInfo_infoBox">
         <span>휴대폰</span>
@@ -201,9 +200,10 @@ function UserInfo(props) {
   const [mode, setMode] = useState('READ')
   const [userInfo, setUserInfo] = useState(props.userInfo)
   const [switchClassName, setSwitchClassName] = useState('UserInfo')
+  const componentSelected = props.componentSelected
   const cookies = props.cookies
   const xAccessToken = props.xAccessToken
-  const { decodedToken, isExpired } = useJwt(xAccessToken)
+  const userLevel = props.userLevel
 
   async function updateUser(updateUerinfo) {
     console.log(updateUerinfo)
@@ -216,7 +216,7 @@ function UserInfo(props) {
       data: updateUerinfo,
     })
       .then(res => {
-        if (decodedToken.userLevel === 1) {
+        if (props.userLevel === 1) {
           alert('회원가입이 완료되었습니다')
         }
         cookies.set('x-access-token', res.data.result, {
@@ -233,22 +233,20 @@ function UserInfo(props) {
   }
 
   useEffect(() => {
-    if (decodedToken) {
-      if (decodedToken.userLevel === 1) {
-        setMode('UPDATE')
-      }
+    if (userLevel === 1) {
+      setMode('UPDATE')
     }
-  }, [decodedToken])
+  }, [userLevel])
 
   useEffect(() => {
     setUserInfo(props.userInfo)
   }, [props.userInfo])
 
   useEffect(() => {
-    if (props.componentSelected === 'UserInfoToggle')
+    if (componentSelected === 'UserInfoToggle')
       setSwitchClassName('ProfilesectionToggle')
     else setSwitchClassName('UserInfo')
-  }, [props.componentSelected])
+  }, [componentSelected])
 
   return (
     <>

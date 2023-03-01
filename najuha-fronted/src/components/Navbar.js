@@ -56,23 +56,23 @@ function Navbar() {
   }, [dropdownVisibility])
 
   return (
-    <header class="navbar">
+    <header className="navbar">
       <div
-        class={`hamburger ${isHamburgerActive ? 'active' : ''}`}
+        className={`hamburger ${isHamburgerActive ? 'active' : ''}`}
         onClick={hamburgerClick}>
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
+        <span className="bar"></span>
+        <span className="bar"></span>
+        <span className="bar"></span>
       </div>
       <h1
-        class="logo"
+        className="logo"
         onClick={() => {
           navigate('/')
         }}>
         NAJUHA
       </h1>
-      <ul class={`category nav-menu ${isnavmenuActive ? 'active' : ''}`}>
-        <li class="category-competition nav-item">
+      <ul className={`category nav-menu ${isnavmenuActive ? 'active' : ''}`}>
+        <li className="category-competition nav-item">
           <p
             onClick={() => {
               navigate('/competition')
@@ -80,12 +80,12 @@ function Navbar() {
             대회일정
           </p>
         </li>
-        <li class="category-seminar nav-item">
+        <li className="category-seminar nav-item">
           <p>세미나</p>
         </li>
       </ul>
       <img
-        class="login-icon"
+        className="login-icon"
         alt="벨트모양 로그인 아이콘"
         src={belticon}
         onClick={() => {

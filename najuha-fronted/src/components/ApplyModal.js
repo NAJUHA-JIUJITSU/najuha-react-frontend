@@ -32,7 +32,8 @@ function ApplyModal(props) {
               }}
               pattern="[가-힣]{1,10}"
               title="한글 10자 이하만 가능합니다."
-              required></input>
+              required
+            ></input>
           </div>
           <div className="ApplyModal_modalinputdiv">
             <label>번호</label>
@@ -46,11 +47,13 @@ function ApplyModal(props) {
               }}
               pattern="[0-9]{11}"
               required
-              title="숫자 11자를 입력해주세요"></input>
+              title="숫자 11자를 입력해주세요"
+            ></input>
           </div>
           <div
             id="ApplyModal_modalinputdiv_birth"
-            className="ApplyModal_modalinputdiv">
+            className="ApplyModal_modalinputdiv"
+          >
             <label>생년월일</label>
             <input
               placeholder="주민번호 앞6자리"
@@ -62,7 +65,8 @@ function ApplyModal(props) {
               }}
               pattern="[0-9]{6}"
               title="숫자 6자를 입력해주세요"
-              required></input>
+              required
+            ></input>
           </div>
           <div className="ApplyModal_modalinputdiv">
             <label>소속</label>
@@ -77,7 +81,8 @@ function ApplyModal(props) {
               }}
               pattern="[가-힣]{1,50}"
               title="한글 50자 이하만 가능합니다."
-              required></input>
+              required
+            ></input>
           </div>
           <button className="ApplyModal_modalregisterbutton" type="submit">
             신청하기

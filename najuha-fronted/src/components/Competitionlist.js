@@ -177,9 +177,9 @@ function Competitionlist() {
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
 
-    let deadlineDiff = todaytime.diff(finishdate, 'd')
+    let deadlineDiffM = todaytime.diff(finishdate, 'm')
 
-    if (deadlineDiff > 0) {
+    if (deadlineDiffM > 0) {
       // 마감날짜(데드라인)이 지났을경우
       return (
         <div className="each-competition-tag-gray">
@@ -187,6 +187,9 @@ function Competitionlist() {
         </div>
       )
     }
+
+    let openDiff = todaytime.diff(opendate, 'd')
+    let deadlineDiff = todaytime.diff(finishdate, 'd')
 
     if (deadlineDiff === 0) {
       // 오늘이 마감날짜(데드라인)일 경우
@@ -196,8 +199,6 @@ function Competitionlist() {
         </div>
       )
     }
-
-    let openDiff = todaytime.diff(opendate, 'd')
 
     if (openDiff < 0) {
       // 현재날짜가 오픈 전일 경우 ex) 신청오픈 D-20
@@ -240,8 +241,8 @@ function Competitionlist() {
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
 
-    let deadlineDiff = todaytime.diff(finishdate, 'd')
-    let openDiff = todaytime.diff(opendate, 'd')
+    let deadlineDiff = todaytime.diff(finishdate, 'm')
+    let openDiff = todaytime.diff(opendate, 'm')
 
     if (deadlineDiff > 0) {
       // 마감날짜(데드라인)이 지났을경우 (전체 그레이)
@@ -298,7 +299,7 @@ function Competitionlist() {
         competition.registrationDeadline
       )
       return (
-        <li className="competition-col">
+        <li className="competition-col" key={competition.id}>
           <div className="each-competition-tag">
             {' '}
             {/* 위쪽 태그공간  */}
@@ -313,36 +314,38 @@ function Competitionlist() {
             )}
           </div>
           <div className="each-competition-body" id={cardGray}>
-            <div class="each-competition-body-poster">
+            <div className="each-competition-body-poster">
               {' '}
               {/* 카드왼쪽 포스터공간  */}
               <img src={curcompetition.posterImage} alt="대회 포스터"></img>
-              <div class="each-competition-body-poster-block"></div>
+              <div className="each-competition-body-poster-block"></div>
               <h1>
                 {curcompetition.doreOpen}
                 <span>({curcompetition.doreOpenDay})</span>
               </h1>
             </div>
-            <div class="each-competition-body-desc">
+            <div className="each-competition-body-desc">
               {' '}
               {/* 카드오른쪽 설명공간 */}
               <div
-                class="each-competition-body-desc-top"
+                className="each-competition-body-desc-top"
                 onClick={() => {
                   navigate(`/competition/${curcompetition.id}`)
-                }}>
+                }}
+              >
                 <p>{curcompetition.title}</p>
               </div>
-              <div class="each-competition-body-desc-middle">
+              <div className="each-competition-body-desc-middle">
                 <p>{curcompetition.location}</p>
               </div>
-              <div class="each-competition-body-desc-bottom">
+              <div className="each-competition-body-desc-bottom">
                 {competition.isPartnership === true ? (
                   <button
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
                       navigate(`/competition/applymethod/${curcompetition.id}`)
-                    }}>
+                    }}
+                  >
                     신청
                   </button>
                 ) : (
@@ -350,7 +353,8 @@ function Competitionlist() {
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
                       window.location.href = competition.nonPartnershipPageLink
-                    }}>
+                    }}
+                  >
                     신청
                   </button>
                 )}
@@ -375,7 +379,8 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setDateDropdown(pre => !pre)}
-          ref={dateDropdownRef}>
+          ref={dateDropdownRef}
+        >
           <p id={startDate === '' ? '' : 'competition-searchzone-black'}>
             {startDate === '' ? '날짜' : `${temDate}월~`}
           </p>
@@ -388,7 +393,8 @@ function Competitionlist() {
                   setStartDate('')
                   listRefresh()
                   setActiveMonth('')
-                }}>
+                }}
+              >
                 전체
               </li>
               {months.map(element => {
@@ -405,7 +411,8 @@ function Competitionlist() {
                       setTemDate(element)
                       listRefresh()
                       setActiveMonth(element)
-                    }}>
+                    }}
+                  >
                     {element}월
                   </li>
                 )
@@ -418,7 +425,8 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setLocationDropdown(pre => !pre)}
-          ref={locationDropdownRef}>
+          ref={locationDropdownRef}
+        >
           <p id={location === '' ? '' : 'competition-searchzone-black'}>
             {location === '' ? '지역' : location}
           </p>
@@ -431,7 +439,8 @@ function Competitionlist() {
                   setLocation('')
                   listRefresh()
                   setActiveLocation('')
-                }}>
+                }}
+              >
                 전체
               </li>
               {locationSample.map(element => {
@@ -447,7 +456,8 @@ function Competitionlist() {
                       setLocation(element)
                       listRefresh()
                       setActiveLocation(element)
-                    }}>
+                    }}
+                  >
                     {element}
                   </li>
                 )
@@ -487,7 +497,8 @@ function Competitionlist() {
           {!isLoading && (
             <div
               style={{ fontsize: '200px', margin: '0 2rem' }}
-              ref={setLastElement}>
+              ref={setLastElement}
+            >
               해당 대회가 모두 로딩되었습니다.
             </div>
           )}

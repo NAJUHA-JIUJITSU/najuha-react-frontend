@@ -30,30 +30,53 @@ const GlobalStyle = createGlobalStyle`
   ${reset}`
 
 function App() {
-  const AuthMainpage = Auth(Mainpage, null)
-  const AuthCompetitionSchedule = Auth(CompetitionSchedule, null)
-  const AuthCompetitionPage = Auth(CompetitionPage, null)
-  const AuthCompetitionApplyPage = Auth(CompetitionApplyPage, true)
-  const AuthCompetitionApplyPatchPage = Auth(CompetitionApplyPatchPage, true)
-  const AuthCompetitionApplyTeamPage = Auth(CompetitionApplyTeamPage, true)
-  const AuthCompetitionApplyPatchTeamPage = Auth(
-    CompetitionApplyPatchTeamPage,
+  const AuthMainpage = Auth(Mainpage, null, null)
+  const AuthCompetitionSchedule = Auth(CompetitionSchedule, null, null)
+  const AuthCompetitionPage = Auth(CompetitionPage, null, null)
+  const AuthCompetitionApplyPage = Auth(CompetitionApplyPage, true, true)
+  const AuthCompetitionApplyPatchPage = Auth(
+    CompetitionApplyPatchPage,
+    true,
     true
   )
-  const AuthAdmincompetition = Auth(Admincompetition, true, true)
-  const AuthCompetitionInfoPage = Auth(AdminCompetitionInfoPage, null)
-  const AuthAdminCsvDownload = Auth(AdminCsvDownload, true, true)
-  const AuthCompetitionform = Auth(Competitionform, true, true)
-  const AuthProfilepage = Auth(Profilepage, true)
-  const AuthProfileInfopage = Auth(ProfileInfopage, true)
-  const Authkakao = Auth(KakaoLogin, null)
-  const AuthoCompetitionApplyMethodPage = Auth(CompetitionApplyMethodPage, true)
-  const AuthPaymentSuccessPage = Auth(PaymentSuccessPage, true)
-  const AuthPaymentFailPage = Auth(PaymentFailPage, true)
-  const AuthPaymentInfoPage = Auth(PaymentInfoPage, true)
-  const AuthAdminCompetitionImagePage = Auth(AdminCompetitionImagePage, true)
-  const AuthScrollPage = Auth(ScrollPage, true)
-  const AuthMainScrollPage = Auth(MainScrollPage, true)
+  const AuthCompetitionApplyTeamPage = Auth(
+    CompetitionApplyTeamPage,
+    true,
+    true
+  )
+  const AuthCompetitionApplyPatchTeamPage = Auth(
+    CompetitionApplyPatchTeamPage,
+    true,
+    true
+  )
+  const AuthAdmincompetition = Auth(Admincompetition, true, true, true)
+  const AuthCompetitionInfoPage = Auth(
+    AdminCompetitionInfoPage,
+    true,
+    true,
+    true
+  )
+  const AuthAdminCsvDownload = Auth(AdminCsvDownload, true, true, true)
+  const AuthCompetitionform = Auth(Competitionform, true, true, true)
+  const AuthProfilepage = Auth(Profilepage, true, null)
+  const AuthProfileInfopage = Auth(ProfileInfopage, true, true)
+  const Authkakao = Auth(KakaoLogin, null, null)
+  const AuthoCompetitionApplyMethodPage = Auth(
+    CompetitionApplyMethodPage,
+    true,
+    true
+  )
+  const AuthPaymentSuccessPage = Auth(PaymentSuccessPage, true, true)
+  const AuthPaymentFailPage = Auth(PaymentFailPage, true, true)
+  const AuthPaymentInfoPage = Auth(PaymentInfoPage, true, true)
+  const AuthAdminCompetitionImagePage = Auth(
+    AdminCompetitionImagePage,
+    true,
+    true,
+    true
+  )
+  const AuthScrollPage = Auth(ScrollPage, null, null)
+  const AuthMainScrollPage = Auth(MainScrollPage, null, null)
 
   return (
     <React.Fragment>

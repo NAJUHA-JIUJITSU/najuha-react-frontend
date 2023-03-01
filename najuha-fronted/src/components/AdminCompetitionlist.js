@@ -308,7 +308,7 @@ function AdminCompetitionlist() {
         competition.registrationDeadline
       )
       return (
-        <li className="competition-col">
+        <li className="competition-col" key={i}>
           <div className="each-competition-tag">
             {makingEarlybirdTag(
               competition.registrationDate,
@@ -323,11 +323,11 @@ function AdminCompetitionlist() {
           <div className="each-competition-body">
             {' '}
             {/* 위쪽 태그공간  */}
-            <div class="each-competition-body-poster">
+            <div className="each-competition-body-poster">
               {' '}
               {/* 카드왼쪽 포스터공간  */}
               <img src={curcompetition.posterImage}></img>
-              <div class="each-competition-body-poster-block"></div>
+              <div className="each-competition-body-poster-block"></div>
               <h1>
                 {curcompetition.doreOpen}
                 <span>({curcompetition.doreOpenDay})</span>
@@ -337,10 +337,11 @@ function AdminCompetitionlist() {
               {' '}
               {/* 카드오른쪽 설명공간 */}
               <div
-                class="each-competition-body-desc-top"
+                className="each-competition-body-desc-top"
                 onClick={() => {
                   navigate(`/Admincompetition/info/${curcompetition.id}`)
-                }}>
+                }}
+              >
                 <p>{curcompetition.title}</p>
               </div>
               <div className="each-competition-body-desc-middle">
@@ -352,7 +353,8 @@ function AdminCompetitionlist() {
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
                       navigate(`/competition/applymethod/${curcompetition.id}`)
-                    }}>
+                    }}
+                  >
                     신청
                   </button>
                 ) : (
@@ -360,7 +362,8 @@ function AdminCompetitionlist() {
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
                       window.location.href = competition.nonPartnershipPageLink
-                    }}>
+                    }}
+                  >
                     신청
                   </button>
                 )}
@@ -373,7 +376,8 @@ function AdminCompetitionlist() {
                 style={{ background: 'orange', color: 'black' }}
                 onClick={() => {
                   navigate(`/admincompetition/${curcompetition.id}`)
-                }}>
+                }}
+              >
                 대회수정하기
               </button>
               {curcompetition.status === 'ACTIVE' ? (
@@ -381,7 +385,8 @@ function AdminCompetitionlist() {
                   style={{ background: 'gray', color: 'black' }}
                   onClick={async () => {
                     InActivePatch(curcompetition.id)
-                  }}>
+                  }}
+                >
                   비활성화하기
                 </button>
               ) : (
@@ -389,7 +394,8 @@ function AdminCompetitionlist() {
                   style={{ background: 'red', color: 'black' }}
                   onClick={() => {
                     ActivePatch(curcompetition.id)
-                  }}>
+                  }}
+                >
                   활성화하기
                 </button>
               )}
@@ -397,21 +403,24 @@ function AdminCompetitionlist() {
                 style={{ background: 'lightblue', color: 'black' }}
                 onClick={() => {
                   navigate(`/Admincompetition/imageupload/${curcompetition.id}`)
-                }}>
+                }}
+              >
                 포스터업로드하기
               </button>
               <button
                 style={{ background: 'pink', color: 'black' }}
                 onClick={() => {
                   navigate(`/paymentinfo/${curcompetition.id}`)
-                }}>
+                }}
+              >
                 결제정보
               </button>
               <button
                 style={{ background: 'yellow', color: 'black' }}
                 onClick={() => {
                   navigate(`/Admincompetition/csv/${curcompetition.id}`)
-                }}>
+                }}
+              >
                 참가선수명단
               </button>
             </div>
@@ -426,7 +435,8 @@ function AdminCompetitionlist() {
       <div className="competition-searchzone">
         <div
           className="competition-searchzone-option"
-          onClick={() => setDateDropdown(pre => !pre)}>
+          onClick={() => setDateDropdown(pre => !pre)}
+        >
           <p>{startDate == '' ? '날짜' : `${temDate}월`}</p>
           <img src={dropdownicon} />
           {dateDropdown ? (
@@ -436,18 +446,21 @@ function AdminCompetitionlist() {
                 onClick={() => {
                   setStartDate('')
                   listRefresh()
-                }}>
+                }}
+              >
                 전체
               </li>
               {months.map(element => {
                 return (
                   <li
+                    key={element}
                     value={element}
                     onClick={() => {
                       setStartDate(`2023-${element}-01`)
                       setTemDate(element)
                       listRefresh()
-                    }}>
+                    }}
+                  >
                     {element}월
                   </li>
                 )
@@ -459,7 +472,8 @@ function AdminCompetitionlist() {
         </div>
         <div
           className="competition-searchzone-option"
-          onClick={() => setLocationDropdown(pre => !pre)}>
+          onClick={() => setLocationDropdown(pre => !pre)}
+        >
           <p>{location == '' ? '지역' : location}</p>
           <img src={dropdownicon} />
           {locationDropdown ? (
@@ -469,17 +483,20 @@ function AdminCompetitionlist() {
                 onClick={() => {
                   setLocation('')
                   listRefresh()
-                }}>
+                }}
+              >
                 전체
               </li>
               {locationSample.map(element => {
                 return (
                   <li
+                    key={element}
                     value={element}
                     onClick={() => {
                       setLocation(element)
                       listRefresh()
-                    }}>
+                    }}
+                  >
                     {element}
                   </li>
                 )
@@ -519,7 +536,8 @@ function AdminCompetitionlist() {
           {!isLoading && (
             <div
               style={{ fontsize: '200px', margin: '0 2rem' }}
-              ref={setLastElement}>
+              ref={setLastElement}
+            >
               해당 대회가 모두 로딩되었습니다.
             </div>
           )}

@@ -4,14 +4,17 @@ import './competition.css'
 import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
 import sampleposter from '../src_assets/samplePoster.png'
+import dayjs from 'dayjs'
 
 function Competition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
+  const [inDate, setInDate] = useState(false)
   const [competition, setCompetition] = useState(null)
   const [viewCompetition, setViewCompetition] = useState(false)
   const { id } = useParams()
   const [markdown, setMarkdown] = useState('')
   const navigate = useNavigate()
+  let todaytime = dayjs()
 
   //     let markdown = `
   // # 참가자 명단
@@ -127,6 +130,24 @@ function Competition() {
     })
   }
 
+  function dateCheck(registrationDate, registrationDeadline) {
+    let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
+    let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
+    let deadlineDiff = todaytime.diff(finishdate, 'm')
+    console.log(deadlineDiff)
+    if (deadlineDiff > 0) {
+      // 마감날짜(데드라인)이 지났을경우
+      return false
+    }
+    let openDiff = todaytime.diff(opendate, 'm')
+
+    if (openDiff < 0) {
+      // 현재날짜가 오픈 전일 경우 ex) 신청오픈 D-20
+      return false
+    }
+    setInDate(true)
+  }
+
   useEffect(() => {
     getCompetition(id)
   }, [])
@@ -134,6 +155,7 @@ function Competition() {
   useEffect(() => {
     if (competition !== null) {
       competitionParsing(competition)
+      dateCheck(competition.registrationDate, competition.registrationDeadline)
       setMarkdown(competition.information)
     }
     console.log(competition)
@@ -216,14 +238,18 @@ function Competition() {
             </div>
           </div>
         </div>
-        <button
-          id="competition-top-button"
-          onClick={() => {
-            navigate(`/competition/applymethod/${id}`)
-          }}
-        >
-          대회 신청
-        </button>
+        {inDate ? (
+          <button
+            id="competition-top-button"
+            onClick={() => {
+              navigate(`/competition/applymethod/${id}`)
+            }}
+          >
+            대회 신청
+          </button>
+        ) : (
+          ''
+        )}
       </div>
       <div className="competition-bottom">
         <ReactMarkdown
