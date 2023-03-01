@@ -35,12 +35,14 @@ export default function (
         }
       } else {
         //로그인한상태
-        tokenTime = new Date(decodedToken.exp * 1000) // 토큰만료시간
-        tokenTime.setMinutes(tokenTime.getMinutes() - 15) // 토큰만료시간에 15분 빼기
-        if (nowTime >= tokenTime) {
-          cookies.remove('x-access-token', { path: '/' })
-          alert('로그인시간이 만료되었습니다.')
-          window.location.href = kakaoAuthURL
+        if (LoginOption === true) {
+          tokenTime = new Date(decodedToken.exp * 1000) // 토큰만료시간
+          tokenTime.setMinutes(tokenTime.getMinutes() - 15) // 토큰만료시간에 15분 빼기
+          if (nowTime >= tokenTime) {
+            cookies.remove('x-access-token', { path: '/' })
+            alert('재로그인이 필요합니다.')
+            window.location.href = kakaoAuthURL
+          }
         }
 
         if (UserLevelOption) {
