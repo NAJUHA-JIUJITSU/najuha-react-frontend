@@ -19,7 +19,7 @@
   --font-size-navlist: 2rem;
   --font-size-title1: 5rem;
   --font-size-subtitle1: 2.4rem;
-  --font-size-subinfo: 1.6rem;
+  --font-size-subinfo: 1.8rem;
   --font-size-title2: 3.6rem;
   --font-size-subtitle2: 1.8rem;
 }
@@ -28,61 +28,17 @@
 .MainScroll_wrapper {
   justify-content: center;
   scroll-behavior: smooth;
-}
-
-.MainScroll_nav {
-  display: flex;
-  height: 72px;
-  line-height: 72px;
-  z-index: 999;
-  color: var(--white-color);
-  /* max-width: 821px;  */
-  padding: 0 30rem;
-  box-sizing: border-box;
-  position: fixed;
-  margin: 0 auto;
-  left: 0;
-  right: 0;
-  /* border-bottom: 1px solid #EDEDED; */
+  overflow: hidden;
 }
 
 .MainScroll_section1,
 .MainScroll_section1-1 {
   position: fixed;
 }
-
+.MainScroll_phoneMsg {
+  color: var(--blue-background-color);
+}
 /* Components */
-
-/* nav 바 */
-.MainScroll_logo {
-  font-family: 'Anton', sans-serif;
-  font-size: var(--font-size-navlogo);
-  margin-right: auto;
-}
-
-.MainScroll_list {
-  display: flex;
-  letter-spacing: -0.12rem;
-  font-weight: 400;
-}
-
-.MainScroll_list li {
-  margin-right: 5rem;
-}
-
-.MainScroll_menu {
-  display: flex;
-  font-size: var(--font-size-navlist);
-}
-
-.MainScroll_belt {
-  background-color: var(--gray-belt-colo);
-  border-radius: 50px;
-  width: 48px;
-  height: 46px;
-  margin: auto 0;
-  box-sizing: border-box;
-}
 
 /* section 1 */
 
@@ -93,7 +49,7 @@
   height: 100vh;
   width: 100vw;
   box-sizing: border-box;
-  z-index: 1;
+  z-index: 88;
 }
 
 .MainScroll_bgImg {
@@ -117,7 +73,7 @@
   );
 }
 .MainScroll_black2 {
-  position: absolute;
+  position: fixed;
   height: 100vh;
   z-index: 20;
   width: 100vw;
@@ -145,13 +101,19 @@
   transform: translate(-50%, -50%);
   z-index: 30;
   text-align: center;
+  width: 100%;
 }
 
 .MainScroll_message2 h2 {
   color: var(--white-color);
   font-weight: 500;
   font-size: 4rem;
-  line-height: 8rem;
+  line-height: 5rem;
+  margin-bottom: 40px;
+}
+
+.MainScroll_message2 h2:last-child {
+  margin-bottom: 0px;
 }
 
 .MainScroll_none {
@@ -175,33 +137,28 @@
 }
 
 .MainScroll_section1-1 {
-  height: 580vh;
+  height: 650vh;
   position: relative;
   background-color: #000000;
 }
 
-.MainScroll_section2 {
-  height: 100vh;
-  background-color: white;
-  z-index: 100;
-  position: relative;
-}
-
 /* section 2 */
 .MainScroll_section2 {
+  z-index: 100;
+  position: relative;
   align-items: center;
   text-align: center;
-  height: 150vh;
+  height: 100%;
 }
 
 .MainScroll_title1 {
-  margin-top: 30px;
+  margin-top: 18rem;
 }
 
 .MainScroll_section2 h1 {
   position: relative;
   font-size: var(--font-size-title1);
-  line-height: 70px;
+  line-height: 7rem;
   font-weight: 700;
   z-index: 2;
 }
@@ -209,28 +166,29 @@
 .MainScroll_section2 h2 {
   font-size: var(--font-size-subtitle1);
   color: var(--gray-subtitle-color);
-  line-height: 36px;
+  line-height: 2.8rem;
   font-weight: 400;
-  margin-top: 82px;
-  margin-bottom: 40px;
+  margin-top: 8.2rem;
+  margin-bottom: 4rem;
 }
 
 .MainScroll_blueLine {
   background: #90ccf8;
-  width: 200px;
-  height: 20px;
+  width: 18rem;
+  height: 2rem;
   border-radius: 25px;
   position: absolute;
-  top: 198px;
+  top: 19.8rem;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
 }
 
+/* 중간 그라데이션 */
 .MainScroll_linear1 {
   position: relative;
   z-index: 888;
-  height: 184px;
+  height: 18.4rem;
   background: linear-gradient(180deg, #ffffff 0%, #f2f7ff 100%);
 }
 
@@ -240,32 +198,374 @@
   position: relative;
   z-index: 888;
   background-color: var(--blue-background-color);
-  height: 150vh;
+  height: 110%;
 }
 
 .MainScroll_section3 h1 {
   position: relative;
   font-size: var(--font-size-title1);
-  line-height: 70px;
+  line-height: 7rem;
   font-weight: 700;
   z-index: 2;
   /* max-width: 821px; */
 }
 
 .MainScroll_title2 {
-  max-width: 821px;
+  max-width: 82.1rem;
   margin: 0 auto;
-  padding-top: 60px;
+  padding-top: 6rem;
 }
 
 .MainScroll_blueLine2 {
   background: #90ccf8;
-  width: 200px;
-  height: 20px;
+  width: 18rem;
+  height: 2rem;
   border-radius: 25px;
   position: absolute;
-  top: 258px;
-  left: 80px;
+  top: 25.8rem;
+  left: 8rem;
   transform: translate(-50%, -50%);
   z-index: 1;
+}
+
+.MainScroll_phone {
+  display: flex;
+  justify-content: center;
+}
+
+.MainScroll_phone img {
+  height: 80rem;
+}
+
+.MainScroll_phone1 {
+  padding-top: 8.6rem;
+}
+
+.MainScroll_phone2 {
+  margin-left: 9rem;
+  margin-top: -20rem;
+}
+
+.MainScroll_phone1 p {
+  font-size: var(--font-size-subinfo);
+  color: var(--gray-info-color);
+  margin-left: 2rem;
+}
+
+.MainScroll_phone2 h2 {
+  font-size: var(--font-size-subtitle1);
+  color: var(--gray-subtitle-color);
+  line-height: 3.6rem;
+  margin-left: 2rem;
+  max-width: 280px;
+}
+
+/* 중간 그라데이션 */
+.MainScroll_linear2 {
+  position: relative;
+  z-index: 888;
+  height: 18.4rem;
+  background: linear-gradient(180deg, #f2f7ff 0%, #ffffff 100%);
+}
+
+/* section 4 */
+
+.MainScroll_section4 {
+  position: relative;
+  z-index: 888;
+  background-color: white;
+  height: 90vh;
+  /* align-items: center; */
+  text-align: center;
+}
+
+.MainScroll_section4 h1 {
+  position: relative;
+  font-size: var(--font-size-title2);
+  line-height: 4.6rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  z-index: 2;
+}
+
+.MainScroll_blueLine3 {
+  background: #90ccf8;
+  width: 21.7rem;
+  height: 1rem;
+  border-radius: 25px;
+  position: absolute;
+  top: 12.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.MainScroll_title3 h2 {
+  font-size: var(--font-size-subtitle2);
+  color: var(--gray-subtitle-color);
+  margin-top: 2.7rem;
+}
+
+/* 카드 슬라이드 디자인 */
+.MainScroll_slide {
+  margin-top: 67px;
+}
+
+.MainScroll_card {
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: auto;
+  max-width: 520px;
+
+  box-shadow: 0 0 0 1px #dbdbdb inset;
+  cursor: pointer;
+}
+.MainScroll_card:hover {
+  box-shadow: 0 0 0 1px #131313 inset;
+}
+
+.MainScroll_cardInfo {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  margin-left: 10px;
+}
+
+.MainScroll_cardInfo p {
+  font-size: 24px;
+  margin-bottom: 5%;
+  margin-top: 10%;
+  height: 15%;
+}
+
+.MainScroll_cardInfo h2 {
+  font-size: 30px;
+  font-weight: 500;
+  width: 96%;
+  height: 35%;
+  margin-bottom: 15%;
+}
+
+.MainScroll_cardInfo h3 {
+  font-size: 18px;
+  height: 20%;
+  margin-bottom: 10%;
+  color: #696969;
+  width: 96%;
+}
+/* 
+.MainScroll_cardInfo button {
+  margin-right: 20px;
+  width: 120px;
+  height: 46px;
+  background: rgba(255, 255, 255, 0.26);
+
+  border: 1px solid #acacac;
+  box-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
+  font-size: 18px;
+} */
+
+.MainScroll_apply {
+  margin-left: auto;
+}
+
+#card {
+  position: static;
+  text-align: center;
+  justify-content: center;
+}
+
+.MainScroll_card img {
+  width: 40%;
+  height: 296px;
+}
+
+.arrow {
+  position: absolute;
+  z-index: 999;
+}
+
+/* 모든 대회 보러가기 버튼 */
+
+.MainScroll_listBtn {
+  margin-top: 80px;
+
+  display: inline-block;
+  font-size: 18px;
+  color: #b2b2b2;
+  letter-spacing: -0.04em;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+@media (max-width: 1049px) {
+  /* 섹션 1 */
+  .MainScroll_message {
+    left: 52%;
+  }
+
+  /* 섹션 2 */
+  .MainScroll_section2 img {
+    width: 90%;
+  }
+}
+
+@media (max-width: 750px) {
+  /* 섹션 1 */
+  .MainScroll_message {
+    left: 40%;
+  }
+
+  .MainScroll_message span {
+    font-size: 8.8rem;
+    line-height: 11rem;
+  }
+
+  .MainScroll_message h1 {
+    font-size: 4rem;
+  }
+
+  .MainScroll_message2 {
+    max-width: 330px;
+  }
+
+  .MainScroll_message2 h2 {
+    font-size: 3.8rem;
+    line-height: 4.6rem;
+    margin-bottom: 30px;
+  }
+
+  /* 섹션 2 (모니터 사진)*/
+
+  .MainScroll_section2 h1 {
+    font-size: 4.6rem;
+    line-height: 5.6rem;
+  }
+
+  .MainScroll_section2 h2 {
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    margin-top: 7rem;
+    margin-bottom: 2.2rem;
+  }
+
+  .MainScroll_blueLine {
+    width: 16rem;
+    height: 1.4rem;
+    top: 15.8rem;
+  }
+
+  .MainScroll_subtitle1 {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  /* 섹션 3 (핸드폰 사진)*/
+  .MainScroll_title2 {
+    margin-left: 2.6rem;
+  }
+
+  .MainScroll_section3 h1 {
+    font-size: 4.6rem;
+    line-height: 5.6rem;
+  }
+
+  .MainScroll_blueLine2 {
+    width: 16rem;
+    height: 1.4rem;
+    top: 21.8rem;
+    left: 7.6rem;
+  }
+
+  .MainScroll_phone {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 730px;
+  }
+
+  .MainScroll_phone1 {
+    width: 50%;
+  }
+
+  .MainScroll_phone2 {
+    width: 50%;
+    margin-top: 8.6rem;
+    margin-left: 0rem;
+  }
+
+  .MainScroll_phone img {
+    width: 100%;
+    height: 76%;
+  }
+
+  .MainScroll_phone1 p {
+    font-size: 14px;
+    color: var(--gray-info-color);
+    margin-left: 2rem;
+
+    width: 580px;
+  }
+
+  .MainScroll_phone2 h2 {
+    display: none;
+  }
+  .MainScroll_phoneMsg {
+    z-index: 99;
+    margin-left: 2rem;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+    color: var(--gray-subtitle-color);
+    margin-top: 1rem;
+    width: 400px;
+    margin-bottom: 2rem;
+  }
+
+  .MainScroll_title3 h2 {
+    font-size: 1.6rem;
+  }
+  /* section 4 - 카드 슬라이드 */
+  .MainScroll_card img {
+    width: 40%;
+    height: 230px;
+  }
+
+  .MainScroll_cardInfo {
+    margin-left: 6px;
+  }
+
+  .MainScroll_cardInfo p {
+    font-size: 16px;
+  }
+
+  .MainScroll_cardInfo h2 {
+    font-size: 20px;
+  }
+
+  .MainScroll_cardInfo h3 {
+    font-size: 14px;
+  }
+
+  .MainScroll_listBtn {
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 470px) {
+  /* section 4 - 카드 슬라이드 */
+  .MainScroll_card img {
+    width: 40%;
+    height: 180px;
+  }
+
+  .MainScroll_section4 {
+    /* height: 82vh; */
+  }
 }

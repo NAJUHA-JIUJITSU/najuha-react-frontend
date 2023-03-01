@@ -57,8 +57,8 @@
   border: 1px solid #f1f1f1;
   box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
-  width: 138px;
-  height: 57px;
+  width: 136px;
+  height: 50px;
   background: #ffffff;
   margin-left: 100%;
   transform: translate(-100%, 0);
@@ -79,14 +79,14 @@
 }
 
 .competition-top-content-img {
-  min-width: 194px;
-  max-width: 194px;
+  min-width: 220px;
+  max-width: 220px;
   height: 264px;
   background-color: white;
 }
 
 .competition-top-content-info {
-  width: calc(100% - 194px);
+  width: calc(100% - 220px);
 }
 
 .competition-top-content-info-each {
@@ -253,18 +253,18 @@
   /* component */
 
   .competition-top-content-img {
-    min-width: 98px;
-    max-width: 98px;
+    min-width: 110px;
+    max-width: 110px;
     height: 144px;
   }
 
   .competition-top-content-info {
-    width: calc(100% - 98px);
+    width: calc(100% - 110px);
   }
 
   #competition-top-button {
-    width: 95px;
-    height: 39px;
+    width: 100px;
+    height: 40px;
   }
 
   .competition-top-content-info-each h3 {

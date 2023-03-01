@@ -1,28 +1,95 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Component, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './mainScroll.css'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import gymFront from '../src_assets/체육관_앞.png'
-import gymBackground from '../src_assets/체육관_뒤.png'
-import players from '../src_assets/선수들.png'
-import competitionBackgruond from '../src_assets/대회장.png'
-import competitionFull from '../src_assets/대회장전체.png'
-import phone from '../src_assets/폰목업.png'
-import whiteBelt from '../src_assets/whiteBelt.svg'
-import grayBelt from '../src_assets/grayBelt.svg'
 import backgroundImg from '../src_assets/jiujitsuGuys.jpg'
 import monitor from '../src_assets/모니터.png'
 import phone1 from '../src_assets/폰1.png'
+import phone2 from '../src_assets/폰2.png'
+import samplePoster from '../src_assets/samplePoster.png'
+import samplePoster2 from '../src_assets/포스터2.png'
+import samplePoster3 from '../src_assets/포스터3.png'
+
+import Slider from 'react-slick'
+import './slick.css'
+import './slick-theme.css'
+
+import { Cookies } from 'react-cookie'
+import axios from 'axios'
 
 function MainScroll() {
   const [ScrollActive, setScrollActive] = useState(false)
-  const [ScrollY, setScrollY] = useState(0) // window 의 pageYOffset값을 저장
-  const [width, setWidth] = useState('100vw')
-  const [height, setHeight] = useState('100vh')
+  const [ScrollY, setScrollY] = useState(
+    Number(localStorage.getItem('scrollY')) || 0
+  ) // window 의 pageYOffset값을 저장
   const [zoom, setZoom] = useState(1)
-  const [bgColor, setBgColor] = useState('rgba(0, 0, 0, 0.5)')
+  const [bgColor, setBgColor] = useState('rgba(0, 0, 0, 0)')
   const [bgColorW, setBgColorW] = useState('rgba(255, 255, 255, 0)')
+  const [competitions, setCompetitions] = useState([])
 
+  let navigate = useNavigate()
+
+  const cookies = new Cookies()
+  const xAccessToken = cookies.get('x-access-token')
+
+  //대회 정보 가져오기
+  async function getCompetitons() {
+    axios
+      .get(
+        `${process.env.REACT_APP_BACK_END_API}/competitionsPartnershipTrue`,
+        {
+          headers: {
+            'x-access-token': cookies.get('x-access-token'),
+          },
+        }
+      )
+      .then(res => {
+        setCompetitions(res.data.result)
+        console.log(res.data.result)
+        console.log(res.data.message)
+      })
+      .catch(err => {
+        console.log(err)
+        console.log(err.response.status)
+        console.log(err.response.data.message)
+      })
+    return
+  }
+  //요일 값 구하기
+  function getDayOfWeek(날짜문자열) {
+    //ex) getDayOfWeek('2022-06-13')
+
+    const week = ['일', '월', '화', '수', '목', '금', '토']
+
+    const dayOfWeek = week[new Date(날짜문자열).getDay()]
+
+    return dayOfWeek
+  }
+  //대회 정보 데이터 파싱
+  function competitionsParsing(competition) {
+    let id = competition.id
+    let title = competition.title
+    let doreOpen = competition.doreOpen
+      .substr(0, 10)
+      .replace('-', '.')
+      .replace('-', '.')
+    let doreOpenDay = getDayOfWeek(competition.doreOpen)
+    let location = competition.location
+    let postUrl = competition.CompetitionPoster
+      ? competition.CompetitionPoster.imageUrl
+      : samplePoster
+
+    return {
+      id: id,
+      title: title,
+      postUrl: postUrl,
+      doreOpen: doreOpen + '(' + doreOpenDay + ')',
+      location: location,
+    }
+  }
+
+  //스크롤 값 구하기 && 그에 따른 이벤트 추가
   function handleScroll() {
     console.log('스크롤 ' + ScrollY)
     if (ScrollY <= 1700) {
@@ -40,9 +107,9 @@ function MainScroll() {
       if (scrollTop < 3100) {
         const newBgColor = `rgba(0, 0, 0, ${(scrollTop - 1700) / 1000})`
         setBgColor(newBgColor)
-      } else if (scrollTop >= 3100) {
+      } else if (scrollTop >= 3600) {
         setBgColor('rgba(0, 0, 0, 0.4)')
-        const newBgColor = `rgba(255, 255, 255, ${(scrollTop - 3100) / 500})`
+        const newBgColor = `rgba(255, 255, 255, ${(scrollTop - 3600) / 500})`
         setBgColorW(newBgColor)
       }
 
@@ -52,6 +119,8 @@ function MainScroll() {
       setScrollActive(false)
     }
   }
+
+  //스크롤 감시
   useEffect(() => {
     function scrollListener() {
       window.addEventListener('scroll', handleScroll)
@@ -62,40 +131,119 @@ function MainScroll() {
     } //  window 에서 스크롤을 감시를 종료
   })
 
+  //슬라이드 라이브러리 추가
   useEffect(() => {
     AOS.init()
   })
 
+  useEffect(() => {
+    getCompetitons()
+  }, [])
+
+  //슬라이드 오른쪽 화살표 컴포넌트
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: 'block' }}
+        onClick={onClick}></div>
+    )
+  }
+
+  //슬라이드 왼쪽 화살표 컴포넌트
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props
+    return (
+      <div
+        className={className}
+        style={{ ...style, display: 'block' }}
+        onClick={onClick}
+      />
+    )
+  }
+
+  //슬라이드 설정값
+  const [settings, setSettings] = useState({
+    dots: true,
+    infinite: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    speed: 500,
+    centerMode: true,
+    centerPadding: '28%',
+    nextArrow: <SampleNextArrow className="arrow" />,
+    prevArrow: <SamplePrevArrow className="arrow" />,
+    responsive: [
+      {
+        breakpoint: 1049,
+        settings: {
+          centerPadding: '18%',
+        },
+      },
+      {
+        breakpoint: 750,
+        settings: {
+          centerPadding: '12%',
+        },
+      },
+    ],
+  })
+
+  const images = [
+    {
+      src: samplePoster,
+      id: 1,
+      doreOpen: '2023.02.08(월)',
+      title: '나주하가 잘 후원한 챔피언십',
+      location: '사우동 시민회관',
+    },
+    {
+      src: samplePoster2,
+      id: 2,
+      doreOpen: '2023.02.15(토)',
+      title: 'JUCA 주짓수 카니발 대회',
+      location: '카니발 체육관',
+    },
+    {
+      src: samplePoster3,
+      id: 3,
+      doreOpen: '2023.02.23(일)',
+      title: '모래밭 주짓수 챔피언십',
+      location: '해운대 모래밭',
+    },
+    {
+      src: samplePoster,
+      id: 4,
+      doreOpen: '2023.03.01(금)',
+      title: '나주하 후원 챔피언십',
+      location: '사우동 시민회관',
+    },
+    {
+      src: samplePoster2,
+      id: 5,
+      doreOpen: '2023.03.09(토)',
+      title: '나주하 후원 챔피언십',
+      location: '사우동 시민회관',
+    },
+    {
+      src: samplePoster3,
+      id: 6,
+      doreOpen: '2023.03.16(일)',
+      title: '나주하 후원 챔피언십',
+      location: '사우동 시민회관',
+    },
+    {
+      src: samplePoster,
+      id: 7,
+      doreOpen: '2023.04.01(월)',
+      title: '나주하 후원 챔피언십',
+      location: '사우동 시민회관',
+    },
+  ]
+
   return (
     <div className="MainScroll_wrapper">
-      <div
-        className="MainScroll_nav"
-        style={ScrollY > 3600 ? { backgroundColor: 'white' } : {}}>
-        <h1
-          className="MainScroll_logo"
-          style={ScrollY > 3600 ? { color: 'black' } : {}}>
-          NAJUHA
-        </h1>
-        <div className="MainScroll_list">
-          <ul
-            className="MainScroll_menu"
-            style={ScrollY > 3600 ? { color: '#888888' } : {}}>
-            <li>대회일정</li>
-            <li>세미나</li>
-          </ul>
-          <img
-            class="MainScroll_belt"
-            alt="벨트모양 로그인 아이콘"
-            src={ScrollY > 3600 ? grayBelt : whiteBelt}
-            style={
-              ScrollY > 3600
-                ? { backgroundColor: 'rgba(238, 238, 238, 0.48)' }
-                : { backgroundColor: 'rgba(238, 238, 238, 0.01)' }
-            }
-          />
-        </div>
-      </div>
-
       <div className="MainScroll_section1">
         <img
           style={{ transform: `scale(${zoom})` }}
@@ -106,7 +254,7 @@ function MainScroll() {
         <div className="MainScroll_message">
           <h1
             className={
-              ScrollY > 350
+              ScrollY > 100
                 ? ScrollY > 1700
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
@@ -139,22 +287,22 @@ function MainScroll() {
           <h2
             className={
               ScrollY > 2000
-                ? ScrollY > 3100
+                ? ScrollY > 3600
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            대회를 한 번에 보고싶었던 경험
+            이번 달 주짓수 대회 한 눈에 보고싶은데..
           </h2>
           <h2
             className={
               ScrollY > 2400
-                ? ScrollY > 3100
+                ? ScrollY > 3600
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            내가 신청한 대회를 바로 확인하고 싶던 경험
+            신청부터 결제까지 한 번에 할 수 없나..
           </h2>
           <h2
             className={
@@ -164,7 +312,17 @@ function MainScroll() {
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            나주하에서는 다 가능합니다
+            (수근수근)
+          </h2>
+          <h2
+            className={
+              ScrollY > 3100
+                ? ScrollY > 3600
+                  ? 'MainScroll_fadeout'
+                  : 'MainScroll_fadein'
+                : 'MainScroll_none'
+            }>
+            뭐? 나주하에서는 다 가능하다고?
           </h2>
         </div>
         <div
@@ -183,7 +341,7 @@ function MainScroll() {
           <h1>한 눈에.</h1>
           <div className="MainScroll_blueLine"></div>
         </div>
-        <div data-aos="fade-up">
+        <div data-aos="fade-up" className="MainScroll_subtitle1">
           <h2> 대회조회부터 상세정보까지 간편하게 확인해보세요.</h2>
         </div>
         <div>
@@ -200,7 +358,64 @@ function MainScroll() {
           <h1>한 번에.</h1>
           <div className="MainScroll_blueLine2"></div>
         </div>
-        <img data-aos="fade-up" src={phone1} alt="핸드폰사진"></img>
+        <div className="MainScroll_phone" data-aos="fade-up">
+          <div className="MainScroll_phone1">
+            <img src={phone1} alt="핸드폰사진1"></img>
+            <h2 data-aos="fade-up" className="MainScroll_phoneMsg">
+              간편결제를 이용하여 <br></br>쉽고 빠르게 결제해보세요.
+            </h2>
+            <p data-aos="fade-up">
+              *나주하와 협약된 대회만 간편결제를 이용하실 수 있습니다.
+            </p>
+          </div>
+          <div className="MainScroll_phone2">
+            <img src={phone2} alt="핸드폰사진2"></img>
+            <h2 data-aos="fade-up">
+              간편결제를 이용하여 쉽고 빠르게 결제해보세요.
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      <div className="MainScroll_linear2"></div>
+
+      <div className="MainScroll_section4">
+        <div data-aos="fade-up" className="MainScroll_title3">
+          <h1>나주하와</h1>
+          <h1>함께하는 대회를</h1>
+          <h1>신청해보세요!</h1>
+          <div className="MainScroll_blueLine3"></div>
+          <h2>간편결제로 결제하고 내 프로필에서 바로 확인까지</h2>
+        </div>
+        <div data-aos="fade-up" className="MainScroll_slide">
+          <Slider {...settings}>
+            {competitions.map(el => {
+              let competition = competitionsParsing(el)
+              return (
+                <div key={competition.id} id="card">
+                  <div className="MainScroll_card">
+                    <img src={competition.imageUrl} />
+                    <div className="MainScroll_cardInfo">
+                      <p>{competition.doreOpen}</p>
+                      <h2>{competition.title}</h2>
+                      <h3>{competition.location}</h3>
+                      {/* <button className="MainScroll_apply">바로가기</button> */}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </Slider>
+        </div>
+
+        <div
+          className="MainScroll_listBtn"
+          onClick={() => {
+            window.scrollTo(0, 0)
+            navigate('/competition')
+          }}>
+          <p>모든 대회 보러가기</p>
+        </div>
       </div>
     </div>
   )
