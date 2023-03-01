@@ -118,6 +118,7 @@ function Competition_form() {
 
   function changeWeight(text, i) {
     let newDiv = [...divisions]
+    text = text.replace(/ /g, '')
     newDiv[i].variableFactor.weight = text.split(',')
     setDivisions(newDiv)
     console.log(divisions[i].variableFactor.weight)
@@ -125,6 +126,7 @@ function Competition_form() {
 
   function changeBelt(text, i) {
     let newDiv = [...divisions]
+    text = text.replace(/ /g, '')
     newDiv[i].variableFactor.belt = text.split(',')
     setDivisions(newDiv)
     console.log(divisions[i].variableFactor.belt)
