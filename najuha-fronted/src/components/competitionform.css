@@ -94,8 +94,19 @@
 }
 
 #patch {
-  display: block;
+  /* display: block; */
   font-size: 50px;
   background-color: blue;
-  margin: 20px auto;
+  margin: 20px 20px;
+}
+
+#copy {
+  /* display: block; */
+  font-size: 50px;
+  background-color: purple;
+  margin: 20px 20px;
+}
+
+.competition_register_patchcopy {
+  text-align: center;
 }

@@ -195,6 +195,43 @@ function Competition_form() {
       })
   }
 
+  function copyToDB() {
+    console.log(divisions)
+
+    axios({
+      method: 'post',
+      headers: {
+        'x-access-token': cookies.get('x-access-token'),
+      },
+      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions`,
+      data: {
+        title: `copied ${title}`,
+        host: host,
+        doreOpen: doreOpen,
+        registrationDate: registrationDate,
+        registrationDeadline: registrationDeadLine,
+        location: location,
+        bankAccount: bankAccount,
+        earlyBirdDeadline: earlybirdDeadline,
+        information: infomation,
+        applicantTableOpenDate: applicantTableOpenDate,
+        tournamentTableOpenDate: tournamentTableOpenDate,
+        division: divisions,
+        isPartnership: isPartnership === 'true' ? true : false,
+        nonPartnershipPageLink: nonPartnershipPageLink,
+      },
+    })
+      .then(res => {
+        console.log(res)
+        alert('대회복사가 완료되었습니다.')
+        navigate('/Admincompetition/')
+      })
+      .catch(err => {
+        console.log(err)
+        alert('대회복사에 실패하였습니다.')
+      })
+  }
+
   function patchToDB() {
     console.log(divisions)
 
@@ -339,7 +376,8 @@ function Competition_form() {
               value={divs.constantFactor.divisionName}
               onChange={e => {
                 changeName(e.target.value, i)
-              }}></input>
+              }}
+            ></input>
             <div>
               <input
                 type="number"
@@ -347,14 +385,16 @@ function Competition_form() {
                 value={divs.constantFactor.birth[0]}
                 onChange={e => {
                   changeBirthStart(e.target.value, i)
-                }}></input>
+                }}
+              ></input>
               <input
                 type="number"
                 placeholder="몇년생까지 ex)2015"
                 value={divs.constantFactor.birth[1]}
                 onChange={e => {
                   changeBirthEnd(e.target.value, i)
-                }}></input>
+                }}
+              ></input>
             </div>
           </div>
 
@@ -367,7 +407,8 @@ function Competition_form() {
               value={divs.variableFactor.weight}
               onChange={e => {
                 changeWeight(e.target.value, i)
-              }}></input>
+              }}
+            ></input>
             <input
               className="belt"
               type="text"
@@ -375,7 +416,8 @@ function Competition_form() {
               value={divs.variableFactor.belt}
               onChange={e => {
                 changeBelt(e.target.value, i)
-              }}></input>
+              }}
+            ></input>
           </div>
 
           <div className="normalPrice">
@@ -387,7 +429,8 @@ function Competition_form() {
               value={divs.pricingPolicy.normal}
               onChange={e => {
                 changeNormalPrice(e.target.value, i)
-              }}></input>
+              }}
+            ></input>
           </div>
 
           <div className="pricingPolicy">
@@ -399,7 +442,8 @@ function Competition_form() {
               value={divs.pricingPolicy.earlyBird}
               onChange={e => {
                 changeEarlybirdPrice(e.target.value, i)
-              }}></input>
+              }}
+            ></input>
           </div>
 
           <div className="pricingPolicy">
@@ -411,7 +455,8 @@ function Competition_form() {
               value={divs.pricingPolicy.withGi}
               onChange={e => {
                 changewithGiPrice(e.target.value, i)
-              }}></input>
+              }}
+            ></input>
           </div>
 
           <div className="pricingPolicy">
@@ -423,20 +468,23 @@ function Competition_form() {
               value={divs.pricingPolicy.withOther}
               onChange={e => {
                 changewithOtherPrice(e.target.value, i)
-              }}></input>
+              }}
+            ></input>
           </div>
 
           <button onClick={addMoreDivision}>디비전추가하기</button>
           <button
             onClick={() => {
               copyDivision(i)
-            }}>
+            }}
+          >
             디비전복사하기
           </button>
           <button
             onClick={() => {
               deleteDivision(i)
-            }}>
+            }}
+          >
             디비전삭제하기
           </button>
         </div>
@@ -475,7 +523,8 @@ function Competition_form() {
               value={title}
               onChange={e => {
                 setTitle(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>대회사:</h1>
@@ -486,7 +535,8 @@ function Competition_form() {
               value={host}
               onChange={e => {
                 setHost(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>대회날짜:</h1>
@@ -497,7 +547,8 @@ function Competition_form() {
               value={doreOpen}
               onChange={e => {
                 setDoreOpen(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>신청오픈날짜:</h1>
@@ -508,7 +559,8 @@ function Competition_form() {
               value={registrationDate}
               onChange={e => {
                 setRegistrationDate(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>신청마감날짜:</h1>
@@ -519,7 +571,8 @@ function Competition_form() {
               value={registrationDeadLine}
               onChange={e => {
                 setRegistrationDeadLine(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>대회장소:</h1>
@@ -530,7 +583,8 @@ function Competition_form() {
               value={location}
               onChange={e => {
                 setLocation(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>계좌번호:</h1>
@@ -541,7 +595,8 @@ function Competition_form() {
               value={bankAccount}
               onChange={e => {
                 setBankAccount(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>얼리버드기한날짜:</h1>
@@ -552,7 +607,8 @@ function Competition_form() {
               value={earlybirdDeadline}
               onChange={e => {
                 setEarlybirdDeadline(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>대회정보(마크업템플릿맞춰서):</h1>
@@ -563,7 +619,8 @@ function Competition_form() {
               value={infomation}
               onChange={e => {
                 setInfomation(e.target.value)
-              }}></textarea>
+              }}
+            ></textarea>
           </div>
           <div className="competition_register_top_each">
             <h1>선수명단오픈날짜:</h1>
@@ -574,7 +631,8 @@ function Competition_form() {
               value={applicantTableOpenDate}
               onChange={e => {
                 setApplicantTableOpenDate(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>대진표오픈날짜:</h1>
@@ -585,7 +643,8 @@ function Competition_form() {
               value={tournamentTableOpenDate}
               onChange={e => {
                 setTournamentTableOpenDate(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
           <div className="competition_register_top_each">
             <h1>파트너쉽 유무</h1>
@@ -621,7 +680,8 @@ function Competition_form() {
               value={nonPartnershipPageLink}
               onChange={e => {
                 setNonPartnershipPageLink(e.target.value)
-              }}></input>
+              }}
+            ></input>
           </div>
         </div>
       </div>
@@ -632,9 +692,14 @@ function Competition_form() {
           대회등록하기
         </button>
       ) : (
-        <button id="patch" onClick={patchToDB}>
-          대회수정하기
-        </button>
+        <div className="competition_register_patchcopy">
+          <button id="copy" onClick={copyToDB}>
+            대회복사하기
+          </button>
+          <button id="patch" onClick={patchToDB}>
+            대회수정하기
+          </button>
+        </div>
       )}
     </div>
   )
