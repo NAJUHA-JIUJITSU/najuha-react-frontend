@@ -18,14 +18,16 @@ function PaymentSuccess() {
           <button
             onClick={() => {
               navigate('/competition')
-            }}>
+            }}
+          >
             이전 화면으로
           </button>
           <button
             id="PaymentSuccess-blue-button"
             onClick={() => {
-              navigate('/Profilepage')
-            }}>
+              navigate('/Profilepage', { state: 'UserApplicationList' })
+            }}
+          >
             대회신청 목록보기
           </button>
         </div>
