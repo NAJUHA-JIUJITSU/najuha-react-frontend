@@ -83,6 +83,8 @@
   width: 48%;
   box-sizing: border-box;
   position: relative;
+
+  border-radius: 10px;
 }
 .nowCnt {
   margin-right: auto;

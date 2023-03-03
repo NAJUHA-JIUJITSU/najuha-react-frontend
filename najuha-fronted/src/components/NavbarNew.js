@@ -138,7 +138,7 @@ function NavbarNew() {
         <h1
           className="MainScroll_logo"
           onClick={() => {
-            navigate('/')
+            window.location.replace('/')
           }}
           style={ScrollY > 4100 ? { color: 'black' } : {}}>
           NAJUHA
@@ -163,7 +163,7 @@ function NavbarNew() {
           </ul>
 
           <img
-            class="MainScroll_profile"
+            className="MainScroll_profile"
             alt="벨트모양 로그인 아이콘"
             ref={beltDropdownRef}
             onClick={() => {

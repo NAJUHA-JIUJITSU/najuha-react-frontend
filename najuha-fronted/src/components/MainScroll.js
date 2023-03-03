@@ -8,6 +8,7 @@ import monitor from '../src_assets/모니터.png'
 import phone1 from '../src_assets/폰1.png'
 import phone2 from '../src_assets/폰2.png'
 import samplePoster from '../src_assets/samplePoster.png'
+import scrollImg from '../src_assets/스크롤.svg'
 import samplePoster2 from '../src_assets/포스터2.png'
 import samplePoster3 from '../src_assets/포스터3.png'
 
@@ -23,6 +24,7 @@ function MainScroll() {
   const [ScrollY, setScrollY] = useState(
     Number(localStorage.getItem('scrollY')) || 0
   ) // window 의 pageYOffset값을 저장
+  const [first, setFirst] = useState(true)
   const [zoom, setZoom] = useState(1)
   const [bgColor, setBgColor] = useState('rgba(0, 0, 0, 0)')
   const [bgColorW, setBgColorW] = useState('rgba(255, 255, 255, 0)')
@@ -169,78 +171,26 @@ function MainScroll() {
     infinite: false,
     slidesToShow: 1,
     slidesToScroll: 1,
-    speed: 500,
+    speed: 400,
     centerMode: true,
-    centerPadding: '28%',
+    centerPadding: '12%',
     nextArrow: <SampleNextArrow className="arrow" />,
     prevArrow: <SamplePrevArrow className="arrow" />,
-    responsive: [
-      {
-        breakpoint: 1049,
-        settings: {
-          centerPadding: '18%',
-        },
-      },
-      {
-        breakpoint: 750,
-        settings: {
-          centerPadding: '12%',
-        },
-      },
-    ],
+    // responsive: [
+    //   {
+    //     breakpoint: 1049,
+    //     settings: {
+    //       centerPadding: '12%',
+    //     },
+    //   },
+    //   {
+    //     breakpoint: 750,
+    //     settings: {
+    //       centerPadding: '12%',
+    //     },
+    //   },
+    // ],
   })
-
-  const images = [
-    {
-      src: samplePoster,
-      id: 1,
-      doreOpen: '2023.02.08(월)',
-      title: '나주하가 잘 후원한 챔피언십',
-      location: '사우동 시민회관',
-    },
-    {
-      src: samplePoster2,
-      id: 2,
-      doreOpen: '2023.02.15(토)',
-      title: 'JUCA 주짓수 카니발 대회',
-      location: '카니발 체육관',
-    },
-    {
-      src: samplePoster3,
-      id: 3,
-      doreOpen: '2023.02.23(일)',
-      title: '모래밭 주짓수 챔피언십',
-      location: '해운대 모래밭',
-    },
-    {
-      src: samplePoster,
-      id: 4,
-      doreOpen: '2023.03.01(금)',
-      title: '나주하 후원 챔피언십',
-      location: '사우동 시민회관',
-    },
-    {
-      src: samplePoster2,
-      id: 5,
-      doreOpen: '2023.03.09(토)',
-      title: '나주하 후원 챔피언십',
-      location: '사우동 시민회관',
-    },
-    {
-      src: samplePoster3,
-      id: 6,
-      doreOpen: '2023.03.16(일)',
-      title: '나주하 후원 챔피언십',
-      location: '사우동 시민회관',
-    },
-    {
-      src: samplePoster,
-      id: 7,
-      doreOpen: '2023.04.01(월)',
-      title: '나주하 후원 챔피언십',
-      location: '사우동 시민회관',
-    },
-  ]
 
   return (
     <div className="MainScroll_wrapper">
@@ -332,6 +282,13 @@ function MainScroll() {
           className="MainScroll_black2"
           style={{ backgroundColor: bgColorW }}></div>
       </div>
+
+      <div
+        className="MainScroll_scrollImg"
+        style={ScrollY > 1700 || !first ? { display: 'none' } : {}}>
+        <p>SCROLL</p>
+        <img src={scrollImg} alt="스크롤 화살표"></img>
+      </div>
       <div className="MainScroll_section1-1"></div>
 
       <div className="MainScroll_section2">
@@ -401,6 +358,7 @@ function MainScroll() {
                   }}>
                   <div className="MainScroll_card">
                     <img src={competition.postUrl} />
+
                     <div className="MainScroll_cardInfo">
                       <p>{competition.doreOpen}</p>
                       <h2>{competition.title}</h2>
