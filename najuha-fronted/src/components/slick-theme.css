@@ -100,7 +100,7 @@
   left: auto;
 }
 .slick-prev:before {
-  content: url(../src_assets/카드왼쪽화살표.svg);
+  content: url(../src_assets/cardLeftArrow.svg);
 }
 [dir='rtl'] .slick-prev:before {
   content: '→';
@@ -115,7 +115,7 @@
 }
 
 .slick-next:before {
-  content: url(../src_assets/카드오른쪽화살표.svg);
+  content: url(../src_assets/cardRigthArrow.svg);
 }
 [dir='rtl'] .slick-next:before {
   content: '←';
