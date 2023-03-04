@@ -151,8 +151,7 @@ function MainScroll() {
       <div
         className={className}
         style={{ ...style, display: 'block' }}
-        onClick={onClick}
-      ></div>
+        onClick={onClick}></div>
     )
   }
 
@@ -179,20 +178,6 @@ function MainScroll() {
     centerPadding: '12%',
     nextArrow: <SampleNextArrow className="arrow" />,
     prevArrow: <SamplePrevArrow className="arrow" />,
-    // responsive: [
-    //   {
-    //     breakpoint: 1049,
-    //     settings: {
-    //       centerPadding: '12%',
-    //     },
-    //   },
-    //   {
-    //     breakpoint: 750,
-    //     settings: {
-    //       centerPadding: '12%',
-    //     },
-    //   },
-    // ],
   })
 
   return (
@@ -218,8 +203,7 @@ function MainScroll() {
 
         <div
           className="MainScroll_black"
-          style={ScrollY > 5000 ? { display: 'none' } : {}}
-        ></div>
+          style={ScrollY > 5000 ? { display: 'none' } : {}}></div>
         <div className="MainScroll_message">
           <h1
             className={
@@ -228,8 +212,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             <span>나</span> 는
           </h1>
           <h1
@@ -239,8 +222,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             <span>주</span> 짓수가
           </h1>
           <h1
@@ -250,8 +232,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             <span>하</span> 고싶다
           </h1>
         </div>
@@ -263,8 +244,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             이번 달 주짓수 대회 한 눈에 보고싶은데..
           </h2>
           <h2
@@ -274,8 +254,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             신청부터 결제까지 한 번에 할 수 없나..
           </h2>
           <h2
@@ -285,8 +264,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             (수근수근)
           </h2>
           <h2
@@ -296,25 +274,21 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             뭐? 나주하에서는 다 가능하다고?
           </h2>
         </div>
         <div
           className="MainScroll_black2"
-          style={{ backgroundColor: bgColor }}
-        ></div>
+          style={{ backgroundColor: bgColor }}></div>
         <div
           className="MainScroll_black2"
-          style={{ backgroundColor: bgColorW }}
-        ></div>
+          style={{ backgroundColor: bgColorW }}></div>
       </div>
 
       <div
         className="MainScroll_scrollImg"
-        style={ScrollY > 1700 || !first ? { display: 'none' } : {}}
-      >
+        style={ScrollY > 1700 || !first ? { display: 'none' } : {}}>
         <p>SCROLL</p>
         <img src={scrollImg} alt="스크롤 화살표"></img>
       </div>
@@ -384,8 +358,7 @@ function MainScroll() {
                   onClick={() => {
                     window.scrollTo(0, 0)
                     navigate(`/competition/${competition.id}`)
-                  }}
-                >
+                  }}>
                   <div className="MainScroll_card">
                     <img src={competition.postUrl} />
 
@@ -407,8 +380,7 @@ function MainScroll() {
           onClick={() => {
             window.scrollTo(0, 0)
             navigate('/competition')
-          }}
-        >
+          }}>
           <p>모든 대회 보러가기</p>
         </div>
       </div>
