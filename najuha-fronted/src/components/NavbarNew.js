@@ -2,8 +2,10 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './navbarNew.css'
 import Dropdown from './Dropdown'
-import whiteProfile from '../src_assets/whiteProfile.svg'
-import grayProfile from '../src_assets/grayProfile.svg'
+import whiteProfile from '../src_assets/whiteProfile.png'
+import grayProfile from '../src_assets/grayProfile.png'
+import whiteBelt from '../src_assets/whiteBelt.png'
+import blackBelt from '../src_assets/blackBelt.png'
 import { useCookies } from 'react-cookie'
 
 function NavbarNew() {
@@ -146,7 +148,7 @@ function NavbarNew() {
         <div className="MainScroll_list">
           <ul
             className="MainScroll_menu"
-            style={ScrollY > 4100 ? { color: '#888888' } : {}}>
+            style={ScrollY > 4100 ? { color: 'black' } : {}}>
             <li
               onClick={() => {
                 window.scrollTo(0, 0)
@@ -170,7 +172,15 @@ function NavbarNew() {
               setDropdownVisibility(!dropdownVisibility)
               console.log(dropdownVisibility)
             }}
-            src={ScrollY > 4100 ? grayProfile : whiteProfile}></img>
+            src={
+              ScrollY > 4100
+                ? cookies['x-access-token'] == undefined
+                  ? whiteProfile
+                  : blackBelt
+                : cookies['x-access-token'] == undefined
+                ? grayProfile
+                : whiteBelt
+            }></img>
           <div id="profile-dropdown">
             <Dropdown visibility={dropdownVisibility}>
               <ul>

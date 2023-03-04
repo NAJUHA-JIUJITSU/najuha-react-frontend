@@ -63,8 +63,8 @@
 
 .MainScroll_profile {
   margin: auto 0;
-  width: 42px;
-  height: 42px;
+  width: 52px;
+  height: 52px;
   cursor: pointer;
   z-index: 888;
 }
@@ -123,9 +123,10 @@
   background: #ffffff;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
   position: absolute;
-  left: 22rem;
+  left: 14rem;
   top: 72px;
   border-radius: 5px;
+  z-index: 999;
 }
 
 #profile-dropdown li {

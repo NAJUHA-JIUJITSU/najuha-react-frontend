@@ -2,7 +2,10 @@ import React, { useState, useEffect, useRef } from 'react'
 import './navbar.css'
 import { useNavigate } from 'react-router-dom'
 import Dropdown from './Dropdown'
-import belticon from '../src_assets/beltLogo.svg'
+import whiteProfile from '../src_assets/whiteProfile.png'
+import grayProfile from '../src_assets/grayProfile.png'
+import whiteBelt from '../src_assets/whiteBelt.png'
+import blackBelt from '../src_assets/blackBelt.png'
 import { useCookies } from 'react-cookie'
 
 function Navbar() {
@@ -56,73 +59,120 @@ function Navbar() {
   }, [dropdownVisibility])
 
   return (
-    <header className="navbar">
-      <div
-        className={`hamburger ${isHamburgerActive ? 'active' : ''}`}
-        onClick={hamburgerClick}>
-        <span className="bar"></span>
-        <span className="bar"></span>
-        <span className="bar"></span>
-      </div>
-      <h1
-        className="logo"
-        onClick={() => {
-          navigate('/')
-        }}>
-        NAJUHA
-      </h1>
-      <ul className={`category nav-menu ${isnavmenuActive ? 'active' : ''}`}>
-        <li className="category-competition nav-item">
-          <p
-            onClick={() => {
-              navigate('/competition')
-            }}>
-            대회일정
-          </p>
-        </li>
-        <li className="category-seminar nav-item">
-          <p>세미나</p>
-        </li>
-      </ul>
-      <img
-        className="login-icon"
-        alt="벨트모양 로그인 아이콘"
-        src={belticon}
-        onClick={() => {
-          setDropdownVisibility(!dropdownVisibility)
-          console.log(dropdownVisibility)
-        }}
-        ref={beltDropdownRef}
-      />
-      <div id="navbar-dropdown">
-        <Dropdown visibility={dropdownVisibility}>
-          <ul>
+    <div
+      id="Navbar_wrapper"
+      className="MainScroll_navWrapper"
+      style={{ backgroundColor: 'white' }}>
+      <div id="Navbar_nav" className="MainScroll_nav">
+        <div
+          className={`MainScroll_hamburger ${
+            isHamburgerActive ? 'active' : ''
+          }`}
+          onClick={hamburgerClick}>
+          <span
+            className="MainScroll_bar"
+            style={{ backgroundColor: '#888888' }}></span>
+          <span
+            className="MainScroll_bar"
+            style={{ backgroundColor: '#888888' }}></span>
+          <span
+            className="MainScroll_bar"
+            style={{ backgroundColor: '#888888' }}></span>
+        </div>
+        <div
+          className={`MainScroll_hamburgerblack ${
+            isHamburgerActive ? 'active' : ''
+          }`}>
+          <div
+            className={`MainScroll_hamburgermenu ${
+              isHamburgerActive ? 'active' : ''
+            }`}>
+            <div className="MainScroll_hamburgerlist">
+              <ul>
+                <li
+                  onClick={() => {
+                    window.scrollTo(0, 0)
+                    navigate('/competition')
+                  }}>
+                  대회일정
+                </li>
+                <li
+                  onClick={() => {
+                    alert('세미나 일정은 준비중입니다.')
+                  }}>
+                  세미나
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <h1
+          className="MainScroll_logo"
+          onClick={() => {
+            window.location.replace('/')
+          }}
+          style={{ color: 'black' }}>
+          NAJUHA
+        </h1>
+        <div className="MainScroll_list">
+          <ul className="MainScroll_menu" style={{ color: 'black' }}>
             <li
               onClick={() => {
-                navigate('/Profilepage', { state: 'UserInfoToggle' })
+                window.scrollTo(0, 0)
+                navigate('/competition')
               }}>
-              내 프로필
+              대회일정
             </li>
             <li
               onClick={() => {
-                navigate('/Profilepage', { state: 'UserApplicationList' })
+                alert('세미나 일정은 준비중입니다.')
               }}>
-              신청대회 목록
+              세미나
             </li>
-            {cookies['x-access-token'] == undefined ? (
-              <li
-                onClick={() => {
-                  window.location.href = kakaoAuthURL
-                }}>
-                로그인 하기
-              </li>
-            ) : (
-              <li onClick={logout}>로그아웃 하기</li>
-            )}
           </ul>
-        </Dropdown>
+
+          <img
+            className="MainScroll_profile"
+            alt="벨트모양 로그인 아이콘"
+            ref={beltDropdownRef}
+            onClick={() => {
+              setDropdownVisibility(!dropdownVisibility)
+              console.log(dropdownVisibility)
+            }}
+            src={
+              cookies['x-access-token'] == undefined ? whiteProfile : blackBelt
+            }></img>
+          <div id="profile-dropdown">
+            <Dropdown visibility={dropdownVisibility}>
+              <ul>
+                <li
+                  onClick={() => {
+                    navigate('/Profilepage', { state: 'UserInfoToggle' })
+                  }}>
+                  내 프로필
+                </li>
+                <li
+                  onClick={() => {
+                    navigate('/Profilepage', { state: 'UserApplicationList' })
+                  }}>
+                  신청대회 목록
+                </li>
+                {cookies['x-access-token'] == undefined ? (
+                  <li
+                    onClick={() => {
+                      window.location.href = kakaoAuthURL
+                    }}>
+                    로그인 하기
+                  </li>
+                ) : (
+                  <li onClick={logout}>로그아웃 하기</li>
+                )}
+              </ul>
+            </Dropdown>
+          </div>
+        </div>
       </div>
-    </header>
+    </div>
   )
 }
 
