@@ -3,7 +3,7 @@ import './footer.css'
 
 function footer() {
   return (
-    <>
+    <div className="Footer-wrap">
       <div className="footer-wrapper">
         <div className="company-wrapper">
           <h3>(주)나주하</h3>
@@ -18,15 +18,13 @@ function footer() {
             <li
               onClick={() => {
                 window.location.href = 'https://najuha.com/privacypolicy'
-              }}
-            >
+              }}>
               개인정보처리방침
             </li>
             <li
               onClick={() => {
                 window.location.href = 'https://najuha.com/termsofuse'
-              }}
-            >
+              }}>
               이용약관
             </li>
             <li>고객센터</li>
@@ -42,7 +40,7 @@ function footer() {
         </p>
         <p>Copyright c najuha Corp. All rights reserved.</p>
       </div>
-    </>
+    </div>
   )
 }
 

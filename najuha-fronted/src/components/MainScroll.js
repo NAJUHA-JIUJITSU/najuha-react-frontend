@@ -196,11 +196,17 @@ function MainScroll() {
     <div className="MainScroll_wrapper">
       <div className="MainScroll_section1">
         <img
-          style={{ transform: `scale(${zoom})` }}
+          style={
+            ScrollY > 5000
+              ? { display: 'none' }
+              : { transform: `scale(${zoom})` }
+          }
           className="MainScroll_bgImg"
           src={backgroundImg}
           alt="배경 이미지"></img>
-        <div className="MainScroll_black"></div>
+        <div
+          className="MainScroll_black"
+          style={ScrollY > 5000 ? { display: 'none' } : {}}></div>
         <div className="MainScroll_message">
           <h1
             className={
@@ -277,10 +283,14 @@ function MainScroll() {
         </div>
         <div
           className="MainScroll_black2"
-          style={{ backgroundColor: bgColor }}></div>
+          style={
+            ScrollY > 7000 ? { display: 'none' } : { backgroundColor: bgColor }
+          }></div>
         <div
           className="MainScroll_black2"
-          style={{ backgroundColor: bgColorW }}></div>
+          style={
+            ScrollY > 7000 ? { display: 'none' } : { backgroundColor: bgColorW }
+          }></div>
       </div>
 
       <div

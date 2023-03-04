@@ -31,8 +31,7 @@
   overflow: hidden;
 }
 
-.MainScroll_section1,
-.MainScroll_section1-1 {
+.MainScroll_section1 {
   position: fixed;
 }
 .MainScroll_phoneMsg {
@@ -55,6 +54,7 @@
 .MainScroll_bgImg {
   width: 100vw;
   height: 100vh;
+  min-height: 100vh;
   object-fit: cover;
   position: fixed;
   z-index: 10;
@@ -137,9 +137,12 @@
 }
 
 .MainScroll_section1-1 {
-  height: 650vh;
+  padding-top: 200vh;
+  height: 450vh;
   position: relative;
-  background-color: #000000;
+
+  background-color: red;
+  z-index: 1;
 }
 
 /* 스크롤 이미지 */
