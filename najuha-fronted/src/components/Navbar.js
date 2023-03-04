@@ -3,8 +3,6 @@ import './navbar.css'
 import { useNavigate } from 'react-router-dom'
 import Dropdown from './Dropdown'
 import whiteProfile from '../src_assets/whiteProfile.png'
-import grayProfile from '../src_assets/grayProfile.png'
-import whiteBelt from '../src_assets/whiteBelt.png'
 import blackBelt from '../src_assets/blackBelt.png'
 import { useCookies } from 'react-cookie'
 
