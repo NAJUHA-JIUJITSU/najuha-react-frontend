@@ -42,7 +42,7 @@ function CompetitionApplyForm() {
     ])
   const [paymentmethod, setPaymentmethod] = useState(null)
   const [easypaymethod, setEasypaymethod] = useState(null)
-  const frontBaseUrl = 'http://localhost:3001'
+  const frontBaseUrl = process.env.REACT_APP_FRONT_END_API
 
   const parsingbeforeapplypost = viewcompetitionApplicationList => {
     let copyList = JSON.parse(JSON.stringify(viewcompetitionApplicationList))
@@ -344,7 +344,8 @@ function CompetitionApplyForm() {
             <img
               style={{ cursor: 'pointer' }}
               src={deleteicon}
-              onClick={() => deleteCompetitionApplication(i)}></img>
+              onClick={() => deleteCompetitionApplication(i)}
+            ></img>
           ) : (
             ''
           )}
@@ -671,7 +672,8 @@ function CompetitionApplyForm() {
           className="CompetitionApplyForm-bottom-payment"
           onClick={() => {
             if (checkInvaildApply()) setapplymodal(!applymodal)
-          }}>
+          }}
+        >
           신청하기
         </button>
         {applymodal && (
