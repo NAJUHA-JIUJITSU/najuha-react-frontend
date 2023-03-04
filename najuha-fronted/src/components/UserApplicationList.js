@@ -2,9 +2,6 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import './userApplicationList.css'
 import axios from 'axios'
-import ProfileTap from '../components/ProfileTap'
-import { Cookies } from 'react-cookie'
-import { useJwt } from 'react-jwt'
 import { useNavigate } from 'react-router-dom'
 import xIcon from '../src_assets/x.svg'
 import samplePoster from '../src_assets/samplePoster.png'
@@ -207,15 +204,13 @@ function UserApplicationList(props) {
                   }}
                   src={xIcon}
                   alt="삭제 아이콘"
-                  className={xButton}
-                ></img>
+                  className={xButton}></img>
                 <div className={xButtonDiv}></div>
                 <div className="UserApplicationList_boxRightTitle">
                   <h3
                     onClick={() => {
                       navigate(`/Profilepage/info/${curApplication.id}`)
-                    }}
-                  >
+                    }}>
                     {curApplication.title}
                   </h3>
                   <p>{curApplication.location}</p>
@@ -231,8 +226,7 @@ function UserApplicationList(props) {
                   className="UserApplicationList_costBtn"
                   onClick={() => {
                     navigate(`/Profilepage/info/${curApplication.id}`)
-                  }}
-                >
+                  }}>
                   {curApplication.isPayment}
                 </button>
               </div>
@@ -270,22 +264,19 @@ function UserApplicationList(props) {
             <li
               key="개인 신청"
               className={active[0]}
-              onClick={() => isClicked('person', 0)}
-            >
+              onClick={() => isClicked('person', 0)}>
               개인 신청
             </li>
             <li
               key="단체 신청"
               className={active[1]}
-              onClick={() => isClicked('group', 1)}
-            >
+              onClick={() => isClicked('group', 1)}>
               단체 신청
             </li>
             <li
               key="지난 신청"
               className={active[2]}
-              onClick={() => isClicked('last', 2)}
-            >
+              onClick={() => isClicked('last', 2)}>
               지난 대회
             </li>
           </ul>

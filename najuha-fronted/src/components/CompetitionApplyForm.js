@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './competitionApplyForm.css'
 import reseticon from '../src_assets/리셋아이콘.svg'
-import complete from '../src_assets/완료아이콘.svg'
 import notcomplete from '../src_assets/미완료아이콘.svg'
 import plus from '../src_assets/대회추가아이콘.svg'
 import axios from 'axios'
@@ -345,8 +344,7 @@ function CompetitionApplyForm() {
             <img
               style={{ cursor: 'pointer' }}
               src={deleteicon}
-              onClick={() => deleteCompetitionApplication(i)}
-            ></img>
+              onClick={() => deleteCompetitionApplication(i)}></img>
           ) : (
             ''
           )}
@@ -673,8 +671,7 @@ function CompetitionApplyForm() {
           className="CompetitionApplyForm-bottom-payment"
           onClick={() => {
             if (checkInvaildApply()) setapplymodal(!applymodal)
-          }}
-        >
+          }}>
           신청하기
         </button>
         {applymodal && (

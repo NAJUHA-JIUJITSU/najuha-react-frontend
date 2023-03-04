@@ -67,27 +67,6 @@ export default function (
           }
         }
       }
-      // dispatch(Auth(xAccessToken)).then(res => {
-      //   console.log(res)
-      //   //로그인하지 않은 상태
-      //   if (!res.payload.isSuccess) {
-      //     if (option === true) {
-      //       alert('로그인이 필요합니다.')
-      //       navigate('/redirect', { state: { url: `${kakaoAuthURL}` } })
-      //     }
-      //   } else {
-      //     //로그인 한 상태
-      //     if (adminRoute && res.payload.result.userLevel !== 2) {
-      //       // 유저레벨 다시 5로 바꿔야함.
-      //       navigate('/')
-      //     } else {
-      //       if (option === false) {
-      //         // 로그인하면 못들어가는 페이지(ex. 로그인 리다이렉트 페이지 등) but 작동이안됨. if문에 걸려도 해당 컴포넌트를 리턴함. 다음컴포넌트에서 리다이렉트가 실행되는 컴포넌트는 리다이렉트를 막을 수가 없는 것으로 보임
-      //         navigate('/')
-      //       }
-      //     }
-      //   }
-      // })
     }, [])
 
     return <SpecificComponent />
