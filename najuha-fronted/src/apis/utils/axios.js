@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
 
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = process.env.REACT_APP_BACK_END_API
 const cookies = new Cookies()
 
 const axiosApi = (url, method, data) => {
