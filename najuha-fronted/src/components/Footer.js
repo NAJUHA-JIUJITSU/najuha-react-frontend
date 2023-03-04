@@ -15,8 +15,20 @@ function footer() {
         <div className="company-menu">
           <ul className="company-menu-list">
             <li>사업자정보확인</li>
-            <li>개인정보처리방침</li>
-            <li>이용약관</li>
+            <li
+              onClick={() => {
+                window.location.href = 'https://najuha.com/privacypolicy'
+              }}
+            >
+              개인정보처리방침
+            </li>
+            <li
+              onClick={() => {
+                window.location.href = 'https://najuha.com/termsofuse'
+              }}
+            >
+              이용약관
+            </li>
             <li>고객센터</li>
             <li id="company-menu-list-last">인재영입</li>
           </ul>

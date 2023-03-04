@@ -83,6 +83,7 @@ function CompetitionApplyForm() {
         }
       )
       const newCompetition = response.data.result
+      console.log(newCompetition)
       setCompetition(newCompetition)
       setFillteredCompetition(newCompetition.division)
     } catch (err) {
@@ -323,6 +324,7 @@ function CompetitionApplyForm() {
         check: 0,
       }
       setviewCompetitionApplicationList(copy)
+      setFillteredCompetition(competition.division)
       return
     }
     copy.splice(i, 1)

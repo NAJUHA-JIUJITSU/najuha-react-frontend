@@ -369,6 +369,7 @@ function CompetitionApplyPatchForm() {
         check: 0,
       }
       setviewCompetitionApplicationList(copy)
+      setFillteredCompetition(competition.division)
       return
     }
     copy.splice(i, 1)

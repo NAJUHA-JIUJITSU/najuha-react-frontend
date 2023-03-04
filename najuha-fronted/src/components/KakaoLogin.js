@@ -11,7 +11,7 @@ import jwt_decode from 'jwt-decode'
 const KakaoLogin = () => {
   const cookies = new Cookies()
   const dispatch = useDispatch()
-  const endPoint = process.env.REACT_APP_BACKEND_SERVER_ENDPOINT + '/auth/kakao'
+  const endPoint = process.env.REACT_APP_BACK_END_API + '/auth/kakao'
   let navigate = useNavigate()
   // let userLevel = useSelector((user) => user);
 

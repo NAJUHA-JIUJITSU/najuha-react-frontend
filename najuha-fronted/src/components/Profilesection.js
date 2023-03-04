@@ -15,7 +15,10 @@ function Profilesection() {
   const [competitionApplications, setCompetitionApplications] = useState([]) //유저 신청 대회 가져오기
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
-  const decodedToken = jwt_decode(xAccessToken)
+  let decodedToken = null
+  if (xAccessToken) {
+    decodedToken = jwt_decode(xAccessToken)
+  }
   const userLevel = decodedToken?.userLevel
   const paramComponentSelected = useLocation().state
 

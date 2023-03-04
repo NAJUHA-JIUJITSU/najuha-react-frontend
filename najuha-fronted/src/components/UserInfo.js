@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import './userInfo.css'
 import axios from 'axios'
 import './profilesectionToggle.css'
+import { patchuser } from '../apis/api/user'
 
 const beltEngtoKor = {
   black: '블랙',
@@ -48,7 +49,8 @@ function Read({ userInfo, setMode }) {
         onClick={e => {
           e.preventDefault()
           setMode('UPDATE')
-        }}>
+        }}
+      >
         수정하기
       </button>
     </div>
@@ -163,7 +165,8 @@ function Update({ userInfo, setUserInfo, setMode, updateUser }) {
           <select
             value={userInfo?.belt}
             name="belt"
-            onChange={e => handleChange(e, 'belt')}>
+            onChange={e => handleChange(e, 'belt')}
+          >
             <option value="white">화이트</option>
             <option value="blue">블루</option>
             <option value="purple">퍼플</option>
@@ -206,30 +209,17 @@ function UserInfo(props) {
   const userLevel = props.userLevel
 
   async function updateUser(updateUerinfo) {
-    console.log(updateUerinfo)
-    axios({
-      method: 'patch',
-      headers: {
-        'x-access-token': xAccessToken,
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/users`,
-      data: updateUerinfo,
-    })
-      .then(res => {
-        if (props.userLevel === 1) {
-          alert('회원가입이 완료되었습니다')
-        }
+    let res = await patchuser(updateUerinfo)
+    if (res) {
+      if (props.userLevel === 1) {
+        alert('회원정보가 수정되었습니다')
         cookies.set('x-access-token', res.data.result, {
           path: '/',
           overwrite: true,
         })
-        console.log(res.data.message)
         props.getUsers()
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.data.message)
-      })
+      }
+    }
   }
 
   useEffect(() => {
