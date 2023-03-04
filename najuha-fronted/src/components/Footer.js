@@ -6,11 +6,12 @@ function footer() {
     <div className="Footer-wrap">
       <div className="footer-wrapper">
         <div className="company-wrapper">
-          <h3>(주)나주하</h3>
-          <p>대표: 나주하</p>
-          <p>주소: 미국 하와이 서핑하기 딱 좋은곳</p>
-          <p>사업자등록번호: 777-77-777777</p>
-          <p>통신판매업 신고번호: 2022-서울강남-77777</p>
+          <h3>나주하</h3>
+          <p>대표: 조지훈</p>
+          <p>주소: 경기도 김포시 김포대로 831, 502호- 13실</p>
+          <p>사업자등록번호: 324-08-02370</p>
+          <p>통신판매업 신고번호: 2023-경기김포-1021</p>
+          <p>유선번호: 010-8073-4524</p>
         </div>
         <div className="company-menu">
           <ul className="company-menu-list">
@@ -18,13 +19,15 @@ function footer() {
             <li
               onClick={() => {
                 window.location.href = 'https://najuha.com/privacypolicy'
-              }}>
+              }}
+            >
               개인정보처리방침
             </li>
             <li
               onClick={() => {
                 window.location.href = 'https://najuha.com/termsofuse'
-              }}>
+              }}
+            >
               이용약관
             </li>
             <li>고객센터</li>
