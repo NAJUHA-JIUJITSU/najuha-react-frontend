@@ -43,7 +43,7 @@ function CompetitionApplyPatchForm() {
     ])
   const [paymentmethod, setPaymentmethod] = useState(null)
   const [easypaymethod, setEasypaymethod] = useState(null)
-  const frontBaseUrl = 'http://localhost:3001'
+  const frontBaseUrl = process.env.REACT_APP_FRONT_END_API
   console.log(state)
 
   const parsingbeforeapplypost = viewcompetitionApplicationList => {
@@ -389,7 +389,8 @@ function CompetitionApplyPatchForm() {
             <img
               style={{ cursor: 'pointer' }}
               src={deleteicon}
-              onClick={() => deleteCompetitionApplication(i)}></img>
+              onClick={() => deleteCompetitionApplication(i)}
+            ></img>
           ) : (
             ''
           )}
@@ -717,7 +718,8 @@ function CompetitionApplyPatchForm() {
           className="CompetitionApplyForm-bottom-payment"
           onClick={() => {
             if (checkInvaildApply()) setapplymodal(!applymodal)
-          }}>
+          }}
+        >
           수정하기
         </button>
         {applymodal && (

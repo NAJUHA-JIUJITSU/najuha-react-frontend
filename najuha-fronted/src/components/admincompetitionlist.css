@@ -166,7 +166,7 @@ li {
 
 .admin-each-competition-top-date {
   background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url(http://localhost:3001/Assets/대회배경.svg);
+    url(../src_assets/samplePoster.png);
   background-position: center;
   background-size: cover;
   width: 28%;

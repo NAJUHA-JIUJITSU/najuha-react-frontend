@@ -48,7 +48,7 @@ function CompetitionApplyTeamForm() {
 
   const [paymentmethod, setPaymentmethod] = useState(null)
   const [easypaymethod, setEasypaymethod] = useState(null)
-  const frontBaseUrl = 'http://localhost:3001'
+  const frontBaseUrl = process.env.REACT_APP_FRONT_END_API
 
   const cookies = new Cookies()
 
