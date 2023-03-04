@@ -31,8 +31,7 @@
   overflow: hidden;
 }
 
-.MainScroll_section1,
-.MainScroll_section1-1 {
+.MainScroll_section1 {
   position: fixed;
 }
 .MainScroll_phoneMsg {
@@ -43,18 +42,17 @@
 /* section 1 */
 
 .MainScroll_section1 {
-  /* background-image: url(../src_assets/jiujitsuGuys.jpg); */
-  /* background-size: cover;
-    background-position: 50% 90%; */
   height: 100vh;
   width: 100vw;
+  background-color: white;
   box-sizing: border-box;
   z-index: 88;
 }
 
-.MainScroll_bgImg {
+#MainScroll_bgImg {
   width: 100vw;
   height: 100vh;
+  min-height: 100vh;
   object-fit: cover;
   position: fixed;
   z-index: 10;
@@ -139,7 +137,9 @@
 .MainScroll_section1-1 {
   height: 650vh;
   position: relative;
-  background-color: #000000;
+
+  background-color: #fffc4a;
+  z-index: 1;
 }
 
 /* 스크롤 이미지 */

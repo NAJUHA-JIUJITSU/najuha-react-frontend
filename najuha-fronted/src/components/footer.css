@@ -22,6 +22,11 @@
 }
 
 /* Layout */
+.Footer-wrap {
+  height: 30vh;
+  padding-top: 8vh;
+  background-color: white;
+}
 
 .footer-wrapper {
   width: auto;
@@ -30,7 +35,7 @@
   display: flex;
   box-sizing: border-box;
   padding: 0 5rem;
-  margin-top: 8vh;
+  /* margin-top: 8vh; */
   z-index: 899;
   position: relative;
 }
@@ -113,6 +118,11 @@ h3 {
 }
 
 @media (max-width: 750px) {
+  .Footer-wrap {
+    height: 6vh;
+    padding-top: 8vh;
+    padding-bottom: 2vh;
+  }
   /* Typography */
   .company-menu-list {
     font-size: 1rem;
@@ -126,8 +136,8 @@ h3 {
     max-width: none;
     width: 100%;
     margin: 0 auto;
-    margin-top: 8vh;
-    margin-bottom: 2vh;
+    /* margin-top: 8vh;
+    margin-bottom: 2vh; */
     padding: 0;
   }
 

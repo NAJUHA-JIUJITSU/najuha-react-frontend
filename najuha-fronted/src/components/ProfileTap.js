@@ -29,8 +29,7 @@ function ProfileTap(props) {
   return (
     <section
       className="ProfileTap_wrapper"
-      id={props?.disapper ? 'ProfileTap_dissaper' : 'ProfileTap_live'}
-    >
+      id={props?.disapper ? 'ProfileTap_dissaper' : 'ProfileTap_live'}>
       <div className="ProfileTap_welcome">
         <div className="ProfileTap_welcome-center">
           <p>
@@ -40,9 +39,6 @@ function ProfileTap(props) {
             님<br></br>
             안녕하세요
           </p>
-          {/* <div className='ProfileTap_welcome-center-btn'>
-                    <p>내 프로필 관리<img src='Assets/arrow_right.svg' alt='오른쪽 화살표'></img></p>
-                </div> */}
         </div>
       </div>
       <div className="ProfileTap_competitionCount">
@@ -65,16 +61,14 @@ function ProfileTap(props) {
             className="ProfileTap_information-btn"
             onClick={() => {
               navigate('/Profilepage', { state: 'UserApplicationList' })
-            }}
-          >
+            }}>
             신청대회 목록
           </div>
           <div
             className="ProfileTap_information-btn"
             onClick={() => {
               navigate('/Profilepage', { state: 'UserInfo' })
-            }}
-          >
+            }}>
             내 프로필
           </div>
           {/* <div className="ProfileTap_information-btn">개인정보처리방침</div>
