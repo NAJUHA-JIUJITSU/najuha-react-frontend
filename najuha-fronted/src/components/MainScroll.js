@@ -9,21 +9,20 @@ import phone1 from '../src_assets/폰1.png'
 import phone2 from '../src_assets/폰2.png'
 import samplePoster from '../src_assets/samplePoster.png'
 import scrollImg from '../src_assets/스크롤.svg'
-import samplePoster2 from '../src_assets/포스터2.png'
-import samplePoster3 from '../src_assets/포스터3.png'
 
 import Slider from 'react-slick'
 import './slick.css'
 import './slick-theme.css'
+
+import ProgressiveImage from 'react-progressive-graceful-image'
+import placeholderSrc from '../src_assets/bgImg.jpeg'
 
 import { Cookies } from 'react-cookie'
 import axios from 'axios'
 
 function MainScroll() {
   const [ScrollActive, setScrollActive] = useState(false)
-  const [ScrollY, setScrollY] = useState(
-    Number(localStorage.getItem('scrollY')) || 0
-  ) // window 의 pageYOffset값을 저장
+  const [ScrollY, setScrollY] = useState(0) // window 의 pageYOffset값을 저장
   const [first, setFirst] = useState(true)
   const [zoom, setZoom] = useState(1)
   const [bgColor, setBgColor] = useState('rgba(0, 0, 0, 0)')
@@ -140,6 +139,9 @@ function MainScroll() {
 
   useEffect(() => {
     getCompetitons()
+    window.onbeforeunload = function pushRefresh() {
+      window.scrollTo(0, 0)
+    }
   }, [])
 
   //슬라이드 오른쪽 화살표 컴포넌트
@@ -196,13 +198,28 @@ function MainScroll() {
   return (
     <div className="MainScroll_wrapper">
       <div className="MainScroll_section1">
-        <img
-          style={{ transform: `scale(${zoom})` }}
-          className="MainScroll_bgImg"
-          src={backgroundImg}
-          alt="배경 이미지"
-        ></img>
-        <div className="MainScroll_black"></div>
+        <ProgressiveImage src={backgroundImg} placeholder={placeholderSrc}>
+          {(src, loading) => (
+            <img
+              className={`image${loading ? ' loading' : ' loaded'}`}
+              src={src}
+              id="MainScroll_bgImg"
+              alt="배경 이미지"
+              width="100vh"
+              height="100vh"
+              style={
+                ScrollY > 5000
+                  ? { display: 'none' }
+                  : { transform: `scale(${zoom})` }
+              }
+            />
+          )}
+        </ProgressiveImage>
+
+        <div
+          className="MainScroll_black"
+          style={ScrollY > 5000 ? { display: 'none' } : {}}
+        ></div>
         <div className="MainScroll_message">
           <h1
             className={

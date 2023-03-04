@@ -23,7 +23,6 @@ import PaymentInfoPage from './pages/PaymentInfoPage'
 import AdminCompetitionImagePage from './pages/AdminCompetitionImagePage'
 import AdminCsvDownload from './components/AdminCsvDownload'
 import AdminCompetitionInfoPage from './pages/AdminCompetitionInfoPage'
-import ScrollPage from './pages/ScrollPage'
 import MainScrollPage from './pages/MainScrollPage'
 
 const GlobalStyle = createGlobalStyle`
@@ -75,7 +74,6 @@ function App() {
     true,
     true
   )
-  const AuthScrollPage = Auth(ScrollPage, null, null)
   const AuthMainScrollPage = Auth(MainScrollPage, null, null)
 
   return (
@@ -133,7 +131,6 @@ function App() {
           <Route path="/payment/success" element={<AuthPaymentSuccessPage />} />
           <Route path="/payment/fail" element={<AuthPaymentFailPage />} />
           <Route path="/PaymentInfo/:id" element={<AuthPaymentInfoPage />} />
-          <Route path="/scroll" element={<AuthScrollPage />} />
           <Route path="/Mainscroll" element={<AuthMainScrollPage />} />
         </Routes>
       </BrowserRouter>
