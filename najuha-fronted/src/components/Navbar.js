@@ -65,6 +65,7 @@ function Navbar() {
       style={{ backgroundColor: 'white' }}>
       <div id="Navbar_nav" className="MainScroll_nav">
         <div
+          id="Navbar_hamburger"
           className={`MainScroll_hamburger ${
             isHamburgerActive ? 'active' : ''
           }`}
@@ -120,7 +121,8 @@ function Navbar() {
               onClick={() => {
                 window.scrollTo(0, 0)
                 navigate('/competition')
-              }}>
+              }}
+              style={{ fontWeight: '500' }}>
               대회일정
             </li>
             <li

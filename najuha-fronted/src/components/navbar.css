@@ -2,6 +2,8 @@
   height: 16vh;
   border-bottom: none;
   position: static;
+  padding-top: 3vh;
+  box-sizing: border-box;
 }
 
 #Navbar_nav {
@@ -14,11 +16,18 @@
   #Navbar_nav {
     max-width: 768px;
   }
+
+  #Navbar_hamburger.active {
+    position: absolute;
+    top: 2vh;
+    left: 2rem;
+  }
 }
 
 @media (max-width: 750px) {
   #Navbar_wrapper {
     height: 12vh;
+    padding-top: 1vh;
   }
 
   #Navbar_nav {
