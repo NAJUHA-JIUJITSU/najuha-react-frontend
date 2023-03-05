@@ -354,7 +354,7 @@
   }
   .UserApplicationList_costBtn {
     font-size: 1.6rem;
-    width: 80px;
+    min-width: 80px;
     height: 36px;
   }
 }

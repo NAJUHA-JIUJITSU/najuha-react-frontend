@@ -353,12 +353,12 @@
   overflow: hidden;
   margin: auto;
   max-width: 580px;
-
-  box-shadow: 0 0 0 1px #dbdbdb inset;
+  border: 1px solid #dbdbdb;
+  /* box-shadow: 0 0 0 1px #dbdbdb inset; */
   cursor: pointer;
 }
 .MainScroll_card:hover {
-  box-shadow: 0 0 0 1px #131313 inset;
+  border: 1px solid #131313;
 }
 
 .MainScroll_cardInfo {
