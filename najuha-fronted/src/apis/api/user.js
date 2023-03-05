@@ -17,3 +17,12 @@ export const getuser = async () => {
     console.log(e)
   }
 }
+
+export const getuserapplication = async () => {
+  try {
+    const res = await axiosApiWithToken('/users/competitionApplications', 'get')
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
