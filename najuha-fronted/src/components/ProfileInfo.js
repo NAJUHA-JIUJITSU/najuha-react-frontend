@@ -451,7 +451,7 @@ function ProfileInfo() {
       <div className="ProfileInfo_title">
         <a
           onClick={() => {
-            navigate(`/Profilepage/`)
+            navigate(`/Profilepage`, { state: 'UserApplicationList' })
           }}
         >
           <img src={arrowLeftIcon} alt="이전으로 돌아가기"></img>
