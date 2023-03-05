@@ -8,3 +8,12 @@ export const patchuser = async data => {
     console.log(e)
   }
 }
+
+export const getuser = async () => {
+  try {
+    const res = await axiosApiWithToken('/users', 'get')
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
