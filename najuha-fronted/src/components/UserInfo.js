@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import './userInfo.css'
 import axios from 'axios'
 import './profilesectionToggle.css'
-import { patchuser } from '../apis/api/user'
+import { patchUserInfo } from '../apis/api/user'
 
 const beltEngtoKor = {
   black: '블랙',
@@ -209,7 +209,7 @@ function UserInfo(props) {
   const userLevel = props.userLevel
 
   async function updateUser(updateUerinfo) {
-    let res = await patchuser(updateUerinfo)
+    let res = await patchUserInfo(updateUerinfo)
     if (res) {
       if (props.userLevel === 1) {
         alert('회원정보가 수정되었습니다')

@@ -8,7 +8,10 @@ import { Cookies } from 'react-cookie'
 import { useLocation } from 'react-router-dom'
 import UserInfo from './UserInfo'
 import jwt_decode from 'jwt-decode'
-import { getuser, getuserapplication } from '../apis/api/user'
+import {
+  getUserInfo,
+  getUserApplicationCompetitionList,
+} from '../apis/api/user'
 
 function Profilesection() {
   const [userInfo, setUserInfo] = useState([])
@@ -25,13 +28,13 @@ function Profilesection() {
 
   //User 프로필 정보 가져오기
   async function getUsers() {
-    let res = await getuser()
+    let res = await getUserInfo()
     setUserInfo(res.data.result.UserInfo)
   }
 
   //User 신청 대회목록 가져오기
   async function getCompetitionApplication() {
-    let res = await getuserapplication()
+    let res = await getUserApplicationCompetitionList()
     setCompetitionApplications(res.data.result)
   }
 

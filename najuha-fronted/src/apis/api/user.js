@@ -1,6 +1,6 @@
 import { axiosApi, axiosApiWithToken } from '../utils/axios'
 
-export const patchuser = async data => {
+export const patchUserInfo = async data => {
   try {
     const res = await axiosApiWithToken('/users', 'patch', data)
     return res
@@ -9,7 +9,7 @@ export const patchuser = async data => {
   }
 }
 
-export const getuser = async () => {
+export const getUserInfo = async () => {
   try {
     const res = await axiosApiWithToken('/users', 'get')
     return res
@@ -18,7 +18,7 @@ export const getuser = async () => {
   }
 }
 
-export const getuserapplication = async () => {
+export const getUserApplicationCompetitionList = async () => {
   try {
     const res = await axiosApiWithToken('/users/competitionApplications', 'get')
     return res
