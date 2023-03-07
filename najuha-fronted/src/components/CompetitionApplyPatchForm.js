@@ -11,6 +11,7 @@ import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
 import { loadTossPayments } from '@tosspayments/payment-sdk'
 import deleteicon from '../src_assets/명단삭제로고.svg'
+import { getUserApplicationCompetitionInfo } from '../apis/api/user'
 
 function CompetitionApplyPatchForm() {
   const { state } = useLocation()
@@ -86,29 +87,11 @@ function CompetitionApplyPatchForm() {
     return infos
   }
 
-  function getCompetitionApplicationInfo() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${state}`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      .then(res => {
-        setviewCompetitionApplicationList(
-          parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
-        )
-        // setCompetitionApplicationList();
-        console.log(res.data.result)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
-      })
+  // 신청아이디로 신청정보 가져와서 뿌려주기
+  async function getCompetitionApplicationInfo() {
+    let res = await getUserApplicationCompetitionInfo(state)
+    res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
+    setviewCompetitionApplicationList(res)
     return
   }
 

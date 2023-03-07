@@ -8,6 +8,7 @@ import deleteicon from '../src_assets/명단삭제로고.svg'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import { loadTossPayments } from '@tosspayments/payment-sdk'
+import { getUserApplicationCompetitionInfo } from '../apis/api/user'
 
 import Paymentmodal from './Paymentmodal'
 import Paymentbridgemodal from './Paymentbridgemodal'
@@ -91,27 +92,11 @@ function CompetitionApplyPatchTeamForm() {
     return infos
   }
 
+  // 신청아이디로 신청정보 가져와서 뿌려주기
   async function getCompetitionApplicationInfo() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${state}`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      .then(res => {
-        setViewCompetitionApplicationList(
-          parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
-        )
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
-      })
+    let res = await getUserApplicationCompetitionInfo(state)
+    res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
+    setViewCompetitionApplicationList(res)
     return
   }
 

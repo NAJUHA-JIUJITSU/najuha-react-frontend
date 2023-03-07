@@ -26,3 +26,15 @@ export const getUserApplicationCompetitionList = async () => {
     console.log(e)
   }
 }
+
+export const getUserApplicationCompetitionInfo = async applicationId => {
+  try {
+    const res = await axiosApiWithToken(
+      `/users/competitionApplications/${applicationId}`,
+      'get'
+    )
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
