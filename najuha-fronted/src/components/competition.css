@@ -159,7 +159,7 @@
 .competition-bottom-markdown h3 {
   font-size: 18px;
   display: block;
-  width: 129px;
+  width: 100%;
   letter-spacing: -0.1em;
   color: #8c8c8c;
 }
@@ -302,11 +302,12 @@
 
   .competition-bottom-markdown h3 {
     font-size: 14px;
-    width: 90px;
+    /* width: 120px; */
+    margin-bottom: 20px;
   }
 
   .competition-bottom-markdown ul {
-    padding-left: 90px;
+    padding-left: 20px;
   }
 
   .competition-bottom-markdown li:last-child {
