@@ -11,7 +11,10 @@ import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
 import { loadTossPayments } from '@tosspayments/payment-sdk'
 import deleteicon from '../src_assets/명단삭제로고.svg'
-import { getUserApplicationCompetitionInfo } from '../apis/api/user'
+import {
+  getUserApplicationCompetitionInfo,
+  patchUserApplicationCompetition,
+} from '../apis/api/user'
 
 function CompetitionApplyPatchForm() {
   const { state } = useLocation()
@@ -137,30 +140,17 @@ function CompetitionApplyPatchForm() {
       })
   }
 
-  function patchCompetitionApply() {
+  async function patchCompetitionApply() {
     let competitionApplicationList = parsingbeforeapplypost(
       viewcompetitionApplicationList
     )
-    axios({
-      method: 'patch',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${state}`,
-      data: {
-        competitionApplicationList,
-      },
-    })
-      .then(res => {
-        console.log(res)
-        setCompetitionApplicationId(res.data.result.competitionApplicationId)
-        setapplymodal(pre => !pre)
-        setPaymentbridgemodal(pre => !pre)
-      })
-      .catch(err => {
-        console.log(err)
-        alert('대회 신청에 실패하였습니다.')
-      })
+    let res = await patchUserApplicationCompetition(
+      state,
+      competitionApplicationList
+    )
+    setCompetitionApplicationId(res.data.result.competitionApplicationId)
+    setapplymodal(pre => !pre)
+    setPaymentbridgemodal(pre => !pre)
   }
 
   const postPaymentData = async () => {
