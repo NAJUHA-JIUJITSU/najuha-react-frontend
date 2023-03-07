@@ -328,7 +328,9 @@
 
 .each-competition-body-desc-bottom button {
   width: 74px;
-  height: 36px;
+  min-width: 74px;
+  height: 34px;
+  min-height: 34px;
   background: #ffffff;
   border: 1px solid #f1f1f1;
   box-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25);
