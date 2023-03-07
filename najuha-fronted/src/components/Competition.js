@@ -239,14 +239,25 @@ function Competition() {
           </div>
         </div>
         {inDate ? (
-          <button
-            id="competition-top-button"
-            onClick={() => {
-              navigate(`/competition/applymethod/${id}`)
-            }}
-          >
-            대회 신청
-          </button>
+          competition.isPartnership === true ? (
+            <button
+              id="competition-top-button"
+              onClick={() => {
+                navigate(`/competition/applymethod/${competition.id}`)
+              }}
+            >
+              대회 신청
+            </button>
+          ) : (
+            <button
+              id="competition-top-button"
+              onClick={() => {
+                window.location.href = competition.nonPartnershipPageLink
+              }}
+            >
+              대회 신청
+            </button>
+          )
         ) : (
           ''
         )}
