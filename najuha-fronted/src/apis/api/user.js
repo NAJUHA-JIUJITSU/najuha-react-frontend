@@ -38,3 +38,15 @@ export const getUserApplicationCompetitionInfo = async applicationId => {
     console.log(e)
   }
 }
+
+export const deleteUserApplicationCompetition = async applicationId => {
+  try {
+    const res = await axiosApiWithToken(
+      `/users/competitionApplications/${applicationId}`,
+      'delete'
+    )
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}

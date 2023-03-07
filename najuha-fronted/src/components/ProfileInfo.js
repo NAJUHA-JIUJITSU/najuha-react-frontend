@@ -8,6 +8,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import arrowLeftIcon from '../src_assets/arrow_left.svg'
 import samplePoster from '../src_assets/samplePoster.png'
 
+// api함수
+import {
+  getUserApplicationCompetitionInfo,
+  deleteUserApplicationCompetition,
+} from '../apis/api/user'
+
 // 결제에 필요한
 import Paymentmodal from './Paymentmodal'
 import { loadTossPayments } from '@tosspayments/payment-sdk'
@@ -97,29 +103,10 @@ function ProfileInfo() {
 
   //서버에서 신청상세정보 가져오기
   async function getCompetitionApplicationInfo() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${competitionApplicationId}`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        setRawCompetitionApplicationInfo(res.data.result)
-        setcompetitionApplicationInfo(applicationParsing(res.data.result))
-        setCompetitionApplicationList(
-          res.data.result.CompetitionApplicationInfos
-        )
-        console.log(res.data.result)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
-      })
+    let res = await getUserApplicationCompetitionInfo(competitionApplicationId)
+    setRawCompetitionApplicationInfo(res.data.result)
+    setcompetitionApplicationInfo(applicationParsing(res.data.result))
+    setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos)
     return
   }
 
@@ -263,26 +250,9 @@ function ProfileInfo() {
 
   // 신청 대회 지우기(결제 미완료)
   async function deleteCompetitionApplication(id) {
-    axios
-      .delete(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${id}`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        console.log('지울 대회 id: ' + id)
-        console.log(res.data.message)
-        alert('대회가 삭제되었습니다.')
-        navigate('/Profilepage')
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.data.result)
-        alert(err.response.data.result)
-      })
+    await deleteUserApplicationCompetition(id)
+    alert('대회가 삭제되었습니다.')
+    navigate('/Profilepage', { state: 'UserApplicationList' })
     return
   }
 
