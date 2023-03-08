@@ -39,3 +39,12 @@ export const getCompetitionPricePredict = async (id, data) => {
     console.log(e)
   }
 }
+
+export const getPartnershipCompetitionList = async () => {
+  try {
+    const res = await axiosApi(`/competitionsPartnershipTrue`, 'GET')
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
