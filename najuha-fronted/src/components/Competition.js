@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
 import sampleposter from '../src_assets/samplePoster.png'
 import dayjs from 'dayjs'
+import { getCompetitionDetail } from '../apis/api/competition'
 
 function Competition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
@@ -71,17 +72,11 @@ function Competition() {
   // - 영상 촬영 허용
   // `;
 
+  // 대회 상세정보 가져오기(3.2)
   const getCompetition = async id => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACK_END_API}/competitions/${id}`
-      )
-      console.log(response)
-      const newCompetition = response.data.result
-      setCompetition(newCompetition)
-    } catch (err) {
-      console.log(err)
-    }
+    const res = await getCompetitionDetail(id)
+    const newCompetition = res.data.result
+    setCompetition(newCompetition)
   }
   function competitionParsing(competition) {
     let doreOpen = competition.doreOpen

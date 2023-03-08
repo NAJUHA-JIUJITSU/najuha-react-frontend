@@ -21,7 +21,6 @@ export const getCompetitionList = async (
 export const getCompetitionDetail = async id => {
   try {
     const res = await axiosApi(`/competitions/${id}`, 'GET')
-    console.log(res)
     return res
   } catch (e) {
     console.log(e)

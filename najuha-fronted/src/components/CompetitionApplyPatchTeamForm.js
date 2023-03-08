@@ -12,6 +12,7 @@ import {
   getUserApplicationCompetitionInfo,
   patchUserApplicationCompetition,
 } from '../apis/api/user'
+import { getCompetitionDetail } from '../apis/api/competition'
 
 import Paymentmodal from './Paymentmodal'
 import Paymentbridgemodal from './Paymentbridgemodal'
@@ -184,21 +185,10 @@ function CompetitionApplyPatchTeamForm() {
   }
 
   const getCompetition = async id => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACK_END_API}/competitions/${id}`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      const newCompetition = response.data.result
-      setCompetition(newCompetition)
-      setFillteredCompetition(newCompetition.division)
-    } catch (err) {
-      console.log(err)
-    }
+    const res = await getCompetitionDetail(id)
+    const newCompetition = res.data.result
+    setCompetition(newCompetition)
+    setFillteredCompetition(newCompetition.division)
   }
 
   function genderDropdownToggle() {

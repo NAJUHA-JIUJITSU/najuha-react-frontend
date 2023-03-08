@@ -11,6 +11,7 @@ import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
 import { loadTossPayments } from '@tosspayments/payment-sdk'
 import deleteicon from '../src_assets/명단삭제로고.svg'
+import { getCompetitionDetail } from '../apis/api/competition'
 
 function CompetitionApplyForm() {
   const { id } = useParams()
@@ -72,22 +73,12 @@ function CompetitionApplyForm() {
   }
 
   const getCompetition = async id => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACK_END_API}/competitions/${id}`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      const newCompetition = response.data.result
-      console.log(newCompetition)
-      setCompetition(newCompetition)
-      setFillteredCompetition(newCompetition.division)
-    } catch (err) {
-      console.log(err)
-    }
+    let res = await getCompetitionDetail(id)
+    console.log(res)
+    const newCompetition = res.data.result
+    console.log(newCompetition)
+    setCompetition(newCompetition)
+    setFillteredCompetition(newCompetition.division)
   }
 
   const getTotalPrice = async id => {
