@@ -15,7 +15,10 @@ import {
   getUserApplicationCompetitionInfo,
   patchUserApplicationCompetition,
 } from '../apis/api/user'
-import { getCompetitionDetail } from '../apis/api/competition'
+import {
+  getCompetitionDetail,
+  getCompetitionPricePredict,
+} from '../apis/api/competition'
 
 function CompetitionApplyPatchForm() {
   const { state } = useLocation()
@@ -99,6 +102,7 @@ function CompetitionApplyPatchForm() {
     return
   }
 
+  // 대회 상세정보 가져오기
   const getCompetition = async id => {
     let res = await getCompetitionDetail(id)
     const newCompetition = res.data.result
@@ -107,28 +111,15 @@ function CompetitionApplyPatchForm() {
     return
   }
 
+  //예상 가격 조회
   const getTotalPrice = async id => {
     let parsedlist = parsingbeforegetprice(viewcompetitionApplicationList)
-    console.log(parsedlist)
-    axios({
-      method: 'post',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/competitions/${id}/prices`,
-      data: {
-        isGroup: false,
-        divisions: parsedlist,
-      },
+    let res = await getCompetitionPricePredict(id, {
+      isGroup: false,
+      divisions: parsedlist,
     })
-      .then(res => {
-        console.log(res)
-        setDiscountedprice(res.data.result.discountedPrice)
-        setNormalprice(res.data.result.normalPrice)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    setDiscountedprice(res.data.result.discountedPrice)
+    setNormalprice(res.data.result.normalPrice)
   }
 
   async function patchCompetitionApply() {

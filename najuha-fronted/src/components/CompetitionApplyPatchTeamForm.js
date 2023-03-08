@@ -12,7 +12,10 @@ import {
   getUserApplicationCompetitionInfo,
   patchUserApplicationCompetition,
 } from '../apis/api/user'
-import { getCompetitionDetail } from '../apis/api/competition'
+import {
+  getCompetitionDetail,
+  getCompetitionPricePredict,
+} from '../apis/api/competition'
 
 import Paymentmodal from './Paymentmodal'
 import Paymentbridgemodal from './Paymentbridgemodal'
@@ -536,25 +539,12 @@ function CompetitionApplyPatchTeamForm() {
   }
 
   const getTotalPrice = async () => {
-    axios({
-      method: 'post',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/competitions/${id}/prices`,
-      data: {
-        isGroup: true,
-        divisions: viewCompetitionApplicationList,
-      },
+    let res = await getCompetitionPricePredict(id, {
+      isGroup: true,
+      divisions: viewCompetitionApplicationList,
     })
-      .then(res => {
-        console.log(res)
-        setDiscountedPrice(res.data.result.discountedPrice)
-        setNormalPrice(res.data.result.normalPrice)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    setDiscountedPrice(res.data.result.discountedPrice)
+    setNormalPrice(res.data.result.normalPrice)
   }
 
   return (

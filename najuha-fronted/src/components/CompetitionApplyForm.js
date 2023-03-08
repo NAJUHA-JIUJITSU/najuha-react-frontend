@@ -11,7 +11,10 @@ import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
 import { loadTossPayments } from '@tosspayments/payment-sdk'
 import deleteicon from '../src_assets/명단삭제로고.svg'
-import { getCompetitionDetail } from '../apis/api/competition'
+import {
+  getCompetitionDetail,
+  getCompetitionPricePredict,
+} from '../apis/api/competition'
 
 function CompetitionApplyForm() {
   const { id } = useParams()
@@ -81,28 +84,15 @@ function CompetitionApplyForm() {
     setFillteredCompetition(newCompetition.division)
   }
 
+  // 예상 가격 가져오기
   const getTotalPrice = async id => {
     let parsedlist = parsingbeforegetprice(viewcompetitionApplicationList)
-    console.log(parsedlist)
-    axios({
-      method: 'post',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/competitions/${id}/prices`,
-      data: {
-        isGroup: false,
-        divisions: parsedlist,
-      },
+    let res = await getCompetitionPricePredict(id, {
+      isGroup: false,
+      divisions: parsedlist,
     })
-      .then(res => {
-        console.log(res)
-        setDiscountedprice(res.data.result.discountedPrice)
-        setNormalprice(res.data.result.normalPrice)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    setDiscountedprice(res.data.result.discountedPrice)
+    setNormalprice(res.data.result.normalPrice)
   }
 
   function postCompetition() {
