@@ -94,6 +94,8 @@
   margin-top: 6vh;
   margin-bottom: 44px;
   background-color: #f8fbff;
+
+  border-radius: 15px;
 }
 
 .CompetitionApplyForm-middle-function {
@@ -103,10 +105,16 @@
 
 .CompetitionApplyForm-middle-function-re {
   text-align: center;
+
+  margin-left: 10px;
+  margin-top: 10px;
 }
 
 .CompetitionApplyForm-middle-function-complete {
   text-align: center;
+
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 .CompetitionApplyForm-middle-function-re p {
@@ -146,8 +154,14 @@
 
 .CompetitionApplyForm-middle-info-checkmessage {
   text-align: center;
-  margin-top: 5vh;
   padding-bottom: 4vh;
+  margin-top: 4vh;
+
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
+.CompetitionApplyForm-middle-info-checkmessage span {
+  color: #4e82e5;
 }
 
 .CompetitionApplyForm-bottom {
