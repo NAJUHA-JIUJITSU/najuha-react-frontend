@@ -6,29 +6,37 @@
 }
 
 .CompetitionApplyTeamForm-teaminfo label {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 
 .CompetitionApplyTeamForm-top-table-column li {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
 .CompetitionApplyTeamForm-top-table-row li {
-  font-size: 1.3rem;
-  font-weight: 400;
+  font-size: 1.6rem;
   color: #8c8c8c;
 }
 
+.CompetitionApplyTeamForm-top-table-row li p {
+  width: 86%;
+}
+
+.CompetitionApplyTeamForm-top-table-row input {
+  font-size: 1.6rem;
+}
+
 .CompetitionApplyTeamForm-bottom-title {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
   text-align: center;
 }
 
 .CompetitionApplyTeamForm-bottom-table-column li {
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 500;
+  color: #8c8c8c;
 }
 
 .CompetitionApplyTeamForm-bottom-table-column li:first-child {
@@ -54,27 +62,16 @@
 }
 
 #CompetitionApplyTeamForm-bottom-table-result-key {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
+  font-weight: 400;
 }
 
 #CompetitionApplyTeamForm-bottom-table-buttons-save {
   color: #8c8c8c;
-  font-size: 1.4rem;
-}
-#CompetitionApplyTeamForm-bottom-table-buttons-save:hover {
-  border: 0px;
-  background-color: #e2e2e2;
 }
 
 #CompetitionApplyTeamForm-bottom-table-buttons-register {
   color: #4e82e5;
-  font-size: 1.4rem;
-}
-
-#CompetitionApplyTeamForm-bottom-table-buttons-register:hover {
-  background-color: #4e82e5;
-  border: 1px solid #4e82e5;
-  color: white;
 }
 
 /* Layout */
@@ -111,8 +108,15 @@
   margin-left: 10px;
 }
 
+.CompetitionApplyTeamForm-teaminfo input::placeholder {
+  font-size: 1.4rem;
+}
+.CompetitionApplyTeamForm-top-table-row li input::placeholder {
+  font-size: 1.4rem;
+}
+
 .CompetitionApplyTeamForm-top-table {
-  width: 70%;
+  width: 82%;
   margin: 0 auto;
 }
 
@@ -136,7 +140,7 @@
   display: table-cell;
   vertical-align: middle;
   width: 16.66%;
-  height: 28px;
+  height: 40px;
   box-sizing: border-box;
   padding-left: 2%;
 }
@@ -151,9 +155,10 @@
   display: table-cell;
   vertical-align: middle;
   width: 16.66%;
-  height: 33px;
+  height: 40px;
   box-sizing: border-box;
   padding-left: 2%;
+  font-weight: 400;
 }
 
 /* 여기서부터바텀 Layout */
@@ -168,6 +173,7 @@
 .CompetitionApplyTeamForm-bottom-table-buttons button {
   margin-left: 35px;
   margin-right: 35px;
+  font-size: 1.8rem;
 }
 
 /*Component*/
@@ -182,6 +188,7 @@
   border: 1px solid #e2eaef;
   border-radius: 5px;
   padding-left: 10px;
+  font-size: 1.6rem;
 }
 
 .CompetitionApplyTeamForm-top-table-column li {
@@ -242,7 +249,7 @@
 
 #CompetitionApplyTeamForm-top-table-row-dropdown {
   position: absolute;
-  top: 33px;
+  top: 39px;
   left: 0;
   display: flex;
   flex-direction: column;
@@ -268,25 +275,25 @@
 .CompetitionApplyTeamForm-top-table-row-disable {
   pointer-events: none;
   opacity: 0.7;
-  background-color: #b8b2b2;
+  background-color: #cecece;
 }
 
 .CompetitionApplyTeamForm-button-add {
   position: absolute;
-  background: #ffffff;
-  color: #4e82e5;
+  background: #4e82e5;
+  color: #ffffff;
   border: 1px solid #f1f1f1;
+  /* box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25); */
   border-radius: 30px;
-  height: 34px;
-  width: 70px;
-  right: 60px;
+  height: 40px;
+  width: 90px;
+  min-height: 40px;
+  min-width: 90px;
+  font-size: 1.6rem;
+
+  right: -20px;
   bottom: 0px;
   cursor: pointer;
-}
-.CompetitionApplyTeamForm-button-add:hover {
-  background-color: #4e82e5;
-  border: 1px solid #4e82e5;
-  color: white;
 }
 
 /* .CompetitionApplyTeamForm-teaminfo input::placeholder{
@@ -296,7 +303,7 @@
 /* 바텀테이블 component */
 
 .CompetitionApplyTeamForm-bottom-table {
-  width: 90%;
+  width: 99%;
   border: 1px solid #e2eaef;
   border-radius: 5px;
 }
@@ -337,15 +344,15 @@
 .CompetitionApplyTeamForm-bottom-table-row li {
   width: 11.9%;
   display: table-cell;
-  height: 40px;
-  padding-left: 5px;
+  height: 44px;
+  padding: 0 6px;
   vertical-align: middle;
   border-bottom: 1px solid #e2eaef;
   box-sizing: border-box;
 }
 
 .CompetitionApplyTeamForm-bottom-table-row li:first-child {
-  padding-left: 0;
+  padding-left: 0px;
   text-align: center;
   width: 4.8%;
 }
@@ -371,12 +378,14 @@
   background: #ffffff;
   border: 1px solid #f1f1f1;
   /* 버튼그림자 */
-  width: 75px;
-  height: 35px;
+  width: 110px;
+  height: 46px;
+  min-width: 110px;
+  min-height: 46px;
   box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
   cursor: pointer;
-  margin-bottom: 30px;
+  margin-top: 30px;
 }
 
 #CompetitionApplyTeamForm-bottom-table-row-deleteicon {
@@ -397,7 +406,12 @@
 
   .CompetitionApplyTeamForm-button-add {
     right: 0px;
-    bottom: -35px;
+    bottom: -40px;
+    height: 36px;
+    width: 82px;
+    min-height: 36px;
+    min-width: 82px;
+    font-size: 1.4rem;
   }
 
   .CompetitionApplyTeamForm-bottom-table {
@@ -417,7 +431,8 @@
 
   .CompetitionApplyTeamForm-teaminfo-element label {
     display: inline-block;
-    width: 60px;
+    width: 80px;
+    min-width: 80px;
   }
 
   .CompetitionApplyTeamForm-top-table-child1 {
@@ -481,6 +496,8 @@
 
   .CompetitionApplyTeamForm-bottom-table-row li:first-child {
     width: 4.8%;
+    min-width: 10px;
+    padding-left: 10px;
     justify-content: center;
     border-right: none;
   }
@@ -535,5 +552,11 @@
   .CompetitionApplyTeamForm-bottom-table-buttons button {
     margin-left: 20px;
     margin-right: 20px;
+
+    width: 96px;
+    height: 40px;
+    min-width: 96px;
+    min-height: 40px;
+    font-size: 1.6rem;
   }
 }
