@@ -15,7 +15,10 @@ import {
   getCompetitionDetail,
   getCompetitionPricePredict,
 } from '../apis/api/competition'
-import { postCompetitionApplication } from '../apis/api/competitionApplications'
+import {
+  postCompetitionApplication,
+  postCompetitionApplicationPayment,
+} from '../apis/api/competitionApplications'
 
 function CompetitionApplyForm() {
   const { id } = useParams()
@@ -107,22 +110,11 @@ function CompetitionApplyForm() {
     setPaymentbridgemodal(pre => !pre)
   }
 
-  const postPaymentData = async () => {
-    const xAccessToken = cookies.get('x-access-token')
-    const paymentData = await axios({
-      method: 'post',
-      url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications/${competitionApplicationId}/payments`,
-      headers: {
-        'x-access-token': xAccessToken,
-      },
-    })
-    console.log(paymentData)
-    return paymentData
-  }
-
   const tossPay = async () => {
     const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
-    const res = await postPaymentData()
+    const res = await postCompetitionApplicationPayment(
+      competitionApplicationId
+    )
     const data = res.data.result
     if (paymentmethod == '카드') {
       loadTossPayments(clientkey).then(tossPayments => {

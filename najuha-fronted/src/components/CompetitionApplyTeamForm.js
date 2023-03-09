@@ -16,7 +16,10 @@ import {
   getCompetitionDetail,
   getCompetitionPricePredict,
 } from '../apis/api/competition'
-import { postCompetitionApplicationGroup } from '../apis/api/competitionApplications'
+import {
+  postCompetitionApplicationGroup,
+  postCompetitionApplicationPayment,
+} from '../apis/api/competitionApplications'
 
 function CompetitionApplyTeamForm() {
   const { id } = useParams()
@@ -79,22 +82,12 @@ function CompetitionApplyTeamForm() {
     if (viewCompetitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
   }, [viewCompetitionApplicationList])
 
-  const postPaymentData = async () => {
-    const xAccessToken = cookies.get('x-access-token')
-    const paymentData = await axios({
-      method: 'post',
-      url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications/${competitionApplicationId}/payments`,
-      headers: {
-        'x-access-token': xAccessToken,
-      },
-    })
-    console.log(paymentData)
-    return paymentData
-  }
-
+  //토스 결제api
   const tossPay = async () => {
     const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
-    const res = await postPaymentData()
+    const res = await postCompetitionApplicationPayment(
+      competitionApplicationId
+    )
     const data = res.data.result
     if (paymentmethod == '카드') {
       loadTossPayments(clientkey).then(tossPayments => {

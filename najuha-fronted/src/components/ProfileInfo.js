@@ -14,6 +14,8 @@ import {
   deleteUserApplicationCompetition,
 } from '../apis/api/user'
 
+import { postCompetitionApplicationPayment } from '../apis/api/competitionApplications'
+
 // 결제에 필요한
 import Paymentmodal from './Paymentmodal'
 import { loadTossPayments } from '@tosspayments/payment-sdk'
@@ -42,23 +44,12 @@ function ProfileInfo() {
   console.log('대회 id: ' + competitionApplicationId)
   const cursorStyle = { cursor: 'default' }
 
-  // 토스결제에 필요한 데이터 post
-  const postPaymentData = async () => {
-    const xAccessToken = cookies.get('x-access-token')
-    const paymentData = await axios({
-      method: 'post',
-      url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications/${competitionApplicationId}/payments`,
-      headers: {
-        'x-access-token': xAccessToken,
-      },
-    })
-    console.log(paymentData)
-    return paymentData
-  }
   // 토스결제
   const tossPay = async () => {
     const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
-    const res = await postPaymentData()
+    const res = await postCompetitionApplicationPayment(
+      competitionApplicationId
+    )
     const data = res.data.result
     if (paymentmethod == '카드') {
       loadTossPayments(clientkey).then(tossPayments => {

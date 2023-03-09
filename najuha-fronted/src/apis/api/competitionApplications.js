@@ -25,3 +25,16 @@ export const postCompetitionApplicationGroup = async data => {
     console.log(e)
   }
 }
+
+export const postCompetitionApplicationPayment =
+  async competitionApplicationId => {
+    try {
+      const res = await axiosApiWithToken(
+        `/competitionApplications/${competitionApplicationId}/payments`,
+        'post'
+      )
+      return res
+    } catch (e) {
+      console.log(e)
+    }
+  }
