@@ -9,7 +9,6 @@ import { useParams, useLocation } from 'react-router-dom'
 import ApplyModal from './ApplyModal'
 import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
-import { loadTossPayments } from '@tosspayments/payment-sdk'
 import deleteicon from '../src_assets/명단삭제로고.svg'
 import {
   getUserApplicationCompetitionInfo,
@@ -19,7 +18,6 @@ import {
   getCompetitionDetail,
   getCompetitionPricePredict,
 } from '../apis/api/competition'
-import { postCompetitionApplicationPayment } from '../apis/api/competitionApplications'
 
 function CompetitionApplyPatchForm() {
   const { state } = useLocation()
@@ -134,53 +132,6 @@ function CompetitionApplyPatchForm() {
     setCompetitionApplicationId(res.data.result.competitionApplicationId)
     setapplymodal(pre => !pre)
     setPaymentbridgemodal(pre => !pre)
-  }
-
-  const tossPay = async () => {
-    const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
-    const res = await postCompetitionApplicationPayment(
-      competitionApplicationId
-    )
-    const data = res.data.result
-    if (paymentmethod == '카드') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    } else if (paymentmethod == '간편결제') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-          flowMode: 'DIRECT',
-          easyPay: easypaymethod,
-        })
-      })
-    } else if (paymentmethod == '계좌이체') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('계좌이체', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    }
   }
 
   useEffect(() => {
@@ -505,33 +456,6 @@ function CompetitionApplyPatchForm() {
     }
   }
 
-  // const optionUI = () => {
-  //     return viewcompetitionApplicationList.map((application, i) => {
-  //         return(
-  //         <>
-  //             {!application.check ? <>
-  //                 <div className='CompetitionApplyForm-middle-function'>
-  //                 <div className='CompetitionApplyForm-middle-function-re'>
-  //                     <img src={reseticon} style={{cursor: 'pointer'}} onClick={() => curApplicationReset(i)}/>
-  //                     <p>다시하기</p>
-  //                 </div>
-  //                 <div className='CompetitionApplyForm-middle-function-complete'>
-  //                     {application.price  ? <><img src={plus} style={{cursor: 'pointer'}} onClick={() => addApplication(i)}/>
-  //                     <p>대회추가</p></> :
-  //                     (application.weight ? <><img src={notcomplete} style={{cursor: 'pointer'}} onClick={() => curApplicationcomplete(i)}/><p>선택완료</p></>
-  //                     : <><img src={notcomplete}/><p>선택완료</p></>)}
-  //                 </div>
-  //             </div>
-  //             <ul className='CompetitionApplyForm-middle-option'>
-  //                 {fillteredcompetition != null ? (application.check == 0 ? chooseOptionUI(application, i) : '') : ''}
-  //             </ul>
-  //             {application.price  ? <h2 className='CompetitionApplyForm-middle-info-checkmessage'>대회를 더 신청하고자 한다면<br/> + 버튼을 클릭해주세요</h2> : application.weight == null ? <h2 className='CompetitionApplyForm-middle-info'>신청할 대회를 선택하세요</h2> : <h2 className='CompetitionApplyForm-middle-info-checkmessage'>해당 대회를 신청하고자 한다면 <br/> 선택완료를 클릭해주세요</h2>}
-  //             </> : ''}
-  //         </>
-  //         )
-  //     })
-  // }
-
   const optionUI = () => {
     return (
       <>
@@ -686,13 +610,9 @@ function CompetitionApplyPatchForm() {
         {paymentmodal && (
           <Paymentmodal
             closeModal={() => setPaymentmodal(pre => !pre)}
-            paymentmethod={paymentmethod}
-            setPaymentmethod={setPaymentmethod}
-            easypaymethod={easypaymethod}
-            setEasypaymethod={setEasypaymethod}
             discountedprice={discountedprice}
             normalprice={normalprice}
-            tossPay={tossPay}
+            competitionApplicationId={competitionApplicationId}
           />
         )}
       </div>

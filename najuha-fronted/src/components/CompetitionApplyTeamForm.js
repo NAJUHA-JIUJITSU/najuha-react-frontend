@@ -5,10 +5,6 @@ import { useParams, useNavigate } from 'react-router-dom'
 import dropdownicon from '../src_assets/드랍다운아이콘.svg'
 import deleteicon from '../src_assets/명단삭제로고.svg'
 
-import axios from 'axios'
-import { Cookies } from 'react-cookie'
-import { loadTossPayments } from '@tosspayments/payment-sdk'
-
 import Paymentmodal from './Paymentmodal'
 import Paymentbridgemodal from './Paymentbridgemodal'
 
@@ -59,8 +55,6 @@ function CompetitionApplyTeamForm() {
   const [easypaymethod, setEasypaymethod] = useState(null)
   const frontBaseUrl = process.env.REACT_APP_FRONT_END_API
 
-  const cookies = new Cookies()
-
   useEffect(() => {
     getCompetition(id)
   }, [])
@@ -81,54 +75,6 @@ function CompetitionApplyTeamForm() {
     console.log(viewCompetitionApplicationList)
     if (viewCompetitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
   }, [viewCompetitionApplicationList])
-
-  //토스 결제api
-  const tossPay = async () => {
-    const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
-    const res = await postCompetitionApplicationPayment(
-      competitionApplicationId
-    )
-    const data = res.data.result
-    if (paymentmethod == '카드') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    } else if (paymentmethod == '간편결제') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-          flowMode: 'DIRECT',
-          easyPay: easypaymethod,
-        })
-      })
-    } else if (paymentmethod == '계좌이체') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('계좌이체', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    }
-  }
 
   function parsingBeforePost(viewCompetitionApplicationList) {
     let copyCompetitionApplicationList = JSON.parse(
@@ -942,13 +888,9 @@ function CompetitionApplyTeamForm() {
       {paymentmodal && (
         <Paymentmodal
           closeModal={() => setPaymentmodal(pre => !pre)}
-          paymentmethod={paymentmethod}
-          setPaymentmethod={setPaymentmethod}
-          easypaymethod={easypaymethod}
-          setEasypaymethod={setEasypaymethod}
           discountedprice={discountedPrice}
           normalprice={normalPrice}
-          tossPay={tossPay}
+          competitionApplicationId={competitionApplicationId}
         />
       )}
     </div>
