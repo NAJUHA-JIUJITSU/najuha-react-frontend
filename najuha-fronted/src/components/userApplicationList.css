@@ -273,11 +273,6 @@
 .UserApplicationList_payCss .UserApplicationList_costBtn {
   color: #4e82e5;
 }
-.UserApplicationList_payCss .UserApplicationList_costBtn:hover {
-  background-color: #4e82e5;
-  border: 1px solid #4e82e5;
-  color: white;
-}
 
 @media (max-width: 1049px) {
   /* Layout */
