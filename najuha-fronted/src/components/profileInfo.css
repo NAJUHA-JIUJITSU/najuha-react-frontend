@@ -12,6 +12,7 @@
   font-size: 1.4rem;
   text-align: right;
   cursor: pointer;
+  text-decoration: underline;
 }
 
 /* Layout */

@@ -459,7 +459,7 @@ function ProfileInfo() {
                 `/competition/${competitionApplicationInfo.competitionId}`
               )
             }}>
-            대회상세보기 {'>'}
+            대회상세보기
           </h2>
         </div>
         <div className="ProfileInfo_competition_Right">
