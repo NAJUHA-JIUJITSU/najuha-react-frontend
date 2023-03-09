@@ -15,6 +15,7 @@ import {
   getCompetitionDetail,
   getCompetitionPricePredict,
 } from '../apis/api/competition'
+import { postCompetitionApplication } from '../apis/api/competitionApplications'
 
 function CompetitionApplyForm() {
   const { id } = useParams()
@@ -95,30 +96,15 @@ function CompetitionApplyForm() {
     setNormalprice(res.data.result.normalPrice)
   }
 
-  function postCompetition() {
+  // 대회 참가 신청하기
+  async function postCompetition() {
     let competitionApplicationList = parsingbeforeapplypost(
       viewcompetitionApplicationList
     )
-    axios({
-      method: 'post',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications`,
-      data: {
-        competitionApplicationList,
-      },
-    })
-      .then(res => {
-        console.log(res)
-        setCompetitionApplicationId(res.data.result.competitionApplicationId)
-        setapplymodal(pre => !pre)
-        setPaymentbridgemodal(pre => !pre)
-      })
-      .catch(err => {
-        console.log(err)
-        alert('대회 신청에 실패하였습니다.')
-      })
+    let res = await postCompetitionApplication({ competitionApplicationList })
+    setCompetitionApplicationId(res.data.result.competitionApplicationId)
+    setapplymodal(pre => !pre)
+    setPaymentbridgemodal(pre => !pre)
   }
 
   const postPaymentData = async () => {

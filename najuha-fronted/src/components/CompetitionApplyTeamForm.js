@@ -16,6 +16,7 @@ import {
   getCompetitionDetail,
   getCompetitionPricePredict,
 } from '../apis/api/competition'
+import { postCompetitionApplicationGroup } from '../apis/api/competitionApplications'
 
 function CompetitionApplyTeamForm() {
   const { id } = useParams()
@@ -150,23 +151,10 @@ function CompetitionApplyTeamForm() {
     let competitionApplicationList = parsingBeforePost(
       viewCompetitionApplicationList
     )
-    console.log(competitionApplicationList)
-    try {
-      await axios({
-        method: 'post',
-        headers: {
-          'x-access-token': cookies.get('x-access-token'),
-        },
-        url: `${process.env.REACT_APP_BACK_END_API}/competitionApplicationsGroup`,
-        data: {
-          competitionApplicationList,
-        },
-      }).then(res => {
-        setCompetitionApplicationId(res.data.result.competitionApplicationId)
-      })
-    } catch (err) {
-      throw err
-    }
+    let res = await postCompetitionApplicationGroup({
+      competitionApplicationList,
+    })
+    setCompetitionApplicationId(res.data.result.competitionApplicationId)
   }
 
   const getCompetition = async id => {
