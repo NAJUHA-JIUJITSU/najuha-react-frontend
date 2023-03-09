@@ -51,10 +51,6 @@ function CompetitionApplyTeamForm() {
   })
   const [competitionApplicationId, setCompetitionApplicationId] = useState(null)
 
-  const [paymentmethod, setPaymentmethod] = useState(null)
-  const [easypaymethod, setEasypaymethod] = useState(null)
-  const frontBaseUrl = process.env.REACT_APP_FRONT_END_API
-
   useEffect(() => {
     getCompetition(id)
   }, [])
