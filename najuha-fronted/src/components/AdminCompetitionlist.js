@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import './admincompetitionlist.css'
 
 import dayjs from 'dayjs'
+import { getCompetitionList } from '../apis/api/admin'
 
 import { Cookies } from 'react-cookie'
 
@@ -37,7 +38,6 @@ function AdminCompetitionlist() {
   const [competitions, setCompetitions] = useState([])
   const [dateDropdown, setDateDropdown] = useState(false)
   const [locationDropdown, setLocationDropdown] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const [lastElement, setLastElement] = useState('')
   const [offset, setOffset] = useState(0)
   const [startDate, setStartDate] = useState('')
@@ -62,7 +62,7 @@ function AdminCompetitionlist() {
         const first = entries[0]
         if (first.isIntersecting) {
           console.log('관측됨')
-          await getCompetitionList(
+          await viewGetCompetitionList(
             startDateRef.current,
             offsetRef.current,
             titleRef.current,
@@ -77,26 +77,11 @@ function AdminCompetitionlist() {
     )
   )
 
-  async function getCompetitionList(startDate, offset, title, location) {
-    setIsLoading(true)
-    axios({
-      method: 'get',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`,
-    })
-      .then(res => {
-        console.log(res.data.result)
-        let newCompetitions = res.data.result
-        setCompetitions(competitions => [...competitions, ...newCompetitions])
-        console.log('성공')
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-      })
-    setIsLoading(false)
+  async function viewGetCompetitionList(startDate, offset, title, location) {
+    let res = await getCompetitionList(startDate, offset, title, location)
+    console.log(res)
+    let newCompetitions = res.data.result
+    setCompetitions(preCompetitions => [...preCompetitions, ...newCompetitions])
     return
   }
 
@@ -528,19 +513,12 @@ function AdminCompetitionlist() {
       <div className="competition-list">
         <ul className="competition-row">
           {renderCompetitionList()}
-          {isLoading && (
-            <div style={{ fontsize: '200px', margin: '0 2rem' }}>
-              Loading...
-            </div>
-          )}
-          {!isLoading && (
-            <div
-              style={{ fontsize: '200px', margin: '0 2rem' }}
-              ref={setLastElement}
-            >
-              해당 대회가 모두 로딩되었습니다.
-            </div>
-          )}
+          <div
+            style={{ fontsize: '200px', margin: '0 2rem' }}
+            ref={setLastElement}
+          >
+            대회가 모두 로딩되었습니다.
+          </div>
         </ul>
       </div>
     </div>
