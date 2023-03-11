@@ -245,7 +245,7 @@ function MainScroll() {
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            이번 달 주짓수 대회 한 눈에 보고싶은데..
+            이번 달 주짓수 대회 어디서 확인하지?
           </h2>
           <h2
             className={
@@ -255,27 +255,17 @@ function MainScroll() {
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            신청부터 결제까지 한 번에 할 수 없나..
+            신청부터 결제까지 한 번에 할 수 없나?
           </h2>
           <h2
             className={
               ScrollY > 2800
-                ? ScrollY > 3100
-                  ? 'MainScroll_fadeout'
-                  : 'MainScroll_fadein'
-                : 'MainScroll_none'
-            }>
-            (수근수근)
-          </h2>
-          <h2
-            className={
-              ScrollY > 3100
                 ? ScrollY > 3600
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            뭐? 나주하에서는 다 가능하다고?
+            나주하에서는 전부 가능합니다.
           </h2>
         </div>
         <div

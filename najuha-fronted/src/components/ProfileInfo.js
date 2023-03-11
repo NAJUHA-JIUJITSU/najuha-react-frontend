@@ -480,10 +480,6 @@ function ProfileInfo() {
             <p>{competitionApplicationInfo.registrationDeadline}</p>
           </div>
           <div className="ProfileInfo_competition_date">
-            <h3>신청자 명단</h3>
-            <p>{competitionApplicationInfo.applicantTableOpenDate}</p>
-          </div>
-          <div className="ProfileInfo_competition_date">
             <h3>대진표 공개</h3>
             <p>{competitionApplicationInfo.tournamentTableOpenDate}</p>
           </div>

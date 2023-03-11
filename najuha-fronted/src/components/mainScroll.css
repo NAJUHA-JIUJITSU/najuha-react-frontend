@@ -460,27 +460,28 @@
 
   .MainScroll_message span {
     font-size: 8.8rem;
-    line-height: 11rem;
+    line-height: 10rem;
   }
 
   .MainScroll_message h1 {
     font-size: 4rem;
-    line-height: 11rem;
+    line-height: 10rem;
   }
 
   .MainScroll_message2 {
-    max-width: 260px;
+    max-width: 280px;
+    margin-top: -20px;
   }
 
   .MainScroll_message2 h2 {
-    font-size: 3rem;
-    line-height: 3.6rem;
+    font-size: 3.4rem;
+    line-height: 4rem;
     margin-bottom: 40px;
   }
 
   /* 섹션 1-1 */
   .MainScroll_section1-1 {
-    height: 4500px;
+    height: 4600px;
   }
   /* 섹션 2 (모니터 사진)*/
 
