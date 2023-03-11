@@ -17,7 +17,7 @@
   width: 270px;
   height: auto;
   padding: 20px;
-  text-align: center;
+  text-align: left;
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
@@ -50,20 +50,7 @@
 }
 
 #Paymentbridgemodal_modaltitle {
-  font-weight: 700;
-  font-size: 24px;
-}
-
-#Paymentbridgemodal_modalCloseBtn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  border: none;
-  color: rgba(0, 0, 0, 0.7);
-  background-color: transparent;
+  font-weight: 600;
   font-size: 20px;
-}
-
-#Paymentbridgemodal_modalCloseBtn:hover {
-  cursor: pointer;
+  margin-bottom: 50px;
 }
