@@ -1,5 +1,6 @@
 import React from 'react'
 import './applymodal.css'
+import blackX from '../src_assets/blackX.svg'
 
 function ApplyModal(props) {
   function closeModal() {
@@ -17,7 +18,14 @@ function ApplyModal(props) {
         <div className="ApplyModal_title">
           <h2 id="ApplyModal_modaltitle">선수정보입력</h2>
           <button id="ApplyModal_modalCloseBtn" onClick={closeModal}>
-            ✖
+            <img
+              src={blackX}
+              alt="삭제 아이콘"
+              style={{
+                width: '24px',
+                marginRight: '-10px',
+                marginTop: '-30px',
+              }}></img>
           </button>
         </div>
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './Paymentmodal.css'
 import { useNavigate } from 'react-router-dom'
+import blackX from '../src_assets/blackX.svg'
 
 function Paymentmodal(props) {
   let navigate = useNavigate()
@@ -65,7 +66,14 @@ function Paymentmodal(props) {
             onClick={() => {
               navigate('/Profilepage', { state: 'UserApplicationList' })
             }}>
-            ✖
+            <img
+              src={blackX}
+              alt="삭제 아이콘"
+              style={{
+                width: '24px',
+                marginRight: '-10px',
+                marginTop: '-30px',
+              }}></img>
           </button>
         </div>
 
@@ -74,17 +82,17 @@ function Paymentmodal(props) {
           <div className="Paymentmodal_firstsection_infos">
             <div className="Paymentmodal_firstsection_info">
               <h4>총 대회금액</h4>
-              <p>{props.normalprice}</p>
+              <p>{props.normalprice}원</p>
             </div>
 
             <div className="Paymentmodal_firstsection_info">
               <h4>할인금액</h4>
-              <p>(-){props.normalprice - props.discountedprice}</p>
+              <p>(-){props.normalprice - props.discountedprice}원</p>
             </div>
           </div>
           <div className="Paymentmodal_firstsection_totalprice">
             <p>총 결제금액</p>
-            <p>{props.discountedprice}</p>
+            <p style={{ color: '#4e82e5' }}>{props.discountedprice}원</p>
           </div>
         </div>
         <div className="Paymentmodal_secondsection">
