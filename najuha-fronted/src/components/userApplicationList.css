@@ -243,8 +243,11 @@
 }
 
 .UserApplicationList_costBtn {
-  width: 84px;
-  height: 37px;
+  width: 96px;
+  height: 40px;
+  min-width: 96px;
+  min-height: 40px;
+
   border-radius: 30px;
   border: 1px solid #f1f1f1;
   text-align: center;
@@ -269,11 +272,6 @@
 }
 .UserApplicationList_payCss .UserApplicationList_costBtn {
   color: #4e82e5;
-}
-.UserApplicationList_payCss .UserApplicationList_costBtn:hover {
-  background-color: #4e82e5;
-  border: 1px solid #4e82e5;
-  color: white;
 }
 
 @media (max-width: 1049px) {
@@ -351,10 +349,5 @@
   }
   .UserApplicationList_boxRightCost h3 {
     font-size: 1.4rem;
-  }
-  .UserApplicationList_costBtn {
-    font-size: 1.6rem;
-    width: 80px;
-    height: 36px;
   }
 }

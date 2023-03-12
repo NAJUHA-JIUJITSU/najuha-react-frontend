@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import './userInfo.css'
 import axios from 'axios'
 import './profilesectionToggle.css'
-import { patchuser } from '../apis/api/user'
+import { patchUserInfo } from '../apis/api/user'
 
 const beltEngtoKor = {
   black: '블랙',
@@ -49,8 +49,7 @@ function Read({ userInfo, setMode }) {
         onClick={e => {
           e.preventDefault()
           setMode('UPDATE')
-        }}
-      >
+        }}>
         수정하기
       </button>
     </div>
@@ -89,7 +88,7 @@ function Update({ userInfo, setUserInfo, setMode, updateUser }) {
   }
 
   return (
-    <form onSubmit={e => onSumbit(e)}>
+    <form onSubmit={e => onSumbit(e)} id="UserInfo_changewrap">
       <div className="UserInfo_infoBox">
         <span>이름</span>
         <p>
@@ -165,8 +164,7 @@ function Update({ userInfo, setUserInfo, setMode, updateUser }) {
           <select
             value={userInfo?.belt}
             name="belt"
-            onChange={e => handleChange(e, 'belt')}
-          >
+            onChange={e => handleChange(e, 'belt')}>
             <option value="white">화이트</option>
             <option value="blue">블루</option>
             <option value="purple">퍼플</option>
@@ -192,7 +190,7 @@ function Update({ userInfo, setUserInfo, setMode, updateUser }) {
           <span>숫자만 입력</span>
         </div>
       </div>
-      <button className="UserInfo_updateBtn" type="submit">
+      <button className="UserInfo_updateBtn UserInfo_saveBtn" type="submit">
         저장하기
       </button>
     </form>
@@ -209,7 +207,7 @@ function UserInfo(props) {
   const userLevel = props.userLevel
 
   async function updateUser(updateUerinfo) {
-    let res = await patchuser(updateUerinfo)
+    let res = await patchUserInfo(updateUerinfo)
     if (res) {
       if (props.userLevel === 1) {
         alert('회원정보가 수정되었습니다')

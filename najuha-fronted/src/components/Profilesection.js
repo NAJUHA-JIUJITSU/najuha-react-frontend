@@ -8,6 +8,10 @@ import { Cookies } from 'react-cookie'
 import { useLocation } from 'react-router-dom'
 import UserInfo from './UserInfo'
 import jwt_decode from 'jwt-decode'
+import {
+  getUserInfo,
+  getUserApplicationCompetitionList,
+} from '../apis/api/user'
 
 function Profilesection() {
   const [userInfo, setUserInfo] = useState([])
@@ -24,46 +28,16 @@ function Profilesection() {
 
   //User 프로필 정보 가져오기
   async function getUsers() {
-    axios
-      .get(`${process.env.REACT_APP_BACK_END_API}/users`, {
-        headers: {
-          'x-access-token': cookies.get('x-access-token'),
-        },
-      })
-      .then(res => {
-        setUserInfo(res.data.result.UserInfo)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        // console.log(err)
-        // console.log(err.response.status)
-        // console.log(err.response.data.message)
-      })
-    return
+    let res = await getUserInfo()
+    setUserInfo(res.data.result.UserInfo)
   }
 
-  //User 대회 정보 가져오기
+  //User 신청 대회목록 가져오기
   async function getCompetitionApplication() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        setCompetitionApplications(res.data.result)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        // console.log(err)
-        // console.log(err.response.status)
-        // console.log(err.response.data.message)
-      })
-    return
+    let res = await getUserApplicationCompetitionList()
+    setCompetitionApplications(res.data.result)
   }
+
   useEffect(() => {
     if (xAccessToken) {
       if (userLevel > 1) {

@@ -6,6 +6,7 @@ import dropdownicon from '../src_assets/드랍다운아이콘회색.svg'
 import searchicon from '../src_assets/검색돋보기아이콘.svg'
 import sampleposter from '../src_assets/samplePoster.png'
 import dayjs from 'dayjs'
+import { getCompetitionList } from '../apis/api/competition'
 
 const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 const locationSample = [
@@ -30,7 +31,6 @@ const week = ['일', '월', '화', '수', '목', '금', '토']
 
 function Competitionlist() {
   const [competitions, setCompetitions] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
   const [lastElement, setLastElement] = useState('')
   const [offset, setOffset] = useState(0)
   const [startDate, setStartDate] = useState('')
@@ -62,7 +62,7 @@ function Competitionlist() {
         const first = entries[0]
         if (first.isIntersecting) {
           console.log('관측됨')
-          await getCompetitionList(
+          await viewGetCompetitionList(
             startDateRef.current,
             offsetRef.current,
             titleRef.current,
@@ -77,23 +77,11 @@ function Competitionlist() {
     )
   )
 
-  async function getCompetitionList(startDate, offset, title, location) {
-    setIsLoading(true)
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`
-      )
-      .then(res => {
-        console.log(res.data.result)
-        let newCompetitions = res.data.result
-        setCompetitions(competitions => [...competitions, ...newCompetitions])
-        console.log('성공')
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-      })
-    setIsLoading(false)
+  async function viewGetCompetitionList(startDate, offset, title, location) {
+    let res = await getCompetitionList(startDate, offset, title, location)
+    console.log(res)
+    let newCompetitions = res.data.result
+    setCompetitions(competitions => [...competitions, ...newCompetitions])
     return
   }
 
@@ -314,7 +302,12 @@ function Competitionlist() {
             )}
           </div>
           <div className="each-competition-body" id={cardGray}>
-            <div className="each-competition-body-poster">
+            <div
+              className="each-competition-body-poster"
+              onClick={() => {
+                window.scrollTo(0, 0)
+                navigate(`/competition/${curcompetition.id}`)
+              }}>
               {' '}
               {/* 카드왼쪽 포스터공간  */}
               <img src={curcompetition.posterImage} alt="대회 포스터"></img>
@@ -330,9 +323,9 @@ function Competitionlist() {
               <div
                 className="each-competition-body-desc-top"
                 onClick={() => {
+                  window.scrollTo(0, 0)
                   navigate(`/competition/${curcompetition.id}`)
-                }}
-              >
+                }}>
                 <p>{curcompetition.title}</p>
               </div>
               <div className="each-competition-body-desc-middle">
@@ -343,9 +336,9 @@ function Competitionlist() {
                   <button
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
+                      window.scrollTo(0, 0)
                       navigate(`/competition/applymethod/${curcompetition.id}`)
-                    }}
-                  >
+                    }}>
                     신청
                   </button>
                 ) : (
@@ -353,8 +346,7 @@ function Competitionlist() {
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
                       window.location.href = competition.nonPartnershipPageLink
-                    }}
-                  >
+                    }}>
                     신청
                   </button>
                 )}
@@ -379,8 +371,7 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setDateDropdown(pre => !pre)}
-          ref={dateDropdownRef}
-        >
+          ref={dateDropdownRef}>
           <p id={startDate === '' ? '' : 'competition-searchzone-black'}>
             {startDate === '' ? '날짜' : `${temDate}월~`}
           </p>
@@ -393,8 +384,7 @@ function Competitionlist() {
                   setStartDate('')
                   listRefresh()
                   setActiveMonth('')
-                }}
-              >
+                }}>
                 전체
               </li>
               {months.map(element => {
@@ -411,8 +401,7 @@ function Competitionlist() {
                       setTemDate(element)
                       listRefresh()
                       setActiveMonth(element)
-                    }}
-                  >
+                    }}>
                     {element}월
                   </li>
                 )
@@ -425,8 +414,7 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setLocationDropdown(pre => !pre)}
-          ref={locationDropdownRef}
-        >
+          ref={locationDropdownRef}>
           <p id={location === '' ? '' : 'competition-searchzone-black'}>
             {location === '' ? '지역' : location}
           </p>
@@ -439,8 +427,7 @@ function Competitionlist() {
                   setLocation('')
                   listRefresh()
                   setActiveLocation('')
-                }}
-              >
+                }}>
                 전체
               </li>
               {locationSample.map(element => {
@@ -456,8 +443,7 @@ function Competitionlist() {
                       setLocation(element)
                       listRefresh()
                       setActiveLocation(element)
-                    }}
-                  >
+                    }}>
                     {element}
                   </li>
                 )
@@ -469,7 +455,7 @@ function Competitionlist() {
         </div>
         <div className="competition-searchzone-searchbar">
           <input
-            placeholder="대회 이름 직접 검색하기"
+            placeholder="대회명 직접 검색하기"
             value={temTitle}
             onKeyDown={e => searchEnterPress(e)}
             onChange={e => {
@@ -489,19 +475,11 @@ function Competitionlist() {
       <div className="competition-list">
         <ul className="competition-row">
           {renderCompetitionList()}
-          {isLoading && (
-            <div style={{ fontsize: '200px', margin: '0 2rem' }}>
-              Loading...
-            </div>
-          )}
-          {!isLoading && (
-            <div
-              style={{ fontsize: '200px', margin: '0 2rem' }}
-              ref={setLastElement}
-            >
-              해당 대회가 모두 로딩되었습니다.
-            </div>
-          )}
+          <div
+            style={{ fontsize: '200px', margin: '0 2rem' }}
+            ref={setLastElement}>
+            대회가 모두 로딩되었습니다.
+          </div>
         </ul>
       </div>
     </div>

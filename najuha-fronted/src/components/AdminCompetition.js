@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import './competition.css'
-import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import sampleposter from '../src_assets/samplePoster.png'
+import { getAdminCompetition } from '../apis/api/admin'
+import MarkdownEditor from './MarkdownEditor'
 
 function AdminCompetition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
@@ -69,23 +70,26 @@ function AdminCompetition() {
   // - 영상 촬영 허용
   // `;
 
-  const getCompetition = async id => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      console.log(response)
-      const newCompetition = response.data.result
-      setCompetition(newCompetition)
-    } catch (err) {
-      console.log(err)
-    }
+  const getCompetition = async () => {
+    const res = await getAdminCompetition(id)
+    if (res) setCompetition(res.data.result)
+    // try {
+    //   const response = await axios.get(
+    //     `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}`,
+    //     {
+    //       headers: {
+    //         'x-access-token': cookies.get('x-access-token'),
+    //       },
+    //     }
+    //   )
+    //   console.log(response)
+    //   const newCompetition = response.data.result
+    //   setCompetition(newCompetition)
+    // } catch (err) {
+    //   console.log(err)
+    // }
   }
+
   function competitionParsing(competition) {
     let doreOpen = competition.doreOpen
       .substr(2, 8)
@@ -134,7 +138,7 @@ function AdminCompetition() {
   }
 
   useEffect(() => {
-    getCompetition(id)
+    getCompetition()
   }, [])
 
   useEffect(() => {
@@ -232,10 +236,7 @@ function AdminCompetition() {
         </button>
       </div>
       <div className="competition-bottom">
-        <ReactMarkdown
-          className="competition-bottom-markdown"
-          children={markdown}
-        />
+        <MarkdownEditor data={markdown} mode="view" />
       </div>
     </div>
   )

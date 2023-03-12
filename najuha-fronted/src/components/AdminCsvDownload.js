@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom'
 import { CSVLink } from 'react-csv'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
-
-const backBaseUrl = process.env.REACT_APP_BACK_END_API
+import { getAdminCompetitionApplicationListCsv } from '../apis/api/admin'
 
 const AdminCsvDownload = () => {
   const [csvData, setCsvData] = useState([])
@@ -14,22 +13,8 @@ const AdminCsvDownload = () => {
   console.log(competitionId)
 
   const getCsvData = async () => {
-    try {
-      const res = await axios({
-        method: 'get',
-        headers: {
-          'x-access-token': xAccessToken,
-        },
-        url:
-          backBaseUrl +
-          '/admin/competitions/' +
-          competitionId +
-          '/competitionApplications/csv',
-      })
-      setCsvData(res.data.result)
-    } catch {
-      console.log('에러')
-    }
+    const res = await getAdminCompetitionApplicationListCsv(competitionId)
+    if (res) setCsvData(res.data.result)
   }
 
   useEffect(() => {
@@ -44,7 +29,8 @@ const AdminCsvDownload = () => {
             fontSize: '50px',
             marginLeft: '50%',
             transform: 'translate(-50%,200%)',
-          }}>
+          }}
+        >
           Download me
         </button>
       </CSVLink>

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import './competition.css'
-import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
 import sampleposter from '../src_assets/samplePoster.png'
 import dayjs from 'dayjs'
+import { getCompetitionDetail } from '../apis/api/competition'
+import MarkdownEditor from './MarkdownEditor'
 
 function Competition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
@@ -71,17 +72,11 @@ function Competition() {
   // - 영상 촬영 허용
   // `;
 
+  // 대회 상세정보 가져오기(3.2)
   const getCompetition = async id => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACK_END_API}/competitions/${id}`
-      )
-      console.log(response)
-      const newCompetition = response.data.result
-      setCompetition(newCompetition)
-    } catch (err) {
-      console.log(err)
-    }
+    const res = await getCompetitionDetail(id)
+    const newCompetition = res.data.result
+    setCompetition(newCompetition)
   }
   function competitionParsing(competition) {
     let doreOpen = competition.doreOpen
@@ -211,21 +206,9 @@ function Competition() {
                 )
               </p>
             </div>
-            <div className="competition-top-content-info-each">
-              <h3>신청자 명단</h3>
-              <p>
-                {viewCompetition ? viewCompetition.applicantTableOpenDate : ''}{' '}
-                (
-                {viewCompetition
-                  ? viewCompetition.applicantTableOpenDateDay
-                  : ''}
-                )
-              </p>
-            </div>
             <div
               id="competition-top-content-info-each-last"
-              className="competition-top-content-info-each"
-            >
+              className="competition-top-content-info-each">
               <h3>대진표 공개</h3>
               <p>
                 {viewCompetition ? viewCompetition.tournamentTableOpenDate : ''}{' '}
@@ -239,23 +222,29 @@ function Competition() {
           </div>
         </div>
         {inDate ? (
-          <button
-            id="competition-top-button"
-            onClick={() => {
-              navigate(`/competition/applymethod/${id}`)
-            }}
-          >
-            대회 신청
-          </button>
+          competition.isPartnership === true ? (
+            <button
+              id="competition-top-button"
+              onClick={() => {
+                navigate(`/competition/applymethod/${competition.id}`)
+              }}>
+              대회 신청
+            </button>
+          ) : (
+            <button
+              id="competition-top-button"
+              onClick={() => {
+                window.location.href = competition.nonPartnershipPageLink
+              }}>
+              대회 신청
+            </button>
+          )
         ) : (
           ''
         )}
       </div>
       <div className="competition-bottom">
-        <ReactMarkdown
-          className="competition-bottom-markdown"
-          children={markdown}
-        />
+        <MarkdownEditor data={markdown} mode="view" />
       </div>
     </div>
   )

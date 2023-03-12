@@ -20,6 +20,8 @@ import placeholderSrc from '../src_assets/bgImg.jpeg'
 import { Cookies } from 'react-cookie'
 import axios from 'axios'
 
+import { getPartnershipCompetitionList } from '../apis/api/competition'
+
 function MainScroll() {
   const [ScrollActive, setScrollActive] = useState(false)
   const [ScrollY, setScrollY] = useState(0) // window 의 pageYOffset값을 저장
@@ -36,25 +38,8 @@ function MainScroll() {
 
   //대회 정보 가져오기
   async function getCompetitons() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/competitionsPartnershipTrue`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      .then(res => {
-        setCompetitions(res.data.result)
-        console.log(res.data.result)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        // console.log(err.response.status)
-        // console.log(err.response.data.message)
-      })
+    const res = await getPartnershipCompetitionList()
+    setCompetitions(res.data.result)
     return
   }
   //요일 값 구하기
@@ -245,7 +230,7 @@ function MainScroll() {
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            이번 달 주짓수 대회 한 눈에 보고싶은데..
+            이번 달 주짓수 대회 어디서 확인하지?
           </h2>
           <h2
             className={
@@ -255,27 +240,17 @@ function MainScroll() {
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            신청부터 결제까지 한 번에 할 수 없나..
+            신청부터 결제까지 한 번에 할 수 없나?
           </h2>
           <h2
             className={
               ScrollY > 2800
-                ? ScrollY > 3100
-                  ? 'MainScroll_fadeout'
-                  : 'MainScroll_fadein'
-                : 'MainScroll_none'
-            }>
-            (수근수근)
-          </h2>
-          <h2
-            className={
-              ScrollY > 3100
                 ? ScrollY > 3600
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            뭐? 나주하에서는 다 가능하다고?
+            나주하에서는 전부 가능합니다.
           </h2>
         </div>
         <div

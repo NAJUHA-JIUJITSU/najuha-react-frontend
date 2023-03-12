@@ -1,31 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Cookies } from 'react-cookie'
-import axios from 'axios'
+import { kakaoLogin } from '../apis/api/auth'
 import jwt_decode from 'jwt-decode'
 
 // import jwt from 'jsonwebtoken';
 const KakaoLogin = () => {
   const cookies = new Cookies()
-  const endPoint = process.env.REACT_APP_BACK_END_API + '/auth/kakao'
   let navigate = useNavigate()
-  // let userLevel = useSelector((user) => user);
-
-  async function LoginUser(url, dataTosubmit) {
-    try {
-      let ret = await axios.post(url, {
-        code: dataTosubmit.code,
-      })
-      cookies.set('x-access-token', ret.data.result.xAccessToken, {
-        path: '/',
-        overwrite: true,
-      })
-      console.log(ret)
-      return ret.data.result.xAccessToken
-    } catch (err) {
-      throw err
-    }
-  }
 
   useEffect(() => {
     let params = new URL(document.location.toString()).searchParams
@@ -36,7 +18,7 @@ const KakaoLogin = () => {
 
     async function TryLoginUser() {
       try {
-        let xAccessToken = await LoginUser(endPoint, body)
+        let xAccessToken = await kakaoLogin(body)
         const decodeToken = jwt_decode(xAccessToken)
 
         if (decodeToken.userLevel === 1) {

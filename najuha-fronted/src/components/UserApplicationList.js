@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import xIcon from '../src_assets/x.svg'
 import samplePoster from '../src_assets/samplePoster.png'
+import { deleteUserApplicationCompetition } from '../apis/api/user'
 
 function UserApplicationList(props) {
   const [clickedList, setclickedList] = useState('person')
@@ -16,26 +17,9 @@ function UserApplicationList(props) {
 
   // 신청 대회 지우기(결제 미완료)
   async function deleteCompetitionApplication(id) {
-    axios
-      .delete(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${id}`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        console.log('지울 대회 id: ' + id)
-        console.log(res.data.message)
-        alert('대회가 삭제되었습니다.')
-        props.getCompetitionApplication()
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.data.result)
-        alert(err.response.data.result)
-      })
+    await deleteUserApplicationCompetition(id)
+    alert('대회가 삭제되었습니다.')
+    props.getCompetitionApplication()
     return
   }
 
@@ -204,13 +188,15 @@ function UserApplicationList(props) {
                   }}
                   src={xIcon}
                   alt="삭제 아이콘"
-                  className={xButton}></img>
+                  className={xButton}
+                ></img>
                 <div className={xButtonDiv}></div>
                 <div className="UserApplicationList_boxRightTitle">
                   <h3
                     onClick={() => {
                       navigate(`/Profilepage/info/${curApplication.id}`)
-                    }}>
+                    }}
+                  >
                     {curApplication.title}
                   </h3>
                   <p>{curApplication.location}</p>
@@ -226,7 +212,8 @@ function UserApplicationList(props) {
                   className="UserApplicationList_costBtn"
                   onClick={() => {
                     navigate(`/Profilepage/info/${curApplication.id}`)
-                  }}>
+                  }}
+                >
                   {curApplication.isPayment}
                 </button>
               </div>
@@ -264,19 +251,22 @@ function UserApplicationList(props) {
             <li
               key="개인 신청"
               className={active[0]}
-              onClick={() => isClicked('person', 0)}>
+              onClick={() => isClicked('person', 0)}
+            >
               개인 신청
             </li>
             <li
               key="단체 신청"
               className={active[1]}
-              onClick={() => isClicked('group', 1)}>
+              onClick={() => isClicked('group', 1)}
+            >
               단체 신청
             </li>
             <li
               key="지난 신청"
               className={active[2]}
-              onClick={() => isClicked('last', 2)}>
+              onClick={() => isClicked('last', 2)}
+            >
               지난 대회
             </li>
           </ul>

@@ -135,9 +135,8 @@
 }
 
 .MainScroll_section1-1 {
-  height: 650vh;
+  height: 4700px;
   position: relative;
-
   background-color: white;
   z-index: 1;
 }
@@ -310,7 +309,7 @@
   position: relative;
   z-index: 888;
   background-color: white;
-  height: 90vh;
+  /* height: 90vh; */
   /* align-items: center; */
   text-align: center;
 }
@@ -353,12 +352,12 @@
   overflow: hidden;
   margin: auto;
   max-width: 580px;
-
-  box-shadow: 0 0 0 1px #dbdbdb inset;
+  border: 1px solid #dbdbdb;
+  /* box-shadow: 0 0 0 1px #dbdbdb inset; */
   cursor: pointer;
 }
 .MainScroll_card:hover {
-  box-shadow: 0 0 0 1px #131313 inset;
+  border: 1px solid #131313;
 }
 
 .MainScroll_cardInfo {
@@ -421,6 +420,7 @@
 .MainScroll_card img {
   width: 40%;
   height: 296px;
+  min-width: 230px;
 }
 
 .arrow {
@@ -431,11 +431,11 @@
 /* 모든 대회 보러가기 버튼 */
 
 .MainScroll_listBtn {
-  margin-top: 80px;
+  margin-top: 60px;
 
   display: inline-block;
   font-size: 18px;
-  color: #b2b2b2;
+  color: #767676;
   letter-spacing: -0.04em;
   text-decoration: underline;
   cursor: pointer;
@@ -461,27 +461,28 @@
 
   .MainScroll_message span {
     font-size: 8.8rem;
-    line-height: 11rem;
+    line-height: 10rem;
   }
 
   .MainScroll_message h1 {
     font-size: 4rem;
-    line-height: 11rem;
+    line-height: 10rem;
   }
 
   .MainScroll_message2 {
-    max-width: 260px;
+    max-width: 280px;
+    margin-top: -20px;
   }
 
   .MainScroll_message2 h2 {
-    font-size: 3rem;
-    line-height: 3.6rem;
+    font-size: 3.4rem;
+    line-height: 4rem;
     margin-bottom: 40px;
   }
 
   /* 섹션 1-1 */
   .MainScroll_section1-1 {
-    height: 4500px;
+    height: 4600px;
   }
   /* 섹션 2 (모니터 사진)*/
 
@@ -576,6 +577,7 @@
   .MainScroll_card img {
     width: 40%;
     height: 230px;
+    min-width: 180px;
   }
 
   .MainScroll_cardInfo {
@@ -595,15 +597,16 @@
   }
 
   .MainScroll_listBtn {
-    margin-top: 100px;
+    font-size: 16px;
   }
 }
 
-@media (max-width: 470px) {
+@media (max-width: 480px) {
   /* section 4 - 카드 슬라이드 */
   .MainScroll_card img {
     width: 40%;
     height: 180px;
+    min-width: 120px;
   }
 
   .MainScroll_section4 {
