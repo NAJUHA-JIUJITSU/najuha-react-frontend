@@ -314,7 +314,12 @@ function Competitionlist() {
             )}
           </div>
           <div className="each-competition-body" id={cardGray}>
-            <div className="each-competition-body-poster">
+            <div
+              className="each-competition-body-poster"
+              onClick={() => {
+                window.scrollTo(0, 0)
+                navigate(`/competition/${curcompetition.id}`)
+              }}>
               {' '}
               {/* 카드왼쪽 포스터공간  */}
               <img src={curcompetition.posterImage} alt="대회 포스터"></img>
@@ -330,6 +335,7 @@ function Competitionlist() {
               <div
                 className="each-competition-body-desc-top"
                 onClick={() => {
+                  window.scrollTo(0, 0)
                   navigate(`/competition/${curcompetition.id}`)
                 }}>
                 <p>{curcompetition.title}</p>
@@ -342,6 +348,7 @@ function Competitionlist() {
                   <button
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
+                      window.scrollTo(0, 0)
                       navigate(`/competition/applymethod/${curcompetition.id}`)
                     }}>
                     신청

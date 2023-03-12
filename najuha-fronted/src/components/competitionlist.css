@@ -275,6 +275,8 @@
 .each-competition-body-poster {
   min-width: 108px;
   position: relative;
+
+  cursor: pointer;
 }
 
 .each-competition-body-poster img {
@@ -342,13 +344,6 @@
   bottom: 8px;
   cursor: pointer;
   font-weight: 500;
-}
-
-.each-competition-body-desc-bottom button:hover {
-  background-color: #4e82e5;
-  border: 1px solid #4e82e5;
-  color: white;
-  /* font-weight: 600; */
 }
 
 @media (max-width: 1049px) {

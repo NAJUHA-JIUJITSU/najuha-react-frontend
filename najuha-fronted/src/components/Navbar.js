@@ -9,6 +9,7 @@ import { useCookies } from 'react-cookie'
 function Navbar() {
   let [isHamburgerActive, setIsHamburgerActive] = useState(false)
   let [isnavmenuActive, setIsNavmenuActive] = useState(false)
+  let [location, setLocation] = useState('')
   const [dropdownVisibility, setDropdownVisibility] = useState(false)
   const restApiKey = process.env.REACT_APP_REST_API_KEY
   const redirectUri = process.env.REACT_APP_REDIRECT_URI
@@ -16,8 +17,15 @@ function Navbar() {
   const [cookies, setCookie, removeCookie] = useCookies(['x-access-token'])
 
   const beltDropdownRef = useRef(null)
-
   let navigate = useNavigate()
+
+  useEffect(() => {
+    let location = window.location.href.slice(-11)
+    console.log(location)
+    if (location === 'competition') {
+      setLocation('competition')
+    }
+  })
 
   function hamburgerClick() {
     isHamburgerActive = !isHamburgerActive
@@ -92,7 +100,10 @@ function Navbar() {
                   onClick={() => {
                     window.scrollTo(0, 0)
                     navigate('/competition')
-                  }}>
+                  }}
+                  style={
+                    location === 'competition' ? { fontWeight: '500' } : {}
+                  }>
                   대회일정
                 </li>
                 <li
@@ -119,7 +130,8 @@ function Navbar() {
               onClick={() => {
                 window.scrollTo(0, 0)
                 navigate('/competition')
-              }}>
+              }}
+              style={location === 'competition' ? { fontWeight: '500' } : {}}>
               대회일정
             </li>
             <li

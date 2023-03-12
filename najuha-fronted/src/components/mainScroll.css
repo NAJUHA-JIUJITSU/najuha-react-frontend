@@ -309,7 +309,7 @@
   position: relative;
   z-index: 888;
   background-color: white;
-  height: 90vh;
+  /* height: 90vh; */
   /* align-items: center; */
   text-align: center;
 }
@@ -420,6 +420,7 @@
 .MainScroll_card img {
   width: 40%;
   height: 296px;
+  min-width: 230px;
 }
 
 .arrow {
@@ -430,11 +431,11 @@
 /* 모든 대회 보러가기 버튼 */
 
 .MainScroll_listBtn {
-  margin-top: 80px;
+  margin-top: 60px;
 
   display: inline-block;
   font-size: 18px;
-  color: #b2b2b2;
+  color: #767676;
   letter-spacing: -0.04em;
   text-decoration: underline;
   cursor: pointer;
@@ -576,6 +577,7 @@
   .MainScroll_card img {
     width: 40%;
     height: 230px;
+    min-width: 180px;
   }
 
   .MainScroll_cardInfo {
@@ -595,15 +597,16 @@
   }
 
   .MainScroll_listBtn {
-    margin-top: 100px;
+    font-size: 16px;
   }
 }
 
-@media (max-width: 470px) {
+@media (max-width: 480px) {
   /* section 4 - 카드 슬라이드 */
   .MainScroll_card img {
     width: 40%;
     height: 180px;
+    min-width: 120px;
   }
 
   .MainScroll_section4 {
