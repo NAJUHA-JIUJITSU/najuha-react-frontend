@@ -59,3 +59,32 @@ export const getAdminCompetitionApplicationList = async competitionId => {
     console.log(e)
   }
 }
+
+// 6.5 대회 포스터 이미지 업로드, 수정
+export const postAdminCompetitionPoster = async (id, data) => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competitions/${id}/posters`,
+      'post',
+      data
+    )
+    alert('대회포스터가 등록되었습니다.')
+    return res
+  } catch (e) {
+    console.log(e)
+    alert('대회포스터 등록이 실패하였습니다.')
+  }
+}
+
+// 6.6 대회 신청 목록 csv 형식 반환
+export const getAdminCompetitionApplicationListCsv = async competitionId => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competitions/${competitionId}/competitionApplications/csv`,
+      'get'
+    )
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
