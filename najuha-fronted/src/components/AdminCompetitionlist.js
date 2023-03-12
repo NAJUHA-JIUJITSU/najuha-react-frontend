@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import './admincompetitionlist.css'
 
 import dayjs from 'dayjs'
-import { getAdminCompetitionList } from '../apis/api/admin'
+import {
+  getAdminCompetitionList,
+  patchAdminCompetitionStatus,
+} from '../apis/api/admin'
 
 import { Cookies } from 'react-cookie'
 
@@ -83,42 +86,6 @@ function AdminCompetitionlist() {
     let newCompetitions = res.data.result
     setCompetitions(preCompetitions => [...preCompetitions, ...newCompetitions])
     return
-  }
-
-  async function ActivePatch(id) {
-    await axios({
-      method: 'patch',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}/status/ACTIVE`,
-    })
-      .then(res => {
-        console.log(res)
-        alert(`id:${id} 대회가 활성화 되었습니다`)
-      })
-      .catch(err => {
-        console.log(err)
-        alert(`id:${id} 대회 활성화에 실패하였습니다.`)
-      })
-  }
-
-  async function InActivePatch(id) {
-    await axios({
-      method: 'patch',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}/status/INACTIVE`,
-    })
-      .then(res => {
-        console.log(res)
-        alert(`id:${id} 대회가 비활성화 되었습니다`)
-      })
-      .catch(err => {
-        console.log(err)
-        alert(`id:${id} 대회 비활성화에 실패하였습니다.`)
-      })
   }
 
   useEffect(() => {
@@ -369,7 +336,10 @@ function AdminCompetitionlist() {
                 <button
                   style={{ background: 'gray', color: 'black' }}
                   onClick={async () => {
-                    InActivePatch(curcompetition.id)
+                    await patchAdminCompetitionStatus(
+                      curcompetition.id,
+                      'INACTIVE'
+                    )
                   }}
                 >
                   비활성화하기
@@ -377,8 +347,11 @@ function AdminCompetitionlist() {
               ) : (
                 <button
                   style={{ background: 'red', color: 'black' }}
-                  onClick={() => {
-                    ActivePatch(curcompetition.id)
+                  onClick={async () => {
+                    await patchAdminCompetitionStatus(
+                      curcompetition.id,
+                      'ACTIVE'
+                    )
                   }}
                 >
                   활성화하기

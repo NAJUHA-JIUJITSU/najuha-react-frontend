@@ -98,3 +98,17 @@ export const getAdminCompetition = async id => {
     console.log(e)
   }
 }
+
+// 6.9 대회상태변경
+export const patchAdminCompetitionStatus = async (id, data) => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competitions/${id}/status/${data}`,
+      'patch'
+    )
+    alert(`id :${id}대회가 ${data} 되었습니다.`)
+    return res
+  } catch (e) {
+    alert(`id :${id}대회가 ${data} 되었습니다.`)
+  }
+}
