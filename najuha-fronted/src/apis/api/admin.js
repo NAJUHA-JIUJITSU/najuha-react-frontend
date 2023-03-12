@@ -1,23 +1,5 @@
 import { axiosApiWithToken } from '../utils/axios'
 
-//6.7 대회리스트 조회
-export const getAdminCompetitionList = async (
-  startDate,
-  offset,
-  title,
-  location
-) => {
-  try {
-    const res = await axiosApiWithToken(
-      `/admin/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`,
-      'get'
-    )
-    return res
-  } catch (e) {
-    console.log(e)
-  }
-}
-
 // 6.2 대회등록
 export const postAdminCompetition = async (data, option) => {
   try {
@@ -83,6 +65,34 @@ export const getAdminCompetitionApplicationListCsv = async competitionId => {
       `/admin/competitions/${competitionId}/competitionApplications/csv`,
       'get'
     )
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+//6.7 대회리스트 조회
+export const getAdminCompetitionList = async (
+  startDate,
+  offset,
+  title,
+  location
+) => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`,
+      'get'
+    )
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+// 6.8 대회상세 조회
+export const getAdminCompetition = async id => {
+  try {
+    const res = await axiosApiWithToken(`/admin/competitions/${id}`, 'get')
     return res
   } catch (e) {
     console.log(e)
