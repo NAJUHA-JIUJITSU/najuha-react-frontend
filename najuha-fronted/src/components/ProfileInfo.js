@@ -235,8 +235,7 @@ function ProfileInfo() {
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}
-            >
+              style={cursorStyle}>
               결제완료
             </button>
           </div>
@@ -249,14 +248,12 @@ function ProfileInfo() {
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              onClick={() => alert('고객센터(1234-1234)로 문의바랍니다.')}
-            >
+              onClick={() => alert('고객센터(1234-1234)로 문의바랍니다.')}>
               환불하기
             </button>
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}
-            >
+              style={cursorStyle}>
               결제완료
             </button>
           </div>
@@ -269,8 +266,7 @@ function ProfileInfo() {
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}
-            >
+              style={cursorStyle}>
               환불완료
             </button>
           </div>
@@ -287,8 +283,7 @@ function ProfileInfo() {
             id="CompetitionApplyTeamForm-bottom-table-buttons-save"
             onClick={() => {
               onRemove(application.id)
-            }}
-          >
+            }}>
             삭제하기
           </button>
         </div>
@@ -302,16 +297,14 @@ function ProfileInfo() {
           id="CompetitionApplyTeamForm-bottom-table-buttons-save"
           onClick={() => {
             patchClick()
-          }}
-        >
+          }}>
           수정하기
         </button>
         <button
           id="CompetitionApplyTeamForm-bottom-table-buttons-register"
           onClick={() => {
             setPaymentmodal(pre => !pre)
-          }}
-        >
+          }}>
           결제하기
         </button>
       </div>
@@ -359,8 +352,7 @@ function ProfileInfo() {
         <a
           onClick={() => {
             navigate(`/Profilepage`, { state: 'UserApplicationList' })
-          }}
-        >
+          }}>
           <img src={arrowLeftIcon} alt="이전으로 돌아가기"></img>
         </a>
         <h2>{competitionApplicationInfo.title}</h2>
@@ -373,9 +365,8 @@ function ProfileInfo() {
               navigate(
                 `/competition/${competitionApplicationInfo.competitionId}`
               )
-            }}
-          >
-            대회상세보기 {'>'}
+            }}>
+            대회상세보기
           </h2>
         </div>
         <div className="ProfileInfo_competition_Right">
@@ -394,10 +385,6 @@ function ProfileInfo() {
           <div className="ProfileInfo_competition_date">
             <h3>참가신청 마감</h3>
             <p>{competitionApplicationInfo.registrationDeadline}</p>
-          </div>
-          <div className="ProfileInfo_competition_date">
-            <h3>신청자 명단</h3>
-            <p>{competitionApplicationInfo.applicantTableOpenDate}</p>
           </div>
           <div className="ProfileInfo_competition_date">
             <h3>대진표 공개</h3>
@@ -425,8 +412,7 @@ function ProfileInfo() {
           {/* 오칸 코드 가져온 부분 - 신청명단 테이블*/}
           <div
             className="CompetitionApplyTeamForm-bottom-table"
-            id="ProfileInfo-bottom"
-          >
+            id="ProfileInfo-bottom">
             <ul className="CompetitionApplyTeamForm-bottom-table-column">
               <li>No.</li>
               <li>이름</li>

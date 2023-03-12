@@ -7,8 +7,6 @@
 
 #competition-top-button {
   font-weight: 400;
-  font-size: 22px;
-  letter-spacing: -0.1em;
   color: #4e82e6;
   cursor: pointer;
 }
@@ -34,6 +32,7 @@
   margin: 0 auto;
   box-sizing: border-box;
   padding-top: 3vh;
+  overflow: hidden;
 }
 
 .competition-top-title {
@@ -57,11 +56,13 @@
   border: 1px solid #f1f1f1;
   box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
-  width: 136px;
-  height: 50px;
+  width: 110px;
+  height: 46px;
+  font-size: 18px;
   background: #ffffff;
   margin-left: 100%;
   transform: translate(-100%, 0);
+  letter-spacing: 0;
 }
 
 /* .competition-top-title button::before{
@@ -217,9 +218,7 @@
   }
 
   #competition-top-button {
-    font-weight: 400;
-    font-size: 1.8rem;
-    color: #4e82e6;
+    font-size: 1.6rem;
   }
 
   .competition-top-content-info-each h3 {
@@ -263,8 +262,10 @@
   }
 
   #competition-top-button {
-    width: 100px;
+    width: 96px;
     height: 40px;
+    min-width: 96px;
+    min-height: 40px;
   }
 
   .competition-top-content-info-each h3 {

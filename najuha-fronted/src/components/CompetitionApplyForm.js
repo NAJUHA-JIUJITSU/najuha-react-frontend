@@ -456,7 +456,9 @@ function CompetitionApplyForm() {
             ) : (
               <img
                 src={reseticon}
-                style={{ cursor: 'pointer' }}
+                style={{
+                  cursor: 'pointer',
+                }}
                 onClick={() =>
                   curApplicationReset(viewcompetitionApplicationList.length - 1)
                 }
@@ -484,7 +486,11 @@ function CompetitionApplyForm() {
               <>
                 <img
                   src={notcomplete}
-                  style={{ cursor: 'pointer' }}
+                  style={{
+                    cursor: 'pointer',
+                    filter:
+                      'invert(43%) sepia(96%) saturate(463%) hue-rotate(183deg) brightness(96%) contrast(87%)',
+                  }}
                   onClick={() =>
                     curApplicationcomplete(
                       viewcompetitionApplicationList.length - 1
@@ -520,7 +526,7 @@ function CompetitionApplyForm() {
         ].price ? (
           <h2 className="CompetitionApplyForm-middle-info-checkmessage">
             대회를 더 신청하고자 한다면
-            <br /> + 버튼을 클릭해주세요
+            <br /> <span>+ 버튼</span>을 클릭해주세요
           </h2>
         ) : viewcompetitionApplicationList[
             viewcompetitionApplicationList.length - 1
@@ -530,7 +536,8 @@ function CompetitionApplyForm() {
           </h2>
         ) : (
           <h2 className="CompetitionApplyForm-middle-info-checkmessage">
-            해당 대회를 신청하고자 한다면 <br /> 선택완료를 클릭해주세요
+            해당 대회를 신청하고자 한다면 <br /> <span>선택완료</span>를
+            클릭해주세요
           </h2>
         )}
       </>

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
-import { textAlign } from '@mui/system'
+import { postAdminCompetitionPoster } from '../apis/api/admin'
 
 function AdminCompetitionImagePage() {
   const cookies = new Cookies()
@@ -17,26 +17,10 @@ function AdminCompetitionImagePage() {
   }
 
   const handleUpload = async () => {
-    try {
-      const formData = new FormData()
-      formData.append('competition-poster', file)
+    const formData = new FormData()
+    formData.append('competition-poster', file)
 
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}/posters`,
-        formData,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      )
-      console.log(response)
-      // handle the response here, for example displaying a success message or updating the state
-    } catch (error) {
-      console.log(error)
-      // handle the error here, for example displaying an error message
-    }
+    const response = await postAdminCompetitionPoster(id, formData)
   }
 
   return (
@@ -53,7 +37,8 @@ function AdminCompetitionImagePage() {
         <input type="file" onChange={handleFileChange} />
         <button
           style={{ width: '100px', height: '80px' }}
-          onClick={handleUpload}>
+          onClick={handleUpload}
+        >
           Upload
         </button>
       </div>

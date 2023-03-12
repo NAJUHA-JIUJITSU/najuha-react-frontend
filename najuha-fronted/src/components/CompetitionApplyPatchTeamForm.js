@@ -524,7 +524,7 @@ function CompetitionApplyPatchTeamForm() {
               {competitionApplication.playerName != '' ? (
                 <li>
                   <input
-                    placeholder="ex) 900404"
+                    placeholder="예) 980404"
                     value={competitionApplication.playerBirth}
                     onChange={e => {
                       changeCompetitionApplication(

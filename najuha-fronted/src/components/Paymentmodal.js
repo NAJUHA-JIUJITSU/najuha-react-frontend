@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './Paymentmodal.css'
 import { useNavigate } from 'react-router-dom'
 import { tossPay } from '../apis/utils/toss'
+import blackX from '../src_assets/blackX.svg'
 
 function Paymentmodal(props) {
   const [paymentmethod, setPaymentmethod] = useState(null)
@@ -42,8 +43,7 @@ function Paymentmodal(props) {
         {easyPayMethods.map(method => (
           <div
             className="Paymentmodal_secondsection_esaypaymethod"
-            key={method.value}
-          >
+            key={method.value}>
             <input
               type="radio"
               value={method.value}
@@ -61,33 +61,41 @@ function Paymentmodal(props) {
     <div className="Paymentmodal_Modal">
       <div
         className="Paymentmodal_modalBody"
-        onClick={e => e.stopPropagation()}
-      >
-        <h2 id="Paymentmodal_modaltitle">결제방식 선택 </h2>
-        <button
-          id="Paymentmodal_modalCloseBtn"
-          onClick={() => {
-            navigate('/Profilepage', { state: 'UserApplicationList' })
-          }}
-        >
-          ✖
-        </button>
+        onClick={e => e.stopPropagation()}>
+        <div className="Paymentmodal_modaltitle">
+          <h2 id="Paymentmodal_modaltitle">결제방식 선택 </h2>
+          <button
+            id="Paymentmodal_modalCloseBtn"
+            onClick={() => {
+              navigate('/Profilepage', { state: 'UserApplicationList' })
+            }}>
+            <img
+              src={blackX}
+              alt="삭제 아이콘"
+              style={{
+                width: '24px',
+                marginRight: '-10px',
+                marginTop: '-30px',
+              }}></img>
+          </button>
+        </div>
+
         <div className="Paymentmodal_firstsection">
           <h3 className="Paymentmodal_firstsection_title">결제 금액</h3>
           <div className="Paymentmodal_firstsection_infos">
             <div className="Paymentmodal_firstsection_info">
               <h4>총 대회금액</h4>
-              <p>{props.normalprice}</p>
+              <p>{props.normalprice}원</p>
             </div>
 
             <div className="Paymentmodal_firstsection_info">
               <h4>할인금액</h4>
-              <p>(-){props.normalprice - props.discountedprice}</p>
+              <p>(-){props.normalprice - props.discountedprice}원</p>
             </div>
           </div>
           <div className="Paymentmodal_firstsection_totalprice">
             <p>총 결제금액</p>
-            <p>{props.discountedprice}</p>
+            <p style={{ color: '#4e82e5' }}>{props.discountedprice}원</p>
           </div>
         </div>
         <div className="Paymentmodal_secondsection">
@@ -98,8 +106,7 @@ function Paymentmodal(props) {
                 type="radio"
                 value="간편결제"
                 checked={paymentmethod == '간편결제'}
-                onChange={e => setPaymentmethod(e.target.value)}
-              ></input>
+                onChange={e => setPaymentmethod(e.target.value)}></input>
               <p>간편결제</p>
             </div>
             {paymentmethod == '간편결제' ? easypaymentUI() : ''}
@@ -108,8 +115,7 @@ function Paymentmodal(props) {
                 type="radio"
                 value="카드"
                 checked={paymentmethod == '카드'}
-                onChange={e => setPaymentmethod(e.target.value)}
-              ></input>
+                onChange={e => setPaymentmethod(e.target.value)}></input>
               <p>카드결제</p>
             </div>
             <div className="Paymentmodal_secondsection_method">
@@ -117,8 +123,7 @@ function Paymentmodal(props) {
                 type="radio"
                 value="계좌이체"
                 checked={paymentmethod == '계좌이체'}
-                onChange={e => setPaymentmethod(e.target.value)}
-              ></input>
+                onChange={e => setPaymentmethod(e.target.value)}></input>
               <p>계좌이체</p>
             </div>
           </div>
@@ -128,9 +133,10 @@ function Paymentmodal(props) {
             <input
               type="radio"
               checked={lastCheck === true}
-              onChange={() => setLastCheck(pre => !pre)}
-            ></input>
-            <p>주문내용 확인 및 결제 동의</p>
+              onChange={() => setLastCheck(pre => !pre)}></input>
+            <p>
+              주문내용 확인 및 결제 동의<span> (필수)</span>
+            </p>
           </div>
           <p className="Paymentmodal_thirdsection_lastinfo">
             나주하는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br />{' '}
@@ -146,8 +152,7 @@ function Paymentmodal(props) {
                   easypaymethod
                 )
               else alert('옵션을 선택해주세요')
-            }}
-          >
+            }}>
             결제하기
           </button>
         </div>

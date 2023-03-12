@@ -1,5 +1,6 @@
 import React from 'react'
 import './applymodal.css'
+import blackX from '../src_assets/blackX.svg'
 
 function ApplyModal(props) {
   function closeModal() {
@@ -14,10 +15,20 @@ function ApplyModal(props) {
   return (
     <div className="ApplyModal_Modal">
       <div className="ApplyModal_modalBody" onClick={e => e.stopPropagation()}>
-        <h2 id="ApplyModal_modaltitle">선수정보입력</h2>
-        <button id="ApplyModal_modalCloseBtn" onClick={closeModal}>
-          ✖
-        </button>
+        <div className="ApplyModal_title">
+          <h2 id="ApplyModal_modaltitle">선수정보입력</h2>
+          <button id="ApplyModal_modalCloseBtn" onClick={closeModal}>
+            <img
+              src={blackX}
+              alt="삭제 아이콘"
+              style={{
+                width: '24px',
+                marginRight: '-10px',
+                marginTop: '-30px',
+              }}></img>
+          </button>
+        </div>
+
         <form className="ApplyModal_modalform" onSubmit={register}>
           <div className="ApplyModal_modalinputdiv" require>
             <label>성명</label>
@@ -32,8 +43,7 @@ function ApplyModal(props) {
               }}
               pattern="[가-힣]{1,10}"
               title="한글 10자 이하만 가능합니다."
-              required
-            ></input>
+              required></input>
           </div>
           <div className="ApplyModal_modalinputdiv">
             <label>번호</label>
@@ -47,13 +57,11 @@ function ApplyModal(props) {
               }}
               pattern="[0-9]{11}"
               required
-              title="숫자 11자를 입력해주세요"
-            ></input>
+              title="숫자 11자를 입력해주세요"></input>
           </div>
           <div
             id="ApplyModal_modalinputdiv_birth"
-            className="ApplyModal_modalinputdiv"
-          >
+            className="ApplyModal_modalinputdiv">
             <label>생년월일</label>
             <input
               placeholder="주민번호 앞6자리"
@@ -65,8 +73,7 @@ function ApplyModal(props) {
               }}
               pattern="[0-9]{6}"
               title="숫자 6자를 입력해주세요"
-              required
-            ></input>
+              required></input>
           </div>
           <div className="ApplyModal_modalinputdiv">
             <label>소속</label>
@@ -81,8 +88,7 @@ function ApplyModal(props) {
               }}
               pattern="[가-힣]{1,50}"
               title="한글 50자 이하만 가능합니다."
-              required
-            ></input>
+              required></input>
           </div>
           <button className="ApplyModal_modalregisterbutton" type="submit">
             신청하기
