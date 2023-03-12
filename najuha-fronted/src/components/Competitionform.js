@@ -6,7 +6,7 @@ import './competitionform.css'
 import { Cookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 
-import { postCompetition, patchCompetition } from '../apis/api/admin'
+import { postAdminCompetition, patchAdminCompetition } from '../apis/api/admin'
 
 function Competition_form() {
   const { id } = useParams()
@@ -163,7 +163,7 @@ function Competition_form() {
   }
 
   async function postToDB() {
-    const res = await postCompetition(
+    const res = await postAdminCompetition(
       {
         title: title,
         host: host,
@@ -221,7 +221,7 @@ function Competition_form() {
   }
 
   async function copyToDB() {
-    const res = await postCompetition(
+    const res = await postAdminCompetition(
       {
         title: `copied ${title}`,
         host: host,
@@ -243,7 +243,7 @@ function Competition_form() {
   }
 
   async function patchToDB() {
-    const res = await patchCompetition(id, {
+    const res = await patchAdminCompetition(id, {
       title: title,
       host: host,
       doreOpen: doreOpen,

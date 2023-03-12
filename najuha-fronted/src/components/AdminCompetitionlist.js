@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import './admincompetitionlist.css'
 
 import dayjs from 'dayjs'
-import { getCompetitionList } from '../apis/api/admin'
+import { getAdminCompetitionList } from '../apis/api/admin'
 
 import { Cookies } from 'react-cookie'
 
@@ -78,7 +78,7 @@ function AdminCompetitionlist() {
   )
 
   async function viewGetCompetitionList(startDate, offset, title, location) {
-    let res = await getCompetitionList(startDate, offset, title, location)
+    let res = await getAdminCompetitionList(startDate, offset, title, location)
     console.log(res)
     let newCompetitions = res.data.result
     setCompetitions(preCompetitions => [...preCompetitions, ...newCompetitions])
