@@ -47,4 +47,15 @@ export const patchAdminCompetition = async (id, data) => {
   }
 }
 
-// export const getCompetitionA
+// 6.4 대회신청전체목록 조회
+export const getAdminCompetitionApplicationList = async competitionId => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competitions/${competitionId}/competitionApplications`,
+      'get'
+    )
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}

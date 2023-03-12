@@ -6,6 +6,7 @@ import { Cookies } from 'react-cookie'
 import { useJwt } from 'react-jwt'
 import { useNavigate, useParams } from 'react-router-dom'
 import samplePoster from '../src_assets/samplePoster.png'
+import { getAdminCompetitionApplicationList } from '../apis/api/admin'
 
 function PaymentInfo() {
   const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState(
@@ -27,29 +28,13 @@ function PaymentInfo() {
   let userPayAmount //유저별 결제 금액 합계
   let userRealPayAmount //유저별 진짜 총 결제 금액 (할인적용)
 
-  //서버에서 대회상세정보 가져오기
+  //서버에서 대회신청 상세정보 가져오기
   async function getCompetitionApplicationInfo() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${params.id}/competitionApplications`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        console.log(res.data.result)
-        setcompetitionApplicationInfo(applicationParsing(res.data.result))
-        setCompetitionApplicationList(res.data.result.competitionApplications)
-        console.log('데이터: ' + res.data.result)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        alert(`${err.message}\n Message:${err.response.data.result} `)
-      })
-    return
+    const res = await getAdminCompetitionApplicationList(params.id)
+    if (res) {
+      setcompetitionApplicationInfo(applicationParsing(res.data.result))
+      setCompetitionApplicationList(res.data.result.competitionApplications)
+    }
   }
 
   //요일 값 구하기
