@@ -5,6 +5,7 @@ import axios from 'axios'
 import './competitionform.css'
 import { Cookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
+import MarkdownEditor from './MarkdownEditor'
 
 import {
   postAdminCompetition,
@@ -515,196 +516,187 @@ function Competition_form() {
   }, [isPartnership])
 
   return (
-    <div className="competition_register_form">
-      <div className="section">
-        <div className="competition_register_top">
-          <div className="competition_register_top_each">
-            <h1>대회이름:</h1>
-            <input
-              type="text"
-              className="competition_register_top_title"
-              placeholder="대회이름"
-              value={title}
-              onChange={e => {
-                setTitle(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>대회사:</h1>
-            <input
-              type="text"
-              className="competition_register_top_host"
-              placeholder="대회사"
-              value={host}
-              onChange={e => {
-                setHost(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>대회날짜:</h1>
-            <input
-              type="text"
-              className="competition_register_top_doreOpen"
-              placeholder="대회날짜 ex)0000-00-00 00:00:00"
-              value={doreOpen}
-              onChange={e => {
-                setDoreOpen(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>신청오픈날짜:</h1>
-            <input
-              type="text"
-              className="competition_register_top_registrationDate"
-              placeholder="신청시작 ex)0000-00-00 00:00:00"
-              value={registrationDate}
-              onChange={e => {
-                setRegistrationDate(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>신청마감날짜:</h1>
-            <input
-              type="text"
-              className="competition_register_top_registrationDeadLine"
-              placeholder="신청마감 ex)0000-00-00 00:00:00"
-              value={registrationDeadLine}
-              onChange={e => {
-                setRegistrationDeadLine(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>대회장소:</h1>
-            <input
-              type="text"
-              className="competition_register_top_location"
-              placeholder="장소"
-              value={location}
-              onChange={e => {
-                setLocation(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>계좌번호:</h1>
-            <input
-              type="text"
-              className="competition_register_top_bankAccount"
-              placeholder="계좌번호"
-              value={bankAccount}
-              onChange={e => {
-                setBankAccount(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>얼리버드기한날짜:</h1>
-            <input
-              type="text"
-              className="competition_register_top_earlyBirdDeadline"
-              placeholder="얼리버드기한 ex)2022-08-27 00:00:00"
-              value={earlybirdDeadline}
-              onChange={e => {
-                setEarlybirdDeadline(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>대회정보(마크업템플릿맞춰서):</h1>
-            <textarea
-              type="text"
-              className="competition_register_top_information"
-              placeholder="대회정보"
-              value={infomation}
-              onChange={e => {
-                setInfomation(e.target.value)
-              }}
-            ></textarea>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>선수명단오픈날짜:</h1>
-            <input
-              type="text"
-              className="competition_register_top_applicantTableOpenDate"
-              placeholder="선수명단오픈 ex)2022-08-27 00:00:00"
-              value={applicantTableOpenDate}
-              onChange={e => {
-                setApplicantTableOpenDate(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>대진표오픈날짜:</h1>
-            <input
-              type="text"
-              className="competition_register_top_tournamentTableLink"
-              placeholder="대진표오픈 ex)2022-08-27 00:00:00"
-              value={tournamentTableOpenDate}
-              onChange={e => {
-                setTournamentTableOpenDate(e.target.value)
-              }}
-            ></input>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>파트너쉽 유무</h1>
-            <h4 id="competition_register_top_isPartnership-true">true</h4>
-            <input
-              id="competition_register_top_isPartnership"
-              type="radio"
-              value={'true'}
-              checked={isPartnership === 'true'}
-              onChange={e => {
-                // console.log(e.target.value)
-                setIsPartnership(e.target.value)
-              }}
-            />
-            <input
-              id="competition_register_top_isPartnership"
-              type="radio"
-              value={'false'}
-              checked={isPartnership === 'false'}
-              onChange={e => {
-                // console.log(e.target.value)
-                setIsPartnership(e.target.value)
-              }}
-            />
-            <h4 id="competition_register_top_isPartnership-false">false</h4>
-          </div>
-          <div className="competition_register_top_each">
-            <h1>대회사링크(파트너X)</h1>
-            <input
-              type="text"
-              className="competition_register_top_nonPartnershipPageLink"
-              placeholder="대회사 홈페이지 링크 ex)https://www.najuha.com"
-              value={nonPartnershipPageLink}
-              onChange={e => {
-                setNonPartnershipPageLink(e.target.value)
-              }}
-            ></input>
+    <div>
+      <MarkdownEditor data={infomation} mode="edit" onChange={setInfomation} />
+      <div className="competition_register_form">
+        <div className="section">
+          <div className="competition_register_top">
+            <div className="competition_register_top_each">
+              <h1>대회이름:</h1>
+              <input
+                type="text"
+                className="competition_register_top_title"
+                placeholder="대회이름"
+                value={title}
+                onChange={e => {
+                  setTitle(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>대회사:</h1>
+              <input
+                type="text"
+                className="competition_register_top_host"
+                placeholder="대회사"
+                value={host}
+                onChange={e => {
+                  setHost(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>대회날짜:</h1>
+              <input
+                type="text"
+                className="competition_register_top_doreOpen"
+                placeholder="대회날짜 ex)0000-00-00 00:00:00"
+                value={doreOpen}
+                onChange={e => {
+                  setDoreOpen(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>신청오픈날짜:</h1>
+              <input
+                type="text"
+                className="competition_register_top_registrationDate"
+                placeholder="신청시작 ex)0000-00-00 00:00:00"
+                value={registrationDate}
+                onChange={e => {
+                  setRegistrationDate(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>신청마감날짜:</h1>
+              <input
+                type="text"
+                className="competition_register_top_registrationDeadLine"
+                placeholder="신청마감 ex)0000-00-00 00:00:00"
+                value={registrationDeadLine}
+                onChange={e => {
+                  setRegistrationDeadLine(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>대회장소:</h1>
+              <input
+                type="text"
+                className="competition_register_top_location"
+                placeholder="장소"
+                value={location}
+                onChange={e => {
+                  setLocation(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>계좌번호:</h1>
+              <input
+                type="text"
+                className="competition_register_top_bankAccount"
+                placeholder="계좌번호"
+                value={bankAccount}
+                onChange={e => {
+                  setBankAccount(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>얼리버드기한날짜:</h1>
+              <input
+                type="text"
+                className="competition_register_top_earlyBirdDeadline"
+                placeholder="얼리버드기한 ex)2022-08-27 00:00:00"
+                value={earlybirdDeadline}
+                onChange={e => {
+                  setEarlybirdDeadline(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>선수명단오픈날짜:</h1>
+              <input
+                type="text"
+                className="competition_register_top_applicantTableOpenDate"
+                placeholder="선수명단오픈 ex)2022-08-27 00:00:00"
+                value={applicantTableOpenDate}
+                onChange={e => {
+                  setApplicantTableOpenDate(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>대진표오픈날짜:</h1>
+              <input
+                type="text"
+                className="competition_register_top_tournamentTableLink"
+                placeholder="대진표오픈 ex)2022-08-27 00:00:00"
+                value={tournamentTableOpenDate}
+                onChange={e => {
+                  setTournamentTableOpenDate(e.target.value)
+                }}
+              ></input>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>파트너쉽 유무</h1>
+              <h4 id="competition_register_top_isPartnership-true">true</h4>
+              <input
+                id="competition_register_top_isPartnership"
+                type="radio"
+                value={'true'}
+                checked={isPartnership === 'true'}
+                onChange={e => {
+                  // console.log(e.target.value)
+                  setIsPartnership(e.target.value)
+                }}
+              />
+              <input
+                id="competition_register_top_isPartnership"
+                type="radio"
+                value={'false'}
+                checked={isPartnership === 'false'}
+                onChange={e => {
+                  // console.log(e.target.value)
+                  setIsPartnership(e.target.value)
+                }}
+              />
+              <h4 id="competition_register_top_isPartnership-false">false</h4>
+            </div>
+            <div className="competition_register_top_each">
+              <h1>대회사링크(파트너X)</h1>
+              <input
+                type="text"
+                className="competition_register_top_nonPartnershipPageLink"
+                placeholder="대회사 홈페이지 링크 ex)https://www.najuha.com"
+                value={nonPartnershipPageLink}
+                onChange={e => {
+                  setNonPartnershipPageLink(e.target.value)
+                }}
+              ></input>
+            </div>
           </div>
         </div>
-      </div>
 
-      {divisionsUI()}
-      {mode === 'post' ? (
-        <button id="save" onClick={postToDB}>
-          대회등록하기
-        </button>
-      ) : (
-        <div className="competition_register_patchcopy">
-          <button id="copy" onClick={copyToDB}>
-            대회복사하기
+        {divisionsUI()}
+        {mode === 'post' ? (
+          <button id="save" onClick={postToDB}>
+            대회등록하기
           </button>
-          <button id="patch" onClick={patchToDB}>
-            대회수정하기
-          </button>
-        </div>
-      )}
+        ) : (
+          <div className="competition_register_patchcopy">
+            <button id="copy" onClick={copyToDB}>
+              대회복사하기
+            </button>
+            <button id="patch" onClick={patchToDB}>
+              대회수정하기
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import './competition.css'
-import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import sampleposter from '../src_assets/samplePoster.png'
 import { getAdminCompetition } from '../apis/api/admin'
+import MarkdownEditor from './MarkdownEditor'
 
 function AdminCompetition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
@@ -236,10 +236,7 @@ function AdminCompetition() {
         </button>
       </div>
       <div className="competition-bottom">
-        <ReactMarkdown
-          className="competition-bottom-markdown"
-          children={markdown}
-        />
+        <MarkdownEditor data={markdown} mode="view" />
       </div>
     </div>
   )

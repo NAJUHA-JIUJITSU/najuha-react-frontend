@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import './competition.css'
-import ReactMarkdown from 'react-markdown'
 import axios from 'axios'
 import sampleposter from '../src_assets/samplePoster.png'
 import dayjs from 'dayjs'
 import { getCompetitionDetail } from '../apis/api/competition'
+import MarkdownEditor from './MarkdownEditor'
 
 function Competition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
@@ -244,10 +244,7 @@ function Competition() {
         )}
       </div>
       <div className="competition-bottom">
-        <ReactMarkdown
-          className="competition-bottom-markdown"
-          children={markdown}
-        />
+        <MarkdownEditor data={markdown} mode="view" />
       </div>
     </div>
   )

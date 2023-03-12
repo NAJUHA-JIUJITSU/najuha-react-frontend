@@ -1,0 +1,11 @@
+.MarkdownEditor ol {
+  list-style-type: decimal !important;
+}
+
+.MarkdownEditor ol {
+  list-style-type: lower-alpha !important;
+}
+
+.MarkdownEditor li {
+  list-style-type: disc !important;
+}
