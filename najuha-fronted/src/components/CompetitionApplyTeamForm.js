@@ -5,12 +5,17 @@ import { useParams, useNavigate } from 'react-router-dom'
 import dropdownicon from '../src_assets/드랍다운아이콘.svg'
 import deleteicon from '../src_assets/명단삭제로고.svg'
 
-import axios from 'axios'
-import { Cookies } from 'react-cookie'
-import { loadTossPayments } from '@tosspayments/payment-sdk'
-
 import Paymentmodal from './Paymentmodal'
 import Paymentbridgemodal from './Paymentbridgemodal'
+
+import {
+  getCompetitionDetail,
+  getCompetitionPricePredict,
+} from '../apis/api/competition'
+import {
+  postCompetitionApplicationGroup,
+  postCompetitionApplicationPayment,
+} from '../apis/api/competitionApplications'
 
 function CompetitionApplyTeamForm() {
   const { id } = useParams()
@@ -46,12 +51,6 @@ function CompetitionApplyTeamForm() {
   })
   const [competitionApplicationId, setCompetitionApplicationId] = useState(null)
 
-  const [paymentmethod, setPaymentmethod] = useState(null)
-  const [easypaymethod, setEasypaymethod] = useState(null)
-  const frontBaseUrl = 'http://localhost:3001'
-
-  const cookies = new Cookies()
-
   useEffect(() => {
     getCompetition(id)
   }, [])
@@ -73,64 +72,6 @@ function CompetitionApplyTeamForm() {
     if (viewCompetitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
   }, [viewCompetitionApplicationList])
 
-  const postPaymentData = async () => {
-    const xAccessToken = cookies.get('x-access-token')
-    const paymentData = await axios({
-      method: 'post',
-      url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications/${competitionApplicationId}/payments`,
-      headers: {
-        'x-access-token': xAccessToken,
-      },
-    })
-    console.log(paymentData)
-    return paymentData
-  }
-
-  const tossPay = async () => {
-    const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
-    const res = await postPaymentData()
-    const data = res.data.result
-    if (paymentmethod == '카드') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    } else if (paymentmethod == '간편결제') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-          flowMode: 'DIRECT',
-          easyPay: easypaymethod,
-        })
-      })
-    } else if (paymentmethod == '계좌이체') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('계좌이체', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    }
-  }
-
   function parsingBeforePost(viewCompetitionApplicationList) {
     let copyCompetitionApplicationList = JSON.parse(
       JSON.stringify(viewCompetitionApplicationList)
@@ -145,41 +86,17 @@ function CompetitionApplyTeamForm() {
     let competitionApplicationList = parsingBeforePost(
       viewCompetitionApplicationList
     )
-    console.log(competitionApplicationList)
-    try {
-      await axios({
-        method: 'post',
-        headers: {
-          'x-access-token': cookies.get('x-access-token'),
-        },
-        url: `${process.env.REACT_APP_BACK_END_API}/competitionApplicationsGroup`,
-        data: {
-          competitionApplicationList,
-        },
-      }).then(res => {
-        setCompetitionApplicationId(res.data.result.competitionApplicationId)
-      })
-    } catch (err) {
-      throw err
-    }
+    let res = await postCompetitionApplicationGroup({
+      competitionApplicationList,
+    })
+    setCompetitionApplicationId(res.data.result.competitionApplicationId)
   }
 
   const getCompetition = async id => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACK_END_API}/competitions/${id}`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      const newCompetition = response.data.result
-      setCompetition(newCompetition)
-      setFillteredCompetition(newCompetition.division)
-    } catch (err) {
-      console.log(err)
-    }
+    const res = await getCompetitionDetail(id)
+    const newCompetition = res.data.result
+    setCompetition(newCompetition)
+    setFillteredCompetition(newCompetition.division)
   }
 
   function genderDropdownToggle() {
@@ -544,25 +461,12 @@ function CompetitionApplyTeamForm() {
   }
 
   const getTotalPrice = async () => {
-    axios({
-      method: 'post',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/competitions/${id}/prices`,
-      data: {
-        isGroup: true,
-        divisions: viewCompetitionApplicationList,
-      },
+    let res = await getCompetitionPricePredict(id, {
+      isGroup: true,
+      divisions: viewCompetitionApplicationList,
     })
-      .then(res => {
-        console.log(res)
-        setDiscountedPrice(res.data.result.discountedPrice)
-        setNormalPrice(res.data.result.normalPrice)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    setDiscountedPrice(res.data.result.discountedPrice)
+    setNormalPrice(res.data.result.normalPrice)
   }
 
   return (
@@ -961,13 +865,9 @@ function CompetitionApplyTeamForm() {
       {paymentmodal && (
         <Paymentmodal
           closeModal={() => setPaymentmodal(pre => !pre)}
-          paymentmethod={paymentmethod}
-          setPaymentmethod={setPaymentmethod}
-          easypaymethod={easypaymethod}
-          setEasypaymethod={setEasypaymethod}
           discountedprice={discountedPrice}
           normalprice={normalPrice}
-          tossPay={tossPay}
+          competitionApplicationId={competitionApplicationId}
         />
       )}
     </div>

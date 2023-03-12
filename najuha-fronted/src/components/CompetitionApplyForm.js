@@ -3,14 +3,17 @@ import './competitionApplyForm.css'
 import reseticon from '../src_assets/리셋아이콘.svg'
 import notcomplete from '../src_assets/미완료아이콘.svg'
 import plus from '../src_assets/대회추가아이콘.svg'
-import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import { useParams } from 'react-router-dom'
 import ApplyModal from './ApplyModal'
 import Paymentbridgemodal from './Paymentbridgemodal'
 import Paymentmodal from './Paymentmodal'
-import { loadTossPayments } from '@tosspayments/payment-sdk'
 import deleteicon from '../src_assets/명단삭제로고.svg'
+import {
+  getCompetitionDetail,
+  getCompetitionPricePredict,
+} from '../apis/api/competition'
+import { postCompetitionApplication } from '../apis/api/competitionApplications'
 
 function CompetitionApplyForm() {
   const { id } = useParams()
@@ -20,7 +23,6 @@ function CompetitionApplyForm() {
   const [applymodal, setapplymodal] = useState(false)
   const [paymentbridgemodal, setPaymentbridgemodal] = useState(false)
   const [paymentmodal, setPaymentmodal] = useState(false)
-  const cookies = new Cookies()
   const [fillteredcompetition, setFillteredCompetition] = useState(null)
   const [competitionApplicationId, setCompetitionApplicationId] = useState(null)
   const [viewcompetitionApplicationList, setviewCompetitionApplicationList] =
@@ -40,9 +42,6 @@ function CompetitionApplyForm() {
         check: 0,
       },
     ])
-  const [paymentmethod, setPaymentmethod] = useState(null)
-  const [easypaymethod, setEasypaymethod] = useState(null)
-  const frontBaseUrl = 'http://localhost:3001'
 
   const parsingbeforeapplypost = viewcompetitionApplicationList => {
     let copyList = JSON.parse(JSON.stringify(viewcompetitionApplicationList))
@@ -72,130 +71,34 @@ function CompetitionApplyForm() {
   }
 
   const getCompetition = async id => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACK_END_API}/competitions/${id}`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      const newCompetition = response.data.result
-      console.log(newCompetition)
-      setCompetition(newCompetition)
-      setFillteredCompetition(newCompetition.division)
-    } catch (err) {
-      console.log(err)
-    }
+    let res = await getCompetitionDetail(id)
+    console.log(res)
+    const newCompetition = res.data.result
+    console.log(newCompetition)
+    setCompetition(newCompetition)
+    setFillteredCompetition(newCompetition.division)
   }
 
+  // 예상 가격 가져오기
   const getTotalPrice = async id => {
     let parsedlist = parsingbeforegetprice(viewcompetitionApplicationList)
-    console.log(parsedlist)
-    axios({
-      method: 'post',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/competitions/${id}/prices`,
-      data: {
-        isGroup: false,
-        divisions: parsedlist,
-      },
+    let res = await getCompetitionPricePredict(id, {
+      isGroup: false,
+      divisions: parsedlist,
     })
-      .then(res => {
-        console.log(res)
-        setDiscountedprice(res.data.result.discountedPrice)
-        setNormalprice(res.data.result.normalPrice)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    setDiscountedprice(res.data.result.discountedPrice)
+    setNormalprice(res.data.result.normalPrice)
   }
 
-  function postCompetition() {
+  // 대회 참가 신청하기
+  async function postCompetition() {
     let competitionApplicationList = parsingbeforeapplypost(
       viewcompetitionApplicationList
     )
-    axios({
-      method: 'post',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications`,
-      data: {
-        competitionApplicationList,
-      },
-    })
-      .then(res => {
-        console.log(res)
-        setCompetitionApplicationId(res.data.result.competitionApplicationId)
-        setapplymodal(pre => !pre)
-        setPaymentbridgemodal(pre => !pre)
-      })
-      .catch(err => {
-        console.log(err)
-        alert('대회 신청에 실패하였습니다.')
-      })
-  }
-
-  const postPaymentData = async () => {
-    const xAccessToken = cookies.get('x-access-token')
-    const paymentData = await axios({
-      method: 'post',
-      url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications/${competitionApplicationId}/payments`,
-      headers: {
-        'x-access-token': xAccessToken,
-      },
-    })
-    console.log(paymentData)
-    return paymentData
-  }
-
-  const tossPay = async () => {
-    const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
-    const res = await postPaymentData()
-    const data = res.data.result
-    if (paymentmethod == '카드') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    } else if (paymentmethod == '간편결제') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-          flowMode: 'DIRECT',
-          easyPay: easypaymethod,
-        })
-      })
-    } else if (paymentmethod == '계좌이체') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('계좌이체', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    }
+    let res = await postCompetitionApplication({ competitionApplicationList })
+    setCompetitionApplicationId(res.data.result.competitionApplicationId)
+    setapplymodal(pre => !pre)
+    setPaymentbridgemodal(pre => !pre)
   }
 
   useEffect(() => {
@@ -238,7 +141,7 @@ function CompetitionApplyForm() {
       gender: null,
       belt: null,
       weight: null,
-      team: '김포 골든라이언',
+      team: '',
       competitionId: id,
       price: null,
       check: 0,
@@ -265,7 +168,7 @@ function CompetitionApplyForm() {
       gender: null,
       belt: null,
       weight: null,
-      team: '김포 골든라이언',
+      team: '',
       competitionId: id,
       price: null,
       check: 0,
@@ -344,7 +247,8 @@ function CompetitionApplyForm() {
             <img
               style={{ cursor: 'pointer' }}
               src={deleteicon}
-              onClick={() => deleteCompetitionApplication(i)}></img>
+              onClick={() => deleteCompetitionApplication(i)}
+            ></img>
           ) : (
             ''
           )}
@@ -678,7 +582,8 @@ function CompetitionApplyForm() {
           className="CompetitionApplyForm-bottom-payment"
           onClick={() => {
             if (checkInvaildApply()) setapplymodal(!applymodal)
-          }}>
+          }}
+        >
           신청하기
         </button>
         {applymodal && (
@@ -700,13 +605,9 @@ function CompetitionApplyForm() {
         {paymentmodal && (
           <Paymentmodal
             closeModal={() => setPaymentmodal(pre => !pre)}
-            paymentmethod={paymentmethod}
-            setPaymentmethod={setPaymentmethod}
-            easypaymethod={easypaymethod}
-            setEasypaymethod={setEasypaymethod}
             discountedprice={discountedprice}
             normalprice={normalprice}
-            tossPay={tossPay}
+            competitionApplicationId={competitionApplicationId}
           />
         )}
       </div>

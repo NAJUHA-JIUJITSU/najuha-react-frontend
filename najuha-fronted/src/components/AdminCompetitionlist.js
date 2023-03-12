@@ -4,6 +4,11 @@ import { useNavigate } from 'react-router-dom'
 import './admincompetitionlist.css'
 
 import dayjs from 'dayjs'
+import {
+  getAdminCompetitionList,
+  patchAdminCompetitionStatus,
+  deleteAdminCompetition,
+} from '../apis/api/admin'
 
 import { Cookies } from 'react-cookie'
 
@@ -37,7 +42,6 @@ function AdminCompetitionlist() {
   const [competitions, setCompetitions] = useState([])
   const [dateDropdown, setDateDropdown] = useState(false)
   const [locationDropdown, setLocationDropdown] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const [lastElement, setLastElement] = useState('')
   const [offset, setOffset] = useState(0)
   const [startDate, setStartDate] = useState('')
@@ -62,7 +66,7 @@ function AdminCompetitionlist() {
         const first = entries[0]
         if (first.isIntersecting) {
           console.log('관측됨')
-          await getCompetitionList(
+          await viewGetCompetitionList(
             startDateRef.current,
             offsetRef.current,
             titleRef.current,
@@ -77,63 +81,18 @@ function AdminCompetitionlist() {
     )
   )
 
-  async function getCompetitionList(startDate, offset, title, location) {
-    setIsLoading(true)
-    axios({
-      method: 'get',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`,
-    })
-      .then(res => {
-        console.log(res.data.result)
-        let newCompetitions = res.data.result
-        setCompetitions(competitions => [...competitions, ...newCompetitions])
-        console.log('성공')
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-      })
-    setIsLoading(false)
+  async function deleteCompetition(id) {
+    if (window.confirm('정말로 삭제하시겠습니까?') == false) return
+    await deleteAdminCompetition(id)
+    window.location.reload()
+  }
+
+  async function viewGetCompetitionList(startDate, offset, title, location) {
+    let res = await getAdminCompetitionList(startDate, offset, title, location)
+    console.log(res)
+    let newCompetitions = res.data.result
+    setCompetitions(preCompetitions => [...preCompetitions, ...newCompetitions])
     return
-  }
-
-  async function ActivePatch(id) {
-    await axios({
-      method: 'patch',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}/status/ACTIVE`,
-    })
-      .then(res => {
-        console.log(res)
-        alert(`id:${id} 대회가 활성화 되었습니다`)
-      })
-      .catch(err => {
-        console.log(err)
-        alert(`id:${id} 대회 활성화에 실패하였습니다.`)
-      })
-  }
-
-  async function InActivePatch(id) {
-    await axios({
-      method: 'patch',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}/status/INACTIVE`,
-    })
-      .then(res => {
-        console.log(res)
-        alert(`id:${id} 대회가 비활성화 되었습니다`)
-      })
-      .catch(err => {
-        console.log(err)
-        alert(`id:${id} 대회 비활성화에 실패하였습니다.`)
-      })
   }
 
   useEffect(() => {
@@ -384,7 +343,11 @@ function AdminCompetitionlist() {
                 <button
                   style={{ background: 'gray', color: 'black' }}
                   onClick={async () => {
-                    InActivePatch(curcompetition.id)
+                    await patchAdminCompetitionStatus(
+                      curcompetition.id,
+                      'INACTIVE'
+                    )
+                    window.location.reload()
                   }}
                 >
                   비활성화하기
@@ -392,8 +355,12 @@ function AdminCompetitionlist() {
               ) : (
                 <button
                   style={{ background: 'red', color: 'black' }}
-                  onClick={() => {
-                    ActivePatch(curcompetition.id)
+                  onClick={async () => {
+                    await patchAdminCompetitionStatus(
+                      curcompetition.id,
+                      'ACTIVE'
+                    )
+                    window.location.reload()
                   }}
                 >
                   활성화하기
@@ -422,6 +389,14 @@ function AdminCompetitionlist() {
                 }}
               >
                 참가선수명단
+              </button>
+              <button
+                style={{ background: 'purple', color: 'yellowGreen' }}
+                onClick={() => {
+                  deleteCompetition(curcompetition.id)
+                }}
+              >
+                삭제
               </button>
             </div>
           </div>
@@ -528,19 +503,12 @@ function AdminCompetitionlist() {
       <div className="competition-list">
         <ul className="competition-row">
           {renderCompetitionList()}
-          {isLoading && (
-            <div style={{ fontsize: '200px', margin: '0 2rem' }}>
-              Loading...
-            </div>
-          )}
-          {!isLoading && (
-            <div
-              style={{ fontsize: '200px', margin: '0 2rem' }}
-              ref={setLastElement}
-            >
-              해당 대회가 모두 로딩되었습니다.
-            </div>
-          )}
+          <div
+            style={{ fontsize: '200px', margin: '0 2rem' }}
+            ref={setLastElement}
+          >
+            대회가 모두 로딩되었습니다.
+          </div>
         </ul>
       </div>
     </div>

@@ -6,6 +6,12 @@ import './competitionform.css'
 import { Cookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 
+import {
+  postAdminCompetition,
+  patchAdminCompetition,
+  getAdminCompetition,
+} from '../apis/api/admin'
+
 function Competition_form() {
   const { id } = useParams()
   const [title, setTitle] = useState('')
@@ -160,16 +166,9 @@ function Competition_form() {
     console.log(newDiv[i].pricingPolicy.withOther)
   }
 
-  function postToDB() {
-    console.log(divisions)
-
-    axios({
-      method: 'post',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions`,
-      data: {
+  async function postToDB() {
+    const res = await postAdminCompetition(
+      {
         title: title,
         host: host,
         doreOpen: doreOpen,
@@ -185,28 +184,49 @@ function Competition_form() {
         isPartnership: isPartnership === 'true' ? true : false,
         nonPartnershipPageLink: nonPartnershipPageLink,
       },
-    })
-      .then(res => {
-        console.log(res)
-        alert('대회등록이 완료되었습니다.')
-        navigate('/Admincompetition/')
-      })
-      .catch(err => {
-        console.log(err)
-        alert('대회등록이 실패하였습니다.')
-      })
+      'new'
+    )
+    // navigate('/admincompetition')
+    // navigate('/admincompetition')
+    // console.log(divisions)
+
+    // axios({
+    //   method: 'post',
+    //   headers: {
+    //     'x-access-token': cookies.get('x-access-token'),
+    //   },
+    //   url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions`,
+    // data: {
+    //   title: title,
+    //   host: host,
+    //   doreOpen: doreOpen,
+    //   registrationDate: registrationDate,
+    //   registrationDeadline: registrationDeadLine,
+    //   location: location,
+    //   bankAccount: bankAccount,
+    //   earlyBirdDeadline: earlybirdDeadline,
+    //   information: infomation,
+    //   applicantTableOpenDate: applicantTableOpenDate,
+    //   tournamentTableOpenDate: tournamentTableOpenDate,
+    //   division: divisions,
+    //   isPartnership: isPartnership === 'true' ? true : false,
+    //   nonPartnershipPageLink: nonPartnershipPageLink,
+    // },
+    // })
+    //   .then(res => {
+    //     console.log(res)
+    //     alert('대회등록이 완료되었습니다.')
+    //     navigate('/Admincompetition/')
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     alert('대회등록이 실패하였습니다.')
+    //   })
   }
 
-  function copyToDB() {
-    console.log(divisions)
-
-    axios({
-      method: 'post',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions`,
-      data: {
+  async function copyToDB() {
+    const res = await postAdminCompetition(
+      {
         title: `copied ${title}`,
         host: host,
         doreOpen: doreOpen,
@@ -222,52 +242,60 @@ function Competition_form() {
         isPartnership: isPartnership === 'true' ? true : false,
         nonPartnershipPageLink: nonPartnershipPageLink,
       },
-    })
-      .then(res => {
-        console.log(res)
-        alert('대회복사가 완료되었습니다.')
-        navigate('/Admincompetition/')
-      })
-      .catch(err => {
-        console.log(err)
-        alert('대회복사에 실패하였습니다.')
-      })
+      'copy'
+    )
   }
 
-  function patchToDB() {
-    console.log(divisions)
-
-    axios({
-      method: 'patch',
-      headers: {
-        'x-access-token': cookies.get('x-access-token'),
-      },
-      url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}`,
-      data: {
-        title: title,
-        host: host,
-        doreOpen: doreOpen,
-        registrationDate: registrationDate,
-        registrationDeadline: registrationDeadLine,
-        location: location,
-        bankAccount: bankAccount,
-        earlyBirdDeadline: earlybirdDeadline,
-        information: infomation,
-        applicantTableOpenDate: applicantTableOpenDate,
-        tournamentTableOpenDate: tournamentTableOpenDate,
-        division: divisions,
-        isPartnership: isPartnership === 'true' ? true : false,
-        nonPartnershipPageLink: nonPartnershipPageLink,
-      },
+  async function patchToDB() {
+    const res = await patchAdminCompetition(id, {
+      title: title,
+      host: host,
+      doreOpen: doreOpen,
+      registrationDate: registrationDate,
+      registrationDeadline: registrationDeadLine,
+      location: location,
+      bankAccount: bankAccount,
+      earlyBirdDeadline: earlybirdDeadline,
+      information: infomation,
+      applicantTableOpenDate: applicantTableOpenDate,
+      tournamentTableOpenDate: tournamentTableOpenDate,
+      division: divisions,
+      isPartnership: isPartnership === 'true' ? true : false,
+      nonPartnershipPageLink: nonPartnershipPageLink,
     })
-      .then(res => {
-        console.log(res)
-        alert('대회수정이 완료되었습니다.')
-      })
-      .catch(err => {
-        console.log(err)
-        alert('대회수정이 실패하였습니다.')
-      })
+    // console.log(divisions)
+
+    // axios({
+    //   method: 'patch',
+    //   headers: {
+    //     'x-access-token': cookies.get('x-access-token'),
+    //   },
+    //   url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}`,
+    //   data: {
+    //     title: title,
+    //     host: host,
+    //     doreOpen: doreOpen,
+    //     registrationDate: registrationDate,
+    //     registrationDeadline: registrationDeadLine,
+    //     location: location,
+    //     bankAccount: bankAccount,
+    //     earlyBirdDeadline: earlybirdDeadline,
+    //     information: infomation,
+    //     applicantTableOpenDate: applicantTableOpenDate,
+    //     tournamentTableOpenDate: tournamentTableOpenDate,
+    //     division: divisions,
+    //     isPartnership: isPartnership === 'true' ? true : false,
+    //     nonPartnershipPageLink: nonPartnershipPageLink,
+    //   },
+    // })
+    //   .then(res => {
+    //     console.log(res)
+    //     alert('대회수정이 완료되었습니다.')
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     alert('대회수정이 실패하였습니다.')
+    //   })
   }
 
   function loadingCompetition(competition) {
@@ -289,38 +317,12 @@ function Competition_form() {
 
   // async/await 를 활용하는 수정된 방식
 
-  const getCompetition = async id => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      const newCompetition = response.data.result
-      setCompetition(newCompetition)
-    } catch (err) {
-      console.log(err)
+  const getCompetition = async () => {
+    const res = await getAdminCompetition(id)
+    if (res) {
+      setCompetition(res.data.result)
     }
   }
-
-  // axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions/${id}`, {
-  //     headers: {
-  //         "x-access-token":  cookies.get("x-access-token")
-  //     }
-  // })
-  // .then((res) => {
-  //     let newCompetition = res.data.result
-  //     setCompetition(newCompetition)
-  //     console.log('성공')
-  // })
-  // .catch((err) => {
-  //     console.log(err)
-  //     console.log(err.response.status);
-  // })
-  // return ;
 
   function divisionsUI() {
     return divisions.map((divs, i) => {
@@ -497,7 +499,7 @@ function Competition_form() {
   useEffect(() => {
     if (Number(id)) {
       setMode('patch')
-      getCompetition(id)
+      getCompetition()
     }
   }, [])
 

@@ -6,6 +6,7 @@ import dropdownicon from '../src_assets/드랍다운아이콘회색.svg'
 import searchicon from '../src_assets/검색돋보기아이콘.svg'
 import sampleposter from '../src_assets/samplePoster.png'
 import dayjs from 'dayjs'
+import { getCompetitionList } from '../apis/api/competition'
 
 const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 const locationSample = [
@@ -30,7 +31,6 @@ const week = ['일', '월', '화', '수', '목', '금', '토']
 
 function Competitionlist() {
   const [competitions, setCompetitions] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
   const [lastElement, setLastElement] = useState('')
   const [offset, setOffset] = useState(0)
   const [startDate, setStartDate] = useState('')
@@ -62,7 +62,7 @@ function Competitionlist() {
         const first = entries[0]
         if (first.isIntersecting) {
           console.log('관측됨')
-          await getCompetitionList(
+          await viewGetCompetitionList(
             startDateRef.current,
             offsetRef.current,
             titleRef.current,
@@ -77,23 +77,11 @@ function Competitionlist() {
     )
   )
 
-  async function getCompetitionList(startDate, offset, title, location) {
-    setIsLoading(true)
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/competitions?startDate=${startDate}&offset=${offset}&title=${title}&location=${location}`
-      )
-      .then(res => {
-        console.log(res.data.result)
-        let newCompetitions = res.data.result
-        setCompetitions(competitions => [...competitions, ...newCompetitions])
-        console.log('성공')
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-      })
-    setIsLoading(false)
+  async function viewGetCompetitionList(startDate, offset, title, location) {
+    let res = await getCompetitionList(startDate, offset, title, location)
+    console.log(res)
+    let newCompetitions = res.data.result
+    setCompetitions(competitions => [...competitions, ...newCompetitions])
     return
   }
 
@@ -487,31 +475,11 @@ function Competitionlist() {
       <div className="competition-list">
         <ul className="competition-row">
           {renderCompetitionList()}
-          {isLoading && (
-            <div style={{ fontsize: '200px', margin: '0 2rem' }}>
-              Loading...
-            </div>
-          )}
-          {!isLoading && (
-            <div
-              style={{
-                fontSize: '16px',
-                margin: '0 2rem',
-                verticalAlign: 'bottom',
-                display: 'flex',
-              }}
-              ref={setLastElement}>
-              <p
-                style={
-                  {
-                    // marginTop: 'auto',
-                    // marginBottom: '3rem',
-                  }
-                }>
-                대회가 모두 로딩되었습니다.
-              </p>
-            </div>
-          )}
+          <div
+            style={{ fontsize: '200px', margin: '0 2rem' }}
+            ref={setLastElement}>
+            대회가 모두 로딩되었습니다.
+          </div>
         </ul>
       </div>
     </div>

@@ -20,6 +20,8 @@ import placeholderSrc from '../src_assets/bgImg.jpeg'
 import { Cookies } from 'react-cookie'
 import axios from 'axios'
 
+import { getPartnershipCompetitionList } from '../apis/api/competition'
+
 function MainScroll() {
   const [ScrollActive, setScrollActive] = useState(false)
   const [ScrollY, setScrollY] = useState(0) // window 의 pageYOffset값을 저장
@@ -36,25 +38,8 @@ function MainScroll() {
 
   //대회 정보 가져오기
   async function getCompetitons() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/competitionsPartnershipTrue`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      .then(res => {
-        setCompetitions(res.data.result)
-        console.log(res.data.result)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        // console.log(err.response.status)
-        // console.log(err.response.data.message)
-      })
+    const res = await getPartnershipCompetitionList()
+    setCompetitions(res.data.result)
     return
   }
   //요일 값 구하기

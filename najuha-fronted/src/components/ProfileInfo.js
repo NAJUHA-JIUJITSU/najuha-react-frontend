@@ -8,9 +8,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import arrowLeftIcon from '../src_assets/arrow_left.svg'
 import samplePoster from '../src_assets/samplePoster.png'
 
+// api함수
+import {
+  getUserApplicationCompetitionInfo,
+  deleteUserApplicationCompetition,
+} from '../apis/api/user'
+
 // 결제에 필요한
 import Paymentmodal from './Paymentmodal'
-import { loadTossPayments } from '@tosspayments/payment-sdk'
 
 function ProfileInfo() {
   const [rawCompetitionApplicationInfo, setRawCompetitionApplicationInfo] =
@@ -28,98 +33,17 @@ function ProfileInfo() {
 
   // 결제에 필요한 state값
   const [paymentmodal, setPaymentmodal] = useState(false)
-  const [paymentmethod, setPaymentmethod] = useState(null)
-  const [easypaymethod, setEasypaymethod] = useState(null)
-  const frontBaseUrl = 'http://localhost:3001'
 
   const competitionApplicationId = useParams().id // ex) id: 1
   console.log('대회 id: ' + competitionApplicationId)
   const cursorStyle = { cursor: 'default' }
 
-  // 토스결제에 필요한 데이터 post
-  const postPaymentData = async () => {
-    const xAccessToken = cookies.get('x-access-token')
-    const paymentData = await axios({
-      method: 'post',
-      url: `${process.env.REACT_APP_BACK_END_API}/competitionApplications/${competitionApplicationId}/payments`,
-      headers: {
-        'x-access-token': xAccessToken,
-      },
-    })
-    console.log(paymentData)
-    return paymentData
-  }
-  // 토스결제
-  const tossPay = async () => {
-    const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
-    const res = await postPaymentData()
-    const data = res.data.result
-    if (paymentmethod == '카드') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    } else if (paymentmethod == '간편결제') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('카드', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-          flowMode: 'DIRECT',
-          easyPay: easypaymethod,
-        })
-      })
-    } else if (paymentmethod == '계좌이체') {
-      loadTossPayments(clientkey).then(tossPayments => {
-        tossPayments.requestPayment('계좌이체', {
-          amount: data.amount,
-          orderId: data.orderId,
-          orderName: data.orderName,
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          successUrl: frontBaseUrl + '/toss/success',
-          failUrl: frontBaseUrl + '/toss/fail',
-        })
-      })
-    }
-  }
-
   //서버에서 신청상세정보 가져오기
   async function getCompetitionApplicationInfo() {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${competitionApplicationId}`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        setRawCompetitionApplicationInfo(res.data.result)
-        setcompetitionApplicationInfo(applicationParsing(res.data.result))
-        setCompetitionApplicationList(
-          res.data.result.CompetitionApplicationInfos
-        )
-        console.log(res.data.result)
-        console.log(res.data.message)
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.status)
-        console.log(err.response.data.message)
-      })
+    let res = await getUserApplicationCompetitionInfo(competitionApplicationId)
+    setRawCompetitionApplicationInfo(res.data.result)
+    setcompetitionApplicationInfo(applicationParsing(res.data.result))
+    setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos)
     return
   }
 
@@ -263,26 +187,9 @@ function ProfileInfo() {
 
   // 신청 대회 지우기(결제 미완료)
   async function deleteCompetitionApplication(id) {
-    axios
-      .delete(
-        `${process.env.REACT_APP_BACK_END_API}/users/competitionApplications/${id}`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        console.log('지울 대회 id: ' + id)
-        console.log(res.data.message)
-        alert('대회가 삭제되었습니다.')
-        navigate('/Profilepage')
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response.data.result)
-        alert(err.response.data.result)
-      })
+    await deleteUserApplicationCompetition(id)
+    alert('대회가 삭제되었습니다.')
+    navigate('/Profilepage', { state: 'UserApplicationList' })
     return
   }
 
@@ -444,7 +351,7 @@ function ProfileInfo() {
       <div className="ProfileInfo_title">
         <a
           onClick={() => {
-            navigate(`/Profilepage/`)
+            navigate(`/Profilepage`, { state: 'UserApplicationList' })
           }}>
           <img src={arrowLeftIcon} alt="이전으로 돌아가기"></img>
         </a>
@@ -546,10 +453,6 @@ function ProfileInfo() {
       {paymentmodal && (
         <Paymentmodal
           closeModal={() => setPaymentmodal(pre => !pre)}
-          paymentmethod={paymentmethod}
-          setPaymentmethod={setPaymentmethod}
-          easypaymethod={easypaymethod}
-          setEasypaymethod={setEasypaymethod}
           discountedprice={
             competitionApplicationInfo ? competitionApplicationInfo.amount : 0
           }
@@ -558,7 +461,7 @@ function ProfileInfo() {
               ? rawCompetitionApplicationInfo.expectedPrice.normalPrice
               : 0
           }
-          tossPay={tossPay}
+          competitionApplicationId={competitionApplicationId}
         />
       )}
     </div>

@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import './Paymentmodal.css'
 import { useNavigate } from 'react-router-dom'
+import { tossPay } from '../apis/utils/toss'
 import blackX from '../src_assets/blackX.svg'
 
 function Paymentmodal(props) {
-  let navigate = useNavigate()
+  const [paymentmethod, setPaymentmethod] = useState(null)
+  const [easypaymethod, setEasypaymethod] = useState(null)
   let [lastCheck, setLastCheck] = useState(false)
+  let navigate = useNavigate()
 
   function closeModal() {
     props.closeModal()
   }
 
   function checkPaymentOption() {
-    if (!lastCheck || props.paymentmethod === null) {
+    if (!lastCheck || paymentmethod === null) {
       return false
     }
 
-    if (props.paymentmethod === '간편결제' && props.easypaymethod === null) {
+    if (paymentmethod === '간편결제' && easypaymethod === null) {
       return false
     }
 
@@ -44,8 +47,8 @@ function Paymentmodal(props) {
             <input
               type="radio"
               value={method.value}
-              checked={props.easypaymethod === method.value}
-              onChange={e => props.setEasypaymethod(e.target.value)}
+              checked={easypaymethod === method.value}
+              onChange={e => setEasypaymethod(e.target.value)}
             />
             <p>{method.label}</p>
           </div>
@@ -102,25 +105,25 @@ function Paymentmodal(props) {
               <input
                 type="radio"
                 value="간편결제"
-                checked={props.paymentmethod == '간편결제'}
-                onChange={e => props.setPaymentmethod(e.target.value)}></input>
+                checked={paymentmethod == '간편결제'}
+                onChange={e => setPaymentmethod(e.target.value)}></input>
               <p>간편결제</p>
             </div>
-            {props.paymentmethod == '간편결제' ? easypaymentUI() : ''}
+            {paymentmethod == '간편결제' ? easypaymentUI() : ''}
             <div className="Paymentmodal_secondsection_method">
               <input
                 type="radio"
                 value="카드"
-                checked={props.paymentmethod == '카드'}
-                onChange={e => props.setPaymentmethod(e.target.value)}></input>
+                checked={paymentmethod == '카드'}
+                onChange={e => setPaymentmethod(e.target.value)}></input>
               <p>카드결제</p>
             </div>
             <div className="Paymentmodal_secondsection_method">
               <input
                 type="radio"
                 value="계좌이체"
-                checked={props.paymentmethod == '계좌이체'}
-                onChange={e => props.setPaymentmethod(e.target.value)}></input>
+                checked={paymentmethod == '계좌이체'}
+                onChange={e => setPaymentmethod(e.target.value)}></input>
               <p>계좌이체</p>
             </div>
           </div>
@@ -142,7 +145,12 @@ function Paymentmodal(props) {
           <button
             className="Paymentmodal_thirdsection_paybutton"
             onClick={() => {
-              if (checkPaymentOption()) props.tossPay()
+              if (checkPaymentOption())
+                tossPay(
+                  props.competitionApplicationId,
+                  paymentmethod,
+                  easypaymethod
+                )
               else alert('옵션을 선택해주세요')
             }}>
             결제하기
