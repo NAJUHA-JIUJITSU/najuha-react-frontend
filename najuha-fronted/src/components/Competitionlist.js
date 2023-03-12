@@ -502,10 +502,12 @@ function Competitionlist() {
               }}
               ref={setLastElement}>
               <p
-                style={{
-                  marginTop: 'auto',
-                  marginBottom: '3rem',
-                }}>
+                style={
+                  {
+                    // marginTop: 'auto',
+                    // marginBottom: '3rem',
+                  }
+                }>
                 대회가 모두 로딩되었습니다.
               </p>
             </div>
