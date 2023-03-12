@@ -17,6 +17,7 @@
 .CompetitionApplyTeamForm-top-table-row li {
   font-size: 1.6rem;
   color: #8c8c8c;
+  z-index: 900;
 }
 
 .CompetitionApplyTeamForm-top-table-row li p {
