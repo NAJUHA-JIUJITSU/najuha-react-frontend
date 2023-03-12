@@ -494,9 +494,20 @@ function Competitionlist() {
           )}
           {!isLoading && (
             <div
-              style={{ fontsize: '200px', margin: '0 2rem' }}
+              style={{
+                fontSize: '16px',
+                margin: '0 2rem',
+                verticalAlign: 'bottom',
+                display: 'flex',
+              }}
               ref={setLastElement}>
-              해당 대회가 모두 로딩되었습니다.
+              <p
+                style={{
+                  marginTop: 'auto',
+                  marginBottom: '3rem',
+                }}>
+                대회가 모두 로딩되었습니다.
+              </p>
             </div>
           )}
         </ul>
