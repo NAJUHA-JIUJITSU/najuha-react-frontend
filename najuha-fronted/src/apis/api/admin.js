@@ -112,3 +112,14 @@ export const patchAdminCompetitionStatus = async (id, data) => {
     alert(`id :${id}대회가 ${data} 되었습니다.`)
   }
 }
+
+// 6.10 결제취소
+export const deleteAdminApplicationPayment = async id => {
+  try {
+    const res = await axiosApiWithToken(`/admin/payments/${id}`, 'delete')
+    alert(`id :${id}결제가 취소되었습니다.`)
+    return res
+  } catch (e) {
+    alert(`id :${id}결제가 취소되었습니다.`)
+  }
+}

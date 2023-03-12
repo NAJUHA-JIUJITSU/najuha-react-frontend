@@ -6,7 +6,10 @@ import { Cookies } from 'react-cookie'
 import { useJwt } from 'react-jwt'
 import { useNavigate, useParams } from 'react-router-dom'
 import samplePoster from '../src_assets/samplePoster.png'
-import { getAdminCompetitionApplicationList } from '../apis/api/admin'
+import {
+  getAdminCompetitionApplicationList,
+  deleteAdminApplicationPayment,
+} from '../apis/api/admin'
 
 function PaymentInfo() {
   const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState(
@@ -200,24 +203,9 @@ function PaymentInfo() {
   }
 
   //환불 함수
-  function refund(orderId) {
-    console.log(orderId)
-    axios
-      .delete(
-        `${process.env.REACT_APP_BACK_END_API}/admin/payments/${orderId}/`,
-        {
-          headers: {
-            'x-access-token': xAccessToken,
-          },
-        }
-      )
-      .then(res => {
-        console.log(res.data.message)
-        getCompetitionApplicationInfo()
-      })
-      .catch(err => {
-        console.log(err)
-      })
+  async function refund(orderId) {
+    await deleteAdminApplicationPayment(orderId)
+    getCompetitionApplicationInfo()
   }
 
   useEffect(() => {
