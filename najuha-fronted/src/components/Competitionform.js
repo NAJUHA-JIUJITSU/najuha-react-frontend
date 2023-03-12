@@ -6,7 +6,11 @@ import './competitionform.css'
 import { Cookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 
-import { postAdminCompetition, patchAdminCompetition } from '../apis/api/admin'
+import {
+  postAdminCompetition,
+  patchAdminCompetition,
+  getAdminCompetition,
+} from '../apis/api/admin'
 
 function Competition_form() {
   const { id } = useParams()
@@ -313,38 +317,12 @@ function Competition_form() {
 
   // async/await 를 활용하는 수정된 방식
 
-  const getCompetition = async id => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}`,
-        {
-          headers: {
-            'x-access-token': cookies.get('x-access-token'),
-          },
-        }
-      )
-      const newCompetition = response.data.result
-      setCompetition(newCompetition)
-    } catch (err) {
-      console.log(err)
+  const getCompetition = async () => {
+    const res = await getAdminCompetition(id)
+    if (res) {
+      setCompetition(res.data.result)
     }
   }
-
-  // axios.get(`${process.env.REACT_APP_BACK_END_API}/competitions/${id}`, {
-  //     headers: {
-  //         "x-access-token":  cookies.get("x-access-token")
-  //     }
-  // })
-  // .then((res) => {
-  //     let newCompetition = res.data.result
-  //     setCompetition(newCompetition)
-  //     console.log('성공')
-  // })
-  // .catch((err) => {
-  //     console.log(err)
-  //     console.log(err.response.status);
-  // })
-  // return ;
 
   function divisionsUI() {
     return divisions.map((divs, i) => {
@@ -521,7 +499,7 @@ function Competition_form() {
   useEffect(() => {
     if (Number(id)) {
       setMode('patch')
-      getCompetition(id)
+      getCompetition()
     }
   }, [])
 
