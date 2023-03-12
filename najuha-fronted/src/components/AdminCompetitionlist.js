@@ -7,6 +7,7 @@ import dayjs from 'dayjs'
 import {
   getAdminCompetitionList,
   patchAdminCompetitionStatus,
+  deleteAdminCompetition,
 } from '../apis/api/admin'
 
 import { Cookies } from 'react-cookie'
@@ -79,6 +80,12 @@ function AdminCompetitionlist() {
       { threshold: 1 }
     )
   )
+
+  async function deleteCompetition(id) {
+    if (window.confirm('정말로 삭제하시겠습니까?') == false) return
+    await deleteAdminCompetition(id)
+    window.location.reload()
+  }
 
   async function viewGetCompetitionList(startDate, offset, title, location) {
     let res = await getAdminCompetitionList(startDate, offset, title, location)
@@ -340,6 +347,7 @@ function AdminCompetitionlist() {
                       curcompetition.id,
                       'INACTIVE'
                     )
+                    window.location.reload()
                   }}
                 >
                   비활성화하기
@@ -352,6 +360,7 @@ function AdminCompetitionlist() {
                       curcompetition.id,
                       'ACTIVE'
                     )
+                    window.location.reload()
                   }}
                 >
                   활성화하기
@@ -380,6 +389,14 @@ function AdminCompetitionlist() {
                 }}
               >
                 참가선수명단
+              </button>
+              <button
+                style={{ background: 'purple', color: 'yellowGreen' }}
+                onClick={() => {
+                  deleteCompetition(curcompetition.id)
+                }}
+              >
+                삭제
               </button>
             </div>
           </div>

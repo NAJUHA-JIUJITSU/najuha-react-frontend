@@ -123,3 +123,14 @@ export const deleteAdminApplicationPayment = async id => {
     alert(`id :${id}결제가 취소되었습니다.`)
   }
 }
+
+// 6.12 대회 삭제
+export const deleteAdminCompetition = async id => {
+  try {
+    const res = await axiosApiWithToken(`/admin/competitions/${id}`, 'delete')
+    alert(`id :${id}대회가 삭제되었습니다.`)
+    return res
+  } catch (e) {
+    alert(`id :${id}대회가 삭제되었습니다.`)
+  }
+}
