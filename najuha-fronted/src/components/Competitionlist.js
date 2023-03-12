@@ -460,7 +460,7 @@ function Competitionlist() {
         </div>
         <div className="competition-searchzone-searchbar">
           <input
-            placeholder="대회 이름 직접 검색하기"
+            placeholder="대회명 직접 검색하기"
             value={temTitle}
             onKeyDown={e => searchEnterPress(e)}
             onChange={e => {

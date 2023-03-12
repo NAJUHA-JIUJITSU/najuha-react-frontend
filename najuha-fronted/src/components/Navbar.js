@@ -119,8 +119,7 @@ function Navbar() {
               onClick={() => {
                 window.scrollTo(0, 0)
                 navigate('/competition')
-              }}
-              style={{ fontWeight: '500' }}>
+              }}>
               대회일정
             </li>
             <li

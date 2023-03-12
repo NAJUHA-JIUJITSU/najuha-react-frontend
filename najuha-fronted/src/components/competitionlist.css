@@ -124,8 +124,8 @@
   box-sizing: border-box;
   position: relative;
 
-  width: 100px;
-  height: 36px;
+  width: 120px;
+  height: 42px;
   border: 1px solid #adadad;
   border-radius: 10px;
 
@@ -143,23 +143,23 @@
   left: 0;
   top: 40px;
   position: absolute;
-  width: 100px;
-  height: 150px;
+  width: 120px;
+  height: 300px;
   background: #fcfcfc;
   border: 1px solid #000000;
   border-radius: 10px;
 
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow-y: scroll;
   z-index: 11;
 }
 
 .competition-searchzone-option ul::-webkit-scrollbar {
-  width: 1px;
+  width: 0px;
 }
 
 .competition-searchzone-option li {
-  height: 35px;
+  height: 42px;
   display: flex;
   align-items: center;
   font-size: 1.6rem;
@@ -174,11 +174,11 @@
 
 .competition-searchzone-searchbar input {
   width: 240px;
-  height: 36px;
+  height: 42px;
   box-sizing: border-box;
   border: 1px solid #adadad;
   border-radius: 50px;
-
+  font-size: 1.6rem;
   padding-top: 4px;
   padding-left: 1.4rem;
   padding-right: calc(1.4rem + 24px);
@@ -366,7 +366,7 @@
   /* Typography */
 
   .competition-searchzone-option {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   /* Layout */
@@ -385,14 +385,14 @@
   /* component */
 
   .competition-searchzone-searchbar input {
-    height: 30px;
-    width: 180px;
+    height: 38px;
+    width: 170px;
     padding-left: 1rem;
     padding-right: calc(1rem + 24px);
     padding-top: 2px;
   }
   .competition-searchzone-searchbar input::placeholder {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
 
   .competition-searchzone-searchbar img {
@@ -401,7 +401,12 @@
 
   .competition-searchzone-option {
     padding: 0 1rem;
+    height: 38px;
     width: 85px;
-    height: 30px;
+    margin-right: 0.4rem;
+  }
+
+  .competition-searchzone-option ul {
+    width: 85px;
   }
 }
