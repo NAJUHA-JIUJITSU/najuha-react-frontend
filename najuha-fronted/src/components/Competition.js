@@ -206,21 +206,9 @@ function Competition() {
                 )
               </p>
             </div>
-            <div className="competition-top-content-info-each">
-              <h3>신청자 명단</h3>
-              <p>
-                {viewCompetition ? viewCompetition.applicantTableOpenDate : ''}{' '}
-                (
-                {viewCompetition
-                  ? viewCompetition.applicantTableOpenDateDay
-                  : ''}
-                )
-              </p>
-            </div>
             <div
               id="competition-top-content-info-each-last"
-              className="competition-top-content-info-each"
-            >
+              className="competition-top-content-info-each">
               <h3>대진표 공개</h3>
               <p>
                 {viewCompetition ? viewCompetition.tournamentTableOpenDate : ''}{' '}
@@ -239,8 +227,7 @@ function Competition() {
               id="competition-top-button"
               onClick={() => {
                 navigate(`/competition/applymethod/${competition.id}`)
-              }}
-            >
+              }}>
               대회 신청
             </button>
           ) : (
@@ -248,8 +235,7 @@ function Competition() {
               id="competition-top-button"
               onClick={() => {
                 window.location.href = competition.nonPartnershipPageLink
-              }}
-            >
+              }}>
               대회 신청
             </button>
           )

@@ -63,8 +63,8 @@
 
 .MainScroll_profile {
   margin: auto 0;
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   cursor: pointer;
   z-index: 888;
 }
@@ -174,7 +174,7 @@
   }
 
   .MainScroll_hamburgermenu.active {
-    animation: fadeInLeft 0.4s;
+    /* animation: fadeInLeft 0.4s; */
     display: block;
   }
 

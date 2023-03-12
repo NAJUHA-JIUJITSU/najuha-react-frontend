@@ -50,10 +50,10 @@
 }
 
 .PaymentSuccess-wrapper-button button {
-  width: 189px;
-  height: 57px;
+  width: 220px;
+  height: 50px;
   margin-top: 40px;
-  margin-left: 20px;
+
   margin-right: 20px;
   background: #ffffff;
   border: 1px solid #f1f1f1;
@@ -82,10 +82,11 @@
   }
 
   .PaymentSuccess-wrapper-button button {
-    width: 45%;
-    height: 50px;
-    margin-left: 5px;
-    margin-right: 5px;
+    width: 40%;
+    min-width: 110px;
+    height: 44px;
+    margin-left: 4px;
+    margin-right: 4px;
   }
 
   /*  typography */
