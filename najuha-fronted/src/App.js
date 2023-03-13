@@ -136,8 +136,10 @@ function App() {
           <Route path="/payment/fail" element={<AuthPaymentFailPage />} />
           <Route path="/PaymentInfo/:id" element={<AuthPaymentInfoPage />} />
           <Route path="/Mainscroll" element={<AuthMainScrollPage />} />
-          <Route path="/Error404" element={<AuthError404Page />} />
-          <Route path="/Error500" element={<AuthError500Page />} />
+
+          <Route path="/*" element={<AuthError404Page />} />
+
+          <Route path="/serverError" element={<AuthError500Page />} />
         </Routes>
       </BrowserRouter>
     </React.Fragment>
