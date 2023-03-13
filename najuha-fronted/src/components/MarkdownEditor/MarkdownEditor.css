@@ -1,11 +1,32 @@
-.MarkdownEditor ol {
-  list-style-type: decimal !important;
+.MarkdownEditor h1 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.MarkdownEditor h2 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.MarkdownEditor ul {
+  margin-bottom: 0px;
+  line-height: 22px;
 }
 
 .MarkdownEditor ol {
+  list-style-type: decimal !important;
   list-style-type: lower-alpha !important;
+  margin-bottom: 0px;
+  line-height: 22px;
 }
 
 .MarkdownEditor li {
   list-style-type: disc !important;
+  font-size: 20px;
+}
+
+.MarkdownEditor p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 20px;
 }
