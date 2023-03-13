@@ -104,10 +104,12 @@ function CompetitionApplyPatchForm() {
   // 대회 상세정보 가져오기
   const getCompetition = async id => {
     let res = await getCompetitionDetail(id)
-    const newCompetition = res.data.result
-    setCompetition(newCompetition)
-    setFillteredCompetition(newCompetition.division)
-    return
+    if (res?.status === 200) {
+      const newCompetition = res.data.result
+      setCompetition(newCompetition)
+      setFillteredCompetition(newCompetition.division)
+      return
+    }
   }
 
   //예상 가격 조회
@@ -117,8 +119,10 @@ function CompetitionApplyPatchForm() {
       isGroup: false,
       divisions: parsedlist,
     })
-    setDiscountedprice(res.data.result.discountedPrice)
-    setNormalprice(res.data.result.normalPrice)
+    if (res?.status === 200) {
+      setDiscountedprice(res.data.result.discountedPrice)
+      setNormalprice(res.data.result.normalPrice)
+    }
   }
 
   async function patchCompetitionApply() {

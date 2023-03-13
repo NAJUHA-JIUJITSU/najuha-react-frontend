@@ -119,9 +119,11 @@ function CompetitionApplyPatchTeamForm() {
 
   const getCompetition = async id => {
     const res = await getCompetitionDetail(id)
-    const newCompetition = res.data.result
-    setCompetition(newCompetition)
-    setFillteredCompetition(newCompetition.division)
+    if (res?.status === 200) {
+      const newCompetition = res.data.result
+      setCompetition(newCompetition)
+      setFillteredCompetition(newCompetition.division)
+    }
   }
 
   function genderDropdownToggle() {
@@ -473,8 +475,10 @@ function CompetitionApplyPatchTeamForm() {
       isGroup: true,
       divisions: viewCompetitionApplicationList,
     })
-    setDiscountedPrice(res.data.result.discountedPrice)
-    setNormalPrice(res.data.result.normalPrice)
+    if (res?.status === 200) {
+      setDiscountedPrice(res.data.result.discountedPrice)
+      setNormalPrice(res.data.result.normalPrice)
+    }
   }
 
   return (
