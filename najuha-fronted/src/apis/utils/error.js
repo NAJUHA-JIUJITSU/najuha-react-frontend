@@ -1,4 +1,7 @@
 export const handleError = error => {
+  if (error.code === 'ERR_NETWORK') {
+    window.location.href = '/500'
+  }
   switch (error.response.status) {
     case 400:
       alert(`${error.message}`)
@@ -10,7 +13,7 @@ export const handleError = error => {
       alert(`${error.message}`)
       break
     case 404:
-      window.location.href = '/404'
+      //   window.location.href = '/404'
       break
     case 409:
       alert(`${error.message}`)
