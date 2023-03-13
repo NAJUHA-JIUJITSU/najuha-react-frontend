@@ -248,7 +248,7 @@ function ProfileInfo() {
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              onClick={() => alert('고객센터(1234-1234)로 문의바랍니다.')}>
+              onClick={() => alert('고객센터(0507-0177-1165)로 문의바랍니다.')}>
               환불하기
             </button>
             <button

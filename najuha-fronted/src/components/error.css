@@ -1,0 +1,105 @@
+.Error_wrapper {
+  height: 84vh;
+  max-width: 1160px;
+  padding: 0 2rem;
+  margin: 0 auto;
+  letter-spacing: -0.1em;
+}
+
+.Error_card {
+  position: relative;
+  top: 10%;
+}
+
+/* 나주하 */
+.Error_card h1 {
+  font-size: 7.2rem;
+  font-family: 'Anton', sans-serif;
+  margin-bottom: 4px;
+}
+
+/* 에러 번호 */
+.Error_card p {
+  font-size: 2.4rem;
+  width: 210px;
+  height: 32px;
+  background: #e9f3fd;
+  border-radius: 15px;
+  text-align: center;
+  line-height: 32px;
+
+  margin-bottom: 40px;
+}
+
+/* 에러 메시지 */
+.Error_card h2 {
+  font-size: 3.6rem;
+  font-weight: 500;
+
+  margin-bottom: 20px;
+}
+
+/* 에러 상세 메시지 */
+.Error_card h3 {
+  font-size: 2.4rem;
+  color: #707070;
+  line-height: 28px;
+
+  margin-bottom: 50px;
+}
+
+/* 버튼 */
+.Error_card button {
+  padding: 14px 8px;
+  width: 320px;
+  height: 60px;
+  background: #ffffff;
+  border: 2px solid #4e82e6;
+  box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  color: #4e82e5;
+  font-size: 2.6rem;
+  cursor: pointer;
+}
+
+@media (max-width: 750px) {
+  /* 나주하 */
+  .Error_card h1 {
+    font-size: 4.2rem;
+    margin-bottom: 4px;
+  }
+
+  /* 에러 번호 */
+  .Error_card p {
+    font-size: 1.8rem;
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+
+    margin-bottom: 24px;
+  }
+
+  /* 에러 메시지 */
+  .Error_card h2 {
+    font-size: 2.4rem;
+
+    margin-bottom: 20px;
+  }
+
+  /* 에러 상세 메시지 */
+  .Error_card h3 {
+    font-size: 1.8rem;
+    color: #707070;
+    line-height: 24px;
+
+    margin-bottom: 20px;
+  }
+
+  /* 버튼 */
+  .Error_card button {
+    padding: 10px 4px;
+    width: 240px;
+    height: 50px;
+    font-size: 2rem;
+  }
+}

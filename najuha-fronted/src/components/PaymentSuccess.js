@@ -19,7 +19,7 @@ function PaymentSuccess() {
             onClick={() => {
               navigate('/')
             }}>
-            홈으로
+            메인으로
           </button>
           <button
             id="PaymentSuccess-blue-button"
