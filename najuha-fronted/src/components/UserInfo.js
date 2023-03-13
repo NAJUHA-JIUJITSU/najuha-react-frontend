@@ -49,7 +49,8 @@ function Read({ userInfo, setMode }) {
         onClick={e => {
           e.preventDefault()
           setMode('UPDATE')
-        }}>
+        }}
+      >
         수정하기
       </button>
     </div>
@@ -164,7 +165,8 @@ function Update({ userInfo, setUserInfo, setMode, updateUser }) {
           <select
             value={userInfo?.belt}
             name="belt"
-            onChange={e => handleChange(e, 'belt')}>
+            onChange={e => handleChange(e, 'belt')}
+          >
             <option value="white">화이트</option>
             <option value="blue">블루</option>
             <option value="purple">퍼플</option>
