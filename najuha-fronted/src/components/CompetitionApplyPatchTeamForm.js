@@ -90,9 +90,10 @@ function CompetitionApplyPatchTeamForm() {
   // 신청아이디로 신청정보 가져와서 뿌려주기
   async function getCompetitionApplicationInfo() {
     let res = await getUserApplicationCompetitionInfo(state)
-    res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
-    setViewCompetitionApplicationList(res)
-    return
+    if (res?.status === 200) {
+      res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
+      setViewCompetitionApplicationList(res)
+    }
   }
 
   function parsingBeforePatch(viewCompetitionApplicationList) {
@@ -113,7 +114,9 @@ function CompetitionApplyPatchTeamForm() {
       state,
       competitionApplicationList
     )
-    setCompetitionApplicationId(res.data.result.competitionApplicationId)
+    if (res?.status === 200) {
+      setCompetitionApplicationId(res.data.result.competitionApplicationId)
+    }
     return
   }
 
@@ -836,14 +839,9 @@ function CompetitionApplyPatchTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-save"
             onClick={async () => {
-              try {
-                await patchCompetitionApply()
-                navigate('/')
-                alert('저장되었습니다.')
-              } catch (err) {
-                console.log(err)
-                alert('대회 신청 수정에 실패했습니다.')
-              }
+              await patchCompetitionApply()
+              navigate('/')
+              alert('저장되었습니다.')
             }}
           >
             저장하기
@@ -851,13 +849,8 @@ function CompetitionApplyPatchTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-register"
             onClick={async () => {
-              try {
-                await patchCompetitionApply()
-                setPaymentbridgemodal(pre => !pre)
-              } catch (err) {
-                console.log(err)
-                alert('대회 신청 수정에 실패했습니다.')
-              }
+              await patchCompetitionApply()
+              setPaymentbridgemodal(pre => !pre)
             }}
           >
             신청하기

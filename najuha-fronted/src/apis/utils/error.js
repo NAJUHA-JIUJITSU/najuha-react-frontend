@@ -4,19 +4,20 @@ export const handleError = error => {
   }
   switch (error.response.status) {
     case 400:
-      alert(`${error.message}`)
+      alert(`${error.response.data.result}`)
       break
     case 401:
       alert('접근 권한이 없습니다.')
+      window.location.href = '/'
       break
     case 403:
-      alert(`${error.message}`)
+      alert(`${error.response.data.result}`)
       break
     case 404:
       window.location.href = '/404'
       break
     case 409:
-      alert(`${error.message}`)
+      alert(`${error.response.data.result}`)
       break
     case 500:
       window.location.href = '/500'

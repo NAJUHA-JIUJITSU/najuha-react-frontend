@@ -41,9 +41,11 @@ function ProfileInfo() {
   //서버에서 신청상세정보 가져오기
   async function getCompetitionApplicationInfo() {
     let res = await getUserApplicationCompetitionInfo(competitionApplicationId)
-    setRawCompetitionApplicationInfo(res.data.result)
-    setcompetitionApplicationInfo(applicationParsing(res.data.result))
-    setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos)
+    if (res?.status === 200) {
+      setRawCompetitionApplicationInfo(res.data.result)
+      setcompetitionApplicationInfo(applicationParsing(res.data.result))
+      setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos)
+    }
     return
   }
 
@@ -187,9 +189,11 @@ function ProfileInfo() {
 
   // 신청 대회 지우기(결제 미완료)
   async function deleteCompetitionApplication(id) {
-    await deleteUserApplicationCompetition(id)
-    alert('대회가 삭제되었습니다.')
-    navigate('/Profilepage', { state: 'UserApplicationList' })
+    const res = await deleteUserApplicationCompetition(id)
+    if (res?.status === 200) {
+      alert('대회가 삭제되었습니다.')
+      navigate('/Profilepage', { state: 'UserApplicationList' })
+    }
     return
   }
 
@@ -235,7 +239,8 @@ function ProfileInfo() {
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}>
+              style={cursorStyle}
+            >
               결제완료
             </button>
           </div>
@@ -248,12 +253,14 @@ function ProfileInfo() {
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              onClick={() => alert('고객센터(1234-1234)로 문의바랍니다.')}>
+              onClick={() => alert('고객센터(1234-1234)로 문의바랍니다.')}
+            >
               환불하기
             </button>
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}>
+              style={cursorStyle}
+            >
               결제완료
             </button>
           </div>
@@ -266,7 +273,8 @@ function ProfileInfo() {
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}>
+              style={cursorStyle}
+            >
               환불완료
             </button>
           </div>
@@ -283,7 +291,8 @@ function ProfileInfo() {
             id="CompetitionApplyTeamForm-bottom-table-buttons-save"
             onClick={() => {
               onRemove(application.id)
-            }}>
+            }}
+          >
             삭제하기
           </button>
         </div>
@@ -297,14 +306,16 @@ function ProfileInfo() {
           id="CompetitionApplyTeamForm-bottom-table-buttons-save"
           onClick={() => {
             patchClick()
-          }}>
+          }}
+        >
           수정하기
         </button>
         <button
           id="CompetitionApplyTeamForm-bottom-table-buttons-register"
           onClick={() => {
             setPaymentmodal(pre => !pre)
-          }}>
+          }}
+        >
           결제하기
         </button>
       </div>
@@ -352,7 +363,8 @@ function ProfileInfo() {
         <a
           onClick={() => {
             navigate(`/Profilepage`, { state: 'UserApplicationList' })
-          }}>
+          }}
+        >
           <img src={arrowLeftIcon} alt="이전으로 돌아가기"></img>
         </a>
         <h2>{competitionApplicationInfo.title}</h2>
@@ -365,7 +377,8 @@ function ProfileInfo() {
               navigate(
                 `/competition/${competitionApplicationInfo.competitionId}`
               )
-            }}>
+            }}
+          >
             대회상세보기
           </h2>
         </div>
@@ -412,7 +425,8 @@ function ProfileInfo() {
           {/* 오칸 코드 가져온 부분 - 신청명단 테이블*/}
           <div
             className="CompetitionApplyTeamForm-bottom-table"
-            id="ProfileInfo-bottom">
+            id="ProfileInfo-bottom"
+          >
             <ul className="CompetitionApplyTeamForm-bottom-table-column">
               <li>No.</li>
               <li>이름</li>

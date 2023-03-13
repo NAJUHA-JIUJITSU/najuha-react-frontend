@@ -96,9 +96,10 @@ function CompetitionApplyPatchForm() {
   // 신청아이디로 신청정보 가져와서 뿌려주기
   async function getCompetitionApplicationInfo() {
     let res = await getUserApplicationCompetitionInfo(state)
-    res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
-    setviewCompetitionApplicationList(res)
-    return
+    if (res?.status === 200) {
+      res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
+      setviewCompetitionApplicationList(res)
+    }
   }
 
   // 대회 상세정보 가져오기
@@ -133,9 +134,11 @@ function CompetitionApplyPatchForm() {
       state,
       competitionApplicationList
     )
-    setCompetitionApplicationId(res.data.result.competitionApplicationId)
-    setapplymodal(pre => !pre)
-    setPaymentbridgemodal(pre => !pre)
+    if (res?.status === 200) {
+      setCompetitionApplicationId(res.data.result.competitionApplicationId)
+      setapplymodal(pre => !pre)
+      setPaymentbridgemodal(pre => !pre)
+    }
   }
 
   useEffect(() => {

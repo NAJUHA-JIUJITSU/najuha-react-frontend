@@ -17,10 +17,12 @@ function UserApplicationList(props) {
 
   // 신청 대회 지우기(결제 미완료)
   async function deleteCompetitionApplication(id) {
-    await deleteUserApplicationCompetition(id)
-    alert('대회가 삭제되었습니다.')
-    props.getCompetitionApplication()
-    return
+    const res = await deleteUserApplicationCompetition(id)
+    if (res?.status === 200) {
+      alert('대회가 삭제되었습니다.')
+      props.getCompetitionApplication()
+      return
+    }
   }
 
   //삭제 경고 문구창
