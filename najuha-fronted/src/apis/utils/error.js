@@ -13,7 +13,7 @@ export const handleError = error => {
       alert(`${error.message}`)
       break
     case 404:
-      //   window.location.href = '/404'
+      window.location.href = '/404'
       break
     case 409:
       alert(`${error.message}`)
