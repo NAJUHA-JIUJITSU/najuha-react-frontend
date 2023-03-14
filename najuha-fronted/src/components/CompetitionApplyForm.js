@@ -72,11 +72,11 @@ function CompetitionApplyForm() {
 
   const getCompetition = async id => {
     let res = await getCompetitionDetail(id)
-    console.log(res)
-    const newCompetition = res.data.result
-    console.log(newCompetition)
-    setCompetition(newCompetition)
-    setFillteredCompetition(newCompetition.division)
+    if (res?.status === 200) {
+      const newCompetition = res.data.result
+      setCompetition(newCompetition)
+      setFillteredCompetition(newCompetition.division)
+    }
   }
 
   // 예상 가격 가져오기
@@ -86,8 +86,10 @@ function CompetitionApplyForm() {
       isGroup: false,
       divisions: parsedlist,
     })
-    setDiscountedprice(res.data.result.discountedPrice)
-    setNormalprice(res.data.result.normalPrice)
+    if (res?.status === 200) {
+      setDiscountedprice(res.data.result.discountedPrice)
+      setNormalprice(res.data.result.normalPrice)
+    }
   }
 
   // 대회 참가 신청하기

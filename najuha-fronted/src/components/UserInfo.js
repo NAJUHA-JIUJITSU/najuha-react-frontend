@@ -210,7 +210,7 @@ function UserInfo(props) {
 
   async function updateUser(updateUerinfo) {
     let res = await patchUserInfo(updateUerinfo)
-    if (res) {
+    if (res?.status === 200) {
       if (props.userLevel === 1) {
         alert('회원정보가 수정되었습니다')
         cookies.set('x-access-token', res.data.result, {
