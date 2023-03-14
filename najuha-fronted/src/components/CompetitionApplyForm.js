@@ -98,9 +98,11 @@ function CompetitionApplyForm() {
       viewcompetitionApplicationList
     )
     let res = await postCompetitionApplication({ competitionApplicationList })
-    setCompetitionApplicationId(res.data.result.competitionApplicationId)
-    setapplymodal(pre => !pre)
-    setPaymentbridgemodal(pre => !pre)
+    if (res?.status === 200) {
+      setCompetitionApplicationId(res.data.result.competitionApplicationId)
+      setapplymodal(pre => !pre)
+      setPaymentbridgemodal(pre => !pre)
+    }
   }
 
   useEffect(() => {
