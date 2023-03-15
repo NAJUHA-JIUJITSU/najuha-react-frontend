@@ -25,7 +25,8 @@ function ApplyModal(props) {
                 width: '24px',
                 marginRight: '-10px',
                 marginTop: '-30px',
-              }}></img>
+              }}
+            ></img>
           </button>
         </div>
 
@@ -34,6 +35,7 @@ function ApplyModal(props) {
             <label>성명</label>
             <input
               placeholder="성명(한글)을 입력해주세요"
+              value={props.viewcompetitionApplicationList[0].playerName}
               onChange={e => {
                 let pattern = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g
                 e.target.value = e.target.value.replace(pattern, '')
@@ -43,11 +45,13 @@ function ApplyModal(props) {
               }}
               pattern="[가-힣]{1,10}"
               title="한글 10자 이하만 가능합니다."
-              required></input>
+              required
+            ></input>
           </div>
           <div className="ApplyModal_modalinputdiv">
             <label>번호</label>
             <input
+              value={props.viewcompetitionApplicationList[0].phoneNumber}
               placeholder="번호를 -없이 입력해주세요"
               onChange={e => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, '')
@@ -57,13 +61,16 @@ function ApplyModal(props) {
               }}
               pattern="[0-9]{11}"
               required
-              title="숫자 11자를 입력해주세요"></input>
+              title="숫자 11자를 입력해주세요"
+            ></input>
           </div>
           <div
             id="ApplyModal_modalinputdiv_birth"
-            className="ApplyModal_modalinputdiv">
+            className="ApplyModal_modalinputdiv"
+          >
             <label>생년월일</label>
             <input
+              value={props.viewcompetitionApplicationList[0].playerBirth}
               placeholder="주민번호 앞6자리"
               onChange={e => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, '')
@@ -73,11 +80,13 @@ function ApplyModal(props) {
               }}
               pattern="[0-9]{6}"
               title="숫자 6자를 입력해주세요"
-              required></input>
+              required
+            ></input>
           </div>
           <div className="ApplyModal_modalinputdiv">
             <label>소속</label>
             <input
+              value={props.viewcompetitionApplicationList[0].team}
               placeholder="소속을 입력해주세요"
               onChange={e => {
                 let pattern = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g
@@ -88,7 +97,8 @@ function ApplyModal(props) {
               }}
               pattern="[가-힣]{1,50}"
               title="한글 50자 이하만 가능합니다."
-              required></input>
+              required
+            ></input>
           </div>
           <button className="ApplyModal_modalregisterbutton" type="submit">
             신청하기
