@@ -24,6 +24,7 @@ import AdminCompetitionImagePage from './pages/AdminCompetitionImagePage'
 import AdminCsvDownload from './components/AdminCsvDownload'
 import AdminCompetitionInfoPage from './pages/AdminCompetitionInfoPage'
 import MainScrollPage from './pages/MainScrollPage'
+import CompetitionApplicantListPage from './pages/CompetitionApplicantListPage'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -132,6 +133,10 @@ function App() {
           <Route path="/payment/fail" element={<AuthPaymentFailPage />} />
           <Route path="/PaymentInfo/:id" element={<AuthPaymentInfoPage />} />
           <Route path="/Mainscroll" element={<AuthMainScrollPage />} />
+          <Route
+            path="/competition/:id/applicant"
+            element={<CompetitionApplicantListPage />}
+          />
         </Routes>
       </BrowserRouter>
     </React.Fragment>

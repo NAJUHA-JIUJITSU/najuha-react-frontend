@@ -48,3 +48,15 @@ export const getPartnershipCompetitionList = async () => {
     handleError(e)
   }
 }
+
+export const getCompetitionApplicationList = async competitionId => {
+  try {
+    const res = await axiosApiWithToken(
+      `/competitions/${competitionId}/applications`,
+      'get'
+    )
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
