@@ -11,6 +11,9 @@ import './CompetitionApplicantList.css'
 
 const jsonToCsv = jsonData => {
   try {
+    if (jsonData.length === 0) {
+      return ''
+    }
     // 1-1. json 데이터 취득
     const json_array = jsonData
 
