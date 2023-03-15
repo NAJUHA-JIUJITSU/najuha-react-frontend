@@ -39,8 +39,10 @@ function MainScroll() {
   //대회 정보 가져오기
   async function getCompetitons() {
     const res = await getPartnershipCompetitionList()
-    setCompetitions(res.data.result)
-    return
+    if (res?.status === 200) {
+      setCompetitions(res.data.result)
+      return
+    }
   }
   //요일 값 구하기
   function getDayOfWeek(날짜문자열) {

@@ -41,9 +41,11 @@ function ProfileInfo() {
   //서버에서 신청상세정보 가져오기
   async function getCompetitionApplicationInfo() {
     let res = await getUserApplicationCompetitionInfo(competitionApplicationId)
-    setRawCompetitionApplicationInfo(res.data.result)
-    setcompetitionApplicationInfo(applicationParsing(res.data.result))
-    setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos)
+    if (res?.status === 200) {
+      setRawCompetitionApplicationInfo(res.data.result)
+      setcompetitionApplicationInfo(applicationParsing(res.data.result))
+      setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos)
+    }
     return
   }
 
@@ -187,9 +189,11 @@ function ProfileInfo() {
 
   // 신청 대회 지우기(결제 미완료)
   async function deleteCompetitionApplication(id) {
-    await deleteUserApplicationCompetition(id)
-    alert('대회가 삭제되었습니다.')
-    navigate('/Profilepage', { state: 'UserApplicationList' })
+    const res = await deleteUserApplicationCompetition(id)
+    if (res?.status === 200) {
+      alert('대회가 삭제되었습니다.')
+      navigate('/Profilepage', { state: 'UserApplicationList' })
+    }
     return
   }
 

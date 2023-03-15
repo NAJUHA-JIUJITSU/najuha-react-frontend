@@ -42,7 +42,7 @@ function CompetitionApplyPatchForm() {
         gender: null,
         belt: null,
         weight: null,
-        team: null,
+        team: '',
         competitionId: id,
         price: null,
         check: 0,
@@ -96,18 +96,21 @@ function CompetitionApplyPatchForm() {
   // 신청아이디로 신청정보 가져와서 뿌려주기
   async function getCompetitionApplicationInfo() {
     let res = await getUserApplicationCompetitionInfo(state)
-    res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
-    setviewCompetitionApplicationList(res)
-    return
+    if (res?.status === 200) {
+      res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
+      setviewCompetitionApplicationList(res)
+    }
   }
 
   // 대회 상세정보 가져오기
   const getCompetition = async id => {
     let res = await getCompetitionDetail(id)
-    const newCompetition = res.data.result
-    setCompetition(newCompetition)
-    setFillteredCompetition(newCompetition.division)
-    return
+    if (res?.status === 200) {
+      const newCompetition = res.data.result
+      setCompetition(newCompetition)
+      setFillteredCompetition(newCompetition.division)
+      return
+    }
   }
 
   //예상 가격 조회
@@ -117,8 +120,10 @@ function CompetitionApplyPatchForm() {
       isGroup: false,
       divisions: parsedlist,
     })
-    setDiscountedprice(res.data.result.discountedPrice)
-    setNormalprice(res.data.result.normalPrice)
+    if (res?.status === 200) {
+      setDiscountedprice(res.data.result.discountedPrice)
+      setNormalprice(res.data.result.normalPrice)
+    }
   }
 
   async function patchCompetitionApply() {
@@ -129,9 +134,11 @@ function CompetitionApplyPatchForm() {
       state,
       competitionApplicationList
     )
-    setCompetitionApplicationId(res.data.result.competitionApplicationId)
-    setapplymodal(pre => !pre)
-    setPaymentbridgemodal(pre => !pre)
+    if (res?.status === 200) {
+      setCompetitionApplicationId(res.data.result.competitionApplicationId)
+      setapplymodal(pre => !pre)
+      setPaymentbridgemodal(pre => !pre)
+    }
   }
 
   useEffect(() => {
@@ -605,6 +612,7 @@ function CompetitionApplyPatchForm() {
             changephoneNumber={changephoneNumber}
             changeTeam={changeTeam}
             postCompetition={patchCompetitionApply}
+            viewcompetitionApplicationList={viewcompetitionApplicationList}
           />
         )}
         {competitionApplicationId && paymentbridgemodal && (

@@ -17,8 +17,10 @@ const KakaoLogin = () => {
     }
 
     async function TryLoginUser() {
-      try {
-        let xAccessToken = await kakaoLogin(body)
+      let res = await kakaoLogin(body)
+      console.log(res)
+      if (res?.status === 200) {
+        let xAccessToken = res.data.result.xAccessToken
         const decodeToken = jwt_decode(xAccessToken)
 
         if (decodeToken.userLevel === 1) {
@@ -28,9 +30,6 @@ const KakaoLogin = () => {
           alert('로그인에 성공하셨습니다')
           navigate('/')
         }
-      } catch (err) {
-        alert(`에러가 발생 ${err.message} \n 로그인에 실패하였습니다`)
-        navigate('/')
       }
     }
 

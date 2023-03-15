@@ -75,8 +75,10 @@ function Competition() {
   // 대회 상세정보 가져오기(3.2)
   const getCompetition = async id => {
     const res = await getCompetitionDetail(id)
-    const newCompetition = res.data.result
-    setCompetition(newCompetition)
+    if (res?.status === 200) {
+      const newCompetition = res.data.result
+      setCompetition(newCompetition)
+    }
   }
   function competitionParsing(competition) {
     let doreOpen = competition.doreOpen
@@ -129,7 +131,6 @@ function Competition() {
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
     let deadlineDiff = todaytime.diff(finishdate, 'm')
-    console.log(deadlineDiff)
     if (deadlineDiff > 0) {
       // 마감날짜(데드라인)이 지났을경우
       return false
@@ -208,7 +209,8 @@ function Competition() {
             </div>
             <div
               id="competition-top-content-info-each-last"
-              className="competition-top-content-info-each">
+              className="competition-top-content-info-each"
+            >
               <h3>대진표 공개</h3>
               <p>
                 {viewCompetition ? viewCompetition.tournamentTableOpenDate : ''}{' '}
@@ -227,7 +229,8 @@ function Competition() {
               id="competition-top-button"
               onClick={() => {
                 navigate(`/competition/applymethod/${competition.id}`)
-              }}>
+              }}
+            >
               대회 신청
             </button>
           ) : (
@@ -235,7 +238,8 @@ function Competition() {
               id="competition-top-button"
               onClick={() => {
                 window.location.href = competition.nonPartnershipPageLink
-              }}>
+              }}
+            >
               대회 신청
             </button>
           )
