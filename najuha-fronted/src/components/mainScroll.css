@@ -62,13 +62,8 @@
   position: absolute;
   height: 100vh;
   z-index: 20;
-  left: 20vw;
-  width: 80vw;
-  background: linear-gradient(
-    270deg,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(6, 0, 0, 0) 100%
-  );
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.4);
 }
 .MainScroll_black2 {
   position: fixed;
@@ -80,16 +75,31 @@
 /* 나는 주짓수가 하고싶다 */
 .MainScroll_message {
   position: absolute;
-  top: 20%;
-  left: 58%;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 30;
+  text-align: center;
 }
 
 .MainScroll_message h1 {
+  font-family: 'Anton', sans-serif;
   color: var(--white-color);
-  font-weight: 700;
-  font-size: 6.4rem;
-  line-height: 14rem;
+  font-size: 18rem;
+}
+#MainScroll_span {
+  color: white;
+  font-size: 3.8rem;
+  line-height: 4.6rem;
+  font-weight: 300;
+  letter-spacing: 3%;
+}
+
+.MainScroll_message h2 span {
+  font-size: 3.8rem;
+  line-height: 4.6rem;
+  font-weight: 600;
+  letter-spacing: 3%;
 }
 
 .MainScroll_message2 {
@@ -105,8 +115,8 @@
 .MainScroll_message2 h2 {
   color: var(--white-color);
   font-weight: 500;
-  font-size: 4rem;
-  line-height: 5rem;
+  font-size: 4.6rem;
+  line-height: 6.2rem;
   margin-bottom: 40px;
 }
 
@@ -155,7 +165,7 @@
   color: white;
   z-index: 999;
   position: fixed;
-  top: 90%;
+  top: 88%;
   left: 50%;
   transform: translateX(-50%);
   animation: motion 0.6s /* 속도 */ linear 0s
@@ -443,9 +453,6 @@
 
 @media (max-width: 1049px) {
   /* 섹션 1 */
-  .MainScroll_message {
-    left: 52%;
-  }
 
   /* 섹션 2 */
   .MainScroll_section2 img {
@@ -456,20 +463,21 @@
 @media (max-width: 750px) {
   /* 섹션 1 */
   .MainScroll_message {
-    left: 44%;
+    top: 40%;
   }
-
-  .MainScroll_message span {
-    font-size: 8.8rem;
-    line-height: 10rem;
-  }
-
   .MainScroll_message h1 {
-    font-size: 4rem;
-    line-height: 10rem;
+    font-size: 11rem;
+  }
+  #MainScroll_span {
+    font-size: 2.4rem;
+  }
+  .MainScroll_message h2 span {
+    font-size: 2.4rem;
+    line-height: 3rem;
   }
 
   .MainScroll_message2 {
+    top: 46%;
     max-width: 280px;
     margin-top: -20px;
   }
