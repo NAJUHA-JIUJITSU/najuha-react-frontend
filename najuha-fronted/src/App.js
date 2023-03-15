@@ -137,17 +137,14 @@ function App() {
           <Route path="/payment/fail" element={<AuthPaymentFailPage />} />
           <Route path="/PaymentInfo/:id" element={<AuthPaymentInfoPage />} />
           <Route path="/Mainscroll" element={<AuthMainScrollPage />} />
-<<<<<<< HEAD
           <Route
             path="/competition/:id/applicant"
             element={<CompetitionApplicantListPage />}
           />
-=======
 
           <Route path="/*" element={<AuthError404Page />} />
 
           <Route path="/serverError" element={<AuthError500Page />} />
->>>>>>> master
         </Routes>
       </BrowserRouter>
     </React.Fragment>
