@@ -1,6 +1,6 @@
 export const handleError = error => {
   if (error.code === 'ERR_NETWORK') {
-    window.location.href = '/500'
+    window.location.href = '/servererror'
   }
   switch (error.response.status) {
     case 400:
@@ -20,7 +20,7 @@ export const handleError = error => {
       alert(`${error.response.data.result}`)
       break
     case 500:
-      window.location.href = '/500'
+      window.location.href = '/servererror'
       break
     default:
       // do something
