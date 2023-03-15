@@ -15,7 +15,7 @@ import './slick.css'
 import './slick-theme.css'
 
 import ProgressiveImage from 'react-progressive-graceful-image'
-import placeholderSrc from '../src_assets/newBg.png'
+import placeholderSrc from '../src_assets/exBG.png'
 
 import { Cookies } from 'react-cookie'
 import axios from 'axios'
