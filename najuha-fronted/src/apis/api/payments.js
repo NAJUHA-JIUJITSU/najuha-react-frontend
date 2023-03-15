@@ -1,4 +1,5 @@
 import { axiosApi } from '../utils/axios'
+import { handleError } from '../utils/error'
 
 export const tossPaymentApproval = async (paymentKey, amount, orderId) => {
   try {
@@ -8,6 +9,7 @@ export const tossPaymentApproval = async (paymentKey, amount, orderId) => {
     )
     return res
   } catch (e) {
-    throw e
+    window.alert('결제에 실패하였습니다.')
+    window.location.href = '/payment/fail'
   }
 }

@@ -264,6 +264,24 @@
   margin-top: 2px;
 }
 
+.each-competition-tag-purple {
+  background: #fbeaff;
+  color: #e441ff;
+  font-size: 14px;
+  letter-spacing: -0.1em;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding-left: 2px;
+  padding-right: 3px;
+  margin-right: 5px;
+}
+
+.each-competition-tag-purple p {
+  /*수직정렬 맞췄지만 p태그안에 수직이 뭔가 안맞아서 인위적으로 p태그를 이동시킴 */
+  margin-top: 2px;
+}
+
 .each-competition-body {
   display: flex;
   height: 140px;

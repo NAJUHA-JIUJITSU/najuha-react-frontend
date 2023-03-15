@@ -1,4 +1,5 @@
 import { axiosApi, axiosApiWithToken } from '../utils/axios'
+import { handleError } from '../utils/error'
 
 export const postCompetitionApplication = async data => {
   try {
@@ -9,7 +10,8 @@ export const postCompetitionApplication = async data => {
     )
     return res
   } catch (e) {
-    console.log(e)
+    alert('대회 신청에 실패하였습니다.')
+    handleError(e)
   }
 }
 
@@ -22,7 +24,8 @@ export const postCompetitionApplicationGroup = async data => {
     )
     return res
   } catch (e) {
-    console.log(e)
+    alert('대회 신청에 실패하였습니다.')
+    handleError(e)
   }
 }
 
@@ -35,6 +38,7 @@ export const postCompetitionApplicationPayment =
       )
       return res
     } catch (e) {
-      console.log(e)
+      alert('결제에 실패하였습니다.')
+      handleError(e)
     }
   }

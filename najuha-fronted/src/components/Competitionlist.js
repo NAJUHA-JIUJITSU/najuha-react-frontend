@@ -224,6 +224,16 @@ function Competitionlist() {
       )
   }
 
+  function makingPartnerTag(isPartnership) {
+    if (isPartnership) {
+      return (
+        <div className="each-competition-tag-purple">
+          <p>간편결제</p>
+        </div>
+      )
+    }
+  }
+
   //신청마감 & 신청오픈 전 카드 색 변경
   function competitionCardGray(registrationDate, registrationDeadline) {
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
@@ -300,6 +310,7 @@ function Competitionlist() {
               competition.registrationDate,
               competition.registrationDeadline
             )}
+            {makingPartnerTag(competition.isPartnership)}
           </div>
           <div className="each-competition-body" id={cardGray}>
             <div

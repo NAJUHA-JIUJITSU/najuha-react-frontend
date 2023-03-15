@@ -42,7 +42,7 @@ function CompetitionApplyPatchForm() {
         gender: null,
         belt: null,
         weight: null,
-        team: null,
+        team: '',
         competitionId: id,
         price: null,
         check: 0,
@@ -612,6 +612,7 @@ function CompetitionApplyPatchForm() {
             changephoneNumber={changephoneNumber}
             changeTeam={changeTeam}
             postCompetition={patchCompetitionApply}
+            viewcompetitionApplicationList={viewcompetitionApplicationList}
           />
         )}
         {competitionApplicationId && paymentbridgemodal && (

@@ -9,6 +9,7 @@ export const tossPay = async (
   const frontBaseUrl = process.env.REACT_APP_FRONT_END_API
   const clientkey = process.env.REACT_APP_TOSS_CLIENTKEY
   const res = await postCompetitionApplicationPayment(competitionApplicationId)
+  if (res?.status !== 200) return
   const data = res.data.result
   if (paymentmethod == '카드') {
     loadTossPayments(clientkey).then(tossPayments => {

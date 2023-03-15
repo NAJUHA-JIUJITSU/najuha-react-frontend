@@ -10,16 +10,12 @@ const TossSuccess = () => {
 
   useEffect(() => {
     async function PaymentApproval() {
-      try {
-        const res = await tossPaymentApproval(paymentKey, amount, orderId)
+      const res = await tossPaymentApproval(paymentKey, amount, orderId)
+      if (res?.status === 200) {
         window.alert(
           `결제가 완료되었습니다. 결제 금액: ${res.data.result.totalAmount}`
         )
         navigate('/payment/success')
-      } catch (e) {
-        console.log(e)
-        window.alert('결제에 실패하였습니다.')
-        navigate('/payment/fail')
       }
     }
     PaymentApproval()

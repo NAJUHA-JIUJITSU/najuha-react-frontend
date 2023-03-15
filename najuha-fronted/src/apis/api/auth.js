@@ -14,7 +14,6 @@ export const kakaoLogin = async code => {
     })
     return res
   } catch (e) {
-    console.log(e)
     alert('로그인에 실패하였습니다')
     handleError(e)
   }

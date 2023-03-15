@@ -186,12 +186,14 @@ function NavbarNew() {
               <ul>
                 <li
                   onClick={() => {
+                    window.scrollTo(0, 0)
                     navigate('/Profilepage', { state: 'UserInfoToggle' })
                   }}>
                   내 프로필
                 </li>
                 <li
                   onClick={() => {
+                    window.scrollTo(0, 0)
                     navigate('/Profilepage', { state: 'UserApplicationList' })
                   }}>
                   신청대회 목록

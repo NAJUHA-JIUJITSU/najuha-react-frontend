@@ -12,10 +12,7 @@ import {
   getCompetitionDetail,
   getCompetitionPricePredict,
 } from '../apis/api/competition'
-import {
-  postCompetitionApplicationGroup,
-  postCompetitionApplicationPayment,
-} from '../apis/api/competitionApplications'
+import { postCompetitionApplicationGroup } from '../apis/api/competitionApplications'
 
 function CompetitionApplyTeamForm() {
   const { id } = useParams()
@@ -89,7 +86,11 @@ function CompetitionApplyTeamForm() {
     let res = await postCompetitionApplicationGroup({
       competitionApplicationList,
     })
-    setCompetitionApplicationId(res.data.result.competitionApplicationId)
+    if (res?.status === 200) {
+      setCompetitionApplicationId(res.data.result.competitionApplicationId)
+      return true
+    }
+    return false
   }
 
   const getCompetition = async id => {
@@ -851,13 +852,10 @@ function CompetitionApplyTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-save"
             onClick={async () => {
-              try {
-                await postCompetitionApply()
-                navigate('/')
+              let res = await postCompetitionApply()
+              if (res === true) {
                 alert('저장되었습니다.')
-              } catch (err) {
-                console.log(err)
-                alert('대회 신청에 실패했습니다.')
+                navigate('/Profilepage', { state: 'UserApplicationList' })
               }
             }}
           >
@@ -866,13 +864,8 @@ function CompetitionApplyTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-register"
             onClick={async () => {
-              try {
-                await postCompetitionApply()
-                setPaymentbridgemodal(pre => !pre)
-              } catch (err) {
-                console.log(err)
-                alert('대회 신청에 실패했습니다.')
-              }
+              let res = await postCompetitionApply()
+              if (res === true) setPaymentbridgemodal(pre => !pre)
             }}
           >
             신청하기

@@ -36,7 +36,7 @@ function CompetitionApplyForm() {
         gender: null,
         belt: null,
         weight: null,
-        team: null,
+        team: '',
         competitionId: id,
         price: null,
         check: 0,
@@ -98,9 +98,11 @@ function CompetitionApplyForm() {
       viewcompetitionApplicationList
     )
     let res = await postCompetitionApplication({ competitionApplicationList })
-    setCompetitionApplicationId(res.data.result.competitionApplicationId)
-    setapplymodal(pre => !pre)
-    setPaymentbridgemodal(pre => !pre)
+    if (res?.status === 200) {
+      setCompetitionApplicationId(res.data.result.competitionApplicationId)
+      setapplymodal(pre => !pre)
+      setPaymentbridgemodal(pre => !pre)
+    }
   }
 
   useEffect(() => {
@@ -596,6 +598,7 @@ function CompetitionApplyForm() {
             changephoneNumber={changephoneNumber}
             changeTeam={changeTeam}
             postCompetition={postCompetition}
+            viewcompetitionApplicationList={viewcompetitionApplicationList}
           />
         )}
         {competitionApplicationId && paymentbridgemodal && (

@@ -116,8 +116,9 @@ function CompetitionApplyPatchTeamForm() {
     )
     if (res?.status === 200) {
       setCompetitionApplicationId(res.data.result.competitionApplicationId)
+      return true
     }
-    return
+    return false
   }
 
   const getCompetition = async id => {
@@ -839,9 +840,11 @@ function CompetitionApplyPatchTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-save"
             onClick={async () => {
-              await patchCompetitionApply()
-              navigate('/')
-              alert('저장되었습니다.')
+              const res = await patchCompetitionApply()
+              if (res === true) {
+                alert('저장되었습니다.')
+                navigate('/Profilepage', { state: 'UserApplicationList' })
+              }
             }}
           >
             저장하기
@@ -849,8 +852,10 @@ function CompetitionApplyPatchTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-register"
             onClick={async () => {
-              await patchCompetitionApply()
-              setPaymentbridgemodal(pre => !pre)
+              const res = await patchCompetitionApply()
+              if (res === true) {
+                setPaymentbridgemodal(pre => !pre)
+              }
             }}
           >
             신청하기
