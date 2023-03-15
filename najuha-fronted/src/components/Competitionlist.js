@@ -350,7 +350,10 @@ function Competitionlist() {
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
                       window.scrollTo(0, 0)
-                      navigate(`/competition/applymethod/${curcompetition.id}`)
+                      navigate(
+                        `/competition/applymethod/${curcompetition.id}`,
+                        { state: `${curcompetition.title}` }
+                      )
                     }}
                   >
                     신청
