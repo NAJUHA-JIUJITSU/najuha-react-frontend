@@ -45,7 +45,7 @@ const jsonToCsv = jsonData => {
   }
 }
 
-function CompetitionApplyTeamForm() {
+function CompetitionApplicantList() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [genderDropdown, setGenderDropdown] = useState(false)
@@ -661,4 +661,4 @@ function CompetitionApplyTeamForm() {
   )
 }
 
-export default CompetitionApplyTeamForm
+export default CompetitionApplicantList

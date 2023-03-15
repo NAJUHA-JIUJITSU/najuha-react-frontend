@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import CompetitionApplicantList from '../components/CompetitionApplicantList'
+import CompetitionApplicantList from '../components/CompetitionApplicantList/CompetitionApplicantList.js'
 
 function CompetitionApplicantListPage() {
   return (
