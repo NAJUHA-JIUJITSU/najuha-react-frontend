@@ -23,7 +23,6 @@ import PaymentInfoPage from './pages/PaymentInfoPage'
 import AdminCompetitionImagePage from './pages/AdminCompetitionImagePage'
 import AdminCsvDownload from './components/AdminCsvDownload'
 import AdminCompetitionInfoPage from './pages/AdminCompetitionInfoPage'
-import MainScrollPage from './pages/MainScrollPage'
 import CompetitionApplicantListPage from './pages/CompetitionApplicantListPage'
 import Error404Page from './pages/Error404Page'
 import Error500Page from './pages/Error500Page'
@@ -51,6 +50,11 @@ function App() {
     true,
     true
   )
+  const AuthCompetitionApplicantListPage = Auth(
+    CompetitionApplicantListPage,
+    null,
+    null
+  )
   const AuthAdmincompetition = Auth(Admincompetition, true, true, true)
   const AuthCompetitionInfoPage = Auth(
     AdminCompetitionInfoPage,
@@ -77,7 +81,6 @@ function App() {
     true,
     true
   )
-  const AuthMainScrollPage = Auth(MainScrollPage, null, null)
   const AuthError404Page = Auth(Error404Page, null, null)
   const AuthError500Page = Auth(Error500Page, null, null)
 
@@ -136,10 +139,9 @@ function App() {
           <Route path="/payment/success" element={<AuthPaymentSuccessPage />} />
           <Route path="/payment/fail" element={<AuthPaymentFailPage />} />
           <Route path="/PaymentInfo/:id" element={<AuthPaymentInfoPage />} />
-          <Route path="/Mainscroll" element={<AuthMainScrollPage />} />
           <Route
             path="/competition/:id/applicant"
-            element={<CompetitionApplicantListPage />}
+            element={<AuthCompetitionApplicantListPage />}
           />
 
           <Route path="/*" element={<AuthError404Page />} />
