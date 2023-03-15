@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import './mainScroll.css'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import backgroundImg from '../src_assets/jiujitsuGuys.jpg'
+import backgroundImg from '../src_assets/newBg.png'
 import monitor from '../src_assets/모니터.png'
 import phone1 from '../src_assets/폰1.png'
 import phone2 from '../src_assets/폰2.png'
@@ -15,7 +15,7 @@ import './slick.css'
 import './slick-theme.css'
 
 import ProgressiveImage from 'react-progressive-graceful-image'
-import placeholderSrc from '../src_assets/bgImg.jpeg'
+import placeholderSrc from '../src_assets/newBg.png'
 
 import { Cookies } from 'react-cookie'
 import axios from 'axios'
@@ -39,8 +39,10 @@ function MainScroll() {
   //대회 정보 가져오기
   async function getCompetitons() {
     const res = await getPartnershipCompetitionList()
-    setCompetitions(res.data.result)
-    return
+    if (res?.status === 200) {
+      setCompetitions(res.data.result)
+      return
+    }
   }
   //요일 값 구하기
   function getDayOfWeek(날짜문자열) {
@@ -192,34 +194,26 @@ function MainScroll() {
         <div className="MainScroll_message">
           <h1
             className={
-              ScrollY > 100
-                ? ScrollY > 1700
-                  ? 'MainScroll_fadeout'
-                  : 'MainScroll_fadein'
-                : 'MainScroll_none'
-            }>
-            <span>나</span> 는
-          </h1>
-          <h1
-            className={
               ScrollY > 700
                 ? ScrollY > 1700
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            <span>주</span> 짓수가
+            NAJUHA
           </h1>
-          <h1
+
+          <h2
+            id="MainScroll_span"
             className={
-              ScrollY > 1050
+              ScrollY > 1200
                 ? ScrollY > 1700
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
             }>
-            <span>하</span> 고싶다
-          </h1>
+            <span>나</span>는 <span>주</span>짓수가 <span>하</span>고싶다.
+          </h2>
         </div>
         <div className="MainScroll_message2">
           <h2
@@ -234,7 +228,7 @@ function MainScroll() {
           </h2>
           <h2
             className={
-              ScrollY > 2400
+              ScrollY > 2500
                 ? ScrollY > 3600
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
@@ -244,7 +238,7 @@ function MainScroll() {
           </h2>
           <h2
             className={
-              ScrollY > 2800
+              ScrollY > 3000
                 ? ScrollY > 3600
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'

@@ -11,7 +11,7 @@ function footer() {
           <p>주소: 경기도 김포시 김포대로 831, 502호- 13실</p>
           <p>사업자등록번호: 324-08-02370</p>
           <p>통신판매업 신고번호: 2023-경기김포-1021</p>
-          <p>유선번호: 010-8073-4524</p>
+          <p>유선번호: 0507-0177-1165</p>
         </div>
         <div className="company-menu">
           <ul className="company-menu-list">
@@ -19,19 +19,22 @@ function footer() {
             <li
               onClick={() => {
                 window.location.href = 'https://najuha.com/privacypolicy'
-              }}
-            >
+              }}>
               개인정보처리방침
             </li>
             <li
               onClick={() => {
                 window.location.href = 'https://najuha.com/termsofuse'
-              }}
-            >
+              }}>
               이용약관
             </li>
-            <li>고객센터</li>
-            <li id="company-menu-list-last">인재영입</li>
+            <li
+              id="company-menu-list-last"
+              onClick={() =>
+                alert('고객센터는 (0507-0177-1165)로 전화바랍니다.')
+              }>
+              고객센터
+            </li>
           </ul>
         </div>
       </div>

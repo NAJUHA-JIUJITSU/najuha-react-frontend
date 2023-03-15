@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import './competitionform.css'
 import { Cookies } from 'react-cookie'
-import { useNavigate } from 'react-router-dom'
 import MarkdownEditor from './MarkdownEditor'
 
 import {
@@ -30,9 +29,6 @@ function Competition_form() {
   const [nonPartnershipPageLink, setNonPartnershipPageLink] = useState('')
   const [mode, setMode] = useState('post')
   const [competition, setCompetition] = useState(null)
-  let navigate = useNavigate()
-
-  const cookies = new Cookies()
 
   const [divisions, setDivisions] = useState([
     {
@@ -187,42 +183,6 @@ function Competition_form() {
       },
       'new'
     )
-    // navigate('/admincompetition')
-    // navigate('/admincompetition')
-    // console.log(divisions)
-
-    // axios({
-    //   method: 'post',
-    //   headers: {
-    //     'x-access-token': cookies.get('x-access-token'),
-    //   },
-    //   url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions`,
-    // data: {
-    //   title: title,
-    //   host: host,
-    //   doreOpen: doreOpen,
-    //   registrationDate: registrationDate,
-    //   registrationDeadline: registrationDeadLine,
-    //   location: location,
-    //   bankAccount: bankAccount,
-    //   earlyBirdDeadline: earlybirdDeadline,
-    //   information: infomation,
-    //   applicantTableOpenDate: applicantTableOpenDate,
-    //   tournamentTableOpenDate: tournamentTableOpenDate,
-    //   division: divisions,
-    //   isPartnership: isPartnership === 'true' ? true : false,
-    //   nonPartnershipPageLink: nonPartnershipPageLink,
-    // },
-    // })
-    //   .then(res => {
-    //     console.log(res)
-    //     alert('대회등록이 완료되었습니다.')
-    //     navigate('/Admincompetition/')
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //     alert('대회등록이 실패하였습니다.')
-    //   })
   }
 
   async function copyToDB() {
@@ -377,9 +337,11 @@ function Competition_form() {
             <input
               className="divisionName"
               type="text"
-              placeholder="나이 ex)초등부, 중등부, 마스터부, 어덜트"
+              placeholder="나이 ex)초등부1/2/3, 중등부, 마스터부, 어덜트"
               value={divs.constantFactor.divisionName || ''}
               onChange={e => {
+                let pattern = /[,]/g
+                e.target.value = e.target.value.replace(pattern, '')
                 changeName(e.target.value, i)
               }}
             ></input>
@@ -395,7 +357,7 @@ function Competition_form() {
               <input
                 type="text"
                 placeholder="몇년생까지 ex)2015"
-                value={divs.constantFactor.birth[1] || 9999}
+                value={divs.constantFactor.birth[1] || 0}
                 onChange={e => {
                   changeBirthEnd(e.target.value, i)
                 }}

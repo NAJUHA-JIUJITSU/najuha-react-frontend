@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './competitionlist.css'
@@ -79,9 +78,10 @@ function Competitionlist() {
 
   async function viewGetCompetitionList(startDate, offset, title, location) {
     let res = await getCompetitionList(startDate, offset, title, location)
-    console.log(res)
-    let newCompetitions = res.data.result
-    setCompetitions(competitions => [...competitions, ...newCompetitions])
+    if (res?.status === 200) {
+      let newCompetitions = res.data.result
+      setCompetitions(competitions => [...competitions, ...newCompetitions])
+    }
     return
   }
 
@@ -224,6 +224,16 @@ function Competitionlist() {
       )
   }
 
+  function makingPartnerTag(isPartnership) {
+    if (isPartnership) {
+      return (
+        <div className="each-competition-tag-purple">
+          <p>간편결제</p>
+        </div>
+      )
+    }
+  }
+
   //신청마감 & 신청오픈 전 카드 색 변경
   function competitionCardGray(registrationDate, registrationDeadline) {
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
@@ -300,6 +310,7 @@ function Competitionlist() {
               competition.registrationDate,
               competition.registrationDeadline
             )}
+            {makingPartnerTag(competition.isPartnership)}
           </div>
           <div className="each-competition-body" id={cardGray}>
             <div
@@ -307,7 +318,8 @@ function Competitionlist() {
               onClick={() => {
                 window.scrollTo(0, 0)
                 navigate(`/competition/${curcompetition.id}`)
-              }}>
+              }}
+            >
               {' '}
               {/* 카드왼쪽 포스터공간  */}
               <img src={curcompetition.posterImage} alt="대회 포스터"></img>
@@ -325,7 +337,8 @@ function Competitionlist() {
                 onClick={() => {
                   window.scrollTo(0, 0)
                   navigate(`/competition/${curcompetition.id}`)
-                }}>
+                }}
+              >
                 <p>{curcompetition.title}</p>
               </div>
               <div className="each-competition-body-desc-middle">
@@ -338,7 +351,8 @@ function Competitionlist() {
                     onClick={() => {
                       window.scrollTo(0, 0)
                       navigate(`/competition/applymethod/${curcompetition.id}`)
-                    }}>
+                    }}
+                  >
                     신청
                   </button>
                 ) : (
@@ -346,7 +360,8 @@ function Competitionlist() {
                     style={cardGray === '' ? {} : { display: 'none' }}
                     onClick={() => {
                       window.location.href = competition.nonPartnershipPageLink
-                    }}>
+                    }}
+                  >
                     신청
                   </button>
                 )}
@@ -371,7 +386,8 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setDateDropdown(pre => !pre)}
-          ref={dateDropdownRef}>
+          ref={dateDropdownRef}
+        >
           <p id={startDate === '' ? '' : 'competition-searchzone-black'}>
             {startDate === '' ? '날짜' : `${temDate}월~`}
           </p>
@@ -384,7 +400,8 @@ function Competitionlist() {
                   setStartDate('')
                   listRefresh()
                   setActiveMonth('')
-                }}>
+                }}
+              >
                 전체
               </li>
               {months.map(element => {
@@ -401,7 +418,8 @@ function Competitionlist() {
                       setTemDate(element)
                       listRefresh()
                       setActiveMonth(element)
-                    }}>
+                    }}
+                  >
                     {element}월
                   </li>
                 )
@@ -414,7 +432,8 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setLocationDropdown(pre => !pre)}
-          ref={locationDropdownRef}>
+          ref={locationDropdownRef}
+        >
           <p id={location === '' ? '' : 'competition-searchzone-black'}>
             {location === '' ? '지역' : location}
           </p>
@@ -427,7 +446,8 @@ function Competitionlist() {
                   setLocation('')
                   listRefresh()
                   setActiveLocation('')
-                }}>
+                }}
+              >
                 전체
               </li>
               {locationSample.map(element => {
@@ -443,7 +463,8 @@ function Competitionlist() {
                       setLocation(element)
                       listRefresh()
                       setActiveLocation(element)
-                    }}>
+                    }}
+                  >
                     {element}
                   </li>
                 )
@@ -477,7 +498,8 @@ function Competitionlist() {
           {renderCompetitionList()}
           <div
             style={{ fontsize: '200px', margin: '0 2rem' }}
-            ref={setLastElement}>
+            ref={setLastElement}
+          >
             대회가 모두 로딩되었습니다.
           </div>
         </ul>

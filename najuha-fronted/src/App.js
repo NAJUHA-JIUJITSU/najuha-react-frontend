@@ -24,6 +24,9 @@ import AdminCompetitionImagePage from './pages/AdminCompetitionImagePage'
 import AdminCsvDownload from './components/AdminCsvDownload'
 import AdminCompetitionInfoPage from './pages/AdminCompetitionInfoPage'
 import MainScrollPage from './pages/MainScrollPage'
+import CompetitionApplicantListPage from './pages/CompetitionApplicantListPage'
+import Error404Page from './pages/Error404Page'
+import Error500Page from './pages/Error500Page'
 
 const GlobalStyle = createGlobalStyle`
   ${reset}`
@@ -75,6 +78,8 @@ function App() {
     true
   )
   const AuthMainScrollPage = Auth(MainScrollPage, null, null)
+  const AuthError404Page = Auth(Error404Page, null, null)
+  const AuthError500Page = Auth(Error500Page, null, null)
 
   return (
     <React.Fragment>
@@ -132,6 +137,14 @@ function App() {
           <Route path="/payment/fail" element={<AuthPaymentFailPage />} />
           <Route path="/PaymentInfo/:id" element={<AuthPaymentInfoPage />} />
           <Route path="/Mainscroll" element={<AuthMainScrollPage />} />
+          <Route
+            path="/competition/:id/applicant"
+            element={<CompetitionApplicantListPage />}
+          />
+
+          <Route path="/*" element={<AuthError404Page />} />
+
+          <Route path="/serverError" element={<AuthError500Page />} />
         </Routes>
       </BrowserRouter>
     </React.Fragment>

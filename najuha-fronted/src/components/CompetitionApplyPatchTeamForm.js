@@ -90,9 +90,10 @@ function CompetitionApplyPatchTeamForm() {
   // 신청아이디로 신청정보 가져와서 뿌려주기
   async function getCompetitionApplicationInfo() {
     let res = await getUserApplicationCompetitionInfo(state)
-    res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
-    setViewCompetitionApplicationList(res)
-    return
+    if (res?.status === 200) {
+      res = parsingApplicationInfo(res.data.result.CompetitionApplicationInfos)
+      setViewCompetitionApplicationList(res)
+    }
   }
 
   function parsingBeforePatch(viewCompetitionApplicationList) {
@@ -113,15 +114,20 @@ function CompetitionApplyPatchTeamForm() {
       state,
       competitionApplicationList
     )
-    setCompetitionApplicationId(res.data.result.competitionApplicationId)
-    return
+    if (res?.status === 200) {
+      setCompetitionApplicationId(res.data.result.competitionApplicationId)
+      return true
+    }
+    return false
   }
 
   const getCompetition = async id => {
     const res = await getCompetitionDetail(id)
-    const newCompetition = res.data.result
-    setCompetition(newCompetition)
-    setFillteredCompetition(newCompetition.division)
+    if (res?.status === 200) {
+      const newCompetition = res.data.result
+      setCompetition(newCompetition)
+      setFillteredCompetition(newCompetition.division)
+    }
   }
 
   function genderDropdownToggle() {
@@ -473,8 +479,10 @@ function CompetitionApplyPatchTeamForm() {
       isGroup: true,
       divisions: viewCompetitionApplicationList,
     })
-    setDiscountedPrice(res.data.result.discountedPrice)
-    setNormalPrice(res.data.result.normalPrice)
+    if (res?.status === 200) {
+      setDiscountedPrice(res.data.result.discountedPrice)
+      setNormalPrice(res.data.result.normalPrice)
+    }
   }
 
   return (
@@ -832,13 +840,10 @@ function CompetitionApplyPatchTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-save"
             onClick={async () => {
-              try {
-                await patchCompetitionApply()
-                navigate('/')
+              const res = await patchCompetitionApply()
+              if (res === true) {
                 alert('저장되었습니다.')
-              } catch (err) {
-                console.log(err)
-                alert('대회 신청 수정에 실패했습니다.')
+                navigate('/Profilepage', { state: 'UserApplicationList' })
               }
             }}
           >
@@ -847,12 +852,9 @@ function CompetitionApplyPatchTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-register"
             onClick={async () => {
-              try {
-                await patchCompetitionApply()
+              const res = await patchCompetitionApply()
+              if (res === true) {
                 setPaymentbridgemodal(pre => !pre)
-              } catch (err) {
-                console.log(err)
-                alert('대회 신청 수정에 실패했습니다.')
               }
             }}
           >

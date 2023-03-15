@@ -1,0 +1,115 @@
+.CompetitionApplicantList-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: auto; /* 스크롤 적용 */
+}
+
+.CompetitionApplicantList-csv-wrapper {
+  overflow: auto;
+  max-height: 80vh;
+  padding: 10px;
+}
+
+.CompetitionApplicantList-csv {
+  padding: 10px;
+}
+
+.CompetitionApplicantList-csv body {
+  padding: 1.5em;
+  background: #f5f5f5;
+}
+
+.CompetitionApplicantList-csv table {
+  border: 1px #a39485 solid;
+  font-size: 0.9em;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.CompetitionApplicantList-csv th {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.5em 1em;
+  font-size: 1.4rem;
+}
+
+.CompetitionApplicantList-csv thead {
+  font-weight: bold;
+  color: #000000;
+  background: #f5f5f5;
+}
+
+.CompetitionApplicantList-csv td,
+th {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.5em 1em;
+  vertical-align: middle;
+  font-size: 1.6rem;
+  min-width: 90px;
+  text-align: center;
+}
+
+.CompetitionApplicantList-csv td {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.5em 1em;
+  vertical-align: middle;
+}
+
+.CompetitionApplicantList-csv a {
+  color: #73685d;
+}
+
+.CompetitionApplicantList-csv @media all and (max-width: 750px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  .CompetitionApplicantList-csv th {
+    text-align: center;
+  }
+
+  .CompetitionApplicantList-csv table {
+    table-layout: fixed;
+    position: relative;
+    padding-bottom: 0;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .CompetitionApplicantList-csv thead {
+    float: left;
+    white-space: nowrap;
+  }
+
+  .CompetitionApplicantList-csv tbody {
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .CompetitionApplicantList-csv tr {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .CompetitionApplicantList-csv th {
+    border-bottom: 1px solid #a39485;
+  }
+
+  .CompetitionApplicantList-csv td {
+    border-bottom: 1px solid #e5e5e5;
+  }
+}

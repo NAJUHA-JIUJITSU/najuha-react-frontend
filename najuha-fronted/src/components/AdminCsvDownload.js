@@ -4,17 +4,20 @@ import { CSVLink } from 'react-csv'
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import { getAdminCompetitionApplicationListCsv } from '../apis/api/admin'
+import { CsvToHtmlTable } from 'react-csv-to-table'
+import './AdminCsvDownload.css'
 
 const AdminCsvDownload = () => {
   const [csvData, setCsvData] = useState([])
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
   const competitionId = useParams().id
-  console.log(competitionId)
 
   const getCsvData = async () => {
     const res = await getAdminCompetitionApplicationListCsv(competitionId)
-    if (res) setCsvData(res.data.result)
+    if (res && res.data && res.data.result) {
+      setCsvData(res.data.result)
+    }
   }
 
   useEffect(() => {
@@ -34,7 +37,13 @@ const AdminCsvDownload = () => {
           Download me
         </button>
       </CSVLink>
-      <div style={{ fontSize: '20px', marginTop: '200px' }}>{csvData}</div>
+      {csvData.length > 0 && (
+        <CsvToHtmlTable
+          data={csvData}
+          csvDelimiter=","
+          tableClassName="AdminCsvDownload"
+        />
+      )}
     </div>
   )
 }

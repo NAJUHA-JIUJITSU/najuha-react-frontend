@@ -1,11 +1,13 @@
 import { axiosApi, axiosApiWithToken } from '../utils/axios'
+import { handleError } from '../utils/error'
 
 export const patchUserInfo = async data => {
   try {
     const res = await axiosApiWithToken('/users', 'patch', data)
     return res
   } catch (e) {
-    console.log(e)
+    alert('유저 정보 수정에 실패하였습니다.')
+    handleError(e)
   }
 }
 
@@ -14,7 +16,7 @@ export const getUserInfo = async () => {
     const res = await axiosApiWithToken('/users', 'get')
     return res
   } catch (e) {
-    console.log(e)
+    handleError(e)
   }
 }
 
@@ -23,7 +25,7 @@ export const getUserApplicationCompetitionList = async () => {
     const res = await axiosApiWithToken('/users/competitionApplications', 'get')
     return res
   } catch (e) {
-    console.log(e)
+    handleError(e)
   }
 }
 
@@ -35,7 +37,7 @@ export const getUserApplicationCompetitionInfo = async applicationId => {
     )
     return res
   } catch (e) {
-    console.log(e)
+    handleError(e)
   }
 }
 
@@ -47,7 +49,8 @@ export const deleteUserApplicationCompetition = async applicationId => {
     )
     return res
   } catch (e) {
-    console.log(e)
+    alert('대회 삭제에 실패하였습니다.')
+    handleError(e)
   }
 }
 
@@ -63,6 +66,7 @@ export const patchUserApplicationCompetition = async (
     )
     return res
   } catch (e) {
-    console.log(e)
+    alert('대회 수정에 실패하였습니다.')
+    handleError(e)
   }
 }

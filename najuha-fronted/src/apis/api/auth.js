@@ -1,6 +1,7 @@
 import { axiosApi, axiosApiWithToken } from '../utils/axios'
 import { Cookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
+import { handleError } from '../utils/error'
 const cookies = new Cookies()
 
 export const kakaoLogin = async code => {
@@ -11,9 +12,9 @@ export const kakaoLogin = async code => {
       path: '/',
       overwrite: true,
     })
-    return res.data.result.xAccessToken
+    return res
   } catch (e) {
-    console.log(e)
-    throw e
+    alert('로그인에 실패하였습니다')
+    handleError(e)
   }
 }

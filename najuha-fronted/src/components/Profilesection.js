@@ -29,13 +29,13 @@ function Profilesection() {
   //User 프로필 정보 가져오기
   async function getUsers() {
     let res = await getUserInfo()
-    setUserInfo(res.data.result.UserInfo)
+    if (res?.status === 200) setUserInfo(res.data.result.UserInfo)
   }
 
   //User 신청 대회목록 가져오기
   async function getCompetitionApplication() {
     let res = await getUserApplicationCompetitionList()
-    setCompetitionApplications(res.data.result)
+    if (res?.status === 200) setCompetitionApplications(res.data.result)
   }
 
   useEffect(() => {
