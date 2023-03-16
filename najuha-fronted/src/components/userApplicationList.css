@@ -291,6 +291,10 @@
 }
 
 @media (max-width: 750px) {
+  .UserApplicationList_costLayout {
+    align-items: center;
+  }
+
   .UserApplicationList_right {
     height: 88vh;
   }
@@ -316,8 +320,10 @@
 
   .UserApplicationList_boxLeft {
     margin: 0rem;
-    width: 104px;
+    width: 100px;
+    min-width: 100px;
     margin-right: 0.8rem;
+    border-radius: 10px 0 0 10px;
   }
 
   .UserApplicationList_boxLeft h3 {
