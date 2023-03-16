@@ -553,7 +553,7 @@
 
   .MainScroll_phone img {
     width: 100%;
-    height: 76%;
+    height: 80%;
   }
 
   .MainScroll_phone1 p {
@@ -575,7 +575,7 @@
     color: var(--gray-subtitle-color);
     margin-top: 1rem;
     width: 400px;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
 
   .MainScroll_title3 h2 {
