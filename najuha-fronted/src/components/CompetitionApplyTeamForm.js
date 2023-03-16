@@ -487,7 +487,7 @@ function CompetitionApplyTeamForm() {
           <div className="CompetitionApplyTeamForm-teaminfo-element">
             <label>팀이름</label>
             <input
-              placeholder="팀 이름을 입력해주세요"
+              placeholder="팀 이름"
               value={competitionApplication.team}
               onChange={e => {
                 let pattern = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g
@@ -501,7 +501,7 @@ function CompetitionApplyTeamForm() {
           <div className="CompetitionApplyTeamForm-teaminfo-element">
             <label>대표자 번호</label>
             <input
-              placeholder="'-' 없이 번호만 입력해주세요"
+              placeholder="'-' 없이 번호 11자리"
               value={competitionApplication.phoneNumber}
               onChange={e => {
                 e.target.value = e.target.value.replace(/[^0-9]/g, '')

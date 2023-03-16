@@ -215,8 +215,7 @@ function Competitionlist() {
     let deadlineDiff = todaytime.diff(finishdate, 'd')
     let openDiff = todaytime.diff(opendate, 'd')
     let earlyBirdDiff = todaytime.diff(earlyBirdDate, 'd')
-
-    if (openDiff >= 0 && deadlineDiff <= 0 && earlyBirdDiff <= 0)
+    if (openDiff >= 0 && deadlineDiff <= 0 && earlyBirdDiff < 0)
       return (
         <div className="each-competition-tag-red">
           <p>얼리버드</p>
