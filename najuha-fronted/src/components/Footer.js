@@ -1,5 +1,5 @@
-import React from 'react'
-import './footer.css'
+import React from "react";
+import "./footer.css";
 
 function footer() {
   return (
@@ -18,22 +18,25 @@ function footer() {
             <li>사업자정보확인</li>
             <li
               onClick={() => {
-                window.location.href = 'https://najuha.com/privacypolicy'
-              }}>
+                window.location.href = "https://najuha.com/privacypolicy";
+              }}
+            >
               개인정보처리방침
             </li>
             <li
               onClick={() => {
-                window.location.href = 'https://najuha.com/termsofuse'
-              }}>
+                window.location.href = "https://najuha.com/termsofuse";
+              }}
+            >
               이용약관
             </li>
             <li
               id="company-menu-list-last"
-              onClick={() =>
-                alert('나주하 카카오톡 채널로 문의 바랍니다.')
-                window.location.href = 'http://pf.kakao.com/_meyxmxj/chat'
-              }>
+              onClick={() => {
+                alert("나주하 카카오톡 채널로 문의 바랍니다.");
+                window.location.href = "http://pf.kakao.com/_meyxmxj/chat";
+              }}
+            >
               고객센터
             </li>
           </ul>
@@ -48,7 +51,7 @@ function footer() {
         <p>Copyright c najuha Corp. All rights reserved.</p>
       </div>
     </div>
-  )
+  );
 }
 
-export default footer
+export default footer;
