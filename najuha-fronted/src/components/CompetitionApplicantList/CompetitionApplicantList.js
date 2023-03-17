@@ -1,5 +1,5 @@
 import React from 'react'
-import './competitionApplyTeamForm.css'
+// import './competitionApplyTeamForm.css'
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import dropdownicon from '../../src_assets/드랍다운아이콘.svg'
@@ -403,27 +403,29 @@ function CompetitionApplicantList() {
   }
 
   return (
-    <div className="CompetitionApplyTeamForm-wrapper">
-      <div className="CompetitionApplyTeamForm-top">
-        <h1 className="CompetitionApplyTeamForm-title">{competition?.title}</h1>
-        <div className="CompetitionApplyTeamForm-top-table">
-          <div className="CompetitionApplyTeamForm-top-table-child1">
-            <ul className="CompetitionApplyTeamForm-top-table-column">
+    <div className="CompetitionApplicationList-filter-wrapper">
+      <div className="CompetitionApplicationList-filter-top">
+        <h1 className="CompetitionApplicationList-filter-title">
+          {competition?.title}
+        </h1>
+        <div className="CompetitionApplicationList-filter-top-table">
+          <div className="CompetitionApplicationList-filter-top-table-child1">
+            <ul className="CompetitionApplicationList-filter-top-table-column">
               <li>성별</li>
               <li>기/노기</li>
             </ul>
-            <ul className="CompetitionApplyTeamForm-top-table-row">
+            <ul className="CompetitionApplicationList-filter-top-table-row">
               {competitionApplication.gender != '' ? ( // 본인값있으면 본인값 보여주고
                 <li onClick={genderDropdownToggle}>
                   <p style={{ color: 'black' }}>
                     {competitionApplication.gender == 'male' ? '남자' : '여자'}
                   </p>
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {genderDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderGenderOptionUI()}
                     </ul>
                   ) : (
@@ -435,11 +437,11 @@ function CompetitionApplicantList() {
                 <li onClick={genderDropdownToggle}>
                   성별{' '}
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {genderDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderGenderOptionUI()}
                     </ul>
                   ) : (
@@ -451,17 +453,17 @@ function CompetitionApplicantList() {
               {competitionApplication.uniform != '' ? ( // 본인값있으면 본인값 보여주고
                 <li
                   onClick={uniformDropdownToggle}
-                  id="CompetitionApplyTeamForm-top-table-ginogi"
+                  id="CompetitionApplicationList-filter-top-table-ginogi"
                 >
                   <p style={{ color: 'black' }}>
                     {competitionApplication.uniform == 'gi' ? '기' : '노기'}
                   </p>{' '}
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {uniformDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderUniformOptionUI()}
                     </ul>
                   ) : (
@@ -471,15 +473,15 @@ function CompetitionApplicantList() {
               ) : competitionApplication.gender != '' ? ( // 없으면 앞에 값(성별) 유무에따라 유: 선택할수있는 드랍다운, 무: 디스에이블
                 <li
                   onClick={uniformDropdownToggle}
-                  id="CompetitionApplyTeamForm-top-table-ginogi"
+                  id="CompetitionApplicationList-filter-top-table-ginogi"
                 >
                   기/노기{' '}
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {uniformDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderUniformOptionUI()}
                     </ul>
                   ) : (
@@ -488,39 +490,39 @@ function CompetitionApplicantList() {
                 </li>
               ) : (
                 <li
-                  className="CompetitionApplyTeamForm-top-table-row-disable"
-                  id="CompetitionApplyTeamForm-top-table-ginogi"
+                  className="CompetitionApplicationList-filter-top-table-row-disable"
+                  id="CompetitionApplicationList-filter-top-table-ginogi"
                 >
                   기/노기{' '}
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                 </li>
               )}
             </ul>
           </div>
-          <div className="CompetitionApplyTeamForm-top-table-child2">
-            <ul className="CompetitionApplyTeamForm-top-table-column">
+          <div className="CompetitionApplicationList-filter-top-table-child2">
+            <ul className="CompetitionApplicationList-filter-top-table-column">
               <li>부문</li>
               <li>벨트</li>
               <li>체급</li>
             </ul>
-            <ul className="CompetitionApplyTeamForm-top-table-row">
+            <ul className="CompetitionApplicationList-filter-top-table-row">
               {competitionApplication.divisionName != '' ? ( // 본인값있으면 본인값 보여주고
                 <li
                   onClick={divisionDropdownToggle}
-                  id="CompetitionApplyTeamForm-top-table-division"
+                  id="CompetitionApplicationList-filter-top-table-division"
                 >
                   <p style={{ color: 'black' }}>
                     {competitionApplication.divisionName}
                   </p>
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {divisionDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderDivisionNameOptionUI()}
                     </ul>
                   ) : (
@@ -530,15 +532,15 @@ function CompetitionApplicantList() {
               ) : competitionApplication.uniform != '' ? ( // 없으면 앞에(유니폼) 값 유무에따라 유: 선택할 수 있는 드랍다운, 무: 디스에이블
                 <li
                   onClick={divisionDropdownToggle}
-                  id="CompetitionApplyTeamForm-top-table-division"
+                  id="CompetitionApplicationList-filter-top-table-division"
                 >
                   부문
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {divisionDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderDivisionNameOptionUI()}
                     </ul>
                   ) : (
@@ -547,12 +549,12 @@ function CompetitionApplicantList() {
                 </li>
               ) : (
                 <li
-                  className="CompetitionApplyTeamForm-top-table-row-disable"
-                  id="CompetitionApplyTeamForm-top-table-division"
+                  className="CompetitionApplicationList-filter-top-table-row-disable"
+                  id="CompetitionApplicationList-filter-top-table-division"
                 >
                   부문{' '}
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                 </li>
@@ -564,11 +566,11 @@ function CompetitionApplicantList() {
                     {competitionApplication.belt}
                   </p>
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {beltDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderBeltOptionUI()}
                     </ul>
                   ) : (
@@ -579,11 +581,11 @@ function CompetitionApplicantList() {
                 <li onClick={beltDropdownToggle}>
                   벨트{' '}
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {beltDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderBeltOptionUI()}
                     </ul>
                   ) : (
@@ -591,10 +593,10 @@ function CompetitionApplicantList() {
                   )}
                 </li>
               ) : (
-                <li className="CompetitionApplyTeamForm-top-table-row-disable">
+                <li className="CompetitionApplicationList-filter-top-table-row-disable">
                   벨트{' '}
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                 </li>
@@ -606,11 +608,11 @@ function CompetitionApplicantList() {
                     {competitionApplication.weight}
                   </p>
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {weightDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderWeightOptionUI()}
                     </ul>
                   ) : (
@@ -621,11 +623,11 @@ function CompetitionApplicantList() {
                 <li onClick={weightDropdownToggle}>
                   체급
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                   {weightDropdown ? (
-                    <ul id="CompetitionApplyTeamForm-top-table-row-dropdown">
+                    <ul id="CompetitionApplicationList-filter-top-table-row-dropdown">
                       {renderWeightOptionUI()}
                     </ul>
                   ) : (
@@ -633,10 +635,10 @@ function CompetitionApplicantList() {
                   )}
                 </li>
               ) : (
-                <li className="CompetitionApplyTeamForm-top-table-row-disable">
+                <li className="CompetitionApplicationList-filter-top-table-row-disable">
                   체급
                   <img
-                    className="CompetitionApplyTeamForm-top-table-row-dropdown-icon"
+                    className="CompetitionApplicationList-filter-top-table-row-dropdown-icon"
                     src={dropdownicon}
                   />
                 </li>
@@ -645,9 +647,9 @@ function CompetitionApplicantList() {
           </div>
         </div>
       </div>
-      <div className="CompetitionApplyTeamForm-bottom">
-        <h3 className="CompetitionApplyTeamForm-bottom-title">신청자 명단</h3>
-      </div>
+      <h3 className="CompetitionApplicationList-filter-bottom-title">
+        신청자 명단
+      </h3>
 
       <div className="CompetitionApplicantList-wrapper">
         <div className="CompetitionApplicantList-csv-wrapper">
