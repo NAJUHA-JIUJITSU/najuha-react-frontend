@@ -4,7 +4,7 @@ import './mainScroll.css'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import backgroundImg from '../src_assets/BG.jpeg'
-import monitor from '../src_assets/모니터.png'
+import monitor from '../src_assets/모니터.jpg'
 import phone1 from '../src_assets/폰1.png'
 import phone2 from '../src_assets/폰2.png'
 import samplePoster from '../src_assets/samplePoster.png'
@@ -138,7 +138,8 @@ function MainScroll() {
       <div
         className={className}
         style={{ ...style, display: 'block' }}
-        onClick={onClick}></div>
+        onClick={onClick}
+      ></div>
     )
   }
 
@@ -190,7 +191,8 @@ function MainScroll() {
 
         <div
           className="MainScroll_black"
-          style={ScrollY > 5000 ? { display: 'none' } : {}}></div>
+          style={ScrollY > 5000 ? { display: 'none' } : {}}
+        ></div>
         <div className="MainScroll_message">
           <h1
             className={
@@ -199,7 +201,8 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }>
+            }
+          >
             NAJUHA
           </h1>
 
@@ -211,7 +214,8 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }>
+            }
+          >
             <span>나</span>는 <span>주</span>짓수가 <span>하</span>고싶다.
           </h2>
         </div>
@@ -223,7 +227,8 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }>
+            }
+          >
             이번 달 주짓수 대회 어디서 확인하지?
           </h2>
           <h2
@@ -233,7 +238,8 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }>
+            }
+          >
             신청부터 결제까지 한 번에 할 수 없나?
           </h2>
           <h2
@@ -243,21 +249,25 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }>
+            }
+          >
             나주하에서는 전부 가능합니다.
           </h2>
         </div>
         <div
           className="MainScroll_black2"
-          style={{ backgroundColor: bgColor }}></div>
+          style={{ backgroundColor: bgColor }}
+        ></div>
         <div
           className="MainScroll_black2"
-          style={{ backgroundColor: bgColorW }}></div>
+          style={{ backgroundColor: bgColorW }}
+        ></div>
       </div>
 
       <div
         className="MainScroll_scrollImg"
-        style={ScrollY > 1700 || !first ? { display: 'none' } : {}}>
+        style={ScrollY > 1700 || !first ? { display: 'none' } : {}}
+      >
         <p>SCROLL</p>
         <img src={scrollImg} alt="스크롤 화살표"></img>
       </div>
@@ -265,13 +275,13 @@ function MainScroll() {
 
       <div className="MainScroll_section2">
         <div data-aos="fade-up" className="MainScroll_title1">
-          <h1>전국에 있는</h1>
+          <h1>전국 곳곳의</h1>
           <h1>주짓수 대회를</h1>
-          <h1>한 눈에.</h1>
+          <h1>한눈에!</h1>
           <div className="MainScroll_blueLine"></div>
         </div>
         <div data-aos="fade-up" className="MainScroll_subtitle1">
-          <h2> 대회조회부터 상세정보까지 간편하게 확인해보세요.</h2>
+          <h2>검색 기능을 이용해 원하는 대회를 간편하게 찾아 보세요.</h2>
         </div>
         <div>
           <img data-aos="fade-up" src={monitor} alt="모니터"></img>
@@ -282,16 +292,16 @@ function MainScroll() {
 
       <div className="MainScroll_section3">
         <div data-aos="fade-up" className="MainScroll_title2">
-          <h1>대회신청부터</h1>
-          <h1>대회결제까지</h1>
-          <h1>한 번에.</h1>
+          <h1>대회 조회는 물론</h1>
+          <h1>신청부터 결제까지</h1>
+          <h1>한번에!</h1>
           <div className="MainScroll_blueLine2"></div>
         </div>
         <div className="MainScroll_phone" data-aos="fade-up">
           <div className="MainScroll_phone1">
             <img src={phone1} alt="핸드폰사진1"></img>
             <h2 data-aos="fade-up" className="MainScroll_phoneMsg">
-              간편결제를 이용하여 <br></br>쉽고 빠르게 결제해보세요.
+              간편결제를 이용하여 쉽고 빠르게 결제해보세요.
             </h2>
             <p data-aos="fade-up">
               *나주하와 협약된 대회만 간편결제를 이용하실 수 있습니다.
@@ -300,7 +310,7 @@ function MainScroll() {
           <div className="MainScroll_phone2">
             <img src={phone2} alt="핸드폰사진2"></img>
             <h2 data-aos="fade-up">
-              간편결제를 이용하여 쉽고 빠르게 결제해보세요.
+              간편결제를 이용하여 <br></br> 쉽고 빠르게 결제해보세요.
             </h2>
           </div>
         </div>
@@ -310,10 +320,9 @@ function MainScroll() {
 
       <div className="MainScroll_section4">
         <div data-aos="fade-up" className="MainScroll_title3">
-          <h1>나주하와</h1>
-          <h1>함께하는 대회를</h1>
-          <h1>신청해보세요!</h1>
-          <div className="MainScroll_blueLine3"></div>
+          <h1>지금 바로 신청해보세요!</h1>
+
+          {/* <div className="MainScroll_blueLine3"></div> */}
           <h2>간편결제로 결제하고 내 프로필에서 바로 확인까지</h2>
         </div>
         <div data-aos="fade-up" className="MainScroll_slide">
@@ -327,7 +336,8 @@ function MainScroll() {
                   onClick={() => {
                     window.scrollTo(0, 0)
                     navigate(`/competition/${competition.id}`)
-                  }}>
+                  }}
+                >
                   <div className="MainScroll_card">
                     <img src={competition.postUrl} />
 
@@ -349,7 +359,8 @@ function MainScroll() {
           onClick={() => {
             window.scrollTo(0, 0)
             navigate('/competition')
-          }}>
+          }}
+        >
           <p>모든 대회 보러가기</p>
         </div>
       </div>
