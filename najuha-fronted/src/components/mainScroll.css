@@ -215,7 +215,7 @@
 
 .MainScroll_blueLine {
   background: #90ccf8;
-  width: 18rem;
+  width: 16rem;
   height: 2rem;
   border-radius: 25px;
   position: absolute;
@@ -263,7 +263,7 @@
 
 .MainScroll_blueLine2 {
   background: #90ccf8;
-  width: 18rem;
+  width: 16rem;
   height: 2rem;
   border-radius: 25px;
   position: absolute;
@@ -326,7 +326,7 @@
 
 .MainScroll_section4 h1 {
   position: relative;
-  font-size: var(--font-size-title2);
+  font-size: 46px;
   line-height: 4.6rem;
   font-weight: 700;
   letter-spacing: -0.04em;
@@ -348,7 +348,7 @@
 .MainScroll_title3 h2 {
   font-size: var(--font-size-subtitle2);
   color: var(--gray-subtitle-color);
-  margin-top: 2.7rem;
+  margin-top: 2.4rem;
 }
 
 /* 카드 슬라이드 디자인 */
@@ -507,7 +507,7 @@
   }
 
   .MainScroll_blueLine {
-    width: 14rem;
+    width: 13rem;
     height: 1.4rem;
     top: 13.2rem;
   }
@@ -528,10 +528,10 @@
   }
 
   .MainScroll_blueLine2 {
-    width: 14rem;
+    width: 13rem;
     height: 1.4rem;
     top: 19.2rem;
-    left: 6.8rem;
+    left: 6.4rem;
   }
 
   .MainScroll_phone {
@@ -580,6 +580,7 @@
 
   .MainScroll_title3 h2 {
     font-size: 1.6rem;
+    margin-top: 1.4rem;
   }
   /* section 4 - 카드 슬라이드 */
   .MainScroll_card img {
@@ -606,6 +607,10 @@
 
   .MainScroll_listBtn {
     font-size: 16px;
+  }
+
+  .MainScroll_section4 h1 {
+    font-size: 34px;
   }
 }
 
