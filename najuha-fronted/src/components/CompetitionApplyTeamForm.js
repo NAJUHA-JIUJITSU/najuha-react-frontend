@@ -388,6 +388,12 @@ function CompetitionApplyTeamForm() {
     }
   }
 
+  function phonevalidationcheck(phoneNumber) {
+    if (phoneNumber.length === 11) return true
+    alert('휴대폰 번호 11자리를 정확히 입력해주세요')
+    return false
+  }
+
   function validationcheck(application) {
     let tmp = Object.values(application)
     let ret = true
@@ -422,8 +428,8 @@ function CompetitionApplyTeamForm() {
 
   function addCompetitionApplication() {
     let check = validationcheck(competitionApplication)
-    console.log(check)
-    if (check) {
+    let phonecheck = phonevalidationcheck(competitionApplication.phoneNumber)
+    if (check && phonecheck) {
       let newCompetitionApplicationList = [...viewCompetitionApplicationList]
       if (newCompetitionApplicationList.length > 0) {
         // 팀이름과 핸드폰 번호를 마지막 신청자에 것으로 통일해주는 역할
@@ -852,10 +858,14 @@ function CompetitionApplyTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-save"
             onClick={async () => {
-              let res = await postCompetitionApply()
-              if (res === true) {
-                alert('저장되었습니다.')
-                navigate('/Profilepage', { state: 'UserApplicationList' })
+              if (viewCompetitionApplicationList.length > 0) {
+                let res = await postCompetitionApply()
+                if (res === true) {
+                  alert('저장되었습니다.')
+                  navigate('/Profilepage', { state: 'UserApplicationList' })
+                }
+              } else {
+                alert('참가자를 추가해주세요.')
               }
             }}
           >
@@ -864,8 +874,12 @@ function CompetitionApplyTeamForm() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-register"
             onClick={async () => {
-              let res = await postCompetitionApply()
-              if (res === true) setPaymentbridgemodal(pre => !pre)
+              if (viewCompetitionApplicationList.length > 0) {
+                let res = await postCompetitionApply()
+                if (res === true) setPaymentbridgemodal(pre => !pre)
+              } else {
+                alert('참가자를 추가해주세요.')
+              }
             }}
           >
             신청하기
