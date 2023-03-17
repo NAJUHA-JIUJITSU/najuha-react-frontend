@@ -47,6 +47,14 @@
     "eject": "react-scripts eject",
     "postbuild": "react-snap"
   },
+  "reactSnap": {
+    "include": [
+      "/",
+      "/competition",
+      "/competition/[id]",
+      "/*"
+    ]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
