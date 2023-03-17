@@ -524,6 +524,10 @@ function CompetitionApplyPatchTeamForm() {
               placeholder="팀 이름"
               value={competitionApplication.team}
               onChange={e => {
+                let pattern = /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g
+                e.target.value = e.target.value.replace(pattern, '')
+                if (e.target.value.length > 50)
+                  e.target.value = e.target.value.slice(0, 50)
                 changeCompetitionApplication(e.target.value, 'team')
               }}
             ></input>
@@ -534,6 +538,9 @@ function CompetitionApplyPatchTeamForm() {
               placeholder="'-' 없이 번호 11자리"
               value={competitionApplication.phoneNumber}
               onChange={e => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '')
+                if (e.target.value.length > 11)
+                  e.target.value = e.target.value.slice(0, 11)
                 changeCompetitionApplication(e.target.value, 'phoneNumber')
               }}
             ></input>
@@ -553,6 +560,11 @@ function CompetitionApplyPatchTeamForm() {
                   placeholder="이름"
                   value={competitionApplication.playerName}
                   onChange={e => {
+                    let pattern =
+                      /[0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g
+                    e.target.value = e.target.value.replace(pattern, '')
+                    if (e.target.value.length > 10)
+                      e.target.value = e.target.value.slice(0, 10)
                     changeCompetitionApplication(e.target.value, 'playerName')
                   }}
                 ></input>{' '}
@@ -563,6 +575,9 @@ function CompetitionApplyPatchTeamForm() {
                     placeholder="예) 980404"
                     value={competitionApplication.playerBirth}
                     onChange={e => {
+                      e.target.value = e.target.value.replace(/[^0-9]/g, '')
+                      if (e.target.value.length > 6)
+                        e.target.value = e.target.value.slice(0, 6)
                       changeCompetitionApplication(
                         e.target.value,
                         'playerBirth'
@@ -576,6 +591,9 @@ function CompetitionApplyPatchTeamForm() {
                     placeholder="ex) 900404"
                     value={competitionApplication.playerBirth}
                     onChange={e => {
+                      e.target.value = e.target.value.replace(/[^0-9]/g, '')
+                      if (e.target.value.length > 6)
+                        e.target.value = e.target.value.slice(0, 6)
                       changeCompetitionApplication(
                         e.target.value,
                         'playerBirth'
