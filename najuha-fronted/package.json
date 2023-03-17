@@ -29,7 +29,6 @@
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
-    "react-snap": "^1.23.0",
     "react-uuid": "^1.0.3",
     "redux": "^4.2.0",
     "redux-promise": "^0.6.0",
@@ -44,16 +43,7 @@
     "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postbuild": "react-snap"
-  },
-  "reactSnap": {
-    "include": [
-      "/",
-      "/competition",
-      "/competition/[id]",
-      "/*"
-    ]
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
