@@ -2,7 +2,6 @@ import * as React from 'react'
 import { createGlobalStyle } from 'styled-components'
 import reset from 'styled-reset' // 리액트에서는 styled-reset을 통해 모든 스타일을 reset 할 수 있어요.
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { HelmetProvider, Helmet } from 'react-helmet-async'
 import Mainpage from './pages/Mainpage'
 import Admincompetition from './pages/Admincompetition'
 import Competitionform from './components/Competitionform'
@@ -89,89 +88,66 @@ function App() {
     <React.Fragment>
       <GlobalStyle />
       <BrowserRouter>
-        <HelmetProvider>
-          <Helmet>
-            <title>나주하컴퍼니</title>
-            <meta property="og:title" content="NAJUHA" />
-            <meta property="og:url" content="www.najuha.com" />
-            <meta property="og:type" content="website" />
-            <meta
-              property="og:image"
-              content="https://cdn.maxq.kr/news/photo/202203/9401_13925_1351.jpg"
-            />
-            <meta property="og:site_name" content="나주하" />
-            <meta
-              property="og:description"
-              content="주짓수 대회 신청부터 결제까지 간편하게, 나주하"
-            />
-          </Helmet>
-          <Routes>
-            <Route path="/" element={<AuthMainpage />} />
-            <Route path="/competition" element={<AuthCompetitionSchedule />} />
-            <Route path="/competition/:id" element={<AuthCompetitionPage />} />
-            <Route
-              path="/competition/applymethod/:id"
-              element={<AuthoCompetitionApplyMethodPage />}
-            />
-            <Route
-              path="/competition/apply/:id"
-              element={<AuthCompetitionApplyPage />}
-            />
-            <Route
-              path="/competition/apply/patch/:id"
-              element={<AuthCompetitionApplyPatchPage />}
-            />
-            <Route
-              path="/competition/applyteam/:id"
-              element={<AuthCompetitionApplyTeamPage />}
-            />
-            <Route
-              path="/competition/applyteam/patch/:id"
-              element={<AuthCompetitionApplyPatchTeamPage />}
-            />
-            <Route
-              path="/Admincompetition/"
-              element={<AuthAdmincompetition />}
-            />
-            <Route
-              path="/Admincompetition/:id"
-              element={<AuthCompetitionform />}
-            />
-            <Route
-              path="/Admincompetition/info/:id"
-              element={<AuthCompetitionInfoPage />}
-            />
-            <Route
-              path="/Admincompetition/csv/:id"
-              element={<AuthAdminCsvDownload />}
-            />
-            <Route
-              path="/Admincompetition/imageupload/:id"
-              element={<AuthAdminCompetitionImagePage />}
-            />
-            <Route path="/Profilepage" element={<AuthProfilepage />} />
-            <Route
-              path="/Profilepage/info/:id"
-              element={<AuthProfileInfopage />}
-            />
-            <Route path="/oauth/callback/kakao" element={<Authkakao />} />
-            <Route path="/toss/success" element={<TossSuccess />} />
-            <Route
-              path="/payment/success"
-              element={<AuthPaymentSuccessPage />}
-            />
-            <Route path="/payment/fail" element={<AuthPaymentFailPage />} />
-            <Route path="/PaymentInfo/:id" element={<AuthPaymentInfoPage />} />
-            <Route
-              path="/competition/:id/applicant"
-              element={<AuthCompetitionApplicantListPage />}
-            />
+        <Routes>
+          <Route path="/" element={<AuthMainpage />} />
+          <Route path="/competition" element={<AuthCompetitionSchedule />} />
+          <Route path="/competition/:id" element={<AuthCompetitionPage />} />
+          <Route
+            path="/competition/applymethod/:id"
+            element={<AuthoCompetitionApplyMethodPage />}
+          />
+          <Route
+            path="/competition/apply/:id"
+            element={<AuthCompetitionApplyPage />}
+          />
+          <Route
+            path="/competition/apply/patch/:id"
+            element={<AuthCompetitionApplyPatchPage />}
+          />
+          <Route
+            path="/competition/applyteam/:id"
+            element={<AuthCompetitionApplyTeamPage />}
+          />
+          <Route
+            path="/competition/applyteam/patch/:id"
+            element={<AuthCompetitionApplyPatchTeamPage />}
+          />
+          <Route path="/Admincompetition/" element={<AuthAdmincompetition />} />
+          <Route
+            path="/Admincompetition/:id"
+            element={<AuthCompetitionform />}
+          />
+          <Route
+            path="/Admincompetition/info/:id"
+            element={<AuthCompetitionInfoPage />}
+          />
+          <Route
+            path="/Admincompetition/csv/:id"
+            element={<AuthAdminCsvDownload />}
+          />
+          <Route
+            path="/Admincompetition/imageupload/:id"
+            element={<AuthAdminCompetitionImagePage />}
+          />
+          <Route path="/Profilepage" element={<AuthProfilepage />} />
+          <Route
+            path="/Profilepage/info/:id"
+            element={<AuthProfileInfopage />}
+          />
+          <Route path="/oauth/callback/kakao" element={<Authkakao />} />
+          <Route path="/toss/success" element={<TossSuccess />} />
+          <Route path="/payment/success" element={<AuthPaymentSuccessPage />} />
+          <Route path="/payment/fail" element={<AuthPaymentFailPage />} />
+          <Route path="/PaymentInfo/:id" element={<AuthPaymentInfoPage />} />
+          <Route
+            path="/competition/:id/applicant"
+            element={<AuthCompetitionApplicantListPage />}
+          />
 
-            <Route path="/*" element={<AuthError404Page />} />
+          <Route path="/*" element={<AuthError404Page />} />
 
-            <Route path="/serverError" element={<AuthError500Page />} />
-          </Routes>
-        </HelmetProvider>
+          <Route path="/serverError" element={<AuthError500Page />} />
+        </Routes>
       </BrowserRouter>
     </React.Fragment>
   )
