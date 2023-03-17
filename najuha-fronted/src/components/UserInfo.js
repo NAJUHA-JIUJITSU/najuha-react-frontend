@@ -70,7 +70,6 @@ function Update({ userInfo, setUserInfo, setMode, updateUser }) {
     }
     let newuserInfo = { ...userInfo }
     newuserInfo[title] = e.target.value
-    console.log(newuserInfo)
     setUserInfo(newuserInfo)
   }
 

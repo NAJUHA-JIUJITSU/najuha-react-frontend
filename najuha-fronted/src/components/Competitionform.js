@@ -88,35 +88,30 @@ function Competition_form() {
     let newDiv = [...divisions]
     newDiv[i].constantFactor.uniform = text
     setDivisions(newDiv)
-    console.log(divisions[i].constantFactor.uniform)
   }
 
   function changeGender(text, i) {
     let newDiv = [...divisions]
     newDiv[i].constantFactor.gender = text
     setDivisions(newDiv)
-    console.log(divisions[i].constantFactor.gender)
   }
 
   function changeName(text, i) {
     let newDiv = [...divisions]
     newDiv[i].constantFactor.divisionName = text
     setDivisions(newDiv)
-    console.log(divisions[i].constantFactor.divisionName)
   }
 
   function changeBirthStart(text, i) {
     let newDiv = [...divisions]
     newDiv[i].constantFactor.birth[0] = Number(text)
     setDivisions(newDiv)
-    console.log(divisions[i].constantFactor.birth[0])
   }
 
   function changeBirthEnd(text, i) {
     let newDiv = [...divisions]
     newDiv[i].constantFactor.birth[1] = Number(text)
     setDivisions(newDiv)
-    console.log(divisions[i].constantFactor.birth[1])
   }
 
   function changeWeight(text, i) {
@@ -124,7 +119,6 @@ function Competition_form() {
     text = text.replace(/ /g, '')
     newDiv[i].variableFactor.weight = text.split(',')
     setDivisions(newDiv)
-    console.log(divisions[i].variableFactor.weight)
   }
 
   function changeBelt(text, i) {
@@ -132,20 +126,17 @@ function Competition_form() {
     text = text.replace(/ /g, '')
     newDiv[i].variableFactor.belt = text.split(',')
     setDivisions(newDiv)
-    console.log(divisions[i].variableFactor.belt)
   }
 
   function changeEarlybirdPrice(text, i) {
     let newDiv = [...divisions]
     newDiv[i].pricingPolicy.earlyBird = Number(text)
     setDivisions(newDiv)
-    console.log(newDiv[i].pricingPolicy.earlyBird)
   }
 
   function changeNormalPrice(text, i) {
     let newDiv = [...divisions]
     newDiv[i].pricingPolicy.normal = Number(text)
-    console.log(newDiv[i].pricingPolicy.normal)
     setDivisions(newDiv)
   }
 
@@ -153,14 +144,12 @@ function Competition_form() {
     let newDiv = [...divisions]
     newDiv[i].pricingPolicy.withGi = Number(text)
     setDivisions(newDiv)
-    console.log(newDiv[i].pricingPolicy.withGi)
   }
 
   function changewithOtherPrice(text, i) {
     let newDiv = [...divisions]
     newDiv[i].pricingPolicy.withOther = Number(text)
     setDivisions(newDiv)
-    console.log(newDiv[i].pricingPolicy.withOther)
   }
 
   async function postToDB() {
@@ -224,39 +213,6 @@ function Competition_form() {
       isPartnership: isPartnership === 'true' ? true : false,
       nonPartnershipPageLink: nonPartnershipPageLink,
     })
-    // console.log(divisions)
-
-    // axios({
-    //   method: 'patch',
-    //   headers: {
-    //     'x-access-token': cookies.get('x-access-token'),
-    //   },
-    //   url: `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}`,
-    //   data: {
-    //     title: title,
-    //     host: host,
-    //     doreOpen: doreOpen,
-    //     registrationDate: registrationDate,
-    //     registrationDeadline: registrationDeadLine,
-    //     location: location,
-    //     bankAccount: bankAccount,
-    //     earlyBirdDeadline: earlybirdDeadline,
-    //     information: infomation,
-    //     applicantTableOpenDate: applicantTableOpenDate,
-    //     tournamentTableOpenDate: tournamentTableOpenDate,
-    //     division: divisions,
-    //     isPartnership: isPartnership === 'true' ? true : false,
-    //     nonPartnershipPageLink: nonPartnershipPageLink,
-    //   },
-    // })
-    //   .then(res => {
-    //     console.log(res)
-    //     alert('대회수정이 완료되었습니다.')
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //     alert('대회수정이 실패하였습니다.')
-    //   })
   }
 
   function loadingCompetition(competition) {
@@ -468,14 +424,9 @@ function Competition_form() {
 
   useEffect(() => {
     if (competition !== null) {
-      console.log(competition)
       loadingCompetition(competition)
     }
   }, [competition])
-
-  useEffect(() => {
-    console.log(isPartnership)
-  }, [isPartnership])
 
   return (
     <div>
@@ -612,7 +563,6 @@ function Competition_form() {
                 value={'true'}
                 checked={isPartnership === 'true'}
                 onChange={e => {
-                  // console.log(e.target.value)
                   setIsPartnership(e.target.value)
                 }}
               />
@@ -622,7 +572,6 @@ function Competition_form() {
                 value={'false'}
                 checked={isPartnership === 'false'}
                 onChange={e => {
-                  // console.log(e.target.value)
                   setIsPartnership(e.target.value)
                 }}
               />

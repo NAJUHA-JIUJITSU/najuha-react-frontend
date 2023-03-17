@@ -5,7 +5,6 @@ import { handleError } from '../utils/error'
 const cookies = new Cookies()
 
 export const kakaoLogin = async code => {
-  console.log(code)
   try {
     const res = await axiosApi('/auth/kakao', 'POST', code)
     cookies.set('x-access-token', res.data.result.xAccessToken, {

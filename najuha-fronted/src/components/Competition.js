@@ -154,12 +154,7 @@ function Competition() {
       dateCheck(competition.registrationDate, competition.registrationDeadline)
       setMarkdown(competition.information)
     }
-    console.log(competition)
   }, [competition])
-
-  useEffect(() => {
-    console.log(viewCompetition)
-  }, [viewCompetition])
 
   return (
     <div className="competition-wrapper">

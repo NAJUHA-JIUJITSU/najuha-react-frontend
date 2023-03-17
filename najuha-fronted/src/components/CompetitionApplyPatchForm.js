@@ -48,10 +48,6 @@ function CompetitionApplyPatchForm() {
         check: 0,
       },
     ])
-  const [paymentmethod, setPaymentmethod] = useState(null)
-  const [easypaymethod, setEasypaymethod] = useState(null)
-  const frontBaseUrl = process.env.REACT_APP_FRONT_END_API
-  console.log(state)
 
   const parsingbeforeapplypost = viewcompetitionApplicationList => {
     let copyList = JSON.parse(JSON.stringify(viewcompetitionApplicationList))
@@ -147,18 +143,6 @@ function CompetitionApplyPatchForm() {
   }, [])
 
   useEffect(() => {
-    console.log(competitionApplicationId)
-  }, [competitionApplicationId])
-
-  useEffect(() => {
-    console.log(competition)
-  }, [competition])
-
-  useEffect(() => {
-    console.log(fillteredcompetition)
-  }, [fillteredcompetition])
-
-  useEffect(() => {
     if (viewcompetitionApplicationList[0].price != null) {
       getTotalPrice(id)
     } else {
@@ -170,12 +154,7 @@ function CompetitionApplyPatchForm() {
       .price,
   ])
 
-  useEffect(() => {
-    console.log(viewcompetitionApplicationList)
-  }, [viewcompetitionApplicationList])
-
   const curApplicationReset = i => {
-    console.log(i)
     let cal = [...viewcompetitionApplicationList]
     cal[i] = {
       playerName: '',
@@ -303,7 +282,6 @@ function CompetitionApplyPatchForm() {
   }
 
   const constfillteringcompetition = (value, part) => {
-    console.log(value, part)
     let newfillteredcompetition = fillteredcompetition.filter(
       div => div.constantFactor[part] == value
     )
@@ -311,7 +289,6 @@ function CompetitionApplyPatchForm() {
   }
 
   const varfillteringcompetition = (value, part) => {
-    console.log(value, part)
     let newfillteredcompetition = fillteredcompetition.filter(div =>
       div.variableFactor[part].includes(value)
     )
@@ -319,7 +296,6 @@ function CompetitionApplyPatchForm() {
   }
 
   const chooseUniformOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].uniform = value
     setviewCompetitionApplicationList(cal)
@@ -327,7 +303,6 @@ function CompetitionApplyPatchForm() {
   }
 
   const chooseDivisionOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].divisionName = value
     setviewCompetitionApplicationList(cal)
@@ -335,7 +310,6 @@ function CompetitionApplyPatchForm() {
   }
 
   const chooseGenderOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].gender = value
     setviewCompetitionApplicationList(cal)
@@ -343,7 +317,6 @@ function CompetitionApplyPatchForm() {
   }
 
   const chooseWeightOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].weight = value
     setviewCompetitionApplicationList(cal)
@@ -351,7 +324,6 @@ function CompetitionApplyPatchForm() {
   }
 
   const chooseBeltOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].belt = value
     setviewCompetitionApplicationList(cal)

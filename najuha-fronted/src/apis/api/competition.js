@@ -57,6 +57,6 @@ export const getCompetitionApplicationList = async competitionId => {
     )
     return res
   } catch (e) {
-    console.log(e)
+    handleError(e)
   }
 }

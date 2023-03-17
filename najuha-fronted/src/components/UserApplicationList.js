@@ -234,7 +234,6 @@ function UserApplicationList(props) {
     reset[i] = 'UserApplicationList_active'
     setActive(reset)
     setclickedList(list)
-    console.log(clickedList)
   }
 
   useEffect(() => {
