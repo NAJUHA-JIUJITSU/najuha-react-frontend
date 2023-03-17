@@ -57,15 +57,6 @@ function CompetitionApplyTeamForm() {
   }, [competitionApplication.weight])
 
   useEffect(() => {
-    console.log(competition)
-  }, [competition])
-
-  useEffect(() => {
-    console.log(competitionApplication)
-  }, [competitionApplication])
-
-  useEffect(() => {
-    console.log(viewCompetitionApplicationList)
     if (viewCompetitionApplicationList.length > 0) getTotalPrice() // 가격 받아오기
   }, [viewCompetitionApplicationList])
 
@@ -371,7 +362,6 @@ function CompetitionApplyTeamForm() {
       copycompetitionApplication.divisionName = ''
       copycompetitionApplication.belt = ''
       copycompetitionApplication.weight = ''
-      console.log(copycompetitionApplication)
       setCompetitionApplication(copycompetitionApplication)
     } else if (key == 'uniform') {
       copycompetitionApplication.divisionName = ''

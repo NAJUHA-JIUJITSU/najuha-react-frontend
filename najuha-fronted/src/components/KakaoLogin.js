@@ -18,7 +18,6 @@ const KakaoLogin = () => {
 
     async function TryLoginUser() {
       let res = await kakaoLogin(body)
-      console.log(res)
       if (res?.status === 200) {
         let xAccessToken = res.data.result.xAccessToken
         const decodeToken = jwt_decode(xAccessToken)

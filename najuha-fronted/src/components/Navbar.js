@@ -21,7 +21,6 @@ function Navbar() {
 
   useEffect(() => {
     let location = window.location.href.slice(-11)
-    console.log(location)
     if (location === 'competition') {
       setLocation('competition')
     }
@@ -40,10 +39,6 @@ function Navbar() {
     setDropdownVisibility(false)
     navigate('/')
   }
-
-  useEffect(() => {
-    console.log(cookies['x-access-token'])
-  }, [cookies['x-access-token']])
 
   //외부 클릭시 드랍다운 닫히기
   useEffect(() => {
@@ -68,32 +63,39 @@ function Navbar() {
     <div
       id="Navbar_wrapper"
       className="MainScroll_navWrapper"
-      style={{ backgroundColor: 'white' }}>
+      style={{ backgroundColor: 'white' }}
+    >
       <div id="Navbar_nav" className="MainScroll_nav">
         <div
           id="Navbar_hamburger"
           className={`MainScroll_hamburger ${
             isHamburgerActive ? 'active' : ''
           }`}
-          onClick={hamburgerClick}>
+          onClick={hamburgerClick}
+        >
           <span
             className="MainScroll_bar"
-            style={{ backgroundColor: '#888888' }}></span>
+            style={{ backgroundColor: '#888888' }}
+          ></span>
           <span
             className="MainScroll_bar"
-            style={{ backgroundColor: '#888888' }}></span>
+            style={{ backgroundColor: '#888888' }}
+          ></span>
           <span
             className="MainScroll_bar"
-            style={{ backgroundColor: '#888888' }}></span>
+            style={{ backgroundColor: '#888888' }}
+          ></span>
         </div>
         <div
           className={`MainScroll_hamburgerblack ${
             isHamburgerActive ? 'active' : ''
-          }`}>
+          }`}
+        >
           <div
             className={`MainScroll_hamburgermenu ${
               isHamburgerActive ? 'active' : ''
-            }`}>
+            }`}
+          >
             <div className="MainScroll_hamburgerlist">
               <ul>
                 <li
@@ -103,13 +105,15 @@ function Navbar() {
                   }}
                   style={
                     location === 'competition' ? { fontWeight: '500' } : {}
-                  }>
+                  }
+                >
                   대회일정
                 </li>
                 <li
                   onClick={() => {
                     alert('세미나 일정은 준비중입니다.')
-                  }}>
+                  }}
+                >
                   세미나
                 </li>
               </ul>
@@ -121,7 +125,8 @@ function Navbar() {
           onClick={() => {
             window.location.replace('/')
           }}
-          style={{ color: 'black' }}>
+          style={{ color: 'black' }}
+        >
           NAJUHA
         </h1>
         <div className="MainScroll_list">
@@ -131,13 +136,15 @@ function Navbar() {
                 window.scrollTo(0, 0)
                 navigate('/competition')
               }}
-              style={location === 'competition' ? { fontWeight: '500' } : {}}>
+              style={location === 'competition' ? { fontWeight: '500' } : {}}
+            >
               대회일정
             </li>
             <li
               onClick={() => {
                 alert('세미나 일정은 준비중입니다.')
-              }}>
+              }}
+            >
               세미나
             </li>
           </ul>
@@ -148,11 +155,11 @@ function Navbar() {
             ref={beltDropdownRef}
             onClick={() => {
               setDropdownVisibility(!dropdownVisibility)
-              console.log(dropdownVisibility)
             }}
             src={
               cookies['x-access-token'] == undefined ? whiteProfile : blackBelt
-            }></img>
+            }
+          ></img>
           <div id="profile-dropdown">
             <Dropdown visibility={dropdownVisibility}>
               <ul>
@@ -160,21 +167,24 @@ function Navbar() {
                   onClick={() => {
                     window.scrollTo(0, 0)
                     navigate('/Profilepage', { state: 'UserInfoToggle' })
-                  }}>
+                  }}
+                >
                   내 프로필
                 </li>
                 <li
                   onClick={() => {
                     window.scrollTo(0, 0)
                     navigate('/Profilepage', { state: 'UserApplicationList' })
-                  }}>
+                  }}
+                >
                   신청대회 목록
                 </li>
                 {cookies['x-access-token'] == undefined ? (
                   <li
                     onClick={() => {
                       window.location.href = kakaoAuthURL
-                    }}>
+                    }}
+                  >
                     로그인 하기
                   </li>
                 ) : (

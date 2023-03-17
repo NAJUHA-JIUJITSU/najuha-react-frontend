@@ -73,21 +73,6 @@ function AdminCompetition() {
   const getCompetition = async () => {
     const res = await getAdminCompetition(id)
     if (res) setCompetition(res.data.result)
-    // try {
-    //   const response = await axios.get(
-    //     `${process.env.REACT_APP_BACK_END_API}/admin/competitions/${id}`,
-    //     {
-    //       headers: {
-    //         'x-access-token': cookies.get('x-access-token'),
-    //       },
-    //     }
-    //   )
-    //   console.log(response)
-    //   const newCompetition = response.data.result
-    //   setCompetition(newCompetition)
-    // } catch (err) {
-    //   console.log(err)
-    // }
   }
 
   function competitionParsing(competition) {

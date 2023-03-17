@@ -110,18 +110,6 @@ function CompetitionApplyForm() {
   }, [])
 
   useEffect(() => {
-    console.log(competitionApplicationId)
-  }, [competitionApplicationId])
-
-  useEffect(() => {
-    console.log(competition)
-  }, [competition])
-
-  useEffect(() => {
-    console.log(fillteredcompetition)
-  }, [fillteredcompetition])
-
-  useEffect(() => {
     if (viewcompetitionApplicationList[0].price != null) {
       if (viewcompetitionApplicationList.length > 0) getTotalPrice(id)
     } else {
@@ -134,7 +122,6 @@ function CompetitionApplyForm() {
   ])
 
   const curApplicationReset = i => {
-    console.log(i)
     let cal = [...viewcompetitionApplicationList]
     cal[i] = {
       playerName: '',
@@ -262,7 +249,6 @@ function CompetitionApplyForm() {
   }
 
   const constfillteringcompetition = (value, part) => {
-    console.log(value, part)
     let newfillteredcompetition = fillteredcompetition.filter(
       div => div.constantFactor[part] == value
     )
@@ -270,7 +256,6 @@ function CompetitionApplyForm() {
   }
 
   const varfillteringcompetition = (value, part) => {
-    console.log(value, part)
     let newfillteredcompetition = fillteredcompetition.filter(div =>
       div.variableFactor[part].includes(value)
     )
@@ -278,7 +263,6 @@ function CompetitionApplyForm() {
   }
 
   const chooseUniformOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].uniform = value
     setviewCompetitionApplicationList(cal)
@@ -286,7 +270,6 @@ function CompetitionApplyForm() {
   }
 
   const chooseDivisionOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].divisionName = value
     setviewCompetitionApplicationList(cal)
@@ -294,7 +277,6 @@ function CompetitionApplyForm() {
   }
 
   const chooseGenderOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].gender = value
     setviewCompetitionApplicationList(cal)
@@ -302,7 +284,6 @@ function CompetitionApplyForm() {
   }
 
   const chooseWeightOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].weight = value
     setviewCompetitionApplicationList(cal)
@@ -310,7 +291,6 @@ function CompetitionApplyForm() {
   }
 
   const chooseBeltOption = (value, i) => {
-    console.log(value)
     let cal = [...viewcompetitionApplicationList]
     cal[i].belt = value
     setviewCompetitionApplicationList(cal)

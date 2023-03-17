@@ -79,7 +79,6 @@ function MainScroll() {
 
   //스크롤 값 구하기 && 그에 따른 이벤트 추가
   function handleScroll() {
-    console.log('스크롤 ' + ScrollY)
     if (ScrollY <= 1700) {
       setBgColor('rgba(0, 0, 0, 0)')
       setBgColorW('rgba(255, 255, 255, 0)')

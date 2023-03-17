@@ -25,7 +25,6 @@ function PaymentInfo() {
   const navigate = useNavigate()
 
   const params = useParams() // ex) id: 1
-  console.log('대회 id: ' + params.id)
 
   let competitionPayAmount //대회 총 결제 금액
   let userPayAmount //유저별 결제 금액 합계

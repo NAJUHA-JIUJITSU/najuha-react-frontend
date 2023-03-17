@@ -60,7 +60,6 @@ function Competitionlist() {
       async entries => {
         const first = entries[0]
         if (first.isIntersecting) {
-          console.log('관측됨')
           await viewGetCompetitionList(
             startDateRef.current,
             offsetRef.current,
@@ -97,26 +96,6 @@ function Competitionlist() {
       }
     }
   }, [lastElement, location, startDate, title, offset === 0])
-
-  useEffect(() => {
-    console.log(competitions.length)
-  }, [competitions])
-
-  useEffect(() => {
-    console.log(`offset값은: ${offset}`)
-  }, [offset])
-
-  useEffect(() => {
-    console.log(`startDate값은: ${startDate}`)
-  }, [startDate])
-
-  useEffect(() => {
-    console.log(`location값은: ${location}`)
-  }, [location])
-
-  useEffect(() => {
-    console.log(`title값은: ${title}`)
-  }, [title])
 
   //외부 클릭시 드랍다운 닫히기
   useEffect(() => {
