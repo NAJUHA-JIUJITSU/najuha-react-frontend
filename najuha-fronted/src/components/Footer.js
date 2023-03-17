@@ -31,7 +31,8 @@ function footer() {
             <li
               id="company-menu-list-last"
               onClick={() =>
-                alert('고객센터는 (0507-0177-1165)로 전화바랍니다.')
+                alert('나주하 카카오톡 채널로 문의 바랍니다.')
+                window.location.href = 'http://pf.kakao.com/_meyxmxj/chat'
               }>
               고객센터
             </li>
