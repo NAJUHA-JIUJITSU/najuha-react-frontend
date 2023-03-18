@@ -120,8 +120,7 @@ function PaymentInfo() {
           className="PaymentInfo_tableHover"
           onClick={() => {
             idClick(application.id)
-          }}
-        >
+          }}>
           <td>{i + 1}</td>
           <td>{application.User.UserInfo.fullName}</td>
           <td>{application.User.UserInfo.phoneNumber}</td>
@@ -133,8 +132,7 @@ function PaymentInfo() {
               if (window.confirm('정말로 환불하시겠습니까?'))
                 refund(application.competitionPayment.orderId)
             }}
-            style={{ color: 'red' }}
-          >
+            style={{ color: 'red' }}>
             환불
           </button>
         </tr>
@@ -227,8 +225,7 @@ function PaymentInfo() {
           <div className="ProfileInfo_competition_Left">
             <img
               src={competitionApplicationInfo.postUrl}
-              alt="대회포스터"
-            ></img>
+              alt="대회포스터"></img>
           </div>
           <div className="ProfileInfo_competition_Right">
             <div className="ProfileInfo_competition_date">
