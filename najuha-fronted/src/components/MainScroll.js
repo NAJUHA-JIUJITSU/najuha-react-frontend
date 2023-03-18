@@ -137,8 +137,7 @@ function MainScroll() {
       <div
         className={className}
         style={{ ...style, display: 'block' }}
-        onClick={onClick}
-      ></div>
+        onClick={onClick}></div>
     )
   }
 
@@ -190,8 +189,7 @@ function MainScroll() {
 
         <div
           className="MainScroll_black"
-          style={ScrollY > 5000 ? { display: 'none' } : {}}
-        ></div>
+          style={ScrollY > 5000 ? { display: 'none' } : {}}></div>
         <div className="MainScroll_message">
           <h1
             className={
@@ -200,8 +198,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             NAJUHA
           </h1>
 
@@ -213,8 +210,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             <span>나</span>는 <span>주</span>짓수가 <span>하</span>고싶다.
           </h2>
         </div>
@@ -226,8 +222,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             이번 달 주짓수 대회 어디서 확인하지?
           </h2>
           <h2
@@ -237,8 +232,7 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             신청부터 결제까지 한 번에 할 수 없나?
           </h2>
           <h2
@@ -248,25 +242,21 @@ function MainScroll() {
                   ? 'MainScroll_fadeout'
                   : 'MainScroll_fadein'
                 : 'MainScroll_none'
-            }
-          >
+            }>
             나주하에서는 전부 가능합니다.
           </h2>
         </div>
         <div
           className="MainScroll_black2"
-          style={{ backgroundColor: bgColor }}
-        ></div>
+          style={{ backgroundColor: bgColor }}></div>
         <div
           className="MainScroll_black2"
-          style={{ backgroundColor: bgColorW }}
-        ></div>
+          style={{ backgroundColor: bgColorW }}></div>
       </div>
 
       <div
         className="MainScroll_scrollImg"
-        style={ScrollY > 1700 || !first ? { display: 'none' } : {}}
-      >
+        style={ScrollY > 3600 || !first ? { display: 'none' } : {}}>
         <p>SCROLL</p>
         <img src={scrollImg} alt="스크롤 화살표"></img>
       </div>
@@ -315,7 +305,7 @@ function MainScroll() {
         </div>
       </div>
 
-      <div className="MainScroll_linear2"></div>
+      {/* <div className="MainScroll_linear2"></div> */}
 
       <div className="MainScroll_section4">
         <div data-aos="fade-up" className="MainScroll_title3">
@@ -335,8 +325,7 @@ function MainScroll() {
                   onClick={() => {
                     window.scrollTo(0, 0)
                     navigate(`/competition/${competition.id}`)
-                  }}
-                >
+                  }}>
                   <div className="MainScroll_card">
                     <img src={competition.postUrl} />
 
@@ -358,8 +347,7 @@ function MainScroll() {
           onClick={() => {
             window.scrollTo(0, 0)
             navigate('/competition')
-          }}
-        >
+          }}>
           <p>모든 대회 보러가기</p>
         </div>
       </div>
