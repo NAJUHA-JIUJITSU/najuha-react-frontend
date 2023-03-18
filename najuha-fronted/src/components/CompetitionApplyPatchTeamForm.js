@@ -895,6 +895,7 @@ function CompetitionApplyPatchTeamForm() {
               if (viewCompetitionApplicationList.length > 0) {
                 const res = await patchCompetitionApply()
                 if (res === true) {
+                  window.scrollTo(0, 0)
                   setPaymentbridgemodal(pre => !pre)
                 }
               } else {

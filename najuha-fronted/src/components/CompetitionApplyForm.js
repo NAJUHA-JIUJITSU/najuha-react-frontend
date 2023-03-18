@@ -565,7 +565,10 @@ function CompetitionApplyForm() {
         <button
           className="CompetitionApplyForm-bottom-payment"
           onClick={() => {
-            if (checkInvaildApply()) setapplymodal(!applymodal)
+            if (checkInvaildApply()) {
+              window.scrollTo(0, 0)
+              setapplymodal(!applymodal)
+            }
           }}
         >
           신청하기
