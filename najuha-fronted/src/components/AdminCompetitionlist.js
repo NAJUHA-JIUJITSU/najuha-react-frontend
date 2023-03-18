@@ -149,7 +149,7 @@ function AdminCompetitionlist() {
       )
     }
 
-    if (deadlineDiff == 0) {
+    if (deadlineDiff === 0) {
       // 오늘이 마감날짜(데드라인)일 경우
       return (
         <div className="each-competition-tag-blue">
@@ -188,12 +188,22 @@ function AdminCompetitionlist() {
     let openDiff = todaytime.diff(opendate, 'd')
     let earlyBirdDiff = todaytime.diff(earlyBirdDate, 'd')
 
-    if (openDiff >= 0 && deadlineDiff <= 0 && earlyBirdDiff <= 0)
+    if (openDiff >= 0 && deadlineDiff <= 0 && earlyBirdDiff < 0)
       return (
         <div className="each-competition-tag-red">
           <p>얼리버드</p>
         </div>
       )
+  }
+
+  function makingPartnerTag(isPartnership) {
+    if (isPartnership) {
+      return (
+        <div className="each-competition-tag-purple">
+          <p>간편결제</p>
+        </div>
+      )
+    }
   }
 
   //신청마감 & 신청오픈 전 카드 색 변경
@@ -278,6 +288,7 @@ function AdminCompetitionlist() {
               competition.registrationDate,
               competition.registrationDeadline
             )}
+            {makingPartnerTag(competition.isPartnership)}
           </div>
           <div className="each-competition-body">
             {' '}
