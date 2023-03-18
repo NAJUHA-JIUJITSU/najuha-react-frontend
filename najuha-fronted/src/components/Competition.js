@@ -218,29 +218,51 @@ function Competition() {
             </div>
           </div>
         </div>
-        {inDate ? (
-          competition.isPartnership === true ? (
-            <button
-              id="competition-top-button"
-              onClick={() => {
-                navigate(`/competition/applymethod/${competition.id}`)
-              }}
-            >
-              대회 신청
-            </button>
+        <div className="competition-top-buttons">
+          {inDate ? (
+            competition.isPartnership === true ? (
+              <>
+                <button
+                  id="competition-top-button"
+                  onClick={() => {
+                    navigate(`/competition/${competition.id}/applicant`)
+                  }}
+                >
+                  참가자 명단
+                </button>
+                <button
+                  id="competition-top-button"
+                  onClick={() => {
+                    navigate(`/competition/applymethod/${competition.id}`)
+                  }}
+                >
+                  대회 신청
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  id="competition-top-button"
+                  onClick={() => {
+                    navigate(`/competition/${competition.id}/applicant`)
+                  }}
+                >
+                  참가자명단
+                </button>
+                <button
+                  id="competition-top-button"
+                  onClick={() => {
+                    navigate(`/competition/applymethod/${competition.id}`)
+                  }}
+                >
+                  대회 신청
+                </button>
+              </>
+            )
           ) : (
-            <button
-              id="competition-top-button"
-              onClick={() => {
-                window.location.href = competition.nonPartnershipPageLink
-              }}
-            >
-              대회 신청
-            </button>
-          )
-        ) : (
-          ''
-        )}
+            ''
+          )}
+        </div>
       </div>
       <div className="competition-bottom">
         <MarkdownEditor data={markdown} mode="view" />
