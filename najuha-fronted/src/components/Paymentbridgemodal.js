@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './paymentbridgemodal.css'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,6 +12,13 @@ function Paymentbridgemodal(props) {
   function openNextModal() {
     props.openNextModal()
   }
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
 
   return (
     <div className="Paymentbridgemodal_Modal">
