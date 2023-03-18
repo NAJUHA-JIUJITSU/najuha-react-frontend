@@ -244,6 +244,7 @@
   z-index: 888;
   background-color: var(--blue-background-color);
   height: 110%;
+  padding: 140px 0;
 }
 
 .MainScroll_section3 h1 {
@@ -287,8 +288,8 @@
 }
 
 .MainScroll_phone2 {
-  margin-left: 9rem;
-  margin-top: -20rem;
+  margin-left: 0rem;
+  margin-top: -10rem;
 }
 
 .MainScroll_phone1 p {
@@ -331,6 +332,7 @@
   font-weight: 700;
   letter-spacing: -0.04em;
   z-index: 2;
+  margin-top: 18rem;
 }
 
 .MainScroll_blueLine3 {
@@ -460,7 +462,7 @@
   }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 850px) {
   /* 섹션 1 */
   .MainScroll_message {
     top: 40%;
@@ -520,6 +522,10 @@
   /* 섹션 3 (핸드폰 사진)*/
   .MainScroll_title2 {
     margin-left: 2.6rem;
+  }
+
+  .MainScroll_section3 {
+    padding: 50px 0;
   }
 
   .MainScroll_section3 h1 {
@@ -611,6 +617,7 @@
 
   .MainScroll_section4 h1 {
     font-size: 34px;
+    margin-top: 12rem;
   }
 }
 

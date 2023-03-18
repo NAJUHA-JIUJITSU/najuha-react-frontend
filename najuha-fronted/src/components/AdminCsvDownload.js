@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { CSVLink } from 'react-csv'
-import axios from 'axios'
-import { Cookies } from 'react-cookie'
 import { getAdminCompetitionApplicationListCsv } from '../apis/api/admin'
 import { CsvToHtmlTable } from 'react-csv-to-table'
 import './AdminCsvDownload.css'
 
 const AdminCsvDownload = () => {
   const [csvData, setCsvData] = useState([])
-  const cookies = new Cookies()
-  const xAccessToken = cookies.get('x-access-token')
   const competitionId = useParams().id
 
   const getCsvData = async () => {

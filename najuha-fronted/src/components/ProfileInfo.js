@@ -1,163 +1,160 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import "./profileInfo.css";
-import axios from "axios";
-import { Cookies } from "react-cookie";
-import { useJwt } from "react-jwt";
-import { useNavigate, useParams } from "react-router-dom";
-import arrowLeftIcon from "../src_assets/arrow_left.svg";
-import samplePoster from "../src_assets/samplePoster.png";
+import React from 'react'
+import { useState, useEffect } from 'react'
+import './profileInfo.css'
+import { Cookies } from 'react-cookie'
+import { useJwt } from 'react-jwt'
+import { useNavigate, useParams } from 'react-router-dom'
+import arrowLeftIcon from '../src_assets/arrow_left.svg'
+import samplePoster from '../src_assets/samplePoster.png'
 
 // api함수
 import {
   getUserApplicationCompetitionInfo,
   deleteUserApplicationCompetition,
-} from "../apis/api/user";
+} from '../apis/api/user'
 
 // 결제에 필요한
-import Paymentmodal from "./Paymentmodal";
+import Paymentmodal from './Paymentmodal'
 
 function ProfileInfo() {
   const [rawCompetitionApplicationInfo, setRawCompetitionApplicationInfo] =
-    useState({});
+    useState({})
   const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState(
     []
-  ); //유저 신청 대회 상세정보 가져오기
+  ) //유저 신청 대회 상세정보 가져오기
   const [competitionApplicationList, setCompetitionApplicationList] = useState(
     []
-  ); //유저 신청 대회 유저 리스트 가져오기
-  const cookies = new Cookies();
-  const xAccessToken = cookies.get("x-access-token");
-  const { decodedToken, isExpired } = useJwt(xAccessToken);
-  const navigate = useNavigate();
+  ) //유저 신청 대회 유저 리스트 가져오기
+  const cookies = new Cookies()
+  const xAccessToken = cookies.get('x-access-token')
+  const { decodedToken, isExpired } = useJwt(xAccessToken)
+  const navigate = useNavigate()
 
   // 결제에 필요한 state값
-  const [paymentmodal, setPaymentmodal] = useState(false);
+  const [paymentmodal, setPaymentmodal] = useState(false)
 
-  const competitionApplicationId = useParams().id; // ex) id: 1
-  const cursorStyle = { cursor: "default" };
+  const competitionApplicationId = useParams().id // ex) id: 1
+  const cursorStyle = { cursor: 'default' }
 
   //서버에서 신청상세정보 가져오기
   async function getCompetitionApplicationInfo() {
-    let res = await getUserApplicationCompetitionInfo(competitionApplicationId);
+    let res = await getUserApplicationCompetitionInfo(competitionApplicationId)
     if (res?.status === 200) {
-      setRawCompetitionApplicationInfo(res.data.result);
-      setcompetitionApplicationInfo(applicationParsing(res.data.result));
-      setCompetitionApplicationList(
-        res.data.result.CompetitionApplicationInfos
-      );
+      setRawCompetitionApplicationInfo(res.data.result)
+      setcompetitionApplicationInfo(applicationParsing(res.data.result))
+      setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos)
     }
-    return;
+    return
   }
 
   //요일 값 구하기
   function getDayOfWeek(날짜문자열) {
     //ex) getDayOfWeek('2022-06-13')
 
-    const week = ["일", "월", "화", "수", "목", "금", "토"];
+    const week = ['일', '월', '화', '수', '목', '금', '토']
 
-    const dayOfWeek = week[new Date(날짜문자열).getDay()];
+    const dayOfWeek = week[new Date(날짜문자열).getDay()]
 
-    return dayOfWeek;
+    return dayOfWeek
   }
 
   //핸드폰 숫자 사이 하이픈 넣기
   function autoHypenPhone(str) {
-    let tmp = "";
+    let tmp = ''
     if (str.length < 4) {
-      return str;
+      return str
     } else if (str.length < 7) {
-      tmp += str.substr(0, 3);
-      tmp += "-";
-      tmp += str.substr(3);
-      return tmp;
+      tmp += str.substr(0, 3)
+      tmp += '-'
+      tmp += str.substr(3)
+      return tmp
     } else if (str.length < 11) {
-      tmp += str.substr(0, 3);
-      tmp += "-";
-      tmp += str.substr(3, 3);
-      tmp += "-";
-      tmp += str.substr(6);
-      return tmp;
+      tmp += str.substr(0, 3)
+      tmp += '-'
+      tmp += str.substr(3, 3)
+      tmp += '-'
+      tmp += str.substr(6)
+      return tmp
     } else {
-      tmp += str.substr(0, 3);
-      tmp += "-";
-      tmp += str.substr(3, 4);
-      tmp += "-";
-      tmp += str.substr(7);
-      return tmp;
+      tmp += str.substr(0, 3)
+      tmp += '-'
+      tmp += str.substr(3, 4)
+      tmp += '-'
+      tmp += str.substr(7)
+      return tmp
     }
 
-    return str;
+    return str
   }
 
   //신청대회 데이터 파싱
   function applicationParsing(application) {
-    let today = new Date();
-    let id = application.id;
-    let competitionId = application.Competition.id;
-    let title = application.Competition.title;
+    let today = new Date()
+    let id = application.id
+    let competitionId = application.Competition.id
+    let title = application.Competition.title
 
     let postUrl = application.Competition.CompetitionPoster
       ? application.Competition.CompetitionPoster.imageUrl
-      : samplePoster;
+      : samplePoster
     let doreOpen = application.Competition.doreOpen
       .substr(0, 10)
-      .replace("-", ".")
-      .replace("-", ".");
-    let doreOpenDay = getDayOfWeek(application.Competition.doreOpen);
-    let location = application.Competition.location;
+      .replace('-', '.')
+      .replace('-', '.')
+    let doreOpenDay = getDayOfWeek(application.Competition.doreOpen)
+    let location = application.Competition.location
     let earlyBirdDeadline = application.Competition.earlyBirdDeadline
       .substr(0, 10)
-      .replace("-", ".")
-      .replace("-", ".");
+      .replace('-', '.')
+      .replace('-', '.')
     let earlyBirdDeadlineDay = getDayOfWeek(
       application.Competition.earlyBirdDeadline
-    );
+    )
     let registrationDeadline = application.Competition.registrationDeadline
       .substr(0, 10)
-      .replace("-", ".")
-      .replace("-", ".");
+      .replace('-', '.')
+      .replace('-', '.')
     let registrationDeadlineDay = getDayOfWeek(
       application.Competition.registrationDeadline
-    );
+    )
     let applicantTableOpenDate = application.Competition.applicantTableOpenDate
       .substr(0, 10)
-      .replace("-", ".")
-      .replace("-", ".");
+      .replace('-', '.')
+      .replace('-', '.')
     let applicantTableOpenDateDay = getDayOfWeek(
       application.Competition.applicantTableOpenDate
-    );
+    )
     let tournamentTableOpenDate =
       application.Competition.tournamentTableOpenDate
         .substr(0, 10)
-        .replace("-", ".")
-        .replace("-", ".");
+        .replace('-', '.')
+        .replace('-', '.')
     let tournamentTableOpenDateDay = getDayOfWeek(
       application.Competition.tournamentTableOpenDate
-    );
-    let team = application.CompetitionApplicationInfos[0].team;
+    )
+    let team = application.CompetitionApplicationInfos[0].team
     let phoneNumber = autoHypenPhone(
       application.CompetitionApplicationInfos[0].phoneNumber
-    );
-    let isGroup = application.isGroup ? "단체" : "개인";
+    )
+    let isGroup = application.isGroup ? '단체' : '개인'
     let amount =
       today > new Date(application.Competition.earlyBirdDeadline)
         ? application.expectedPrice.earlyBirdFalse
-        : application.expectedPrice.earlyBirdTrue;
+        : application.expectedPrice.earlyBirdTrue
     let isPay =
-      application.competitionPayment === null ? "예상 결제금액" : "총 결제금액";
+      application.competitionPayment === null ? '예상 결제금액' : '총 결제금액'
 
     //버튼 렌더에 필요한 정보
-    let competitionPayment = application.competitionPayment;
+    let competitionPayment = application.competitionPayment
     let status = application.competitionPayment
       ? application.competitionPayment.status
-      : " ";
+      : ' '
     let CheckRegistrationDeadline =
       today > new Date(application.Competition.registrationDeadline)
         ? false
-        : true; //false면 신청마감
+        : true //false면 신청마감
     let CheckDoreOpen =
-      today > new Date(application.Competition.doreOpen) ? false : true; //false면 대회날짜 지남
+      today > new Date(application.Competition.doreOpen) ? false : true //false면 대회날짜 지남
 
     return {
       id: id,
@@ -165,15 +162,15 @@ function ProfileInfo() {
       title: title,
 
       postUrl: postUrl,
-      doreOpen: doreOpen + "(" + doreOpenDay + ")",
+      doreOpen: doreOpen + '(' + doreOpenDay + ')',
       location: location,
-      earlyBirdDeadline: earlyBirdDeadline + "(" + earlyBirdDeadlineDay + ")",
+      earlyBirdDeadline: earlyBirdDeadline + '(' + earlyBirdDeadlineDay + ')',
       registrationDeadline:
-        registrationDeadline + "(" + registrationDeadlineDay + ")",
+        registrationDeadline + '(' + registrationDeadlineDay + ')',
       applicantTableOpenDate:
-        applicantTableOpenDate + "(" + applicantTableOpenDateDay + ")",
+        applicantTableOpenDate + '(' + applicantTableOpenDateDay + ')',
       tournamentTableOpenDate:
-        tournamentTableOpenDate + "(" + tournamentTableOpenDateDay + ")",
+        tournamentTableOpenDate + '(' + tournamentTableOpenDateDay + ')',
       team: team,
       phoneNumber: phoneNumber,
       isGroup: isGroup,
@@ -185,49 +182,49 @@ function ProfileInfo() {
       status: status,
       CheckRegistrationDeadline: CheckRegistrationDeadline,
       CheckDoreOpen: CheckDoreOpen,
-    };
+    }
   }
 
   // 신청 대회 지우기(결제 미완료)
   async function deleteCompetitionApplication(id) {
-    const res = await deleteUserApplicationCompetition(id);
+    const res = await deleteUserApplicationCompetition(id)
     if (res?.status === 200) {
-      alert("대회가 삭제되었습니다.");
-      navigate("/Profilepage", { state: "UserApplicationList" });
+      alert('대회가 삭제되었습니다.')
+      navigate('/Profilepage', { state: 'UserApplicationList' })
     }
-    return;
+    return
   }
 
   //삭제 경고 문구창
-  const onRemove = (id) => {
+  const onRemove = id => {
     if (
       window.confirm(
-        "대회 정보가 모두 삭제됩니다. 해당 대회를 정말 삭제하시겠습니까?"
+        '대회 정보가 모두 삭제됩니다. 해당 대회를 정말 삭제하시겠습니까?'
       )
     ) {
-      deleteCompetitionApplication(id);
+      deleteCompetitionApplication(id)
     } else {
       //   alert("취소합니다.");
     }
-  };
+  }
 
   //수정하기 버튼에 넘겨줄 대회ID, 신청정보ID
   const patchClick = () => {
     //개인으로 신청한 경우
-    if (competitionApplicationInfo.isGroup === "개인") {
+    if (competitionApplicationInfo.isGroup === '개인') {
       navigate(
         `/competition/apply/patch/${competitionApplicationInfo.competitionId}`,
         { state: competitionApplicationInfo.id }
-      );
+      )
     }
     //단체로 신청한 경우
-    if (competitionApplicationInfo.isGroup === "단체") {
+    if (competitionApplicationInfo.isGroup === '단체') {
       navigate(
         `/competition/applyteam/patch/${competitionApplicationInfo.competitionId}`,
         { state: competitionApplicationInfo.id }
-      );
+      )
     }
-  };
+  }
 
   //버튼 렌더
   function renderButton(application) {
@@ -245,18 +242,18 @@ function ProfileInfo() {
               결제완료
             </button>
           </div>
-        );
+        )
       }
       //결제완료(대회날짜 안지남)
-      if (application.status === "APPROVED") {
+      if (application.status === 'APPROVED') {
         return (
           //환불하기&결제완료 버튼
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
               onClick={() => {
-                alert("환불요청은 카카오톡 채널로 환불신청  바랍니다.");
-                window.location.href = "http://pf.kakao.com/_meyxmxj/chat";
+                alert('환불요청은 카카오톡 채널로 환불신청  바랍니다.')
+                window.location.href = 'http://pf.kakao.com/_meyxmxj/chat'
               }}
             >
               환불하기
@@ -268,10 +265,10 @@ function ProfileInfo() {
               결제완료
             </button>
           </div>
-        );
+        )
       }
       //환불완료
-      if (application.status === "CANCELED") {
+      if (application.status === 'CANCELED') {
         return (
           //환불완료 버튼
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
@@ -282,7 +279,7 @@ function ProfileInfo() {
               환불완료
             </button>
           </div>
-        );
+        )
       }
     }
 
@@ -294,13 +291,13 @@ function ProfileInfo() {
           <button
             id="CompetitionApplyTeamForm-bottom-table-buttons-save"
             onClick={() => {
-              onRemove(application.id);
+              onRemove(application.id)
             }}
           >
             삭제하기
           </button>
         </div>
-      );
+      )
     }
     //결제 미완료
     return (
@@ -309,7 +306,7 @@ function ProfileInfo() {
         <button
           id="CompetitionApplyTeamForm-bottom-table-buttons-save"
           onClick={() => {
-            patchClick();
+            patchClick()
           }}
         >
           수정하기
@@ -317,13 +314,14 @@ function ProfileInfo() {
         <button
           id="CompetitionApplyTeamForm-bottom-table-buttons-register"
           onClick={() => {
-            setPaymentmodal((pre) => !pre);
+            window.scrollTo(0, 0)
+            setPaymentmodal(pre => !pre)
           }}
         >
           결제하기
         </button>
       </div>
-    );
+    )
   }
 
   //(오칸 코드) 테이블 렌더
@@ -334,35 +332,35 @@ function ProfileInfo() {
           <li>{i + 1}</li>
           <li>{application.playerName}</li>
           <li>{application.playerBirth}</li>
-          <li>{application.gender == "female" ? "여자" : "남자"}</li>
-          <li>{application.uniform == "gi" ? "기" : "노기"}</li>
+          <li>{application.gender == 'female' ? '여자' : '남자'}</li>
+          <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
           <li>{application.divisionName}</li>
           <li>{application.belt}</li>
           <li>{application.weight}</li>
           <li>{application.pricingPolicy.normal}원</li>
         </ul>
-      );
-    });
+      )
+    })
   }
 
   useEffect(() => {
     if (decodedToken) {
       // 레벨 1인 유저가 들어오면 다시 수정페이지로 리다이렉트
       if (decodedToken.userLevel == 1) {
-        alert("회원가입을 완료해주세요");
-        navigate("/UserInfopage");
+        alert('회원가입을 완료해주세요')
+        navigate('/UserInfopage')
       }
     }
 
-    getCompetitionApplicationInfo();
-  }, [decodedToken]);
+    getCompetitionApplicationInfo()
+  }, [decodedToken])
 
   return (
     <div className="ProfileInfo_wrapper">
       <div className="ProfileInfo_title">
         <a
           onClick={() => {
-            navigate(`/Profilepage`, { state: "UserApplicationList" });
+            navigate(`/Profilepage`, { state: 'UserApplicationList' })
           }}
         >
           <img src={arrowLeftIcon} alt="이전으로 돌아가기"></img>
@@ -376,7 +374,7 @@ function ProfileInfo() {
             onClick={() => {
               navigate(
                 `/competition/${competitionApplicationInfo.competitionId}`
-              );
+              )
             }}
           >
             대회상세보기
@@ -466,7 +464,7 @@ function ProfileInfo() {
       </div>
       {paymentmodal && (
         <Paymentmodal
-          closeModal={() => setPaymentmodal((pre) => !pre)}
+          closeModal={() => setPaymentmodal(pre => !pre)}
           discountedprice={
             competitionApplicationInfo ? competitionApplicationInfo.amount : 0
           }
@@ -479,7 +477,7 @@ function ProfileInfo() {
         />
       )}
     </div>
-  );
+  )
 }
 
-export default ProfileInfo;
+export default ProfileInfo
