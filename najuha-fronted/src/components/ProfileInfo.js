@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import './profileInfo.css'
-import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import { useJwt } from 'react-jwt'
 import { useNavigate, useParams } from 'react-router-dom'

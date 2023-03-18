@@ -3,7 +3,6 @@ import './competitionApplyForm.css'
 import reseticon from '../src_assets/리셋아이콘.svg'
 import notcomplete from '../src_assets/미완료아이콘.svg'
 import plus from '../src_assets/대회추가아이콘.svg'
-import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import { useParams, useLocation } from 'react-router-dom'
 import ApplyModal from './ApplyModal'
@@ -28,7 +27,6 @@ function CompetitionApplyPatchForm() {
   const [applymodal, setapplymodal] = useState(false)
   const [paymentbridgemodal, setPaymentbridgemodal] = useState(false)
   const [paymentmodal, setPaymentmodal] = useState(false)
-  const cookies = new Cookies()
   const [fillteredcompetition, setFillteredCompetition] = useState(null)
   const [competitionApplicationId, setCompetitionApplicationId] = useState(null)
   const [viewcompetitionApplicationList, setviewCompetitionApplicationList] =

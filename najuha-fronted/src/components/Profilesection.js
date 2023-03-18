@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import './profilesection.css'
-import axios from 'axios'
 import ProfileTap from '../components/ProfileTap'
 import UserApplicationList from './UserApplicationList'
 import { Cookies } from 'react-cookie'

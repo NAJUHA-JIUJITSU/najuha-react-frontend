@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import './competition.css'
-import axios from 'axios'
 import { Cookies } from 'react-cookie'
 import sampleposter from '../src_assets/samplePoster.png'
 import { getAdminCompetition } from '../apis/api/admin'

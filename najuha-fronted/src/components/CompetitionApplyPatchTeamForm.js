@@ -5,7 +5,6 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import dropdownicon from '../src_assets/드랍다운아이콘.svg'
 import deleteicon from '../src_assets/명단삭제로고.svg'
 
-import { Cookies } from 'react-cookie'
 import {
   getUserApplicationCompetitionInfo,
   patchUserApplicationCompetition,

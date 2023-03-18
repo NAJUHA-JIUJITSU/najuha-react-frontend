@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import './profileTap.css'
 import { useNavigate } from 'react-router-dom'
 
@@ -29,7 +29,8 @@ function ProfileTap(props) {
   return (
     <section
       className="ProfileTap_wrapper"
-      id={props?.disapper ? 'ProfileTap_dissaper' : 'ProfileTap_live'}>
+      id={props?.disapper ? 'ProfileTap_dissaper' : 'ProfileTap_live'}
+    >
       <div className="ProfileTap_welcome">
         <div className="ProfileTap_welcome-center">
           <p>
@@ -61,14 +62,16 @@ function ProfileTap(props) {
             className="ProfileTap_information-btn"
             onClick={() => {
               navigate('/Profilepage', { state: 'UserApplicationList' })
-            }}>
+            }}
+          >
             신청대회 목록
           </div>
           <div
             className="ProfileTap_information-btn"
             onClick={() => {
               navigate('/Profilepage', { state: 'UserInfo' })
-            }}>
+            }}
+          >
             내 프로필
           </div>
           {/* <div className="ProfileTap_information-btn">개인정보처리방침</div>
