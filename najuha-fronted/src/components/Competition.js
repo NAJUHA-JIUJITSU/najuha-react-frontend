@@ -166,7 +166,7 @@ function Competition() {
             competition.isPartnership === true ? (
               <>
                 <button
-                  id="competition-top-button"
+                  id="competition-top-button2"
                   onClick={() => {
                     navigate(`/competition/${competition.id}/applicant`)
                   }}
@@ -174,7 +174,7 @@ function Competition() {
                   참가자 명단
                 </button>
                 <button
-                  id="competition-top-button"
+                  id="competition-top-button1"
                   onClick={() => {
                     navigate(`/competition/applymethod/${competition.id}`)
                   }}
@@ -183,24 +183,14 @@ function Competition() {
                 </button>
               </>
             ) : (
-              <>
-                <button
-                  id="competition-top-button"
-                  onClick={() => {
-                    navigate(`/competition/${competition.id}/applicant`)
-                  }}
-                >
-                  참가자명단
-                </button>
-                <button
-                  id="competition-top-button"
-                  onClick={() => {
-                    navigate(`/competition/applymethod/${competition.id}`)
-                  }}
-                >
-                  대회 신청
-                </button>
-              </>
+              <button
+                id="competition-top-button1"
+                onClick={() => {
+                  window.location.href = competition.nonPartnershipPageLink
+                }}
+              >
+                대회 신청
+              </button>
             )
           ) : (
             ''
