@@ -18,7 +18,6 @@ import ProgressiveImage from 'react-progressive-graceful-image'
 import placeholderSrc from '../src_assets/exBG.jpeg'
 
 import { Cookies } from 'react-cookie'
-import axios from 'axios'
 
 import { getPartnershipCompetitionList } from '../apis/api/competition'
 

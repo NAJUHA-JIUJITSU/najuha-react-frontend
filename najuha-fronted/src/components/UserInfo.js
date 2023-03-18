@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import './userInfo.css'
-import axios from 'axios'
 import './profilesectionToggle.css'
 import { patchUserInfo } from '../apis/api/user'
 

@@ -866,7 +866,10 @@ function CompetitionApplyTeamForm() {
             onClick={async () => {
               if (viewCompetitionApplicationList.length > 0) {
                 let res = await postCompetitionApply()
-                if (res === true) setPaymentbridgemodal(pre => !pre)
+                if (res === true) {
+                  window.scrollTo(0, 0)
+                  setPaymentbridgemodal(pre => !pre)
+                }
               } else {
                 alert('참가자를 추가해주세요.')
               }

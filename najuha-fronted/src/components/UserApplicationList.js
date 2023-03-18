@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import './userApplicationList.css'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import xIcon from '../src_assets/x.svg'
 import samplePoster from '../src_assets/samplePoster.png'
@@ -11,7 +10,6 @@ function UserApplicationList(props) {
   const [clickedList, setclickedList] = useState('person')
   const [active, setActive] = useState(['UserApplicationList_active', '', ''])
   const navigate = useNavigate()
-  const xAccessToken = props.xAccessToken
   const userLevel = props.userLevel
   let competitionApplications = props.competitionApplications
 

@@ -26,6 +26,13 @@ function Paymentmodal(props) {
     return true
   }
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
+
   function easypaymentUI() {
     const easyPayMethods = [
       { value: '토스페이', label: '토스페이' },
@@ -43,7 +50,8 @@ function Paymentmodal(props) {
         {easyPayMethods.map(method => (
           <div
             className="Paymentmodal_secondsection_esaypaymethod"
-            key={method.value}>
+            key={method.value}
+          >
             <input
               type="radio"
               value={method.value}
@@ -61,14 +69,16 @@ function Paymentmodal(props) {
     <div className="Paymentmodal_Modal">
       <div
         className="Paymentmodal_modalBody"
-        onClick={e => e.stopPropagation()}>
+        onClick={e => e.stopPropagation()}
+      >
         <div className="Paymentmodal_modaltitle">
           <h2 id="Paymentmodal_modaltitle">결제방식 선택 </h2>
           <button
             id="Paymentmodal_modalCloseBtn"
             onClick={() => {
               navigate('/Profilepage', { state: 'UserApplicationList' })
-            }}>
+            }}
+          >
             <img
               src={blackX}
               alt="삭제 아이콘"
@@ -76,7 +86,8 @@ function Paymentmodal(props) {
                 width: '24px',
                 marginRight: '-10px',
                 marginTop: '-30px',
-              }}></img>
+              }}
+            ></img>
           </button>
         </div>
 
@@ -106,7 +117,8 @@ function Paymentmodal(props) {
                 type="radio"
                 value="간편결제"
                 checked={paymentmethod == '간편결제'}
-                onChange={e => setPaymentmethod(e.target.value)}></input>
+                onChange={e => setPaymentmethod(e.target.value)}
+              ></input>
               <p>간편결제</p>
             </div>
             {paymentmethod == '간편결제' ? easypaymentUI() : ''}
@@ -115,7 +127,8 @@ function Paymentmodal(props) {
                 type="radio"
                 value="카드"
                 checked={paymentmethod == '카드'}
-                onChange={e => setPaymentmethod(e.target.value)}></input>
+                onChange={e => setPaymentmethod(e.target.value)}
+              ></input>
               <p>카드결제</p>
             </div>
             <div className="Paymentmodal_secondsection_method">
@@ -123,7 +136,8 @@ function Paymentmodal(props) {
                 type="radio"
                 value="계좌이체"
                 checked={paymentmethod == '계좌이체'}
-                onChange={e => setPaymentmethod(e.target.value)}></input>
+                onChange={e => setPaymentmethod(e.target.value)}
+              ></input>
               <p>계좌이체</p>
             </div>
           </div>
@@ -133,7 +147,8 @@ function Paymentmodal(props) {
             <input
               type="radio"
               checked={lastCheck === true}
-              onChange={() => setLastCheck(pre => !pre)}></input>
+              onChange={() => setLastCheck(pre => !pre)}
+            ></input>
             <p>
               주문내용 확인 및 결제 동의<span> (필수)</span>
             </p>
@@ -152,7 +167,8 @@ function Paymentmodal(props) {
                   easypaymethod
                 )
               else alert('옵션을 선택해주세요')
-            }}>
+            }}
+          >
             결제하기
           </button>
         </div>
