@@ -1,7 +1,8 @@
 #Navbar_wrapper {
   height: 16vh;
   border-bottom: none;
-  position: static;
+  position: relative;
+  z-index: 999;
   padding-top: 3vh;
   box-sizing: border-box;
 }
