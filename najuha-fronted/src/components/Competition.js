@@ -161,41 +161,40 @@ function Competition() {
             </div>
           </div>
         </div>
-        <div className="competition-top-buttons">
-          {inDate ? (
-            competition.isPartnership === true ? (
-              <>
-                <button
-                  id="competition-top-button2"
-                  onClick={() => {
-                    navigate(`/competition/${competition.id}/applicant`)
-                  }}
-                >
-                  참가자 명단
-                </button>
-                <button
-                  id="competition-top-button1"
-                  onClick={() => {
-                    navigate(`/competition/applymethod/${competition.id}`)
-                  }}
-                >
-                  대회 신청
-                </button>
-              </>
-            ) : (
+
+        {inDate ? (
+          competition.isPartnership === true ? (
+            <div className="competition-top-buttons">
+              <button
+                id="competition-top-button2"
+                onClick={() => {
+                  navigate(`/competition/${competition.id}/applicant`)
+                }}
+              >
+                참가자 명단
+              </button>
               <button
                 id="competition-top-button1"
                 onClick={() => {
-                  window.location.href = competition.nonPartnershipPageLink
+                  navigate(`/competition/applymethod/${competition.id}`)
                 }}
               >
                 대회 신청
               </button>
-            )
+            </div>
           ) : (
-            ''
-          )}
-        </div>
+            <button
+              id="competition-top-button1"
+              onClick={() => {
+                window.location.href = competition.nonPartnershipPageLink
+              }}
+            >
+              대회 신청
+            </button>
+          )
+        ) : (
+          ''
+        )}
       </div>
       <div className="competition-bottom">
         <MarkdownEditor data={markdown} mode="view" />
