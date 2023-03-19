@@ -1,5 +1,5 @@
 #Navbar_wrapper {
-  height: 16vh;
+  height: 12vh;
   border-bottom: none;
   position: relative;
   z-index: 999;
@@ -27,7 +27,7 @@
 
 @media (max-width: 750px) {
   #Navbar_wrapper {
-    height: 12vh;
+    /* height: 10vh; */
     padding-top: 1vh;
   }
 
