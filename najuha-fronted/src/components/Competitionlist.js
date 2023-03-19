@@ -144,7 +144,27 @@ function Competitionlist() {
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
 
+    let openDiff = todaytime.diff(opendate, 'd')
+    let deadlineDiff = todaytime.diff(finishdate, 'd')
     let deadlineDiffM = todaytime.diff(finishdate, 'm')
+    let opendateDiffM = todaytime.diff(opendate, 'm')
+
+    if (opendateDiffM < 0) {
+      if (openDiff < 0) {
+        return (
+          <div className="each-competition-tag-gray">
+            <p>신청오픈 D{openDiff}</p>
+          </div>
+        )
+      }
+      if (openDiff === 0) {
+        return (
+          <div className="each-competition-tag-gray">
+            <p>신청오픈 D-1</p>
+          </div>
+        )
+      }
+    }
 
     if (deadlineDiffM > 0) {
       // 마감날짜(데드라인)이 지났을경우
@@ -155,23 +175,11 @@ function Competitionlist() {
       )
     }
 
-    let openDiff = todaytime.diff(opendate, 'd')
-    let deadlineDiff = todaytime.diff(finishdate, 'd')
-
     if (deadlineDiff === 0) {
       // 오늘이 마감날짜(데드라인)일 경우
       return (
         <div className="each-competition-tag-blue">
           <p>신청마감 D-day</p>
-        </div>
-      )
-    }
-
-    if (openDiff < 0) {
-      // 현재날짜가 오픈 전일 경우 ex) 신청오픈 D-20
-      return (
-        <div className="each-competition-tag-gray">
-          <p>신청오픈 D{openDiff}</p>
         </div>
       )
     }
@@ -191,9 +199,9 @@ function Competitionlist() {
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
     let earlyBirdDate = dayjs(earlyBirdDeadline, 'YYYY-MM-DD')
 
-    let deadlineDiff = todaytime.diff(finishdate, 'd')
-    let openDiff = todaytime.diff(opendate, 'd')
-    let earlyBirdDiff = todaytime.diff(earlyBirdDate, 'd')
+    let deadlineDiff = todaytime.diff(finishdate, 'm')
+    let openDiff = todaytime.diff(opendate, 'm')
+    let earlyBirdDiff = todaytime.diff(earlyBirdDate, 'm')
     if (openDiff >= 0 && deadlineDiff <= 0 && earlyBirdDiff < 0)
       return (
         <div className="each-competition-tag-red">
