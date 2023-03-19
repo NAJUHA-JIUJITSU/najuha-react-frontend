@@ -63,7 +63,8 @@
 }
 
 .competition-searchzone {
-  height: 10vh;
+  height: 80px;
+  margin-top: 10px;
   display: flex;
   align-items: end;
 }
