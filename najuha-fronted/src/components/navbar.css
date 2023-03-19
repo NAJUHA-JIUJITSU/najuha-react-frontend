@@ -1,7 +1,8 @@
 #Navbar_wrapper {
-  height: 16vh;
+  height: 12vh;
   border-bottom: none;
-  position: static;
+  position: relative;
+  z-index: 999;
   padding-top: 3vh;
   box-sizing: border-box;
 }
@@ -26,7 +27,7 @@
 
 @media (max-width: 750px) {
   #Navbar_wrapper {
-    height: 12vh;
+    /* height: 10vh; */
     padding-top: 1vh;
   }
 
