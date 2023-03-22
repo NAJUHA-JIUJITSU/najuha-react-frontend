@@ -9,7 +9,7 @@ import MarkdownEditor from './MarkdownEditor'
 function Competition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
   const [inDate, setInDate] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
+  const [isApplicantTableOpen, setIsApplicantTableOpen] = useState(false)
   const [competition, setCompetition] = useState(null)
   const [viewCompetition, setViewCompetition] = useState(false)
   const { id } = useParams()
@@ -88,11 +88,11 @@ function Competition() {
     setInDate(true)
   }
 
-  function openCheck(registrationDate) {
-    let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
+  function applicantTableOpenCheck(applicantTableOpenDate) {
+    let opendate = dayjs(applicantTableOpenDate, 'YYYY-MM-DD')
     let openDiff = todaytime.diff(opendate, 'm')
     if (openDiff >= 0) {
-      setIsOpen(true)
+      setIsApplicantTableOpen(true)
     }
   }
 
@@ -104,7 +104,7 @@ function Competition() {
     if (competition !== null) {
       competitionParsing(competition)
       dateCheck(competition.registrationDate, competition.registrationDeadline)
-      openCheck(competition.registrationDate)
+      applicantTableOpenCheck(competition.applicantTableOpenDate)
       setMarkdown(competition.information)
     }
   }, [competition])
@@ -172,7 +172,7 @@ function Competition() {
           </div>
         </div>
         <div className="competition-top-buttons">
-          {isOpen && competition.isPartnership === true ? (
+          {isApplicantTableOpen && competition.isPartnership === true ? (
             <button
               id="competition-top-button2"
               onClick={() => {
