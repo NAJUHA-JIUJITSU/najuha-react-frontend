@@ -155,6 +155,17 @@ function Competition() {
                 )
               </p>
             </div>
+            <div className="competition-top-content-info-each">
+              <h3>참가자 공개</h3>
+              <p>
+                {viewCompetition ? viewCompetition.applicantTableOpenDate : ''}{' '}
+                (
+                {viewCompetition
+                  ? viewCompetition.applicantTableOpenDateDay
+                  : ''}
+                )
+              </p>
+            </div>
             <div
               id="competition-top-content-info-each-last"
               className="competition-top-content-info-each"
