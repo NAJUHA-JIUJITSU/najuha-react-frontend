@@ -1,79 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import './competition.css'
-import { Cookies } from 'react-cookie'
 import sampleposter from '../src_assets/samplePoster.png'
 import { getAdminCompetition } from '../apis/api/admin'
 import MarkdownEditor from './MarkdownEditor'
+import dayjs from 'dayjs'
 
 function AdminCompetition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
+  const [inDate, setInDate] = useState(false)
+  const [isApplicantTableOpen, setIsApplicantTableOpen] = useState(false)
   const [competition, setCompetition] = useState(null)
   const [viewCompetition, setViewCompetition] = useState(false)
   const { id } = useParams()
   const [markdown, setMarkdown] = useState('')
-  const cookies = new Cookies()
   const navigate = useNavigate()
-  //     let markdown = `
-  // # 참가자 명단
-  // ## 세부 정보
-  // 11월 25일 화요일 공개
+  let todaytime = dayjs()
 
-  // ---
-
-  // # 대진표
-  // ## 엑셀 다운로드
-  // [예거스 챔피언쉽 로컬대회 송도 오픈_대진표xl](www.naver.com)
-
-  // ---
-
-  // # 주요 사항
-  // ## 주최
-  // 예거스 챔피언쉽
-  // ####
-  // ## 후원
-  // 예거스 챔피언쉽
-  // ####
-  // ## 설명
-  // 본프로젝트는 기부합니다 어쩌구~~
-
-  // ---
-
-  // # Division
-  // ## 환불 규정
-  // 환불 요청은 11.20(화) 23:59 이전에만 가능
-  // ![sample](https://user-images.githubusercontent.com/76994774/211767637-9b72a5a8-0d20-4e7c-9ca3-bb655fd90fcb.png)
-
-  // ---
-
-  // # 대회 안내
-  // ### 대회규정
-  // - 어드 존재 안함
-  // - 동점으로 끝났을 때, 서든데스 연장전 진행
-  // - 앱솔루트: 서든데스 방식 적용
-  // ### 계체 안내
-  // - 경기 시작 전 직전 계체
-  // - 허용 오차 : 저울의 오차 범위 +500g 허용 (계체 실패시 즉시 실격)
-  // - 체급 1강도 계체를 통과해야 함
-  // ### 도복 규정
-  // - 도복 색상은 흰색, 검정색, 파란색만 착용 가능
-  // - 도복 상의 안에 여성은 래쉬가드 착용, 남성은 착용 불가
-  // - 도복 팔 길이는 손목에서 5cm, 바지 길이는 복사뼈에서 5cm 이내여야 함
-  // ### 코치(세컨) 제도
-  // - 선수 1명당 코치 1명 동반 입장 가능
-  // - 코치는 대회사에서 제공하는 코치복을 착용하고 입장
-  // - 영상 촬영 허용
-  // ### 보험안내
-  // - 선수 1명당 코치 1명 동반 입장 가능
-  // - 코치는 대회사에서 제공하는 코치복을 착용하고 입장
-  // - 영상 촬영 허용
-  // `;
-
-  const getCompetition = async () => {
+  const getCompetition = async id => {
     const res = await getAdminCompetition(id)
     if (res) setCompetition(res.data.result)
   }
-
   function competitionParsing(competition) {
     let doreOpen = competition.doreOpen
       .substr(2, 8)
@@ -121,21 +68,43 @@ function AdminCompetition() {
     })
   }
 
+  function dateCheck(registrationDate, registrationDeadline) {
+    let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
+    let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
+    let deadlineDiff = todaytime.diff(finishdate, 'm')
+    if (deadlineDiff > 0) {
+      // 마감날짜(데드라인)이 지났을경우
+      return false
+    }
+    let openDiff = todaytime.diff(opendate, 'm')
+
+    if (openDiff < 0) {
+      // 현재날짜가 오픈 전일 경우 ex) 신청오픈 D-20
+      return false
+    }
+    setInDate(true)
+  }
+
+  function applicantTableOpenCheck(applicantTableOpenDate) {
+    let opendate = dayjs(applicantTableOpenDate, 'YYYY-MM-DD')
+    let openDiff = todaytime.diff(opendate, 'm')
+    if (openDiff >= 0) {
+      setIsApplicantTableOpen(true)
+    }
+  }
+
   useEffect(() => {
-    getCompetition()
+    getCompetition(id)
   }, [])
 
   useEffect(() => {
     if (competition !== null) {
       competitionParsing(competition)
+      dateCheck(competition.registrationDate, competition.registrationDeadline)
+      applicantTableOpenCheck(competition.applicantTableOpenDate)
       setMarkdown(competition.information)
     }
-    console.log(competition)
   }, [competition])
-
-  useEffect(() => {
-    console.log(viewCompetition)
-  }, [viewCompetition])
 
   return (
     <div className="competition-wrapper">
@@ -183,17 +152,6 @@ function AdminCompetition() {
                 )
               </p>
             </div>
-            <div className="competition-top-content-info-each">
-              <h3>신청자 명단</h3>
-              <p>
-                {viewCompetition ? viewCompetition.applicantTableOpenDate : ''}{' '}
-                (
-                {viewCompetition
-                  ? viewCompetition.applicantTableOpenDateDay
-                  : ''}
-                )
-              </p>
-            </div>
             <div
               id="competition-top-content-info-each-last"
               className="competition-top-content-info-each"
@@ -210,14 +168,43 @@ function AdminCompetition() {
             </div>
           </div>
         </div>
-        <button
-          id="competition-top-button"
-          onClick={() => {
-            navigate(`/competition/applymethod/${id}`)
-          }}
-        >
-          대회 신청
-        </button>
+        <div className="competition-top-buttons">
+          {isApplicantTableOpen && competition.isPartnership === true ? (
+            <button
+              id="competition-top-button2"
+              onClick={() => {
+                navigate(`/competition/${competition.id}/applicant`)
+              }}
+            >
+              참가자 명단
+            </button>
+          ) : (
+            ''
+          )}
+          {inDate ? (
+            competition.isPartnership === true ? (
+              <button
+                id="competition-top-button1"
+                onClick={() => {
+                  navigate(`/competition/applymethod/${competition.id}`)
+                }}
+              >
+                대회 신청
+              </button>
+            ) : (
+              <button
+                id="competition-top-button1"
+                onClick={() => {
+                  window.location.href = competition.nonPartnershipPageLink
+                }}
+              >
+                대회 신청
+              </button>
+            )
+          ) : (
+            ''
+          )}
+        </div>
       </div>
       <div className="competition-bottom">
         <MarkdownEditor data={markdown} mode="view" />
