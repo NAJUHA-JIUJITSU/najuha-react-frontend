@@ -1,0 +1,287 @@
+.swiper {
+  max-width: 1200px;
+  max-height: 190px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  /* padding: 0 20px; */
+  background: rgba(0, 0, 0, 0.31);
+  color: #ffffff !important;
+  fill: black !important;
+  stroke: black !important;
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 16px !important;
+}
+
+.swiper-button-prev {
+  margin-left: 1rem;
+}
+
+.swiper-button-next {
+  margin-right: 1rem;
+}
+
+.PartnershipBanner_wrapper {
+  max-width: 1200px;
+  max-height: 190px;
+  height: 190px;
+  min-height: 190px;
+  padding: 0 2rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+  position: relative;
+  /* background-color: pink; */
+}
+
+.PartnershipBanner_wrapper * {
+  letter-spacing: -0.02rem !important;
+}
+/* same height as parents height  */
+.PartnershipBanner_posterimage {
+  width: 100%;
+  height: 100%;
+}
+
+.PartnershipBanner_postershadow {
+  position: absolute;
+  top: 0;
+  left: 2rem;
+  width: calc(100% - 4rem);
+  height: 100%;
+  background-color: #00000080;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.PartnershipBanner_postercontent {
+  position: absolute;
+  top: 29px;
+  left: 79px;
+  width: calc(100% - 138px);
+  height: 161px;
+  cursor: pointer;
+}
+
+.PartnershipBanner_postercontent_top {
+  width: 180px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 18px;
+  letter-spacing: -0.04em;
+}
+
+.PartnershipBanner_postercontent_middle {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.PartnershipBanner_postercontent_middle p {
+  font-size: 36px;
+  color: #ffffff;
+  line-height: 56px;
+  letter-spacing: -0.04em;
+}
+
+.PartnershipBanner_postercontent_bottom {
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.PartnershipBanner_postercontent_bottom_button {
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 106px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.PartnershipBanner_postercontent_bottom_location {
+  display: flex;
+}
+
+.PartnershipBanner_postercontent_bottom_location h1 {
+  display: inline-block;
+  width: 86px;
+  color: #cccccc;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 21px;
+}
+
+.PartnershipBanner_postercontent_bottom_location p {
+  display: inline-block;
+  /* width: 90px; */
+  color: #cccccc;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.PartnershipBanner_postercontent_bottom_date h1 {
+  display: inline-block;
+  width: 86px;
+  color: #cccccc;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 21px;
+}
+
+.PartnershipBanner_postercontent_bottom_date p {
+  display: inline-block;
+  /* width: 90px; */
+  color: #cccccc;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.PartnershipBanner_postercontent_bottom_date {
+  display: flex;
+}
+
+@media (max-width: 1049px) {
+  .swiper {
+    max-width: 768px;
+  }
+  .PartnershipBanner_wrapper {
+    max-width: 768px;
+  }
+}
+
+@media (max-width: 750px) {
+  .swiper {
+    max-width: 100vw;
+  }
+
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 24px !important;
+    height: 24px !important;
+    margin-top: -11px !important;
+    /* margin-bottom: 0px !important; */
+    /* margin-bottom: 50px !important; */
+  }
+
+  .swiper-button-next:after,
+  .swiper-button-prev:after {
+    font-size: 12px !important;
+  }
+
+  .swiper-button-prev {
+    margin-left: -1rem;
+  }
+
+  .swiper-button-next {
+    margin-right: -1rem;
+  }
+  .PartnershipBanner_wrapper {
+    margin: 0;
+    padding: 0;
+    /* background-color: pink; */
+    max-width: 100vw;
+    height: 150px;
+    min-height: 150px;
+  }
+
+  .PartnershipBanner_postershadow {
+    left: 0;
+    width: 100%;
+  }
+
+  .PartnershipBanner_postercontent {
+    position: absolute;
+    top: 24px;
+    left: 34px;
+    width: calc(100% - 68px);
+    height: 120px;
+  }
+
+  .PartnershipBanner_postercontent_top {
+    width: 117px;
+    height: 18px;
+    font-size: 12px;
+  }
+
+  /* when text length over the width of the box, it will be added "..." at the end of the text */
+
+  .PartnershipBanner_postercontent_middle p {
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 500;
+  }
+
+  .PartnershipBanner_postercontent_bottom {
+    padding-top: 12px;
+    display: block;
+  }
+
+  .PartnershipBanner_postercontent_bottom_button {
+    width: 72px;
+    height: 27px;
+    font-size: 12px;
+  }
+
+  .PartnershipBanner_postercontent_bottom_location {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .PartnershipBanner_postercontent_bottom_location h1 {
+    display: inline-block;
+    width: 48px;
+    color: #cccccc;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: 14px;
+  }
+
+  .PartnershipBanner_postercontent_bottom_location p {
+    display: inline-block;
+    width: 66px;
+    font-size: 10px;
+    color: #cccccc;
+    letter-spacing: 0;
+    line-height: 14px;
+  }
+
+  .PartnershipBanner_postercontent_bottom_date {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .PartnershipBanner_postercontent_bottom_date h1 {
+    display: inline-block;
+    width: 48px;
+    color: #cccccc;
+    font-size: 10px;
+    letter-spacing: 0;
+    line-height: 14px;
+  }
+
+  .PartnershipBanner_postercontent_bottom_date p {
+    display: inline-block;
+    width: 66px;
+    font-size: 10px;
+    color: #cccccc;
+    letter-spacing: 0;
+    line-height: 14px;
+  }
+}
