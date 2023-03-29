@@ -229,7 +229,13 @@ function CompetitionApplyForm() {
         <ul className="CompetitionApplyForm-top-table-item" key={i}>
           <li>{application.uniform}</li>
           <li>{application.divisionName}</li>
-          <li>{application.gender}</li>
+          <li>
+            {application.gender === null
+              ? ''
+              : application.gender === 'male'
+              ? '남자'
+              : '여자'}
+          </li>
           <li>{application.belt}</li>
           <li>{application.weight}</li>
           <li>{application.price}</li>
@@ -364,7 +370,7 @@ function CompetitionApplyForm() {
       return comgender.map((el, h) => {
         return (
           <li key={h} onClick={() => chooseGenderOption(el, i)}>
-            {el}
+            {el === 'male' ? '남자' : '여자'}
           </li>
         )
       })
