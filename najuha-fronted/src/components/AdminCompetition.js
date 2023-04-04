@@ -11,7 +11,20 @@ function AdminCompetition() {
   const [inDate, setInDate] = useState(false)
   const [isApplicantTableOpen, setIsApplicantTableOpen] = useState(false)
   const [competition, setCompetition] = useState(null)
-  const [viewCompetition, setViewCompetition] = useState(false)
+  const [viewCompetition, setViewCompetition] = useState({
+    title: null,
+    location: null,
+    doreOpen: null,
+    doreOpenDay: null,
+    earlyBirdDeadline: null,
+    earlyBirdDeadlineDay: null,
+    registrationDeadline: null,
+    registrationDeadlineDay: null,
+    applicantTableOpenDate: null,
+    applicantTableOpenDateDay: null,
+    tournamentTableOpenDate: null,
+    tournamentTableOpenDateDay: null,
+  })
   const { id } = useParams()
   const [markdown, setMarkdown] = useState('')
   const navigate = useNavigate()
@@ -129,38 +142,38 @@ function AdminCompetition() {
             <div className="competition-top-content-info-each">
               <h3>대회 날짜</h3>
               <p>
-                {viewCompetition ? viewCompetition.doreOpen : ''} (
-                {viewCompetition ? viewCompetition.doreOpenDay : ''})
+                {viewCompetition.doreOpen} ({viewCompetition.doreOpenDay})
               </p>
             </div>
             <div className="competition-top-content-info-each">
               <h3>대회 장소</h3>
-              <p>{viewCompetition ? viewCompetition.location : ''}</p>
+              <p>{viewCompetition.location}</p>
             </div>
             <div className="competition-top-content-info-each">
               <h3>얼리버드 마감</h3>
               <p>
-                {viewCompetition ? viewCompetition.earlyBirdDeadline : ''} (
-                {viewCompetition ? viewCompetition.earlyBirdDeadlineDay : ''})
+                {viewCompetition.earlyBirdDeadline !== null
+                  ? viewCompetition.earlyBirdDeadline.slice(0, 2) === '98'
+                    ? '해당없음'
+                    : `${viewCompetition.earlyBirdDeadline} (${viewCompetition.earlyBirdDeadlineDay})`
+                  : ''}
               </p>
             </div>
             <div className="competition-top-content-info-each">
               <h3>참가신청 마감</h3>
               <p>
-                {viewCompetition ? viewCompetition.registrationDeadline : ''} (
-                {viewCompetition ? viewCompetition.registrationDeadlineDay : ''}
-                )
+                {viewCompetition.registrationDeadline} (
+                {viewCompetition.registrationDeadlineDay})
               </p>
             </div>
             <div className="competition-top-content-info-each">
               <h3>참가자 공개</h3>
               <p>
-                {viewCompetition ? viewCompetition.applicantTableOpenDate : ''}{' '}
-                (
-                {viewCompetition
-                  ? viewCompetition.applicantTableOpenDateDay
+                {viewCompetition.applicantTableOpenDate !== null
+                  ? viewCompetition.applicantTableOpenDate.slice(0, 2) === '30'
+                    ? '해당없음'
+                    : `${viewCompetition.applicantTableOpenDate} (${viewCompetition.applicantTableOpenDateDay})`
                   : ''}
-                )
               </p>
             </div>
             <div
@@ -169,12 +182,11 @@ function AdminCompetition() {
             >
               <h3>대진표 공개</h3>
               <p>
-                {viewCompetition ? viewCompetition.tournamentTableOpenDate : ''}{' '}
-                (
-                {viewCompetition
-                  ? viewCompetition.tournamentTableOpenDateDay
+                {viewCompetition.tournamentTableOpenDate !== null
+                  ? viewCompetition.tournamentTableOpenDate.slice(0, 2) === '98'
+                    ? '해당없음'
+                    : `${viewCompetition.tournamentTableOpenDate} (${viewCompetition.tournamentTableOpenDateDay})`
                   : ''}
-                )
               </p>
             </div>
           </div>
