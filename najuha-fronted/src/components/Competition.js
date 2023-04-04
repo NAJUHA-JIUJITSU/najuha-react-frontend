@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import './competition.css'
 import sampleposter from '../src_assets/samplePoster.png'
+import copy from '../src_assets/copy.png'
 import dayjs from 'dayjs'
 import { getCompetitionDetail } from '../apis/api/competition'
 import MarkdownEditor from './MarkdownEditor'
@@ -16,6 +17,16 @@ function Competition() {
   const [markdown, setMarkdown] = useState('')
   const navigate = useNavigate()
   let todaytime = dayjs()
+
+  // 텍스트 복사
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(viewCompetition.location)
+      alert('대회장소가 클립보드에 복사되었습니다!')
+    } catch (error) {
+      console.error('Failed to copy: ', error)
+    }
+  }
 
   const getCompetition = async id => {
     const res = await getCompetitionDetail(id)
@@ -138,7 +149,18 @@ function Competition() {
             </div>
             <div className="competition-top-content-info-each">
               <h3>대회 장소</h3>
-              <p>{viewCompetition ? viewCompetition.location : ''}</p>
+              <div className="competition-top-content-copyWrap">
+                <p>{viewCompetition ? viewCompetition.location : ''}</p>
+                <div
+                  className="competition-top-content-copy"
+                  onClick={copyToClipboard}>
+                  <img
+                    src={copy}
+                    alt="복사하기"
+                    className="competition-top-content-copyIcon"></img>
+                  <span>복사</span>
+                </div>
+              </div>
             </div>
             <div className="competition-top-content-info-each">
               <h3>얼리버드 마감</h3>
@@ -168,8 +190,7 @@ function Competition() {
             </div>
             <div
               id="competition-top-content-info-each-last"
-              className="competition-top-content-info-each"
-            >
+              className="competition-top-content-info-each">
               <h3>대진표 공개</h3>
               <p>
                 {viewCompetition ? viewCompetition.tournamentTableOpenDate : ''}{' '}
@@ -188,8 +209,7 @@ function Competition() {
               id="competition-top-button2"
               onClick={() => {
                 navigate(`/competition/${competition.id}/applicant`)
-              }}
-            >
+              }}>
               참가자 명단
             </button>
           ) : (
@@ -201,8 +221,7 @@ function Competition() {
                 id="competition-top-button1"
                 onClick={() => {
                   navigate(`/competition/applymethod/${competition.id}`)
-                }}
-              >
+                }}>
                 대회 신청
               </button>
             ) : (
@@ -210,8 +229,7 @@ function Competition() {
                 id="competition-top-button1"
                 onClick={() => {
                   window.location.href = competition.nonPartnershipPageLink
-                }}
-              >
+                }}>
                 대회 신청
               </button>
             )
