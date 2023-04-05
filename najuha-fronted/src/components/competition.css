@@ -29,6 +29,24 @@
   letter-spacing: -0.06em;
 }
 
+.competition-top-content-copyWrap {
+  display: flex;
+}
+
+.competition-top-content-copy {
+  color: #0353e6;
+  min-width: 36px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.competition-top-content-copyIcon {
+  width: 16px;
+  margin-right: 2px;
+}
+.competition-top-content-copy span {
+  font-size: 12px;
+}
+
 /* Layout */
 
 .competition-wrapper {
@@ -249,6 +267,10 @@
     font-size: 1.6rem;
   }
 
+  .competition-top-content {
+    display: block;
+  }
+
   .competition-top-content-info-each h3 {
     font-size: 1.4rem;
     color: #8c8c8c;
@@ -263,8 +285,7 @@
   /* Layout */
 
   .competition-top-content-info {
-    padding-top: 0;
-    padding-left: 1.5rem;
+    padding-left: 0;
     padding-bottom: 1.4rem;
     box-sizing: border-box;
   }
@@ -286,7 +307,7 @@
   }
 
   .competition-top-content-info {
-    width: calc(100% - 110px);
+    width: 100%;
   }
 
   #competition-top-button1 {
@@ -368,5 +389,14 @@
     font-size: 16px;
     margin-bottom: 16px;
     padding-left: 18px;
+  }
+
+  .competition-top-content-copy {
+    min-width: 38px;
+    margin-left: 8px;
+    display: block;
+  }
+  .competition-top-content-copyIcon {
+    width: 12px;
   }
 }
