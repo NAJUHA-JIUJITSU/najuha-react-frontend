@@ -41,7 +41,7 @@
 }
 .competition-top-content-copyIcon {
   width: 16px;
-  margin-right: 2px;
+  margin-right: 1px;
 }
 .competition-top-content-copy span {
   font-size: 12px;
@@ -128,7 +128,7 @@
 }
 
 .competition-top-content-info {
-  width: calc(100% - 220px);
+  width: calc(100% - 50px);
 }
 
 .competition-top-content-info-each {
@@ -139,7 +139,7 @@
 
 .competition-top-content-info-each p {
   display: block;
-  min-width: calc(100%-120px);
+  min-width: calc(100%-50px);
   /* overflow: hidden; */
 }
 
@@ -326,10 +326,6 @@
 
   .competition-top-content-info-each h3 {
     min-width: 98px;
-  }
-
-  .competition-top-content-info-each p {
-    width: calc(100%-98px);
   }
 
   /* markdown */

@@ -38,6 +38,13 @@ function Competition() {
       alert('대회장소가 클립보드에 복사되었습니다!')
     } catch (error) {
       console.error('Failed to copy: ', error)
+      const textarea = document.createElement('textarea')
+      textarea.value = viewCompetition.location
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      alert('대회장소가 클립보드에 복사되었습니다!')
     }
   }
 
