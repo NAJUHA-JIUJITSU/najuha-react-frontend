@@ -59,10 +59,13 @@ export const postAdminCompetitionPoster = async (id, data) => {
 }
 
 // 6.6 대회 신청 목록 csv 형식 반환
-export const getAdminCompetitionApplicationListCsv = async competitionId => {
+export const getAdminCompetitionApplicationListCsv = async (
+  competitionId,
+  paymentFilter
+) => {
   try {
     const res = await axiosApiWithToken(
-      `/admin/competitions/${competitionId}/competitionApplications/csv`,
+      `/admin/competitions/${competitionId}/competitionApplications/csv/${paymentFilter}`,
       'get'
     )
     return res
