@@ -7,10 +7,14 @@ import './AdminCsvDownload.css'
 
 const AdminCsvDownload = () => {
   const [csvData, setCsvData] = useState([])
+  const [paymentFilter, setPaymentFilter] = useState('all')
   const competitionId = useParams().id
 
   const getCsvData = async () => {
-    const res = await getAdminCompetitionApplicationListCsv(competitionId)
+    const res = await getAdminCompetitionApplicationListCsv(
+      competitionId,
+      paymentFilter
+    )
     if (res && res.data && res.data.result) {
       setCsvData(res.data.result)
     }
@@ -18,28 +22,44 @@ const AdminCsvDownload = () => {
 
   useEffect(() => {
     getCsvData()
-  }, [])
+  }, [paymentFilter])
+
+  const handleFilterButtonClick = filter => {
+    setPaymentFilter(filter)
+  }
 
   return (
     <div>
-      <CSVLink data={csvData} filename="applicationList.csv">
-        <button
-          style={{
-            fontSize: '50px',
-            marginLeft: '50%',
-            transform: 'translate(-50%,200%)',
-          }}
-        >
-          Download me
+      <div>
+        <button onClick={() => handleFilterButtonClick('all')}>
+          결제완료 + 미결제
         </button>
-      </CSVLink>
-      {csvData.length > 0 && (
-        <CsvToHtmlTable
-          data={csvData}
-          csvDelimiter=","
-          tableClassName="AdminCsvDownload"
-        />
-      )}
+        <button onClick={() => handleFilterButtonClick('paid')}>
+          결제완료
+        </button>
+        <button onClick={() => handleFilterButtonClick('unpaid')}>
+          미결제
+        </button>
+        <CSVLink data={csvData} filename="applicationList.csv">
+          <button
+            style={{
+              fontSize: '50px',
+              marginLeft: '20px',
+            }}
+          >
+            Download me
+          </button>
+        </CSVLink>
+      </div>
+      <div>
+        {csvData.length > 0 && (
+          <CsvToHtmlTable
+            data={csvData}
+            csvDelimiter=","
+            tableClassName="AdminCsvDownload"
+          />
+        )}
+      </div>
     </div>
   )
 }
