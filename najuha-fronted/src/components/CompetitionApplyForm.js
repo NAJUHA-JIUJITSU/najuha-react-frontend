@@ -243,8 +243,7 @@ function CompetitionApplyForm() {
             <img
               style={{ cursor: 'pointer' }}
               src={deleteicon}
-              onClick={() => deleteCompetitionApplication(i)}
-            ></img>
+              onClick={() => deleteCompetitionApplication(i)}></img>
           ) : (
             ''
           )}
@@ -515,7 +514,7 @@ function CompetitionApplyForm() {
         ].price ? (
           <h2 className="CompetitionApplyForm-middle-info-checkmessage">
             대회를 더 신청하고자 한다면
-            <br /> <span>+ 버튼</span>을 클릭해주세요
+            <br /> <span>+ 버튼</span>을 클릭해주세요 <br />
           </h2>
         ) : viewcompetitionApplicationList[
             viewcompetitionApplicationList.length - 1
@@ -574,8 +573,7 @@ function CompetitionApplyForm() {
               window.scrollTo(0, 0)
               setapplymodal(!applymodal)
             }
-          }}
-        >
+          }}>
           신청하기
         </button>
         {applymodal && (
