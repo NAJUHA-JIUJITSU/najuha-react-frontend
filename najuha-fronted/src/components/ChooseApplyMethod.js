@@ -40,6 +40,13 @@ function ChooseApplyMethod() {
                 <img src={checkicon} alt="체크아이콘" />
                 <p>얼리버드 할인이 적용됩니다.</p>
               </li>
+              <li>
+                <img src={checkicon} alt="체크아이콘" />
+                <p>
+                  중복대회 신청 할인(기 + 노기, 체급 + 앱솔 등)은 한번에
+                  신청해야 할인됩니다.
+                </p>
+              </li>
             </ul>
           </div>
           <div className="ChooseApplyMethod-card-bottom">

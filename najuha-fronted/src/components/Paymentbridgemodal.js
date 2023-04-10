@@ -24,16 +24,15 @@ function Paymentbridgemodal(props) {
     <div className="Paymentbridgemodal_Modal">
       <div
         className="Paymentbridgemodal_modalBody"
-        onClick={e => e.stopPropagation()}
-      >
+        onClick={e => e.stopPropagation()}>
         <h2 id="Paymentbridgemodal_modaltitle">결제를 진행 하시겠습니까?</h2>
+        <h3>*결제까지 진행하셔야 신청이 완료됩니다.</h3>
         <div className="Paymentbridgemodal_buttongroup">
           <button
             className="Paymentbridgemodal_button_later"
             onClick={() => {
               navigate('/Profilepage', { state: 'UserApplicationList' })
-            }}
-          >
+            }}>
             나중에하기
           </button>
           <button
@@ -41,8 +40,7 @@ function Paymentbridgemodal(props) {
             onClick={() => {
               closeModal()
               openNextModal()
-            }}
-          >
+            }}>
             결제하기
           </button>
         </div>

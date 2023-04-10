@@ -64,6 +64,7 @@
   height: 482px;
   border: 2px solid #f0f0f0;
   border-radius: 10px;
+  padding-right: 4px;
 
   margin: 40px 40px;
   box-sizing: border-box;
@@ -110,6 +111,7 @@
   display: flex;
   padding-left: 37px;
   margin-bottom: 16px;
+  line-height: 130%;
 }
 
 .ChooseApplyMethod-card-middle li img {

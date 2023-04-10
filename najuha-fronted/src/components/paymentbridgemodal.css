@@ -53,5 +53,10 @@
 #Paymentbridgemodal_modaltitle {
   font-weight: 600;
   font-size: 20px;
-  margin-bottom: 50px;
+  margin-bottom: 14px;
+}
+
+.Paymentbridgemodal_modalBody h3 {
+  font-size: 14px;
+  color: #7c7c7c;
 }
