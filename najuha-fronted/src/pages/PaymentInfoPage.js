@@ -8,7 +8,6 @@ function PaymentInfoPage() {
     <>
       <Navbar />
       <PaymentInfo />
-      <Footer />
     </>
   )
 }
