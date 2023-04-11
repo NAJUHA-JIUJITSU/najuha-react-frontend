@@ -343,27 +343,25 @@
   align-items: center;
 }
 
+/* 대회카드 아래 (신청기간 + 좋아요) */
 .each-competition-body-desc-bottom {
+  width: 96%;
+  padding-top: 20px;
   height: 50px;
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: -0.6px;
 }
 
-.each-competition-body-desc-bottom button {
-  width: 74px;
-  min-width: 74px;
-  height: 34px;
-  min-height: 34px;
-  background: #ffffff;
-  border: 1px solid #f1f1f1;
-  box-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.25);
-  border-radius: 30px;
-  color: #4e82e5;
-  font-size: 16px;
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-  cursor: pointer;
-  font-weight: 500;
+.each-competition-body-applyDate {
+  font-size: 14px;
+  color: #7c7c7c;
+  display: flex;
+}
+
+.each-competition-body-applyDate h3 {
+  margin-right: 6px;
 }
 
 @media (max-width: 1049px) {
