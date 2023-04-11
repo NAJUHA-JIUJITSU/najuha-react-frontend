@@ -1,1 +1,1 @@
-![나주하콜라보로고](https://user-images.githubusercontent.com/76994774/231073035-605192fd-3f36-4e2a-91ee-9629a162a763.png)
+![najuhaLogo](https://user-images.githubusercontent.com/92975437/231219492-47aa1e98-e304-4b85-b882-0a6a516764ef.png)
