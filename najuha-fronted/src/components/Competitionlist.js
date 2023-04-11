@@ -4,6 +4,8 @@ import './competitionlist.css'
 import dropdownicon from '../src_assets/드랍다운아이콘회색.svg'
 import searchicon from '../src_assets/검색돋보기아이콘.svg'
 import sampleposter from '../src_assets/samplePoster.png'
+import heartFull from '../src_assets/heartFull.png'
+import heart from '../src_assets/heart.png'
 import dayjs from 'dayjs'
 import { getCompetitionList } from '../apis/api/competition'
 
@@ -333,8 +335,9 @@ function Competitionlist() {
                   <h3>신청기간</h3>
                   <p>23.07.14 ~ 23.08.23</p>
                 </div>
-                <div>
-                  <p>좋아요</p>
+                <div className="each-competition-body-heart">
+                  <img src={heart}></img>
+                  <p>11</p>
                 </div>
               </div>
             </div>

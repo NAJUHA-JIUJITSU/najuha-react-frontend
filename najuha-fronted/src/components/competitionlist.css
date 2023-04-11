@@ -26,7 +26,7 @@
 }
 
 .each-competition-body-desc-top p {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 2rem;
   letter-spacing: -0.12rem;
   line-height: 1.1;
@@ -333,9 +333,9 @@
   align-items: center;
   cursor: pointer;
 }
-.each-competition-body-desc-top p:hover {
+/* .each-competition-body-desc-top p:hover {
   font-weight: 500;
-}
+} */
 
 .each-competition-body-desc-middle {
   height: 20px;
@@ -346,11 +346,12 @@
 /* 대회카드 아래 (신청기간 + 좋아요) */
 .each-competition-body-desc-bottom {
   width: 96%;
-  padding-top: 20px;
+  padding-top: 5px;
   height: 50px;
   position: relative;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   letter-spacing: -0.6px;
 }
 
@@ -362,6 +363,17 @@
 
 .each-competition-body-applyDate h3 {
   margin-right: 6px;
+}
+
+.each-competition-body-heart p {
+  color: #ff5f5f !important;
+}
+
+.each-competition-body-heart img {
+  width: 14px;
+}
+.each-competition-body-heart p {
+  text-align: center;
 }
 
 @media (max-width: 1049px) {
@@ -422,4 +434,27 @@
   .competition-searchzone-option ul {
     width: 85px;
   }
+
+  /* 모바일 카드 크기 줄여보기 */
+  /* .each-competition-body {
+    height: 110px;
+  }
+  .each-competition-body-poster {
+    min-width: 96px;
+    max-width: 96px;
+  }
+
+  .each-competition-body-poster h1 {
+    font-weight: 500;
+    letter-spacing: -0.14rem;
+    font-size: 26px;
+  }
+
+  .each-competition-body-poster h1 span {
+    font-size: 18px;
+  }
+
+  .each-competition-body-desc-top {
+    height: 60px;
+  } */
 }
