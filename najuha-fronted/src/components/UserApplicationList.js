@@ -125,7 +125,7 @@ function UserApplicationList(props) {
         : curApplication.isPayment
 
       if (curApplication.isPayment === '환불완료') {
-        curApplication.payCss = 'UserApplicationList_costBtn'
+        curApplication.payCss = 'UserApplicationList_costLayout'
       }
 
       let xButton
