@@ -1,1 +1,1 @@
-![najuhaLogo](https://user-images.githubusercontent.com/92975437/231219492-47aa1e98-e304-4b85-b882-0a6a516764ef.png)
+![najuhaLogo2](https://user-images.githubusercontent.com/92975437/231223223-3856445b-fd79-4dae-ab93-1c5645151c5b.png)
