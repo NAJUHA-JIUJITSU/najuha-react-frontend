@@ -11,6 +11,7 @@ import samplePoster from '../src_assets/samplePoster.png'
 import {
   getUserApplicationCompetitionInfo,
   deleteUserApplicationCompetition,
+  deleteUserPayment,
 } from '../apis/api/user'
 
 // 결제에 필요한
@@ -195,6 +196,16 @@ function ProfileInfo() {
     return
   }
 
+  //결제 취소하기(결제 완료)
+  async function reundPayment(orderId) {
+    const res = await deleteUserPayment(orderId)
+    if (res?.status === 200) {
+      alert('환불이 완료되었습니다.')
+      getCompetitionApplicationInfo()
+    }
+    return
+  }
+
   //삭제 경고 문구창
   const onRemove = id => {
     if (
@@ -252,8 +263,11 @@ function ProfileInfo() {
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
               onClick={() => {
-                alert('환불요청은 카카오톡 채널로 환불신청  바랍니다.')
-                window.location.href = 'http://pf.kakao.com/_meyxmxj/chat'
+                if (window.confirm('환불하시겠습니까?')) {
+                  reundPayment(
+                    rawCompetitionApplicationInfo?.competitionPayment.orderId
+                  )
+                }
               }}
             >
               환불하기
