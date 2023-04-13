@@ -6,6 +6,11 @@ import copy from '../src_assets/copy.png'
 import dayjs from 'dayjs'
 import { getCompetitionDetail } from '../apis/api/competition'
 import MarkdownEditor from './MarkdownEditor'
+import likeFull from '../src_assets/heartFull.png'
+import like from '../src_assets/heart.png'
+import { Cookies } from 'react-cookie'
+import jwt_decode from 'jwt-decode'
+import { postLike } from '../apis/api/like'
 
 function Competition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
@@ -13,6 +18,7 @@ function Competition() {
   const [isApplicantTableOpen, setIsApplicantTableOpen] = useState(false)
   const [competition, setCompetition] = useState(null)
   const [viewCompetition, setViewCompetition] = useState({
+    id: null,
     title: null,
     location: null,
     doreOpen: null,
@@ -25,11 +31,21 @@ function Competition() {
     applicantTableOpenDateDay: null,
     tournamentTableOpenDate: null,
     tournamentTableOpenDateDay: null,
+    likeCount: null,
+    likeUsers: null,
+    likeImg: null,
   })
   const { id } = useParams()
   const [markdown, setMarkdown] = useState('')
   const navigate = useNavigate()
   let todaytime = dayjs()
+  const [userId, setUserId] = useState('')
+
+  const cookies = new Cookies()
+  const xAccessToken = cookies.get('x-access-token')
+  const restApiKey = process.env.REACT_APP_REST_API_KEY
+  const redirectUri = process.env.REACT_APP_REDIRECT_URI
+  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`
 
   // 텍스트 복사
   const copyToClipboard = async () => {
@@ -86,7 +102,15 @@ function Competition() {
       .replace('-', '.')
     let tournamentTableOpenDateDay =
       week[new Date(competition.tournamentTableOpenDate).getDay()]
+
+    let likeImg = competition.CompetitionLikes.find(
+      users => users.userId === userId
+    )
+      ? likeFull
+      : like
+
     setViewCompetition({
+      id: competition.id,
       title: competition.title,
       location: location,
       doreOpen: doreOpen,
@@ -99,6 +123,9 @@ function Competition() {
       applicantTableOpenDateDay: applicantTableOpenDateDay,
       tournamentTableOpenDate: tournamentTableOpenDate,
       tournamentTableOpenDateDay: tournamentTableOpenDateDay,
+      likeCount: competition.competitionLikeCount,
+      likeUsers: competition.CompetitionLikes,
+      likeImg: likeImg,
     })
   }
 
@@ -127,8 +154,52 @@ function Competition() {
     }
   }
 
+  async function clickedLike(competitionId) {
+    if (!userId) {
+      alert('로그인이 필요합니다')
+      window.location.href = kakaoAuthURL
+      return
+    }
+    let res = await postLike(competitionId)
+
+    if (res?.status === 200) {
+      let likeCount = res.data.result.competitionLikeCount
+      changeCompetitionLiked(likeCount)
+    }
+    return
+  }
+
+  function changeCompetitionLiked(likeCount) {
+    let copycompetition = { ...viewCompetition }
+    copycompetition.likeCount = likeCount
+    if (copycompetition.likeUsers.find(users => users.userId === userId)) {
+      copycompetition.likeUsers = copycompetition.likeUsers.filter(
+        users => users.userId !== userId
+      )
+      copycompetition.likeImg = like
+    } else {
+      let newObject = { userId: userId }
+      copycompetition.likeUsers = copycompetition.likeUsers.concat(newObject)
+      copycompetition.likeImg = likeFull
+    }
+    setViewCompetition(copycompetition)
+  }
+
   useEffect(() => {
     getCompetition(id)
+  }, [])
+
+  // 유저 아이디, 레벨 확인하기
+  useEffect(() => {
+    let decodedToken
+    if (xAccessToken) {
+      // 토큰 확인하기
+      decodedToken = jwt_decode(xAccessToken)
+    }
+    // 로그인한 상태
+    if (decodedToken) {
+      setUserId(decodedToken.userId)
+    }
   }, [])
 
   useEffect(() => {
@@ -145,6 +216,12 @@ function Competition() {
       <div className="competition-top">
         <div className="competition-top-title">
           <h2>{viewCompetition.title}</h2>
+          <div
+            className="each-competition-body-like"
+            onClick={() => clickedLike(viewCompetition.id)}>
+            <img src={viewCompetition.likeImg}></img>
+            <p>{viewCompetition.likeCount}</p>
+          </div>
         </div>
         <div className="competition-top-content">
           {/* <div className='competition-top-content-img'></div> */}

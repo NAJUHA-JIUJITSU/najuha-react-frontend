@@ -352,7 +352,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.7px;
 }
 
 .each-competition-body-applyDate {
@@ -365,15 +365,20 @@
   margin-right: 6px;
 }
 
-.each-competition-body-heart p {
+.each-competition-body-like {
+  cursor: pointer;
+}
+
+.each-competition-body-like p {
   color: #ff5f5f !important;
 }
 
-.each-competition-body-heart img {
+.each-competition-body-like img {
   width: 14px;
 }
-.each-competition-body-heart p {
+.each-competition-body-like p {
   text-align: center;
+  cursor: pointer !important;
 }
 
 @media (max-width: 1049px) {
@@ -456,5 +461,22 @@
 
   .each-competition-body-desc-top {
     height: 60px;
+  }
+
+  .each-competition-body-desc-top p {
+    font-size: 18px;
+  }
+
+  .each-competition-body-desc-bottom,
+  .each-competition-body-desc-middle {
+    height: 16px;
+    margin-bottom: 5px;
+  }
+
+  .each-competition-body-desc-middle p {
+    font-size: 14px;
+  }
+
+  .each-competition-body-desc-bottom {
   } */
 }

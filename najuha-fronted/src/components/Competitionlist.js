@@ -4,10 +4,13 @@ import './competitionlist.css'
 import dropdownicon from '../src_assets/드랍다운아이콘회색.svg'
 import searchicon from '../src_assets/검색돋보기아이콘.svg'
 import sampleposter from '../src_assets/samplePoster.png'
-import heartFull from '../src_assets/heartFull.png'
-import heart from '../src_assets/heart.png'
+import likeFull from '../src_assets/heartFull.png'
+import like from '../src_assets/heart.png'
 import dayjs from 'dayjs'
 import { getCompetitionList } from '../apis/api/competition'
+import { postLike } from '../apis/api/like'
+import { Cookies } from 'react-cookie'
+import jwt_decode from 'jwt-decode'
 
 const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 const locationSample = [
@@ -43,6 +46,7 @@ function Competitionlist() {
   const [temTitle, setTemTitle] = useState('')
   const [activeMonth, setActiveMonth] = useState(0)
   const [activeLocation, setActiveLocation] = useState(0)
+  const [userId, setUserId] = useState('')
 
   const offsetRef = useRef()
   const locationRef = useRef()
@@ -56,6 +60,11 @@ function Competitionlist() {
   titleRef.current = title
   let navigate = useNavigate()
   let todaytime = dayjs()
+  const cookies = new Cookies()
+  const xAccessToken = cookies.get('x-access-token')
+  const restApiKey = process.env.REACT_APP_REST_API_KEY
+  const redirectUri = process.env.REACT_APP_REDIRECT_URI
+  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`
 
   const observer = useRef(
     new IntersectionObserver(
@@ -84,6 +93,41 @@ function Competitionlist() {
       setCompetitions(competitions => [...competitions, ...newCompetitions])
     }
     return
+  }
+
+  async function clickedLike(competitionId, i) {
+    if (!userId) {
+      alert('로그인이 필요합니다')
+      window.location.href = kakaoAuthURL
+      return
+    }
+    let res = await postLike(competitionId)
+
+    if (res?.status === 200) {
+      let likeCount = res.data.result.competitionLikeCount
+      changeCompetitionLiked(likeCount, i)
+    }
+    return
+  }
+
+  function changeCompetitionLiked(likeCount, competitionoffset) {
+    let copycompetitions = [...competitions]
+    copycompetitions[competitionoffset].competitionLikeCount = likeCount
+    if (
+      copycompetitions[competitionoffset].CompetitionLikes.find(
+        users => users.userId === userId
+      )
+    ) {
+      copycompetitions[competitionoffset].CompetitionLikes = copycompetitions[
+        competitionoffset
+      ].CompetitionLikes.filter(users => users.userId !== userId)
+    } else {
+      let newObject = { userId: userId }
+      copycompetitions[competitionoffset].CompetitionLikes =
+        copycompetitions[competitionoffset].CompetitionLikes.concat(newObject)
+    }
+
+    setCompetitions(copycompetitions)
   }
 
   useEffect(() => {
@@ -135,6 +179,19 @@ function Competitionlist() {
       document.removeEventListener('click', handleClickOutside)
     }
   }, [locationDropdown])
+
+  // 유저 아이디, 레벨 확인하기
+  useEffect(() => {
+    let decodedToken
+    if (xAccessToken) {
+      // 토큰 확인하기
+      decodedToken = jwt_decode(xAccessToken)
+    }
+    // 로그인한 상태
+    if (decodedToken) {
+      setUserId(decodedToken.userId)
+    }
+  }, [])
 
   function listRefresh() {
     // 검색 변수가 바뀔때마다 초기화 해주는 역할.
@@ -274,16 +331,20 @@ function Competitionlist() {
         competition.earlyBirdDeadline != null
           ? competition.earlyBirdDeadline
           : null,
+      likeCount: competition.competitionLikeCount,
+      likeUsers: competition.CompetitionLikes,
     }
   }
 
   function renderCompetitionList() {
     return competitions.map((competition, i) => {
       let curcompetition = competitionParsing(competition)
+
       let cardGray = competitionCardGray(
         competition.registrationDate,
         competition.registrationDeadline
       )
+
       return (
         <li className="competition-col" key={competition.id}>
           <div className="each-competition-tag">
@@ -335,9 +396,17 @@ function Competitionlist() {
                   <h3>신청기간</h3>
                   <p>23.07.14 ~ 23.08.23</p>
                 </div>
-                <div className="each-competition-body-heart">
-                  <img src={heart}></img>
-                  <p>11</p>
+                <div
+                  className="each-competition-body-like"
+                  onClick={() => clickedLike(curcompetition.id, i)}>
+                  {curcompetition.likeUsers.find(
+                    users => users.userId === userId
+                  ) ? (
+                    <img src={likeFull}></img>
+                  ) : (
+                    <img src={like}></img>
+                  )}
+                  <p>{curcompetition.likeCount}</p>
                 </div>
               </div>
             </div>
