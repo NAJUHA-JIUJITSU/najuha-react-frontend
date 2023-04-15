@@ -217,7 +217,7 @@ function Competition() {
         <div className="competition-top-title">
           <h2>{viewCompetition.title}</h2>
           <div
-            className="each-competition-body-like"
+            className="each-competition-body-like competition-top-like"
             onClick={() => clickedLike(viewCompetition.id)}>
             <img src={viewCompetition.likeImg}></img>
             <p>{viewCompetition.likeCount}</p>

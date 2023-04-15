@@ -75,6 +75,14 @@
 
 .competition-top-title {
   display: flex;
+  justify-content: space-between;
+}
+
+.competition-top-like img {
+  width: 20px;
+}
+.competition-top-like p {
+  font-size: 14px;
 }
 
 .competition-top-buttons {
@@ -243,6 +251,12 @@
 @media (max-width: 1049px) {
   .competition-wrapper {
     max-width: 768px;
+  }
+  .competition-top-like img {
+    width: 14px;
+  }
+  .competition-top-like p {
+    font-size: 10px;
   }
 }
 
