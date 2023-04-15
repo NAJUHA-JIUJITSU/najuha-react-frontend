@@ -313,6 +313,9 @@ function Competitionlist() {
     let registrationDeadline = competition.registrationDeadline
       .substr(5, 5)
       .replace('-', '.')
+    let year = competition.registrationDeadline.substr(0, 4)
+    let displayNone = year === '2030' ? true : false
+
     return {
       id: competition.id,
       title: competition.title,
@@ -333,6 +336,8 @@ function Competitionlist() {
           : null,
       likeCount: competition.competitionLikeCount,
       likeUsers: competition.CompetitionLikes,
+      year: year,
+      displayNone: displayNone,
     }
   }
 
@@ -393,8 +398,18 @@ function Competitionlist() {
               </div>
               <div className="each-competition-body-desc-bottom">
                 <div className="each-competition-body-applyDate">
-                  <h3>신청기간</h3>
-                  <p>23.07.14 ~ 23.08.23</p>
+                  <h3
+                    style={
+                      curcompetition.displayNone ? { display: 'none' } : {}
+                    }>
+                    신청기간
+                  </h3>
+                  <p
+                    style={
+                      curcompetition.displayNone ? { display: 'none' } : {}
+                    }>
+                    ~{curcompetition.year}.{curcompetition.registrationDeadline}
+                  </p>
                 </div>
                 <div
                   className="each-competition-body-like"
