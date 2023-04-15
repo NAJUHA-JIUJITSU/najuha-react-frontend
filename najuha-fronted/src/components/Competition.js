@@ -271,8 +271,11 @@ function Competition() {
             <div className="competition-top-content-info-each">
               <h3>참가신청 마감</h3>
               <p>
-                {viewCompetition.registrationDeadline} (
-                {viewCompetition.registrationDeadlineDay})
+                {viewCompetition.registrationDeadline !== null
+                  ? viewCompetition.registrationDeadline.slice(0, 2) === '30'
+                    ? '해당없음'
+                    : `${viewCompetition.registrationDeadline} (${viewCompetition.registrationDeadlineDay})`
+                  : ''}
               </p>
             </div>
             <div className="competition-top-content-info-each">
@@ -311,8 +314,8 @@ function Competition() {
           ) : (
             ''
           )}
-          {inDate ? (
-            competition.isPartnership === true ? (
+          {competition?.isPartnership === true ? (
+            inDate ? (
               <button
                 id="competition-top-button1"
                 onClick={() => {
@@ -321,16 +324,16 @@ function Competition() {
                 대회 신청
               </button>
             ) : (
-              <button
-                id="competition-top-button1"
-                onClick={() => {
-                  window.location.href = competition.nonPartnershipPageLink
-                }}>
-                대회 신청
-              </button>
+              ''
             )
           ) : (
-            ''
+            <button
+              id="competition-top-button1"
+              onClick={() => {
+                window.location.href = competition.nonPartnershipPageLink
+              }}>
+              대회 신청
+            </button>
           )}
         </div>
       </div>

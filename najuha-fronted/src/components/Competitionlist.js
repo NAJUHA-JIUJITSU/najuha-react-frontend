@@ -199,7 +199,11 @@ function Competitionlist() {
     setCompetitions([])
   }
 
-  function makingRegisterTag(registrationDate, registrationDeadline) {
+  function makingRegisterTag(registrationDate, registrationDeadline, year) {
+    if (year === '2030') {
+      return
+    }
+
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
 
@@ -362,7 +366,8 @@ function Competitionlist() {
             )}
             {makingRegisterTag(
               competition.registrationDate,
-              competition.registrationDeadline
+              competition.registrationDeadline,
+              curcompetition.year
             )}
             {makingPartnerTag(competition.isPartnership)}
           </div>
