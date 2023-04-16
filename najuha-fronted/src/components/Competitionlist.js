@@ -4,8 +4,13 @@ import './competitionlist.css'
 import dropdownicon from '../src_assets/드랍다운아이콘회색.svg'
 import searchicon from '../src_assets/검색돋보기아이콘.svg'
 import sampleposter from '../src_assets/samplePoster.png'
+import likeFull from '../src_assets/heartFull.png'
+import like from '../src_assets/heart.png'
 import dayjs from 'dayjs'
 import { getCompetitionList } from '../apis/api/competition'
+import { postLike } from '../apis/api/like'
+import { Cookies } from 'react-cookie'
+import jwt_decode from 'jwt-decode'
 
 const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 const locationSample = [
@@ -41,6 +46,7 @@ function Competitionlist() {
   const [temTitle, setTemTitle] = useState('')
   const [activeMonth, setActiveMonth] = useState(0)
   const [activeLocation, setActiveLocation] = useState(0)
+  const [userId, setUserId] = useState('')
 
   const offsetRef = useRef()
   const locationRef = useRef()
@@ -54,6 +60,11 @@ function Competitionlist() {
   titleRef.current = title
   let navigate = useNavigate()
   let todaytime = dayjs()
+  const cookies = new Cookies()
+  const xAccessToken = cookies.get('x-access-token')
+  const restApiKey = process.env.REACT_APP_REST_API_KEY
+  const redirectUri = process.env.REACT_APP_REDIRECT_URI
+  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`
 
   const observer = useRef(
     new IntersectionObserver(
@@ -82,6 +93,41 @@ function Competitionlist() {
       setCompetitions(competitions => [...competitions, ...newCompetitions])
     }
     return
+  }
+
+  async function clickedLike(competitionId, i) {
+    if (!userId) {
+      alert('로그인이 필요합니다')
+      window.location.href = kakaoAuthURL
+      return
+    }
+    let res = await postLike(competitionId)
+
+    if (res?.status === 200) {
+      let likeCount = res.data.result.competitionLikeCount
+      changeCompetitionLiked(likeCount, i)
+    }
+    return
+  }
+
+  function changeCompetitionLiked(likeCount, competitionoffset) {
+    let copycompetitions = [...competitions]
+    copycompetitions[competitionoffset].competitionLikeCount = likeCount
+    if (
+      copycompetitions[competitionoffset].CompetitionLikes.find(
+        users => users.userId === userId
+      )
+    ) {
+      copycompetitions[competitionoffset].CompetitionLikes = copycompetitions[
+        competitionoffset
+      ].CompetitionLikes.filter(users => users.userId !== userId)
+    } else {
+      let newObject = { userId: userId }
+      copycompetitions[competitionoffset].CompetitionLikes =
+        copycompetitions[competitionoffset].CompetitionLikes.concat(newObject)
+    }
+
+    setCompetitions(copycompetitions)
   }
 
   useEffect(() => {
@@ -134,13 +180,30 @@ function Competitionlist() {
     }
   }, [locationDropdown])
 
+  // 유저 아이디, 레벨 확인하기
+  useEffect(() => {
+    let decodedToken
+    if (xAccessToken) {
+      // 토큰 확인하기
+      decodedToken = jwt_decode(xAccessToken)
+    }
+    // 로그인한 상태
+    if (decodedToken) {
+      setUserId(decodedToken.userId)
+    }
+  }, [])
+
   function listRefresh() {
     // 검색 변수가 바뀔때마다 초기화 해주는 역할.
     setOffset(0)
     setCompetitions([])
   }
 
-  function makingRegisterTag(registrationDate, registrationDeadline) {
+  function makingRegisterTag(registrationDate, registrationDeadline, year) {
+    if (year === '2030') {
+      return
+    }
+
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
 
@@ -254,6 +317,9 @@ function Competitionlist() {
     let registrationDeadline = competition.registrationDeadline
       .substr(5, 5)
       .replace('-', '.')
+    let year = competition.registrationDeadline.substr(0, 4)
+    let displayNone = year === '2030' ? true : false
+
     return {
       id: competition.id,
       title: competition.title,
@@ -272,16 +338,22 @@ function Competitionlist() {
         competition.earlyBirdDeadline != null
           ? competition.earlyBirdDeadline
           : null,
+      likeCount: competition.competitionLikeCount,
+      likeUsers: competition.CompetitionLikes,
+      year: year,
+      displayNone: displayNone,
     }
   }
 
   function renderCompetitionList() {
     return competitions.map((competition, i) => {
       let curcompetition = competitionParsing(competition)
+
       let cardGray = competitionCardGray(
         competition.registrationDate,
         competition.registrationDeadline
       )
+
       return (
         <li className="competition-col" key={competition.id}>
           <div className="each-competition-tag">
@@ -294,7 +366,8 @@ function Competitionlist() {
             )}
             {makingRegisterTag(
               competition.registrationDate,
-              competition.registrationDeadline
+              competition.registrationDeadline,
+              curcompetition.year
             )}
             {makingPartnerTag(competition.isPartnership)}
           </div>
@@ -304,8 +377,7 @@ function Competitionlist() {
               onClick={() => {
                 window.scrollTo(0, 0)
                 navigate(`/competition/${curcompetition.id}`)
-              }}
-            >
+              }}>
               {' '}
               {/* 카드왼쪽 포스터공간  */}
               <img src={curcompetition.posterImage} alt="대회 포스터"></img>
@@ -323,37 +395,39 @@ function Competitionlist() {
                 onClick={() => {
                   window.scrollTo(0, 0)
                   navigate(`/competition/${curcompetition.id}`)
-                }}
-              >
+                }}>
                 <p>{curcompetition.title}</p>
               </div>
               <div className="each-competition-body-desc-middle">
                 <p>{curcompetition.location}</p>
               </div>
               <div className="each-competition-body-desc-bottom">
-                {competition.isPartnership === true ? (
-                  <button
-                    style={cardGray === '' ? {} : { display: 'none' }}
-                    onClick={() => {
-                      window.scrollTo(0, 0)
-                      navigate(
-                        `/competition/applymethod/${curcompetition.id}`,
-                        { state: `${curcompetition.title}` }
-                      )
-                    }}
-                  >
-                    신청
-                  </button>
-                ) : (
-                  <button
-                    style={cardGray === '' ? {} : { display: 'none' }}
-                    onClick={() => {
-                      window.location.href = competition.nonPartnershipPageLink
-                    }}
-                  >
-                    신청
-                  </button>
-                )}
+                <div className="each-competition-body-applyDate">
+                  <h3
+                    style={
+                      curcompetition.displayNone ? { display: 'none' } : {}
+                    }>
+                    신청기간
+                  </h3>
+                  <p
+                    style={
+                      curcompetition.displayNone ? { display: 'none' } : {}
+                    }>
+                    ~{curcompetition.year}.{curcompetition.registrationDeadline}
+                  </p>
+                </div>
+                <div
+                  className="each-competition-body-like"
+                  onClick={() => clickedLike(curcompetition.id, i)}>
+                  {curcompetition.likeUsers.find(
+                    users => users.userId === userId
+                  ) ? (
+                    <img src={likeFull}></img>
+                  ) : (
+                    <img src={like}></img>
+                  )}
+                  <p>{curcompetition.likeCount}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -375,8 +449,7 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setDateDropdown(pre => !pre)}
-          ref={dateDropdownRef}
-        >
+          ref={dateDropdownRef}>
           <p id={startDate === '' ? '' : 'competition-searchzone-black'}>
             {startDate === '' ? '날짜' : `${temDate}월~`}
           </p>
@@ -389,8 +462,7 @@ function Competitionlist() {
                   setStartDate('')
                   listRefresh()
                   setActiveMonth('')
-                }}
-              >
+                }}>
                 전체
               </li>
               {months.map(element => {
@@ -407,8 +479,7 @@ function Competitionlist() {
                       setTemDate(element)
                       listRefresh()
                       setActiveMonth(element)
-                    }}
-                  >
+                    }}>
                     {element}월
                   </li>
                 )
@@ -421,8 +492,7 @@ function Competitionlist() {
         <div
           className="competition-searchzone-option"
           onClick={() => setLocationDropdown(pre => !pre)}
-          ref={locationDropdownRef}
-        >
+          ref={locationDropdownRef}>
           <p id={location === '' ? '' : 'competition-searchzone-black'}>
             {location === '' ? '지역' : location}
           </p>
@@ -435,8 +505,7 @@ function Competitionlist() {
                   setLocation('')
                   listRefresh()
                   setActiveLocation('')
-                }}
-              >
+                }}>
                 전체
               </li>
               {locationSample.map(element => {
@@ -452,8 +521,7 @@ function Competitionlist() {
                       setLocation(element)
                       listRefresh()
                       setActiveLocation(element)
-                    }}
-                  >
+                    }}>
                     {element}
                   </li>
                 )
@@ -487,8 +555,7 @@ function Competitionlist() {
           {renderCompetitionList()}
           <div
             style={{ fontsize: '200px', margin: '0 2rem' }}
-            ref={setLastElement}
-          >
+            ref={setLastElement}>
             대회가 모두 로딩되었습니다.
           </div>
         </ul>
