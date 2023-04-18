@@ -227,7 +227,13 @@ function CompetitionApplyForm() {
     return viewcompetitionApplicationList.map((application, i) => {
       return (
         <ul className="CompetitionApplyForm-top-table-item" key={i}>
-          <li>{application.uniform}</li>
+          <li>
+            {application.uniform === null
+              ? ''
+              : application.uniform === 'gi'
+              ? '기'
+              : '노기'}
+          </li>
           <li>{application.divisionName}</li>
           <li>
             {application.gender === null
@@ -243,7 +249,8 @@ function CompetitionApplyForm() {
             <img
               style={{ cursor: 'pointer' }}
               src={deleteicon}
-              onClick={() => deleteCompetitionApplication(i)}></img>
+              onClick={() => deleteCompetitionApplication(i)}
+            ></img>
           ) : (
             ''
           )}
@@ -573,7 +580,8 @@ function CompetitionApplyForm() {
               window.scrollTo(0, 0)
               setapplymodal(!applymodal)
             }
-          }}>
+          }}
+        >
           신청하기
         </button>
         {applymodal && (
