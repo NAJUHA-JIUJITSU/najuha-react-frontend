@@ -45,6 +45,8 @@ const convertHeaderToKorean = (csvData) => {
         return "앱솔할인";
       case "orderId":
         return "주문번호";
+      case "paymentId":
+        return "결제ID";
       default:
         return header;
     }
@@ -58,6 +60,7 @@ const AdminCsvDownload = () => {
   const [csvData, setCsvData] = useState([]);
   const [csvDataKo, setCsvDataKo] = useState([]);
   const [paymentFilter, setPaymentFilter] = useState("all");
+  const [rowCnt, setRowCnt] = useState(0);
   const competitionId = useParams().id;
 
   const getCsvData = async () => {
@@ -66,8 +69,9 @@ const AdminCsvDownload = () => {
       paymentFilter
     );
     if (res && res.data && res.data.result) {
-      setCsvData(res.data.result);
-      setCsvDataKo(convertHeaderToKorean(res.data.result));
+      setRowCnt(res.data.result.rowCnt);
+      setCsvData(res.data.result.csv);
+      setCsvDataKo(convertHeaderToKorean(res.data.result.csv));
     }
   };
 
@@ -111,6 +115,13 @@ const AdminCsvDownload = () => {
             대회사용
           </button>
         </CSVLink>
+        <div
+          style={{
+            fontSize: "30px",
+          }}
+        >
+          count : {rowCnt}
+        </div>
       </div>
       <div>
         {csvData.length > 0 && (
