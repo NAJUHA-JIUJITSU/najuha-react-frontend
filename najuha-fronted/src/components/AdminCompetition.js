@@ -5,6 +5,12 @@ import sampleposter from '../src_assets/samplePoster.png'
 import { getAdminCompetition } from '../apis/api/admin'
 import MarkdownEditor from './MarkdownEditor'
 import dayjs from 'dayjs'
+import likeFull from '../src_assets/heartFull.png'
+import like from '../src_assets/heart.png'
+import { Cookies } from 'react-cookie'
+import jwt_decode from 'jwt-decode'
+import { postLike } from '../apis/api/like'
+import copy from '../src_assets/copy.png'
 
 function AdminCompetition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
@@ -12,6 +18,7 @@ function AdminCompetition() {
   const [isApplicantTableOpen, setIsApplicantTableOpen] = useState(false)
   const [competition, setCompetition] = useState(null)
   const [viewCompetition, setViewCompetition] = useState({
+    id: null,
     title: null,
     location: null,
     doreOpen: null,
@@ -24,11 +31,38 @@ function AdminCompetition() {
     applicantTableOpenDateDay: null,
     tournamentTableOpenDate: null,
     tournamentTableOpenDateDay: null,
+    likeCount: null,
+    likeUsers: null,
+    likeImg: null,
   })
   const { id } = useParams()
   const [markdown, setMarkdown] = useState('')
   const navigate = useNavigate()
   let todaytime = dayjs()
+  const [userId, setUserId] = useState('')
+
+  const cookies = new Cookies()
+  const xAccessToken = cookies.get('x-access-token')
+  const restApiKey = process.env.REACT_APP_REST_API_KEY
+  const redirectUri = process.env.REACT_APP_REDIRECT_URI
+  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`
+
+  // 텍스트 복사
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(viewCompetition.location)
+      alert('대회장소가 클립보드에 복사되었습니다!')
+    } catch (error) {
+      console.error('Failed to copy: ', error)
+      const textarea = document.createElement('textarea')
+      textarea.value = viewCompetition.location
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      alert('대회장소가 클립보드에 복사되었습니다!')
+    }
+  }
 
   const getCompetition = async id => {
     const res = await getAdminCompetition(id)
@@ -65,7 +99,15 @@ function AdminCompetition() {
       .replace('-', '.')
     let tournamentTableOpenDateDay =
       week[new Date(competition.tournamentTableOpenDate).getDay()]
+
+    let likeImg = competition.CompetitionLikes.find(
+      users => users.userId === userId
+    )
+      ? likeFull
+      : like
+
     setViewCompetition({
+      id: competition.id,
       title: competition.title,
       location: location,
       doreOpen: doreOpen,
@@ -78,6 +120,9 @@ function AdminCompetition() {
       applicantTableOpenDateDay: applicantTableOpenDateDay,
       tournamentTableOpenDate: tournamentTableOpenDate,
       tournamentTableOpenDateDay: tournamentTableOpenDateDay,
+      likeCount: competition.competitionLikeCount,
+      likeUsers: competition.CompetitionLikes,
+      likeImg: likeImg,
     })
   }
 
@@ -106,8 +151,52 @@ function AdminCompetition() {
     }
   }
 
+  async function clickedLike(competitionId) {
+    if (!userId) {
+      alert('로그인이 필요합니다')
+      window.location.href = kakaoAuthURL
+      return
+    }
+    let res = await postLike(competitionId)
+
+    if (res?.status === 200) {
+      let likeCount = res.data.result.competitionLikeCount
+      changeCompetitionLiked(likeCount)
+    }
+    return
+  }
+
+  function changeCompetitionLiked(likeCount) {
+    let copycompetition = { ...viewCompetition }
+    copycompetition.likeCount = likeCount
+    if (copycompetition.likeUsers.find(users => users.userId === userId)) {
+      copycompetition.likeUsers = copycompetition.likeUsers.filter(
+        users => users.userId !== userId
+      )
+      copycompetition.likeImg = like
+    } else {
+      let newObject = { userId: userId }
+      copycompetition.likeUsers = copycompetition.likeUsers.concat(newObject)
+      copycompetition.likeImg = likeFull
+    }
+    setViewCompetition(copycompetition)
+  }
+
   useEffect(() => {
     getCompetition(id)
+  }, [])
+
+  // 유저 아이디, 레벨 확인하기
+  useEffect(() => {
+    let decodedToken
+    if (xAccessToken) {
+      // 토큰 확인하기
+      decodedToken = jwt_decode(xAccessToken)
+    }
+    // 로그인한 상태
+    if (decodedToken) {
+      setUserId(decodedToken.userId)
+    }
   }, [])
 
   useEffect(() => {
@@ -123,7 +212,14 @@ function AdminCompetition() {
     <div className="competition-wrapper">
       <div className="competition-top">
         <div className="competition-top-title">
-          <h2>{viewCompetition ? viewCompetition.title : ''}</h2>
+          <h2>{viewCompetition.title}</h2>
+          <div
+            className="each-competition-body-like competition-top-like"
+            onClick={() => clickedLike(viewCompetition.id)}
+          >
+            <img src={viewCompetition.likeImg}></img>
+            <p>{viewCompetition.likeCount}</p>
+          </div>
         </div>
         <div className="competition-top-content">
           {/* <div className='competition-top-content-img'></div> */}
@@ -147,7 +243,20 @@ function AdminCompetition() {
             </div>
             <div className="competition-top-content-info-each">
               <h3>대회 장소</h3>
-              <p>{viewCompetition.location}</p>
+              <div className="competition-top-content-copyWrap">
+                <p>{viewCompetition ? viewCompetition.location : ''}</p>
+                <div
+                  className="competition-top-content-copy"
+                  onClick={copyToClipboard}
+                >
+                  <img
+                    src={copy}
+                    alt="복사하기"
+                    className="competition-top-content-copyIcon"
+                  ></img>
+                  <span>복사</span>
+                </div>
+              </div>
             </div>
             <div className="competition-top-content-info-each">
               <h3>얼리버드 마감</h3>
@@ -162,8 +271,11 @@ function AdminCompetition() {
             <div className="competition-top-content-info-each">
               <h3>참가신청 마감</h3>
               <p>
-                {viewCompetition.registrationDeadline} (
-                {viewCompetition.registrationDeadlineDay})
+                {viewCompetition.registrationDeadline !== null
+                  ? viewCompetition.registrationDeadline.slice(0, 2) === '30'
+                    ? '해당없음'
+                    : `${viewCompetition.registrationDeadline} (${viewCompetition.registrationDeadlineDay})`
+                  : ''}
               </p>
             </div>
             <div className="competition-top-content-info-each">
@@ -204,8 +316,8 @@ function AdminCompetition() {
           ) : (
             ''
           )}
-          {inDate ? (
-            competition.isPartnership === true ? (
+          {competition?.isPartnership === true ? (
+            inDate ? (
               <button
                 id="competition-top-button1"
                 onClick={() => {
@@ -215,17 +327,17 @@ function AdminCompetition() {
                 대회 신청
               </button>
             ) : (
-              <button
-                id="competition-top-button1"
-                onClick={() => {
-                  window.location.href = competition.nonPartnershipPageLink
-                }}
-              >
-                대회 신청
-              </button>
+              ''
             )
           ) : (
-            ''
+            <button
+              id="competition-top-button1"
+              onClick={() => {
+                window.location.href = competition.nonPartnershipPageLink
+              }}
+            >
+              대회 신청
+            </button>
           )}
         </div>
       </div>
