@@ -21,7 +21,8 @@ function ChooseApplyMethod() {
       <div className="ChooseApplyMethod-cardWrapper">
         <div
           className="ChooseApplyMethod-card"
-          id="ChooseApplyMethod-forshadows">
+          id="ChooseApplyMethod-forshadows"
+        >
           <div className="ChooseApplyMethod-card-top">
             <h2 className="ChooseApplyMethod-card-top-title">개인신청</h2>
             <img src={oneicon} alt="개인신청아이콘" />
@@ -53,7 +54,8 @@ function ChooseApplyMethod() {
             <button
               onClick={() => {
                 navigate(`/competition/apply/${id}`)
-              }}>
+              }}
+            >
               개인 신청하기
             </button>
             <p className="ChooseApplyMethod-card-bottom-info">
@@ -85,8 +87,11 @@ function ChooseApplyMethod() {
                 <p>얼리버드 할인이 적용됩니다.</p>
               </li>
               <li>
-                <img src={xicon} alt="엑스아이콘" />
-                <p>얼리버드 할인 외의 할인은 적용되지 않습니다.</p>
+                <img src={checkicon} alt="체크아이콘" />
+                <p>
+                  중복대회 신청 할인(기 + 노기, 체급 + 앱솔 등)은 한번에
+                  신청해야 할인됩니다.
+                </p>
               </li>
             </ul>
           </div>
@@ -94,7 +99,8 @@ function ChooseApplyMethod() {
             <button
               onClick={() => {
                 navigate(`/competition/applyteam/${id}`)
-              }}>
+              }}
+            >
               단체 신청하기
             </button>
             <p className="ChooseApplyMethod-card-bottom-info">
