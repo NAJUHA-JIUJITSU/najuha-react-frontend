@@ -116,7 +116,6 @@ function PaymentInfo() {
     return (
       <tbody>
         {competitionApplicationList.map((application, i) => {
-          console.log(application)
           competitionPayAmount += application.competitionPayment.amount
           return (
             <tr
