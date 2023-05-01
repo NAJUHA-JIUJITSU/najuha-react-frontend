@@ -4,6 +4,8 @@ import './paymentInfo.css'
 import { Cookies } from 'react-cookie'
 import { useJwt } from 'react-jwt'
 import { useNavigate, useParams } from 'react-router-dom'
+import { Collapse } from 'react-collapse'
+import { useSpring, animated } from 'react-spring'
 import samplePoster from '../src_assets/samplePoster.png'
 import {
   getAdminCompetitionApplicationList,
@@ -22,6 +24,7 @@ function PaymentInfo() {
   const xAccessToken = cookies.get('x-access-token')
   const { decodedToken, isExpired } = useJwt(xAccessToken)
   const navigate = useNavigate()
+  const [selectedRowIndex, setSelectedRowIndex] = useState(null)
 
   const params = useParams() // ex) id: 1
 
@@ -110,7 +113,15 @@ function PaymentInfo() {
     }
   }
 
-  //왼쪽 테이블 렌더
+  //유저 클릭
+  function idClick(id) {
+    if (selectedRowIndex === id) {
+      setSelectedRowIndex(null)
+    } else {
+      setSelectedRowIndex(id)
+    }
+  }
+
   function renderCompetitionApplicationList() {
     competitionPayAmount = 0
     return (
@@ -118,87 +129,121 @@ function PaymentInfo() {
         {competitionApplicationList.map((application, i) => {
           competitionPayAmount += application.competitionPayment.amount
           return (
-            <tr
-              key={application.id}
-              className="PaymentInfo_tableHover"
-              onClick={() => {
-                idClick(application.id)
-              }}
-            >
-              <td>{i + 1}</td>
-              <td>{application.User.kakaoName}</td>
-              <td>{application.User.UserInfo.fullName || 'NaN'}</td>
-              <td>{application.User.UserInfo.phoneNumber || 'NaN'}</td>
-              <td>{application.isGroup ? '단체' : '개인'}</td>
-              <td>{application.competitionPayment.amount}</td>
-              <td>{application.competitionPayment.id}</td>
-              <td>{application.competitionPayment.orderId}</td>
-            </tr>
+            <React.Fragment key={application.id}>
+              <tr
+                className="PaymentInfo_tableHover"
+                onClick={() => {
+                  idClick(application.id)
+                }}
+              >
+                <td>{i + 1}</td>
+                <td>{application.User.kakaoName}</td>
+                <td>{application.User.UserInfo.fullName || 'NaN'}</td>
+                <td>{application.User.UserInfo.phoneNumber || 'NaN'}</td>
+                <td>{application.isGroup ? '단체' : '개인'}</td>
+                <td>{application.competitionPayment.amount}</td>
+                <td>{application.competitionPayment.id}</td>
+                <td>{application.competitionPayment.orderId}</td>
+              </tr>
+              {renderInsideCompetitionApplicationListInfo(application)}
+            </React.Fragment>
           )
         })}
       </tbody>
     )
   }
 
-  //유저 클릭
-  function idClick(id) {
-    setclickID(id)
-  }
+  // 환불 버튼
+  function refundButton(application) {
+    console.log(application)
+    const confirmMessage =
+      '정말로 다음 결제 정보로 환불하시겠습니까?\n' +
+      `카카오이름: ${application.User.kakaoName}\n` +
+      `프로필이름: ${application.User.UserInfo.fullName}\n` +
+      `결제 ID: ${application.competitionPayment.id}\n` +
+      `결제 금액: ${application.competitionPayment.amount}원`
 
-  //오른쪽 테이블 렌더
-  function renderCompetitionApplicationListInfo() {
-    userPayAmount = 0
-    userRealPayAmount = 0
     return (
-      <tbody>
-        {competitionApplicationList.map(parentApplication => {
-          if (parentApplication.id == clickID) {
-            userRealPayAmount = parentApplication.competitionPayment.amount
-            return parentApplication.CompetitionApplicationInfos.map(
-              (application, i) => {
-                userPayAmount += application.pricingPolicy.normal
-                return (
-                  <tr key={application.id}>
-                    <td>{i + 1}</td>
-                    <td>{application.playerName}</td>
-                    <td>{application.playerBirth}</td>
-                    <td>{application.gender == 'male' ? '남자' : '여자'}</td>
-                    <td>{application.uniform == 'gi' ? '기' : '노기'}</td>
-                    <td>{application.divisionName}</td>
-                    <td>{application.belt}</td>
-                    <td>{application.weight}kg</td>
-                    <td>{application.pricingPolicy.normal}원</td>
-                  </tr>
-                )
-              }
-            )
-          }
-        })}
-      </tbody>
+      <button
+        onClick={() => {
+          if (window.confirm(confirmMessage))
+            refund(application.competitionPayment.orderId)
+        }}
+        style={{ color: 'red', marginLeft: '16px' }}
+      >
+        환불
+      </button>
     )
   }
 
-  //오른쪽 대표 정보 렌더
-  function renderCompetitionApplicationListInfoTitle() {
-    return competitionApplicationList.map(application => {
-      if (application.id == clickID) {
-        return (
-          <div className="PaymentInfo_listInfoTitle">
-            <h2>
-              팀 이름
-              <span>{application.CompetitionApplicationInfos[0].team}</span>
-            </h2>
-            <h2>
-              대표번호
-              <span>
-                {application.CompetitionApplicationInfos[0].phoneNumber}
-              </span>
-            </h2>
-          </div>
-        )
-      }
-      return
-    })
+  function renderInsideCompetitionApplicationListInfo(application) {
+    userPayAmount = 0
+    userRealPayAmount = 0
+    return (
+      <tr>
+        <td colSpan="8">
+          <Collapse isOpened={selectedRowIndex === application.id}>
+            <animated.div>
+              <div className="PaymentInfo_listInfo">
+                <div className="PaymentInfo_listInfoTitle">
+                  <h2>
+                    팀 이름
+                    <span>
+                      {application.CompetitionApplicationInfos[0].team}
+                    </span>
+                  </h2>
+                  <h2>
+                    대표번호
+                    <span>
+                      {application.CompetitionApplicationInfos[0].phoneNumber}
+                    </span>
+                  </h2>
+                </div>
+                <table>
+                  <tr>
+                    <th>No.</th>
+                    <th>선수명</th>
+                    <th>생년월일</th>
+                    <th>성별</th>
+                    <th>기/노기</th>
+                    <th>부문</th>
+                    <th>벨트</th>
+                    <th>체급</th>
+                    <th>참가비</th>
+                  </tr>
+                  {application.CompetitionApplicationInfos.map((info, i) => {
+                    userPayAmount += info.priceTag.amount
+                    userRealPayAmount += info.priceTag.normal
+                    return (
+                      <tr key={info.id}>
+                        <td>{i + 1}</td>
+                        <td>{info.playerName}</td>
+                        <td>{info.playerBirth}</td>
+                        <td>{info.gender == 'male' ? '남자' : '여자'}</td>
+                        <td>{info.uniform == 'gi' ? '기' : '노기'}</td>
+                        <td>{info.divisionName}</td>
+                        <td>{info.belt}</td>
+                        <td>{info.weight}kg</td>
+                        <td>{info.pricingPolicy.normal}원</td>
+                      </tr>
+                    )
+                  })}
+                </table>
+                <div className="PaymentInfo_listInfoPay">
+                  <h2>
+                    할인금액 <span>{userPayAmount - userRealPayAmount}원</span>
+                  </h2>
+                  <h2>
+                    총 합계 <span>{userRealPayAmount}원</span>
+                  </h2>
+                  {refundButton(application)}
+                </div>
+              </div>
+            </animated.div>
+          </Collapse>
+        </td>
+      </tr>
+    )
   }
 
   //환불 함수
@@ -217,31 +262,6 @@ function PaymentInfo() {
     }
     getCompetitionApplicationInfo()
   }, [decodedToken])
-
-  // 환불 버튼
-  function refundButton() {
-    return competitionApplicationList.map(application => {
-      if (application.id === clickID) {
-        const confirmMessage = `정말로 다음 결제 정보로 환불하시겠습니까?
-결제자이름: ${application.User.UserInfo.fullName}
-결제 ID: ${application.competitionPayment.id}
-결제 금액: ${application.competitionPayment.amount}원
-`
-        return (
-          <button
-            onClick={() => {
-              if (window.confirm(confirmMessage))
-                refund(application.competitionPayment.orderId)
-            }}
-            style={{ color: 'red', marginLeft: '16px' }}
-          >
-            환불
-          </button>
-        )
-      }
-      return null
-    })
-  }
 
   return (
     <div className="PaymentInfo_wrapper">
@@ -302,33 +322,6 @@ function PaymentInfo() {
           <h2>
             총 결제금액 <span>{competitionPayAmount}원</span>
           </h2>
-        </div>
-        <div className="PaymentInfo_listInfo">
-          {renderCompetitionApplicationListInfoTitle()}
-          <table>
-            <tr>
-              <th>No.</th>
-              <th>선수명</th>
-              <th>생년월일</th>
-              <th>성별</th>
-              <th>기/노기</th>
-              <th>부문</th>
-              <th>벨트</th>
-              <th>체급</th>
-              <th>참가비</th>
-            </tr>
-            {renderCompetitionApplicationListInfo()}
-          </table>
-          <div className="PaymentInfo_listInfoPay">
-            <h2>
-              할인금액 <span>{userPayAmount - userRealPayAmount}원</span>
-            </h2>
-            <h2>
-              총 합계 <span>{userRealPayAmount}원</span>
-            </h2>
-
-            {refundButton()}
-          </div>
         </div>
       </div>
     </div>
