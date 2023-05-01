@@ -116,6 +116,7 @@ function PaymentInfo() {
     return (
       <tbody>
         {competitionApplicationList.map((application, i) => {
+          console.log(application)
           competitionPayAmount += application.competitionPayment.amount
           return (
             <tr
@@ -126,8 +127,9 @@ function PaymentInfo() {
               }}
             >
               <td>{i + 1}</td>
-              <td>{application.User.UserInfo.fullName}</td>
-              <td>{application.User.UserInfo.phoneNumber}</td>
+              <td>{application.User.kakaoName}</td>
+              <td>{application.User.UserInfo.fullName || 'NaN'}</td>
+              <td>{application.User.UserInfo.phoneNumber || 'NaN'}</td>
               <td>{application.isGroup ? '단체' : '개인'}</td>
               <td>{application.competitionPayment.amount}</td>
               <td>{application.competitionPayment.id}</td>
@@ -288,7 +290,8 @@ function PaymentInfo() {
           <table>
             <tr>
               <th>No.</th>
-              <th>결제자</th>
+              <th>kakao이름</th>
+              <th>프로필이름</th>
               <th>핸드폰 번호</th>
               <th>개인/단체</th>
               <th>결제금액</th>
@@ -306,7 +309,7 @@ function PaymentInfo() {
           <table>
             <tr>
               <th>No.</th>
-              <th>이름</th>
+              <th>선수명</th>
               <th>생년월일</th>
               <th>성별</th>
               <th>기/노기</th>
