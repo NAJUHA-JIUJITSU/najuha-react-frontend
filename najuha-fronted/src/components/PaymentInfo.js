@@ -177,8 +177,10 @@ function PaymentInfo() {
   }
 
   function renderInsideCompetitionApplicationListInfo(application) {
-    userPayAmount = 0
-    userRealPayAmount = 0
+    let normal = 0
+    let amount = 0
+    let discount = 0
+
     return (
       <tr>
         <td colSpan="8">
@@ -209,11 +211,17 @@ function PaymentInfo() {
                     <th>부문</th>
                     <th>벨트</th>
                     <th>체급</th>
+                    <th>결제가격</th>
                     <th>참가비</th>
+                    <th>할인가격</th>
                   </tr>
                   {application.CompetitionApplicationInfos.map((info, i) => {
-                    userPayAmount += info.priceTag.amount
-                    userRealPayAmount += info.priceTag.normal
+                    normal += info.priceTag.normal
+                    amount += info.priceTag.amount
+                    discount +=
+                      info.priceTag.earlyBird +
+                      info.priceTag.withGi +
+                      info.priceTag.withOther
                     return (
                       <tr key={info.id}>
                         <td>{i + 1}</td>
@@ -224,17 +232,27 @@ function PaymentInfo() {
                         <td>{info.divisionName}</td>
                         <td>{info.belt}</td>
                         <td>{info.weight}kg</td>
-                        <td>{info.pricingPolicy.normal}원</td>
+                        <td>{info.priceTag.amount}원</td>
+                        <td>{info.priceTag.normal}원</td>
+                        <td>
+                          {info.priceTag.earlyBird +
+                            info.priceTag.withGi +
+                            info.priceTag.withOther}
+                          원
+                        </td>
                       </tr>
                     )
                   })}
                 </table>
                 <div className="PaymentInfo_listInfoPay">
                   <h2>
-                    할인금액 <span>{userPayAmount - userRealPayAmount}원</span>
+                    결제가격 합 <span>{amount}원</span>
                   </h2>
                   <h2>
-                    총 합계 <span>{userRealPayAmount}원</span>
+                    참가비 합 <span>{normal}원</span>
+                  </h2>
+                  <h2>
+                    할인가격 합 <span>{discount}원</span>
                   </h2>
                   {refundButton(application)}
                 </div>
