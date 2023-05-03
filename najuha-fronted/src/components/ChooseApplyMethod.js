@@ -21,8 +21,7 @@ function ChooseApplyMethod() {
       <div className="ChooseApplyMethod-cardWrapper">
         <div
           className="ChooseApplyMethod-card"
-          id="ChooseApplyMethod-forshadows"
-        >
+          id="ChooseApplyMethod-forshadows">
           <div className="ChooseApplyMethod-card-top">
             <h2 className="ChooseApplyMethod-card-top-title">개인신청</h2>
             <img src={oneicon} alt="개인신청아이콘" />
@@ -37,15 +36,20 @@ function ChooseApplyMethod() {
                 <img src={checkicon} alt="체크아이콘" />
                 <p>한명이 여러 대회를 신청할 수 있습니다.</p>
               </li>
-              <li>
-                <img src={checkicon} alt="체크아이콘" />
-                <p>얼리버드 할인이 적용됩니다.</p>
-              </li>
+
               <li>
                 <img src={checkicon} alt="체크아이콘" />
                 <p>
                   중복대회 신청 할인(기 + 노기, 체급 + 앱솔 등)은 한번에
                   신청해야 할인됩니다.
+                </p>
+              </li>
+              <li>
+                <img src={xicon} alt="체크아이콘" />
+                <p>
+                  {' '}
+                  얼리버드 마감 후 신청정보를 변경하기 위해 환불 후 재거래
+                  진행시 얼리버드 할인은 받으실 수 없습니다.
                 </p>
               </li>
             </ul>
@@ -54,8 +58,7 @@ function ChooseApplyMethod() {
             <button
               onClick={() => {
                 navigate(`/competition/apply/${id}`)
-              }}
-            >
+              }}>
               개인 신청하기
             </button>
             <p className="ChooseApplyMethod-card-bottom-info">
@@ -82,15 +85,20 @@ function ChooseApplyMethod() {
                 <img src={checkicon} alt="체크아이콘" />
                 <p>대표자의 번호로 선수 연락처가 통일됩니다.</p>
               </li>
-              <li>
-                <img src={checkicon} alt="체크아이콘" />
-                <p>얼리버드 할인이 적용됩니다.</p>
-              </li>
+
               <li>
                 <img src={checkicon} alt="체크아이콘" />
                 <p>
                   중복대회 신청 할인(기 + 노기, 체급 + 앱솔 등)은 한번에
                   신청해야 할인됩니다.
+                </p>
+              </li>
+              <li>
+                <img src={xicon} alt="체크아이콘" />
+                <p>
+                  {' '}
+                  얼리버드 마감 후 신청정보를 변경하기 위해 환불 후 재거래
+                  진행시 얼리버드 할인은 받으실 수 없습니다.
                 </p>
               </li>
             </ul>
@@ -99,8 +107,7 @@ function ChooseApplyMethod() {
             <button
               onClick={() => {
                 navigate(`/competition/applyteam/${id}`)
-              }}
-            >
+              }}>
               단체 신청하기
             </button>
             <p className="ChooseApplyMethod-card-bottom-info">
