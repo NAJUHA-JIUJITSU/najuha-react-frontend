@@ -250,26 +250,28 @@ function ProfileInfo() {
   function renderButton(application) {
     //competitionPayment이 null이 아니면
     if (application.competitionPayment !== null) {
-      //대회신청마감지남
-      if (application.CheckRegistrationDeadline === false) {
-        return (
-          //결제내역(완료) 버튼
-          <div className="CompetitionApplyTeamForm-bottom-table-buttons">
-            <button
-              id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              onClick={() => {
-                //영수증 외부 페이지 띄우기
-                window.open(`${receiptUrl}`)
-              }}
-            >
-              결제내역
-            </button>
-          </div>
-        )
-      }
-      //결제완료(대회신청마감안지남)
+      //결제완료(대회신청마감안지남 & 대회신청마감지남)
       if (application.status === 'APPROVED') {
+        //대회신청마감지남
+        if (application.CheckRegistrationDeadline === false) {
+          return (
+            //결제내역(완료) 버튼
+            <div className="CompetitionApplyTeamForm-bottom-table-buttons">
+              <button
+                id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+                onClick={() => {
+                  //영수증 외부 페이지 띄우기
+                  window.open(`${receiptUrl}`)
+                }}
+              >
+                결제내역
+              </button>
+            </div>
+          )
+        }
+
         return (
+          //대회신청마감안지남
           //환불하기&결제내역(완료)버튼
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
@@ -307,6 +309,16 @@ function ProfileInfo() {
               style={cursorStyle}
             >
               환불완료
+            </button>
+            <button
+              id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+              // style={cursorStyle}
+              onClick={() => {
+                //영수증 외부 페이지 띄우기
+                window.open(`${receiptUrl}`)
+              }}
+            >
+              결제내역
             </button>
           </div>
         )
