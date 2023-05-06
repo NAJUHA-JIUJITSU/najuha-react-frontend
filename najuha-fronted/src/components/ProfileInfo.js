@@ -9,6 +9,7 @@ import samplePoster from '../src_assets/samplePoster.png'
 
 // api함수
 import {
+  getUserPaymentReceipt,
   getUserApplicationCompetitionInfo,
   deleteUserApplicationCompetition,
   deleteUserPayment,
@@ -26,6 +27,7 @@ function ProfileInfo() {
   const [competitionApplicationList, setCompetitionApplicationList] = useState(
     []
   ) //유저 신청 대회 유저 리스트 가져오기
+  const [receiptUrl, setReceiptUrl] = useState('') //유저 결제 영수증 가져오기
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
   const { decodedToken, isExpired } = useJwt(xAccessToken)
@@ -46,6 +48,13 @@ function ProfileInfo() {
       setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos)
     }
     return
+  }
+
+  async function getReceipt(orderId) {
+    let res = await getUserPaymentReceipt(orderId)
+    if (res?.status === 200) {
+      setReceiptUrl(res.data.result.receipt.url)
+    }
   }
 
   //요일 값 구하기
@@ -241,24 +250,27 @@ function ProfileInfo() {
   function renderButton(application) {
     //competitionPayment이 null이 아니면
     if (application.competitionPayment !== null) {
-      //대회날짜 지났으면
-      if (application.CheckDoreOpen === false) {
+      //대회신청마감지남
+      if (application.CheckRegistrationDeadline === false) {
         return (
-          //결제완료 버튼
+          //결제내역(완료) 버튼
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}
+              onClick={() => {
+                //영수증 외부 페이지 띄우기
+                window.open(`${receiptUrl}`)
+              }}
             >
-              결제완료
+              결제내역
             </button>
           </div>
         )
       }
-      //결제완료(대회날짜 안지남)
+      //결제완료(대회신청마감안지남)
       if (application.status === 'APPROVED') {
         return (
-          //환불하기&결제완료 버튼
+          //환불하기&결제내역(완료)버튼
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
@@ -274,9 +286,13 @@ function ProfileInfo() {
             </button>
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}
+              // style={cursorStyle}
+              onClick={() => {
+                //영수증 외부 페이지 띄우기
+                window.open(`${receiptUrl}`)
+              }}
             >
-              결제완료
+              결제내역
             </button>
           </div>
         )
@@ -369,6 +385,14 @@ function ProfileInfo() {
     getCompetitionApplicationInfo()
   }, [decodedToken])
 
+  useEffect(() => {
+    if (
+      rawCompetitionApplicationInfo?.competitionPayment?.orderId !== undefined
+    ) {
+      getReceipt(rawCompetitionApplicationInfo.competitionPayment.orderId)
+    }
+  }, [rawCompetitionApplicationInfo])
+
   return (
     <div className="ProfileInfo_wrapper">
       <div className="ProfileInfo_title">
@@ -405,15 +429,53 @@ function ProfileInfo() {
           </div>
           <div className="ProfileInfo_competition_date">
             <h3>얼리버드 마감</h3>
-            <p>{competitionApplicationInfo.earlyBirdDeadline}</p>
+            <p>
+              {competitionApplicationInfo.earlyBirdDeadline !== null
+                ? competitionApplicationInfo.earlyBirdDeadline?.slice(0, 2) ===
+                  '98'
+                  ? '해당없음'
+                  : `${competitionApplicationInfo.earlyBirdDeadline}`
+                : ''}
+            </p>
           </div>
           <div className="ProfileInfo_competition_date">
             <h3>참가신청 마감</h3>
-            <p>{competitionApplicationInfo.registrationDeadline}</p>
+            <p>
+              {competitionApplicationInfo?.registrationDeadline !== null
+                ? competitionApplicationInfo?.registrationDeadline?.slice(
+                    0,
+                    2
+                  ) === '30'
+                  ? '해당없음'
+                  : `${competitionApplicationInfo?.registrationDeadline}`
+                : ''}
+            </p>
+          </div>
+          <div className="ProfileInfo_competition_date">
+            <h3>참가자 공개</h3>
+            <p>
+              {competitionApplicationInfo?.tournamentTableOpenDate !== null
+                ? competitionApplicationInfo?.tournamentTableOpenDate?.slice(
+                    0,
+                    2
+                  ) === '30'
+                  ? '해당없음'
+                  : `${competitionApplicationInfo?.tournamentTableOpenDate}`
+                : ''}
+            </p>
           </div>
           <div className="ProfileInfo_competition_date">
             <h3>대진표 공개</h3>
-            <p>{competitionApplicationInfo.tournamentTableOpenDate}</p>
+            <p>
+              {competitionApplicationInfo.tournamentTableOpenDate !== null
+                ? competitionApplicationInfo.tournamentTableOpenDate?.slice(
+                    0,
+                    2
+                  ) === '98'
+                  ? '해당없음'
+                  : `${competitionApplicationInfo.tournamentTableOpenDate}`
+                : ''}
+            </p>
           </div>
         </div>
       </div>
