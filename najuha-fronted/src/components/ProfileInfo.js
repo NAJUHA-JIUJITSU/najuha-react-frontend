@@ -9,6 +9,7 @@ import samplePoster from '../src_assets/samplePoster.png'
 
 // api함수
 import {
+  getUserPaymentReceipt,
   getUserApplicationCompetitionInfo,
   deleteUserApplicationCompetition,
   deleteUserPayment,
@@ -26,6 +27,7 @@ function ProfileInfo() {
   const [competitionApplicationList, setCompetitionApplicationList] = useState(
     []
   ) //유저 신청 대회 유저 리스트 가져오기
+  const [receiptUrl, setReceiptUrl] = useState('') //유저 결제 영수증 가져오기
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
   const { decodedToken, isExpired } = useJwt(xAccessToken)
@@ -46,6 +48,13 @@ function ProfileInfo() {
       setCompetitionApplicationList(res.data.result.CompetitionApplicationInfos)
     }
     return
+  }
+
+  async function getReceipt(orderId) {
+    let res = await getUserPaymentReceipt(orderId)
+    if (res?.status === 200) {
+      setReceiptUrl(res.data.result.receipt.url)
+    }
   }
 
   //요일 값 구하기
@@ -248,7 +257,10 @@ function ProfileInfo() {
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}
+              onClick={() => {
+                //영수증 외부 페이지 띄우기
+                window.open(`${receiptUrl}`)
+              }}
             >
               결제내역
             </button>
@@ -274,7 +286,11 @@ function ProfileInfo() {
             </button>
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              style={cursorStyle}
+              // style={cursorStyle}
+              onClick={() => {
+                //영수증 외부 페이지 띄우기
+                window.open(`${receiptUrl}`)
+              }}
             >
               결제내역
             </button>
@@ -370,7 +386,11 @@ function ProfileInfo() {
   }, [decodedToken])
 
   useEffect(() => {
-    console.log(rawCompetitionApplicationInfo)
+    if (
+      rawCompetitionApplicationInfo?.competitionPayment?.orderId !== undefined
+    ) {
+      getReceipt(rawCompetitionApplicationInfo.competitionPayment.orderId)
+    }
   }, [rawCompetitionApplicationInfo])
 
   return (

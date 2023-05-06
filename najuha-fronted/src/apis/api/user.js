@@ -89,3 +89,14 @@ export const deleteUserPayment = async orderId => {
     console.log(e)
   }
 }
+
+//2.10 유저결제내역조회(영수증)
+export const getUserPaymentReceipt = async orderId => {
+  try {
+    const res = await axiosApiWithToken(`/users/payments/${orderId}`, 'get')
+    return res
+  } catch (e) {
+    // handleError(e)
+    console.log(e)
+  }
+}
