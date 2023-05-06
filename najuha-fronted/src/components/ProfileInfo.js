@@ -241,24 +241,24 @@ function ProfileInfo() {
   function renderButton(application) {
     //competitionPayment이 null이 아니면
     if (application.competitionPayment !== null) {
-      //대회날짜 지났으면
-      if (application.CheckDoreOpen === false) {
+      //대회신청마감지남
+      if (application.CheckRegistrationDeadline === false) {
         return (
-          //결제완료 버튼
+          //결제내역(완료) 버튼
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
               style={cursorStyle}
             >
-              결제완료
+              결제내역
             </button>
           </div>
         )
       }
-      //결제완료(대회날짜 안지남)
+      //결제완료(대회신청마감안지남)
       if (application.status === 'APPROVED') {
         return (
-          //환불하기&결제완료 버튼
+          //환불하기&결제내역(완료)버튼
           <div className="CompetitionApplyTeamForm-bottom-table-buttons">
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
@@ -276,7 +276,7 @@ function ProfileInfo() {
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
               style={cursorStyle}
             >
-              결제완료
+              결제내역
             </button>
           </div>
         )
@@ -368,6 +368,10 @@ function ProfileInfo() {
 
     getCompetitionApplicationInfo()
   }, [decodedToken])
+
+  useEffect(() => {
+    console.log(rawCompetitionApplicationInfo)
+  }, [rawCompetitionApplicationInfo])
 
   return (
     <div className="ProfileInfo_wrapper">
