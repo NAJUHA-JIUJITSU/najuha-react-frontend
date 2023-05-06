@@ -429,15 +429,53 @@ function ProfileInfo() {
           </div>
           <div className="ProfileInfo_competition_date">
             <h3>얼리버드 마감</h3>
-            <p>{competitionApplicationInfo.earlyBirdDeadline}</p>
+            <p>
+              {competitionApplicationInfo.earlyBirdDeadline !== null
+                ? competitionApplicationInfo.earlyBirdDeadline?.slice(0, 2) ===
+                  '98'
+                  ? '해당없음'
+                  : `${competitionApplicationInfo.earlyBirdDeadline}`
+                : ''}
+            </p>
           </div>
           <div className="ProfileInfo_competition_date">
             <h3>참가신청 마감</h3>
-            <p>{competitionApplicationInfo.registrationDeadline}</p>
+            <p>
+              {competitionApplicationInfo?.registrationDeadline !== null
+                ? competitionApplicationInfo?.registrationDeadline?.slice(
+                    0,
+                    2
+                  ) === '30'
+                  ? '해당없음'
+                  : `${competitionApplicationInfo?.registrationDeadline}`
+                : ''}
+            </p>
+          </div>
+          <div className="ProfileInfo_competition_date">
+            <h3>참가자 공개</h3>
+            <p>
+              {competitionApplicationInfo?.tournamentTableOpenDate !== null
+                ? competitionApplicationInfo?.tournamentTableOpenDate?.slice(
+                    0,
+                    2
+                  ) === '30'
+                  ? '해당없음'
+                  : `${competitionApplicationInfo?.tournamentTableOpenDate}`
+                : ''}
+            </p>
           </div>
           <div className="ProfileInfo_competition_date">
             <h3>대진표 공개</h3>
-            <p>{competitionApplicationInfo.tournamentTableOpenDate}</p>
+            <p>
+              {competitionApplicationInfo.tournamentTableOpenDate !== null
+                ? competitionApplicationInfo.tournamentTableOpenDate?.slice(
+                    0,
+                    2
+                  ) === '98'
+                  ? '해당없음'
+                  : `${competitionApplicationInfo.tournamentTableOpenDate}`
+                : ''}
+            </p>
           </div>
         </div>
       </div>
