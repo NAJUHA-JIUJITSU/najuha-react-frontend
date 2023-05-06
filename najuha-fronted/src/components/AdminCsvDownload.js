@@ -70,8 +70,13 @@ const AdminCsvDownload = () => {
     )
     if (res && res.data && res.data.result) {
       setRowCnt(res.data.result.rowCnt)
-      setCsvData(res.data.result.csv)
-      setCsvDataKo(convertHeaderToKorean(res.data.result.csv))
+      if (res.data.result.csv) {
+        setCsvData(res.data.result.csv)
+        setCsvDataKo(convertHeaderToKorean(res.data.result.csv))
+      } else {
+        setCsvData('')
+        setCsvDataKo('')
+      }
     }
   }
 
@@ -95,6 +100,14 @@ const AdminCsvDownload = () => {
         <button onClick={() => handleFilterButtonClick('unpaid')}>
           미결제
         </button>
+        <div style={{ fontSize: '30px' }}>
+          필터 :{' '}
+          {paymentFilter === 'all'
+            ? '결제완료 + 미결제'
+            : paymentFilter === 'paid'
+            ? '결제완료'
+            : '미결제'}
+        </div>
         <CSVLink data={csvData} filename="applicationList.csv">
           <button
             style={{
@@ -124,7 +137,7 @@ const AdminCsvDownload = () => {
         </div>
       </div>
       <div>
-        {csvData.length > 0 && (
+        {csvDataKo.length > 0 && (
           <CsvToHtmlTable
             data={csvDataKo}
             csvDelimiter=","
