@@ -112,7 +112,13 @@ function PaymentInfo() {
                   idClick(application.id)
                 }}
               >
-                <td>{i + 1}</td>
+                <td>
+                  {i + 1}
+                  {application.CompetitionApplicationInfos.length > 4 &&
+                  application.isGroup === false
+                    ? ' (개인신청 4개 초과)'
+                    : ''}
+                </td>
                 <td>{application.User.kakaoName}</td>
                 <td>{application.User.UserInfo.fullName || 'NaN'}</td>
                 <td>{application.User.UserInfo.phoneNumber || 'NaN'}</td>
