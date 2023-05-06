@@ -29,8 +29,6 @@ function PaymentInfo() {
   const params = useParams() // ex) id: 1
 
   let competitionPayAmount //대회 총 결제 금액
-  let userPayAmount //유저별 결제 금액 합계
-  let userRealPayAmount //유저별 진짜 총 결제 금액 (할인적용)
 
   //서버에서 대회신청 상세정보 가져오기
   async function getCompetitionApplicationInfo() {
@@ -44,72 +42,50 @@ function PaymentInfo() {
   //요일 값 구하기
   function getDayOfWeek(날짜문자열) {
     //ex) getDayOfWeek('2022-06-13')
-
     const week = ['일', '월', '화', '수', '목', '금', '토']
-
     const dayOfWeek = week[new Date(날짜문자열).getDay()]
-
     return dayOfWeek
   }
 
   //신청대회 데이터 파싱
-  function parseApplication(application) {
-    let id = application.competition.id
-    let title = application.competition.title
+  function formatDate(dateString) {
+    return dateString.substr(0, 10).replace('-', '.').replace('-', '.')
+  }
 
-    let postUrl = application.competition.CompetitionPoster
-      ? application.competition.CompetitionPoster.imageUrl
+  function formatDateWithDay(dateString) {
+    const formattedDate = formatDate(dateString)
+    const dayOfWeek = getDayOfWeek(dateString)
+    return `${formattedDate}(${dayOfWeek})`
+  }
+
+  function parseApplication(application) {
+    const { competition } = application
+    const {
+      id,
+      title,
+      CompetitionPoster,
+      doreOpen,
+      location,
+      earlyBirdDeadline,
+      registrationDeadline,
+      applicantTableOpenDate,
+      tournamentTableOpenDate,
+    } = competition
+
+    const postUrl = CompetitionPoster
+      ? CompetitionPoster.imageUrl
       : samplePoster
-    let doreOpen = application.competition.doreOpen
-      .substr(0, 10)
-      .replace('-', '.')
-      .replace('-', '.')
-    let doreOpenDay = getDayOfWeek(application.competition.doreOpen)
-    let location = application.competition.location
-    let earlyBirdDeadline = application.competition.earlyBirdDeadline
-      .substr(0, 10)
-      .replace('-', '.')
-      .replace('-', '.')
-    let earlyBirdDeadlineDay = getDayOfWeek(
-      application.competition.earlyBirdDeadline
-    )
-    let registrationDeadline = application.competition.registrationDeadline
-      .substr(0, 10)
-      .replace('-', '.')
-      .replace('-', '.')
-    let registrationDeadlineDay = getDayOfWeek(
-      application.competition.registrationDeadline
-    )
-    let applicantTableOpenDate = application.competition.applicantTableOpenDate
-      .substr(0, 10)
-      .replace('-', '.')
-      .replace('-', '.')
-    let applicantTableOpenDateDay = getDayOfWeek(
-      application.competition.applicantTableOpenDate
-    )
-    let tournamentTableOpenDate =
-      application.competition.tournamentTableOpenDate
-        .substr(0, 10)
-        .replace('-', '.')
-        .replace('-', '.')
-    let tournamentTableOpenDateDay = getDayOfWeek(
-      application.competition.tournamentTableOpenDate
-    )
 
     return {
-      id: id,
-      title: title,
-      postUrl: postUrl,
-
-      doreOpen: doreOpen + '(' + doreOpenDay + ')',
-      location: location,
-      earlyBirdDeadline: earlyBirdDeadline + '(' + earlyBirdDeadlineDay + ')',
-      registrationDeadline:
-        registrationDeadline + '(' + registrationDeadlineDay + ')',
-      applicantTableOpenDate:
-        applicantTableOpenDate + '(' + applicantTableOpenDateDay + ')',
-      tournamentTableOpenDate:
-        tournamentTableOpenDate + '(' + tournamentTableOpenDateDay + ')',
+      id,
+      title,
+      postUrl,
+      doreOpen: formatDateWithDay(doreOpen),
+      location,
+      earlyBirdDeadline: formatDateWithDay(earlyBirdDeadline),
+      registrationDeadline: formatDateWithDay(registrationDeadline),
+      applicantTableOpenDate: formatDateWithDay(applicantTableOpenDate),
+      tournamentTableOpenDate: formatDateWithDay(tournamentTableOpenDate),
     }
   }
 
@@ -145,7 +121,15 @@ function PaymentInfo() {
                 <td>{application.competitionPayment.id}</td>
                 <td>{application.competitionPayment.orderId}</td>
               </tr>
-              {renderInsideCompetitionApplicationListInfo(application)}
+              {selectedRowIndex === application.id && (
+                <tr>
+                  <td colSpan="8">
+                    <Collapse isOpened={selectedRowIndex === application.id}>
+                      {renderInsideCompetitionApplicationListInfo(application)}
+                    </Collapse>
+                  </td>
+                </tr>
+              )}
             </React.Fragment>
           )
         })}
@@ -155,7 +139,6 @@ function PaymentInfo() {
 
   // 환불 버튼
   function refundButton(application) {
-    console.log(application)
     const confirmMessage =
       '정말로 다음 결제 정보로 환불하시겠습니까?\n' +
       `카카오이름: ${application.User.kakaoName}\n` +
@@ -177,9 +160,66 @@ function PaymentInfo() {
   }
 
   function renderInsideCompetitionApplicationListInfo(application) {
-    let normal = 0
-    let amount = 0
-    let discount = 0
+    const getTotalAmounts = info => {
+      let normal = info.priceTag.normal
+      let amount = info.priceTag.amount
+      let discount =
+        info.priceTag.earlyBird + info.priceTag.withGi + info.priceTag.withOther
+
+      return { normal, amount, discount }
+    }
+
+    const renderInfoTableRow = (info, i) => {
+      const { normal, amount, discount } = getTotalAmounts(info)
+
+      return (
+        <tr key={info.id}>
+          <td>{i + 1}</td>
+          <td>{info.playerName}</td>
+          <td>{info.playerBirth}</td>
+          <td>{info.gender === 'male' ? '남자' : '여자'}</td>
+          <td>{info.uniform === 'gi' ? '기' : '노기'}</td>
+          <td>{info.divisionName}</td>
+          <td>{info.belt}</td>
+          <td>{info.weight}kg</td>
+          <td>{amount}원</td>
+          <td>{normal}원</td>
+          <td>{discount}원</td>
+        </tr>
+      )
+    }
+
+    const renderPaymentInfo = application => {
+      let normal = 0
+      let amount = 0
+      let discount = 0
+
+      application.CompetitionApplicationInfos.forEach(info => {
+        const {
+          normal: infoNormal,
+          amount: infoAmount,
+          discount: infoDiscount,
+        } = getTotalAmounts(info)
+        normal += infoNormal
+        amount += infoAmount
+        discount += infoDiscount
+      })
+
+      return (
+        <div className="PaymentInfo_listInfoPay">
+          <h2>
+            결제가격 합 <span>{amount}원</span>
+          </h2>
+          <h2>
+            참가비 합 <span>{normal}원</span>
+          </h2>
+          <h2>
+            할인가격 합 <span>{discount}원</span>
+          </h2>
+          {refundButton(application)}
+        </div>
+      )
+    }
 
     return (
       <tr>
@@ -215,47 +255,11 @@ function PaymentInfo() {
                     <th>참가비</th>
                     <th>할인가격</th>
                   </tr>
-                  {application.CompetitionApplicationInfos.map((info, i) => {
-                    normal += info.priceTag.normal
-                    amount += info.priceTag.amount
-                    discount +=
-                      info.priceTag.earlyBird +
-                      info.priceTag.withGi +
-                      info.priceTag.withOther
-                    return (
-                      <tr key={info.id}>
-                        <td>{i + 1}</td>
-                        <td>{info.playerName}</td>
-                        <td>{info.playerBirth}</td>
-                        <td>{info.gender == 'male' ? '남자' : '여자'}</td>
-                        <td>{info.uniform == 'gi' ? '기' : '노기'}</td>
-                        <td>{info.divisionName}</td>
-                        <td>{info.belt}</td>
-                        <td>{info.weight}kg</td>
-                        <td>{info.priceTag.amount}원</td>
-                        <td>{info.priceTag.normal}원</td>
-                        <td>
-                          {info.priceTag.earlyBird +
-                            info.priceTag.withGi +
-                            info.priceTag.withOther}
-                          원
-                        </td>
-                      </tr>
-                    )
-                  })}
+                  {application.CompetitionApplicationInfos.map(
+                    renderInfoTableRow
+                  )}
                 </table>
-                <div className="PaymentInfo_listInfoPay">
-                  <h2>
-                    결제가격 합 <span>{amount}원</span>
-                  </h2>
-                  <h2>
-                    참가비 합 <span>{normal}원</span>
-                  </h2>
-                  <h2>
-                    할인가격 합 <span>{discount}원</span>
-                  </h2>
-                  {refundButton(application)}
-                </div>
+                {renderPaymentInfo(application)}
               </div>
             </animated.div>
           </Collapse>
