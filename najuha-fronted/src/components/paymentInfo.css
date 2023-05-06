@@ -28,18 +28,15 @@
 
 .PaymentInfo_list {
   width: auto;
-  padding-right: 2%;
-  border-right: 10px solid rgb(229, 229, 229);
 }
 
 .PaymentInfo_listInfo {
-  padding-left: 2%;
   width: auto;
 }
 
-/* 왼쪽 테이블 */
+/* 바깥쪽 테이블 */
 .PaymentInfo_list table {
-  width: 100%;
+  width: 1258px;
   border: 2px solid rgb(160, 195, 230);
   border-collapse: seperate;
   border-spacing: 20px 30px;
@@ -57,7 +54,7 @@
   padding: 10px;
 }
 
-/* 오른쪽 테이블 타이틀 */
+/* 내부 테이블 타이틀 */
 .PaymentInfo_wrapper h2 {
   font-size: 14px;
   color: #8c8c8c;
@@ -77,7 +74,7 @@
   margin-top: 0px;
 }
 
-/* 오른쪽 테이블 */
+/* 내부 테이블 */
 .PaymentInfo_listInfo table {
   width: 100%;
   border: 2px solid rgb(209, 209, 209);
@@ -102,7 +99,7 @@
   cursor: pointer;
 }
 
-/* 오른쪽 테이블 결제정보 */
+/* 내부 테이블 결제정보 */
 @media (max-width: 1049px) {
   /* Layout */
 
