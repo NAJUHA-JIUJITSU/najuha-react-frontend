@@ -280,6 +280,63 @@ function PaymentInfo() {
     getCompetitionApplicationInfo()
   }
 
+  function renderCompetitionInfo() {
+    function CompetitionInfoItem({ title, value }) {
+      return (
+        <div className="ProfileInfo_competition_date">
+          <h3>{title}</h3>
+          <p>{value}</p>
+        </div>
+      )
+    }
+
+    const infoItems = [
+      { title: '대회 날짜', value: competitionApplicationInfo.doreOpen },
+      { title: '대회 장소', value: competitionApplicationInfo.location },
+      {
+        title: '얼리버드 마감',
+        value: competitionApplicationInfo.earlyBirdDeadline,
+      },
+      {
+        title: '참가신청 마감',
+        value: competitionApplicationInfo.registrationDeadline,
+      },
+      {
+        title: '신청자 명단',
+        value: competitionApplicationInfo.applicantTableOpenDate,
+      },
+      {
+        title: '대진표 공개',
+        value: competitionApplicationInfo.tournamentTableOpenDate,
+      },
+    ]
+
+    return (
+      <div className="PaymentInfo_top">
+        <div className="ProfileInfo_title">
+          <h2>{competitionApplicationInfo.title}</h2>
+        </div>
+        <div className="ProfileInfo_competition">
+          <div className="ProfileInfo_competition_Left">
+            <img
+              src={competitionApplicationInfo.postUrl}
+              alt="대회포스터"
+            ></img>
+          </div>
+          <div className="ProfileInfo_competition_Right">
+            {infoItems.map(item => (
+              <CompetitionInfoItem
+                key={item.title}
+                title={item.title}
+                value={item.value}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   useEffect(() => {
     if (decodedToken) {
       // 레벨 1인 유저가 들어오면 다시 수정페이지로 리다이렉트
@@ -293,45 +350,7 @@ function PaymentInfo() {
 
   return (
     <div className="PaymentInfo_wrapper">
-      <div className="PaymentInfo_top">
-        <div className="ProfileInfo_title">
-          <h2>{competitionApplicationInfo.title}</h2>
-        </div>
-        <div className="ProfileInfo_competition">
-          <div className="ProfileInfo_competition_Left">
-            <img
-              src={competitionApplicationInfo.postUrl}
-              alt="대회포스터"
-            ></img>
-          </div>
-          <div className="ProfileInfo_competition_Right">
-            <div className="ProfileInfo_competition_date">
-              <h3>대회 날짜</h3>
-              <p>{competitionApplicationInfo.doreOpen}</p>
-            </div>
-            <div className="ProfileInfo_competition_date">
-              <h3>대회 장소</h3>
-              <p>{competitionApplicationInfo.location}</p>
-            </div>
-            <div className="ProfileInfo_competition_date">
-              <h3>얼리버드 마감</h3>
-              <p>{competitionApplicationInfo.earlyBirdDeadline}</p>
-            </div>
-            <div className="ProfileInfo_competition_date">
-              <h3>참가신청 마감</h3>
-              <p>{competitionApplicationInfo.registrationDeadline}</p>
-            </div>
-            <div className="ProfileInfo_competition_date">
-              <h3>신청자 명단</h3>
-              <p>{competitionApplicationInfo.applicantTableOpenDate}</p>
-            </div>
-            <div className="ProfileInfo_competition_date">
-              <h3>대진표 공개</h3>
-              <p>{competitionApplicationInfo.tournamentTableOpenDate}</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {renderCompetitionInfo()}
       <div className="PaymentInfo_bottom">
         <div className="PaymentInfo_list">
           <table>
