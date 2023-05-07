@@ -41,6 +41,10 @@ function Competition() {
   let todaytime = dayjs()
   const [userId, setUserId] = useState('')
 
+  const [decodedToken ,setDecodedToken] = useState('')
+  const nowTime = new Date()
+  let tokenTime = new Date(0)
+
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
   const restApiKey = process.env.REACT_APP_REST_API_KEY
@@ -155,11 +159,23 @@ function Competition() {
   }
 
   async function clickedLike(competitionId) {
+     //로그인 안한 상태 
     if (!userId) {
       alert('로그인이 필요합니다')
       window.location.href = kakaoAuthURL
       return
     }
+    //로그인 한 상태 + 토큰만료시간 지남
+    else {
+      tokenTime = new Date(decodedToken.exp * 1000) // 토큰만료시간
+      tokenTime.setMinutes(tokenTime.getMinutes() - 15) // 토큰만료시간에 15분 빼기
+      if (nowTime >= tokenTime) {
+        cookies.remove('x-access-token', { path: '/' })
+        alert('재로그인이 필요합니다.')
+        window.location.href = kakaoAuthURL
+      }
+    }
+    
     let res = await postLike(competitionId)
 
     if (res?.status === 200) {
@@ -199,6 +215,7 @@ function Competition() {
     // 로그인한 상태
     if (decodedToken) {
       setUserId(decodedToken.userId)
+      setDecodedToken(decodedToken)
     }
   }, [])
 
