@@ -137,3 +137,20 @@ export const deleteAdminCompetition = async id => {
     alert(`id :${id}대회가 삭제되었습니다.`)
   }
 }
+
+// 6.13 유저 대회신청 상세정보 수정
+export const patchAdminCompetitionApplicationInfo = async (id, data) => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competitionApplicationInfos/${id}`,
+      'patch',
+      data
+    )
+    alert(`id :${id}대회신청이 수정되었습니다.`)
+    return res
+  } catch (e) {
+    console.log(e)
+    alert(`id :${id}대회신청수정이 실패했습니다.\n${e.response.data.result}`)
+    throw e
+  }
+}

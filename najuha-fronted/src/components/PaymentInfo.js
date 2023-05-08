@@ -10,6 +10,7 @@ import samplePoster from '../src_assets/samplePoster.png'
 import {
   getAdminCompetitionApplicationList,
   deleteAdminApplicationPayment,
+  patchAdminCompetitionApplicationInfo,
 } from '../apis/api/admin'
 
 function PaymentInfo() {
@@ -25,6 +26,8 @@ function PaymentInfo() {
   const { decodedToken, isExpired } = useJwt(xAccessToken)
   const navigate = useNavigate()
   const [selectedRowIndex, setSelectedRowIndex] = useState(null)
+  const [editingRow, setEditingRow] = useState(null)
+  const [updatedValue, setUpdatedValue] = useState({})
 
   const params = useParams() // ex) id: 1
 
@@ -37,6 +40,37 @@ function PaymentInfo() {
       setCompetitionApplicationInfo(parseApplication(res.data.result))
       setCompetitionApplicationList(res.data.result.competitionApplications)
     }
+  }
+
+  const saveChangesApplicationInfo = async info => {
+    const updatedData = {
+      competitionId: params.id,
+      playerName: updatedValue.playerName || info.playerName,
+      playerBirth: updatedValue.playerBirth || info.playerBirth,
+      phoneNumber: updatedValue.phoneNumber || info.phoneNumber,
+      uniform: updatedValue.uniform || info.uniform,
+      gender: updatedValue.gender || info.gender,
+      divisionName: updatedValue.divisionName || info.divisionName,
+      belt: updatedValue.belt || info.belt,
+      weight: updatedValue.weight || info.weight,
+      team: updatedValue.team || info.team,
+    }
+
+    const res = await patchAdminCompetitionApplicationInfo(info.id, updatedData)
+
+    let tmp = [...competitionApplicationList]
+    for (let i = 0; i < tmp.length; i++) {
+      for (let j = 0; j < tmp[i].CompetitionApplicationInfos.length; j++) {
+        if (tmp[i].CompetitionApplicationInfos[j].id === info.id) {
+          tmp[i].CompetitionApplicationInfos[j] = res.data.result
+        }
+      }
+    }
+
+    setCompetitionApplicationList(tmp)
+
+    setUpdatedValue({})
+    setEditingRow(null)
   }
 
   //요일 값 구하기
@@ -158,7 +192,7 @@ function PaymentInfo() {
           if (window.confirm(confirmMessage))
             refund(application.competitionPayment.orderId)
         }}
-        style={{ color: 'red', marginLeft: '16px' }}
+        style={{ color: 'red', height: '30px', marginTop: '15px' }}
       >
         환불
       </button>
@@ -171,26 +205,178 @@ function PaymentInfo() {
       let amount = info.priceTag.amount
       let discount =
         info.priceTag.earlyBird + info.priceTag.withGi + info.priceTag.withOther
-
       return { normal, amount, discount }
     }
 
     const renderInfoTableRow = (info, i) => {
       const { normal, amount, discount } = getTotalAmounts(info)
+      const isEditing = editingRow === info.id
 
       return (
         <tr key={info.id}>
           <td>{i + 1}</td>
-          <td>{info.playerName}</td>
-          <td>{info.playerBirth}</td>
-          <td>{info.gender === 'male' ? '남자' : '여자'}</td>
-          <td>{info.uniform === 'gi' ? '기' : '노기'}</td>
-          <td>{info.divisionName}</td>
-          <td>{info.belt}</td>
-          <td>{info.weight}kg</td>
+          <td>
+            {editingRow === info.id ? (
+              <input
+                type="text"
+                value={
+                  updatedValue.playerName !== undefined
+                    ? updatedValue.playerName
+                    : info.playerName
+                }
+                onChange={e =>
+                  setUpdatedValue({
+                    ...updatedValue,
+                    playerName: e.target.value,
+                  })
+                }
+              />
+            ) : (
+              info.playerName
+            )}
+          </td>
+          <td>
+            {editingRow === info.id ? (
+              <input
+                type="text"
+                value={
+                  updatedValue.playerBirth !== undefined
+                    ? updatedValue.playerBirth
+                    : info.playerBirth
+                }
+                onChange={e =>
+                  setUpdatedValue({
+                    ...updatedValue,
+                    playerBirth: e.target.value,
+                  })
+                }
+              />
+            ) : (
+              info.playerBirth
+            )}
+          </td>
+          <td>
+            {editingRow === info.id ? (
+              <input
+                type="text"
+                value={
+                  updatedValue.gender !== undefined
+                    ? updatedValue.gender
+                    : info.gender
+                }
+                onChange={e =>
+                  setUpdatedValue({
+                    ...updatedValue,
+                    gender: e.target.value,
+                  })
+                }
+              />
+            ) : (
+              info.gender
+            )}
+          </td>
+          <td>
+            {editingRow === info.id ? (
+              <input
+                type="text"
+                value={
+                  updatedValue.uniform !== undefined
+                    ? updatedValue.uniform
+                    : info.uniform
+                }
+                onChange={e =>
+                  setUpdatedValue({
+                    ...updatedValue,
+                    uniform: e.target.value,
+                  })
+                }
+              />
+            ) : (
+              info.uniform
+            )}
+          </td>
+          <td>
+            {editingRow === info.id ? (
+              <input
+                type="text"
+                value={
+                  updatedValue.divisionName !== undefined
+                    ? updatedValue.divisionName
+                    : info.divisionName
+                }
+                onChange={e =>
+                  setUpdatedValue({
+                    ...updatedValue,
+                    divisionName: e.target.value,
+                  })
+                }
+              />
+            ) : (
+              info.divisionName
+            )}
+          </td>
+          <td>
+            {editingRow === info.id ? (
+              <input
+                type="text"
+                value={
+                  updatedValue.belt !== undefined
+                    ? updatedValue.belt
+                    : info.belt
+                }
+                onChange={e =>
+                  setUpdatedValue({
+                    ...updatedValue,
+                    belt: e.target.value,
+                  })
+                }
+              />
+            ) : (
+              info.belt
+            )}
+          </td>
+          <td>
+            {editingRow === info.id ? (
+              <input
+                type="text"
+                value={
+                  updatedValue.weight !== undefined
+                    ? updatedValue.weight
+                    : info.weight
+                }
+                onChange={e =>
+                  setUpdatedValue({
+                    ...updatedValue,
+                    weight: e.target.value,
+                  })
+                }
+              />
+            ) : (
+              info.weight
+            )}
+          </td>
           <td>{amount}원</td>
           <td>{normal}원</td>
           <td>{discount}원</td>
+          <td>
+            {isEditing ? (
+              <>
+                <button onClick={() => saveChangesApplicationInfo(info)}>
+                  저장
+                </button>
+                <button
+                  onClick={() => {
+                    setEditingRow(null)
+                    setUpdatedValue({})
+                  }}
+                >
+                  취소
+                </button>
+              </>
+            ) : (
+              <button onClick={() => setEditingRow(info.id)}>수정</button>
+            )}
+          </td>
         </tr>
       )
     }
@@ -253,13 +439,14 @@ function PaymentInfo() {
                     <th>선수명</th>
                     <th>생년월일</th>
                     <th>성별</th>
-                    <th>기/노기</th>
+                    <th>gi / no-gi</th>
                     <th>부문</th>
                     <th>벨트</th>
                     <th>체급</th>
                     <th>결제가격</th>
                     <th>참가비</th>
                     <th>할인가격</th>
+                    <th></th>
                   </tr>
                   {application.CompetitionApplicationInfos.map(
                     renderInfoTableRow

@@ -91,7 +91,12 @@
 .PaymentInfo_listInfo td,
 .PaymentInfo_listInfo th {
   border-bottom: 1px solid rgb(209, 209, 209);
-  padding: 10px;
+  padding: 5px;
+}
+
+.PaymentInfo_listInfo input {
+  width: 80px;
+  text-align: center;
 }
 
 .PaymentInfo_tableHover:hover {
