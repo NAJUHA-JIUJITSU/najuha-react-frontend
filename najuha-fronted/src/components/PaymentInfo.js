@@ -11,6 +11,7 @@ import {
   getAdminCompetitionApplicationList,
   deleteAdminApplicationPayment,
   patchAdminCompetitionApplicationInfo,
+  patchAdminCompetitionApplicationPaymentStatus,
 } from '../apis/api/admin'
 
 function PaymentInfo() {
@@ -28,14 +29,18 @@ function PaymentInfo() {
   const [selectedRowIndex, setSelectedRowIndex] = useState(null)
   const [editingRow, setEditingRow] = useState(null)
   const [updatedValue, setUpdatedValue] = useState({})
+  const [paymentFilter, setPaymentFilter] = useState(true)
 
   const params = useParams() // ex) id: 1
 
   let competitionPayAmount //대회 총 결제 금액
 
   //서버에서 대회신청 상세정보 가져오기
-  async function getCompetitionApplicationInfo() {
-    const res = await getAdminCompetitionApplicationList(params.id)
+  async function getCompetitionApplicationInfo(paymentFilter) {
+    const res = await getAdminCompetitionApplicationList(
+      params.id,
+      paymentFilter
+    )
     if (res) {
       setCompetitionApplicationInfo(parseApplication(res.data.result))
       setCompetitionApplicationList(res.data.result.competitionApplications)
@@ -71,6 +76,16 @@ function PaymentInfo() {
 
     setUpdatedValue({})
     setEditingRow(null)
+  }
+
+  const changePaymentStatus = async (id, isPayment) => {
+    const res = await patchAdminCompetitionApplicationPaymentStatus(
+      id,
+      isPayment
+    )
+    if (res) {
+      getCompetitionApplicationInfo(paymentFilter)
+    }
   }
 
   //요일 값 구하기
@@ -137,7 +152,7 @@ function PaymentInfo() {
     return (
       <tbody>
         {competitionApplicationList.map((application, i) => {
-          competitionPayAmount += application.competitionPayment.amount
+          competitionPayAmount += application?.competitionPayment?.amount || 0
           return (
             <React.Fragment key={application.id}>
               <tr
@@ -157,9 +172,9 @@ function PaymentInfo() {
                 <td>{application.User.UserInfo.fullName || 'NaN'}</td>
                 <td>{application.User.UserInfo.phoneNumber || 'NaN'}</td>
                 <td>{application.isGroup ? '단체' : '개인'}</td>
-                <td>{application.competitionPayment.amount}</td>
-                <td>{application.competitionPayment.id}</td>
-                <td>{application.competitionPayment.orderId}</td>
+                <td>{application?.competitionPayment?.amount || 'NaN'}</td>
+                <td>{application?.competitionPayment?.id || 'NaN'}</td>
+                <td>{application?.competitionPayment?.orderId || 'NaN'}</td>
               </tr>
               {selectedRowIndex === application.id && (
                 <tr>
@@ -183,14 +198,14 @@ function PaymentInfo() {
       '정말로 다음 결제 정보로 환불하시겠습니까?\n' +
       `카카오이름: ${application.User.kakaoName}\n` +
       `프로필이름: ${application.User.UserInfo.fullName}\n` +
-      `결제 ID: ${application.competitionPayment.id}\n` +
-      `결제 금액: ${application.competitionPayment.amount}원`
+      `결제 ID: ${application?.competitionPayment?.id}\n` +
+      `결제 금액: ${application?.competitionPayment?.amount}원`
 
     return (
       <button
         onClick={() => {
           if (window.confirm(confirmMessage))
-            refund(application.competitionPayment.orderId)
+            refund(application?.competitionPayment?.orderId)
         }}
         style={{ color: 'red', height: '30px', marginTop: '15px' }}
       >
@@ -199,12 +214,32 @@ function PaymentInfo() {
     )
   }
 
+  // 결제상태 변경버튼
+  function changePaymentStatusButton(application) {
+    const confirmMessage =
+      '정말로 다음 결제 정보로 변경하시겠습니까?\n' +
+			`applicationid: ${application.id}\n`
+			
+    return (
+      <button
+        onClick={() => {
+          if (window.confirm(confirmMessage))
+            changePaymentStatus(application.id, true)
+        }}
+      >
+        결제완료 상태로 변경
+      </button>
+    )
+  }
+
   function renderInsideCompetitionApplicationListInfo(application) {
     const getTotalAmounts = info => {
-      let normal = info.priceTag.normal
-      let amount = info.priceTag.amount
+      let normal = info?.priceTag?.normal
+      let amount = info?.priceTag?.amount
       let discount =
-        info.priceTag.earlyBird + info.priceTag.withGi + info.priceTag.withOther
+        info?.priceTag?.earlyBird +
+        info?.priceTag?.withGi +
+        info?.priceTag?.withOther
       return { normal, amount, discount }
     }
 
@@ -355,9 +390,9 @@ function PaymentInfo() {
               info.weight
             )}
           </td>
-          <td>{amount}원</td>
-          <td>{normal}원</td>
-          <td>{discount}원</td>
+          <td>{amount || 0}원</td>
+          <td>{normal || 0}원</td>
+          <td>{discount || 0}원</td>
           <td>
             {isEditing ? (
               <>
@@ -392,9 +427,9 @@ function PaymentInfo() {
           amount: infoAmount,
           discount: infoDiscount,
         } = getTotalAmounts(info)
-        normal += infoNormal
-        amount += infoAmount
-        discount += infoDiscount
+        normal += infoNormal || 0
+        amount += infoAmount || 0
+        discount += infoDiscount || 0
       })
 
       return (
@@ -408,7 +443,9 @@ function PaymentInfo() {
           <h2>
             할인가격 합 <span>{discount}원</span>
           </h2>
-          {refundButton(application)}
+          {paymentFilter
+            ? refundButton(application)
+            : changePaymentStatusButton(application)}
         </div>
       )
     }
@@ -464,7 +501,7 @@ function PaymentInfo() {
   //환불 함수
   async function refund(orderId) {
     await deleteAdminApplicationPayment(orderId)
-    getCompetitionApplicationInfo()
+    getCompetitionApplicationInfo(paymentFilter)
   }
 
   function renderCompetitionInfo() {
@@ -532,12 +569,28 @@ function PaymentInfo() {
         navigate('/UserInfopage')
       }
     }
-    getCompetitionApplicationInfo()
+    getCompetitionApplicationInfo(true)
   }, [decodedToken])
+
+  const paymentFilterHandler = () => {
+    setPaymentFilter(!paymentFilter)
+    getCompetitionApplicationInfo(!paymentFilter)
+    setEditingRow(null)
+    setUpdatedValue({})
+    setSelectedRowIndex(null)
+  }
 
   return (
     <div className="PaymentInfo_wrapper">
       {renderCompetitionInfo()}
+      <div>
+        <button
+          style={{ fontSize: '50px' }}
+          onClick={() => paymentFilterHandler()}
+        >
+          {paymentFilter ? '결제완료' : '미결제'}
+        </button>
+      </div>
       <div className="PaymentInfo_bottom">
         <div className="PaymentInfo_list">
           <table>
