@@ -30,10 +30,13 @@ export const patchAdminCompetition = async (id, data) => {
 }
 
 // 6.4 대회신청전체목록 조회
-export const getAdminCompetitionApplicationList = async competitionId => {
+export const getAdminCompetitionApplicationList = async (
+  competitionId,
+  paymentFilter
+) => {
   try {
     const res = await axiosApiWithToken(
-      `/admin/competitions/${competitionId}/competitionApplications`,
+      `/admin/competitions/${competitionId}/competitionApplications?paymentFilter=${paymentFilter}`,
       'get'
     )
     return res
@@ -151,6 +154,27 @@ export const patchAdminCompetitionApplicationInfo = async (id, data) => {
   } catch (e) {
     console.log(e)
     alert(`id :${id}대회신청수정이 실패했습니다.\n${e.response.data.result}`)
+    throw e
+  }
+}
+
+// 6.14 유저 대회신청 결제상태 수정
+export const patchAdminCompetitionApplicationPaymentStatus = async (
+  id,
+  isPayment
+) => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competitionApplications/${id}/isPayment/${isPayment}`,
+      'patch'
+    )
+    alert(`id :${id}대회신청 결제상태가 수정되었습니다.`)
+    return res
+  } catch (e) {
+    console.log(e)
+    alert(
+      `id :${id}대회신청 결제상태 수정이 실패했습니다.\n${e.response.data.result}`
+    )
     throw e
   }
 }
