@@ -50,7 +50,9 @@ function PaymentInfo() {
   const saveChangesApplicationInfo = async info => {
     const updatedData = {
       competitionId: params.id,
+      team: updatedValue.team || info.team,
       playerName: updatedValue.playerName || info.playerName,
+      phoneNumber: updatedValue.phoneNumber || info.phoneNumber,
       playerBirth: updatedValue.playerBirth || info.playerBirth,
       phoneNumber: updatedValue.phoneNumber || info.phoneNumber,
       uniform: updatedValue.uniform || info.uniform,
@@ -218,8 +220,8 @@ function PaymentInfo() {
   function changePaymentStatusButton(application) {
     const confirmMessage =
       '정말로 다음 결제 정보로 변경하시겠습니까?\n' +
-			`applicationid: ${application.id}\n`
-			
+      `applicationid: ${application.id}\n`
+
     return (
       <button
         onClick={() => {
@@ -255,6 +257,26 @@ function PaymentInfo() {
               <input
                 type="text"
                 value={
+                  updatedValue.team !== undefined
+                    ? updatedValue.team
+                    : info.team
+                }
+                onChange={e =>
+                  setUpdatedValue({
+                    ...updatedValue,
+                    team: e.target.value,
+                  })
+                }
+              />
+            ) : (
+              info.team
+            )}
+          </td>
+          <td>
+            {editingRow === info.id ? (
+              <input
+                type="text"
+                value={
                   updatedValue.playerName !== undefined
                     ? updatedValue.playerName
                     : info.playerName
@@ -268,6 +290,26 @@ function PaymentInfo() {
               />
             ) : (
               info.playerName
+            )}
+          </td>
+          <td>
+            {editingRow === info.id ? (
+              <input
+                type="text"
+                value={
+                  updatedValue.phoneNumber !== undefined
+                    ? updatedValue.phoneNumber
+                    : info.phoneNumber
+                }
+                onChange={e =>
+                  setUpdatedValue({
+                    ...updatedValue,
+                    phoneNumber: e.target.value,
+                  })
+                }
+              />
+            ) : (
+              info.phoneNumber
             )}
           </td>
           <td>
@@ -456,24 +498,12 @@ function PaymentInfo() {
           <Collapse isOpened={selectedRowIndex === application.id}>
             <animated.div>
               <div className="PaymentInfo_listInfo">
-                <div className="PaymentInfo_listInfoTitle">
-                  <h2>
-                    팀 이름
-                    <span>
-                      {application.CompetitionApplicationInfos[0].team}
-                    </span>
-                  </h2>
-                  <h2>
-                    대표번호
-                    <span>
-                      {application.CompetitionApplicationInfos[0].phoneNumber}
-                    </span>
-                  </h2>
-                </div>
                 <table>
                   <tr>
                     <th>No.</th>
+                    <th>팀 이름</th>
                     <th>선수명</th>
+                    <th>전화번호</th>
                     <th>생년월일</th>
                     <th>성별</th>
                     <th>gi / no-gi</th>
