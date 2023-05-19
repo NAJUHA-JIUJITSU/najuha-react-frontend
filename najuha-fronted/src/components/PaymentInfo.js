@@ -30,6 +30,7 @@ function PaymentInfo() {
   const [editingRow, setEditingRow] = useState(null)
   const [updatedValue, setUpdatedValue] = useState({})
   const [paymentFilter, setPaymentFilter] = useState(true)
+  const [openAll, setOpenAll] = useState(false)
 
   const params = useParams() // ex) id: 1
 
@@ -178,10 +179,12 @@ function PaymentInfo() {
                 <td>{application?.competitionPayment?.id || 'NaN'}</td>
                 <td>{application?.competitionPayment?.orderId || 'NaN'}</td>
               </tr>
-              {selectedRowIndex === application.id && (
+              {(selectedRowIndex === application.id || openAll) && (
                 <tr>
                   <td colSpan="8">
-                    <Collapse isOpened={selectedRowIndex === application.id}>
+                    <Collapse
+                      isOpened={selectedRowIndex === application.id || openAll}
+                    >
                       {renderInsideCompetitionApplicationListInfo(application)}
                     </Collapse>
                   </td>
@@ -495,7 +498,7 @@ function PaymentInfo() {
     return (
       <tr>
         <td colSpan="8">
-          <Collapse isOpened={selectedRowIndex === application.id}>
+          <Collapse isOpened={selectedRowIndex === application.id || openAll}>
             <animated.div>
               <div className="PaymentInfo_listInfo">
                 <table>
@@ -615,10 +618,16 @@ function PaymentInfo() {
       {renderCompetitionInfo()}
       <div>
         <button
-          style={{ fontSize: '50px' }}
+          style={{ margin: '10px', fontSize: '50px' }}
           onClick={() => paymentFilterHandler()}
         >
           {paymentFilter ? '결제완료' : '미결제'}
+        </button>
+        <button
+          style={{ margin: '10px', fontSize: '50px' }}
+          onClick={() => setOpenAll(!openAll)}
+        >
+          {openAll ? '전체닫기' : '전체열기'}
         </button>
       </div>
       <div className="PaymentInfo_bottom">
