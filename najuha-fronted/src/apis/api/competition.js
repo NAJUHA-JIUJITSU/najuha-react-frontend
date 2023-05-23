@@ -60,3 +60,15 @@ export const getCompetitionApplicationList = async competitionId => {
     handleError(e)
   }
 }
+
+export const getCompetitionBrackets = async competitionId => {
+  try {
+    const res = await axiosApiWithToken(
+      `/competitions/${competitionId}/brackets`,
+      'get'
+    )
+    return res
+  } catch (e) {
+    handleError(e)
+  }
+}

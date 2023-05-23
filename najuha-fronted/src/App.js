@@ -24,6 +24,7 @@ import AdminCompetitionImagePage from './pages/AdminCompetitionImagePage'
 import AdminCsvDownload from './components/AdminCsvDownload'
 import AdminCompetitionInfoPage from './pages/AdminCompetitionInfoPage'
 import CompetitionApplicantListPage from './pages/CompetitionApplicantListPage'
+import CompetitionBracketPage from './pages/CompetitionBracketPage'
 import Error404Page from './pages/Error404Page'
 import Error500Page from './pages/Error500Page'
 
@@ -55,6 +56,7 @@ function App() {
     null,
     null
   )
+  const AuthCompetitionBracketPage = Auth(CompetitionBracketPage, null, null)
   const AuthAdmincompetition = Auth(Admincompetition, true, true, true)
   const AuthCompetitionInfoPage = Auth(
     AdminCompetitionInfoPage,
@@ -142,6 +144,10 @@ function App() {
           <Route
             path="/competition/:id/applicant"
             element={<AuthCompetitionApplicantListPage />}
+          />
+          <Route
+            path="/competition/:id/bracket"
+            element={<AuthCompetitionBracketPage />}
           />
 
           <Route path="/*" element={<AuthError404Page />} />
