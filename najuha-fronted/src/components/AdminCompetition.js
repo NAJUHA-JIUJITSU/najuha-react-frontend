@@ -16,6 +16,7 @@ function AdminCompetition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
   const [inDate, setInDate] = useState(false)
   const [isApplicantTableOpen, setIsApplicantTableOpen] = useState(false)
+  const [isBracketOpen, setIsBracketOpen] = useState(false)
   const [competition, setCompetition] = useState(null)
   const [viewCompetition, setViewCompetition] = useState({
     id: null,
@@ -151,6 +152,14 @@ function AdminCompetition() {
     }
   }
 
+  function bracketOpenCheck(tournamentTableOpenDate) {
+    let opendate = dayjs(tournamentTableOpenDate, 'YYYY-MM-DD')
+    let openDiff = todaytime.diff(opendate, 'm')
+    if (openDiff >= 0) {
+      setIsBracketOpen(true)
+    }
+  }
+
   async function clickedLike(competitionId) {
     if (!userId) {
       alert('로그인이 필요합니다')
@@ -204,6 +213,7 @@ function AdminCompetition() {
       competitionParsing(competition)
       dateCheck(competition.registrationDate, competition.registrationDeadline)
       applicantTableOpenCheck(competition.applicantTableOpenDate)
+      bracketOpenCheck(competition.tournamentTableOpenDate)
       setMarkdown(competition.information)
     }
   }, [competition])
@@ -304,6 +314,18 @@ function AdminCompetition() {
           </div>
         </div>
         <div className="competition-top-buttons">
+          {isBracketOpen && competition.isPartnership === true ? (
+            <button
+              id="competition-top-button1"
+              onClick={() => {
+                navigate(`/competition/${competition.id}/bracket`)
+              }}
+            >
+              대진표
+            </button>
+          ) : (
+            ''
+          )}
           {isApplicantTableOpen && competition.isPartnership === true ? (
             <button
               id="competition-top-button2"
