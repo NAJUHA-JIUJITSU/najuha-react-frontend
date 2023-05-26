@@ -87,8 +87,10 @@ function CompetitionBracket() {
     let filtered = []
 
     const filter = JSON.parse(JSON.stringify(copyCompetitionApplication))
-    filter.gender = filter.gender === 'male' ? '남자' : '여자'
-    filter.uniform = filter.uniform === 'gi' ? '기' : '노기'
+
+    if (filter.gender)
+      filter.gender = filter.gender === 'male' ? '남자' : '여자'
+    if (filter.uniform) filter.uniform = filter.uniform === 'gi' ? '기' : '노기'
 
     for (let b of brackets) {
       if (
