@@ -178,3 +178,19 @@ export const patchAdminCompetitionApplicationPaymentStatus = async (
     throw e
   }
 }
+
+// 6.16 대회 포스터 이미지 업로드, 수정
+export const postAdminCompetitionBracket = async (id, data) => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competitions/${id}/brackets`,
+      'post',
+      data
+    )
+    alert('대회대진표가 등록되었습니다.')
+    return res
+  } catch (e) {
+    console.log(e)
+    alert('대회대진표 등록이 실패하였습니다.')
+  }
+}

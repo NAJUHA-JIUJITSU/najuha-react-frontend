@@ -16,6 +16,7 @@ function Competition() {
   const [week, setWeek] = useState(['일', '월', '화', '수', '목', '금', '토'])
   const [inDate, setInDate] = useState(false)
   const [isApplicantTableOpen, setIsApplicantTableOpen] = useState(false)
+  const [isBracketOpen, setIsBracketOpen] = useState(false)
   const [competition, setCompetition] = useState(null)
   const [viewCompetition, setViewCompetition] = useState({
     id: null,
@@ -41,7 +42,7 @@ function Competition() {
   let todaytime = dayjs()
   const [userId, setUserId] = useState('')
 
-  const [decodedToken ,setDecodedToken] = useState('')
+  const [decodedToken, setDecodedToken] = useState('')
   const nowTime = new Date()
   let tokenTime = new Date(0)
 
@@ -158,8 +159,16 @@ function Competition() {
     }
   }
 
+  function bracketOpenCheck(tournamentTableOpenDate) {
+    let opendate = dayjs(tournamentTableOpenDate, 'YYYY-MM-DD')
+    let openDiff = todaytime.diff(opendate, 'm')
+    if (openDiff >= 0) {
+      setIsBracketOpen(true)
+    }
+  }
+
   async function clickedLike(competitionId) {
-     //로그인 안한 상태 
+    //로그인 안한 상태
     if (!userId) {
       alert('로그인이 필요합니다')
       window.location.href = kakaoAuthURL
@@ -175,7 +184,7 @@ function Competition() {
         window.location.href = kakaoAuthURL
       }
     }
-    
+
     let res = await postLike(competitionId)
 
     if (res?.status === 200) {
@@ -224,6 +233,7 @@ function Competition() {
       competitionParsing(competition)
       dateCheck(competition.registrationDate, competition.registrationDeadline)
       applicantTableOpenCheck(competition.applicantTableOpenDate)
+      bracketOpenCheck(competition.tournamentTableOpenDate)
       setMarkdown(competition.information)
     }
   }, [competition])
@@ -235,7 +245,8 @@ function Competition() {
           <h2>{viewCompetition.title}</h2>
           <div
             className="each-competition-body-like competition-top-like"
-            onClick={() => clickedLike(viewCompetition.id)}>
+            onClick={() => clickedLike(viewCompetition.id)}
+          >
             <img src={viewCompetition.likeImg}></img>
             <p>{viewCompetition.likeCount}</p>
           </div>
@@ -266,11 +277,13 @@ function Competition() {
                 <p>{viewCompetition ? viewCompetition.location : ''}</p>
                 <div
                   className="competition-top-content-copy"
-                  onClick={copyToClipboard}>
+                  onClick={copyToClipboard}
+                >
                   <img
                     src={copy}
                     alt="복사하기"
-                    className="competition-top-content-copyIcon"></img>
+                    className="competition-top-content-copyIcon"
+                  ></img>
                   <span>복사</span>
                 </div>
               </div>
@@ -307,7 +320,8 @@ function Competition() {
             </div>
             <div
               id="competition-top-content-info-each-last"
-              className="competition-top-content-info-each">
+              className="competition-top-content-info-each"
+            >
               <h3>대진표 공개</h3>
               <p>
                 {viewCompetition.tournamentTableOpenDate !== null
@@ -320,12 +334,25 @@ function Competition() {
           </div>
         </div>
         <div className="competition-top-buttons">
+          {isBracketOpen && competition.isPartnership === true ? (
+            <button
+              id="competition-top-button1"
+              onClick={() => {
+                navigate(`/competition/${competition.id}/bracket`)
+              }}
+            >
+              대진표
+            </button>
+          ) : (
+            ''
+          )}
           {isApplicantTableOpen && competition.isPartnership === true ? (
             <button
               id="competition-top-button2"
               onClick={() => {
                 navigate(`/competition/${competition.id}/applicant`)
-              }}>
+              }}
+            >
               참가자 명단
             </button>
           ) : (
@@ -337,7 +364,8 @@ function Competition() {
                 id="competition-top-button1"
                 onClick={() => {
                   navigate(`/competition/applymethod/${competition.id}`)
-                }}>
+                }}
+              >
                 대회 신청
               </button>
             ) : (
@@ -348,7 +376,8 @@ function Competition() {
               id="competition-top-button1"
               onClick={() => {
                 window.location.href = competition.nonPartnershipPageLink
-              }}>
+              }}
+            >
               대회 신청
             </button>
           )}
