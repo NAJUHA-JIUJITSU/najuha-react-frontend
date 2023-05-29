@@ -1,14 +1,30 @@
 import React, { useEffect } from 'react'
 import './applymodal.css'
 import blackX from '../src_assets/blackX.svg'
+import { a } from 'react-spring'
 
 function ApplyModal(props) {
   function closeModal() {
     props.closeModal()
   }
 
-  function register(e) {
+  //신청하기 누르면 개인정보 [0]번째껄로 통일시켜주기 fix_수정한뒤결제하기시생기는버그고치는함수_okhan
+  const makePlayerInfoSameBeforeRegister = async () => {
+    await props.changePlayerName(
+      props.viewcompetitionApplicationList[0].playerName
+    )
+    await props.changePlayerBirth(
+      props.viewcompetitionApplicationList[0].playerBirth
+    )
+    await props.changephoneNumber(
+      props.viewcompetitionApplicationList[0].phoneNumber
+    )
+    await props.changeTeam(props.viewcompetitionApplicationList[0].team)
+  }
+
+  async function register(e) {
     e.preventDefault()
+    await makePlayerInfoSameBeforeRegister()
     props.postCompetition()
   }
   useEffect(() => {
