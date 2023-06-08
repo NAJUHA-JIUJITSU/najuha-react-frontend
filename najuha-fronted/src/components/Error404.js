@@ -9,7 +9,7 @@ function Error404() {
       <div className="Error_card">
         <h1>NAJUHA</h1>
 
-        <p>404 Error</p>
+        <p className="Error_num">404 Error</p>
 
         <h2>원하시는 페이지를 찾을 수 없습니다.</h2>
         <h3>
@@ -23,7 +23,7 @@ function Error404() {
           onClick={() => {
             navigate('/')
           }}>
-          메인으로
+          홈으로 이동
         </button>
       </div>
     </div>
