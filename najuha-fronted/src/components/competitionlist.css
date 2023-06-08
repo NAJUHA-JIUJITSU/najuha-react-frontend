@@ -381,6 +381,92 @@
   cursor: pointer !important;
 }
 
+/* 필터 체크박스 디자인 */
+.competition-filter {
+  /* margin-top: 2px; */
+  margin-bottom: 10px;
+  height: 40px;
+  
+  overflow: auto;
+  white-space: nowrap;
+}
+.competition-filter::-webkit-scrollbar{
+  display: none; 
+}
+
+.competition-filter label {
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.competition-filter label input[type="checkbox"] {
+  display: none ;
+}
+
+.competition-filter label span {
+  position: relative;
+  display: inline-block;
+  padding: 10px 12px;
+  color: #999999; 
+  border-radius: 50px;
+  border: 1px solid #E4E4E4;
+  font-size: 15px;
+  transition: 0.1s;
+  user-select: none;
+  overflow: hidden ;
+}
+
+/* 신청가능 */
+.filter-active{
+  background-color: #F3F7FF;
+}
+.competition-filter label input[type="checkbox"][value="active"]:checked ~ span {
+  border: 1px solid #4E82E5;
+  color: #4E82E5;
+}
+
+/* 얼리버드 */
+.filter-early{
+  background-color: #FFF3F3;
+}
+.competition-filter label input[type="checkbox"][value="early"]:checked ~ span {
+  border: 1px solid #FF5F5F;
+  color: #FF5F5F;
+}
+
+/* 간편결제 */
+.filter-easypay{
+  background-color: #FAEDFF;
+}
+.competition-filter label input[type="checkbox"][value="easypay"]:checked ~ span {
+  border: 1px solid #BE4EE5;
+  color: #BE4EE5;
+}
+
+/* 내 좋아요 */
+.filter-likes{
+  background-color: #FFFFFF;
+}
+.competition-filter label .filter-likes {
+  padding: 9px 12px;
+}
+
+.filter-likes img {
+  width: 14px;
+  height: 14px;
+  transition: 0.1s;
+  opacity: 0.5;
+}
+.competition-filter label input[type="checkbox"][value="likes"]:checked ~ span {
+  border: 1px solid #101010;
+  color: #101010;
+}
+.competition-filter label input[type="checkbox"][value="likes"]:checked ~ span img {
+  opacity: 1;
+}
+
+
+
 @media (max-width: 1049px) {
   /* Layout */
   .competition-schedule-wrapper {
@@ -438,6 +524,10 @@
 
   .competition-searchzone-option ul {
     width: 85px;
+  }
+
+  .competition-filter label {
+    margin-right: 6px;
   }
 
   /* 모바일 카드 크기 줄여보기 */
