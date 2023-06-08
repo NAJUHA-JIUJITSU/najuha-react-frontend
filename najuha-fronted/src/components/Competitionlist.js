@@ -47,6 +47,7 @@ function Competitionlist() {
   const [activeMonth, setActiveMonth] = useState(0)
   const [activeLocation, setActiveLocation] = useState(0)
   const [userId, setUserId] = useState('')
+  const [filters, setFilters] = useState([]); // 사용자가 선택한 필터 조건들
 
   const offsetRef = useRef()
   const locationRef = useRef()
@@ -336,7 +337,7 @@ function Competitionlist() {
       .replace('-', '.')
     let year = competition.registrationDeadline.substr(0, 4)
     let displayNone = year === '2030' ? true : false
-
+    console.log('여기'+competition)
     return {
       id: competition.id,
       title: competition.title,
@@ -362,8 +363,76 @@ function Competitionlist() {
     }
   }
 
+  //대회 필터해주는 함수
+  const getFilteredAndSortedCompetitions = (competitions) => {
+    // 필터 적용
+    let filteredCompetitions = competitions
+
+    // 선택된 필터 조건들을 모두 적용
+    filters.forEach((filter) => {
+      //신청가능 필터
+      if (filter === 'active') {
+        filteredCompetitions = filteredCompetitions.filter((competition) => {
+          // 마감기한 조건에 따라 필터링
+          const currentDate = new Date();
+          const deadlineDate = new Date(competition.registrationDeadline);
+
+          // currentDate와 deadlineDate 비교하여 필터링 조건을 설정합니다.
+          // 예를 들어, currentDate가 deadlineDate보다 이전인 경우에만 true를 반환하도록 설정합니다.
+          return currentDate <= deadlineDate;
+        });
+      }
+      //얼리버드 필터
+      else if (filter === 'early') {
+        filteredCompetitions = filteredCompetitions.filter((competition) => {
+          // 얼리버드 여부 
+          const currentDate = new Date();
+          const deadlineDate = new Date(competition.earlyBirdDeadline);
+
+          // currentDate와 deadlineDate 비교하여 필터링 조건을 설정합니다.
+          // 예를 들어, currentDate가 deadlineDate보다 이전인 경우에만 true를 반환하도록 설정합니다.
+          return currentDate <= deadlineDate;
+        });
+      }
+      //간편결제 필터 
+      else if (filter === 'easypay') {
+        filteredCompetitions = filteredCompetitions.filter((competition) => {
+          // 파트너십 여부
+          return competition.isPartnership
+        });
+      }
+      //내 좋아요 필터 
+      else if (filter === 'likes') {
+        // 사용자가 로그인하지 않은 경우, 좋아요 체크하지 않음
+        if (!userId) {
+            alert('로그인이 필요합니다')
+            window.location.href = kakaoAuthURL
+            return false
+        } else {
+            tokenTime = new Date(decodedToken.exp * 1000) // 토큰만료시간
+            tokenTime.setMinutes(tokenTime.getMinutes() - 15) // 토큰만료시간에 15분 빼기
+            if (nowTime >= tokenTime) {
+              cookies.remove('x-access-token', { path: '/' })
+              alert('재로그인이 필요합니다.')
+              window.location.href = kakaoAuthURL
+              return false
+            }
+        }
+
+        filteredCompetitions = filteredCompetitions.filter((competition) => {
+          // 대회의 CompetitionLikes 배열에서 현재 사용자의 ID와 일치하는 객체를 찾아서 좋아요 여부를 반환
+          return competition.CompetitionLikes.some((like) => like.userId === userId);
+        });
+      }
+    });
+
+    return filteredCompetitions;
+  }
+
   function renderCompetitionList() {
-    return competitions.map((competition, i) => {
+    let filteredCompetitions = getFilteredAndSortedCompetitions(competitions)
+
+    return filteredCompetitions.map((competition, i) => {
       let curcompetition = competitionParsing(competition)
 
       let cardGray = competitionCardGray(
@@ -459,6 +528,17 @@ function Competitionlist() {
       listRefresh()
     }
   }
+
+  // 필터 목록 변경
+  const handleFilter = (condition) => {
+    if (filters.includes(condition)) {
+      // 이미 선택된 필터인 경우, 해당 필터를 해제
+      setFilters(filters.filter((filter) => filter !== condition));
+    } else {
+      // 선택되지 않은 필터인 경우, 해당 필터를 추가
+      setFilters([...filters, condition]);
+    }
+  };
 
   return (
     <div className="competition-schedule-wrapper">
@@ -566,6 +646,44 @@ function Competitionlist() {
             }}
           />
         </div>
+      </div>
+      <div className="competition-filter">
+        <label>
+          <input
+            type="checkbox"
+            value="active"
+            checked={filters.includes('active')}
+            onChange={() => handleFilter('active')}
+          />
+          <span className='filter-active'>신청가능</span>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            value="early"
+            checked={filters.includes('early')}
+            onChange={() => handleFilter('early')}
+          />
+            <span className='filter-early'>얼리버드</span>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            value="easypay"
+            checked={filters.includes('easypay')}
+            onChange={() => handleFilter('easypay')}
+          />
+            <span className='filter-easypay'>간편결제</span>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            value="likes"
+            checked={filters.includes('likes')}
+            onChange={() => handleFilter('likes')}
+          />
+             <span className='filter-likes'>좋아요 <img src={likeFull}></img></span>
+        </label>
       </div>
       <div className="competition-list">
         <ul className="competition-row">
