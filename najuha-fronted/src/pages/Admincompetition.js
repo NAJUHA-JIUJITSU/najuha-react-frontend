@@ -2,22 +2,12 @@ import React from 'react'
 import uuid from 'react-uuid'
 import { useNavigate } from 'react-router-dom'
 import AdminCompetitionlist from '../components/AdminCompetitionlist'
+import AdminDashBoard from '../components/AdminDashBoard/AdminDashBoard'
 
 function Admincompetition() {
-  let navigate = useNavigate()
-  const createCompetition = () => {
-    const id = uuid()
-
-    navigate('/Admincompetition/' + id)
-  }
-
   return (
     <div>
-      <button
-        onClick={createCompetition}
-        style={{ width: '100%', height: '16vh', background: 'green' }}>
-        대회등록
-      </button>
+      <AdminDashBoard />
       <AdminCompetitionlist />
     </div>
   )

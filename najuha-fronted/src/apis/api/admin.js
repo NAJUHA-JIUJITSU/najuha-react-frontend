@@ -194,3 +194,23 @@ export const postAdminCompetitionBracket = async (id, data) => {
     alert('대회대진표 등록이 실패하였습니다.')
   }
 }
+
+// 6.17 대회 리스트 조회수 조회
+export const getAdminCompetitionListViewCnt = async () => {
+  try {
+    const res = await axiosApiWithToken(`/admin/competitionListViewCnt`, 'get')
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+// 6.18 회원수 조회
+export const getAdminUserCnt = async () => {
+  try {
+    const res = await axiosApiWithToken(`/admin/userCnt`, 'get')
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
