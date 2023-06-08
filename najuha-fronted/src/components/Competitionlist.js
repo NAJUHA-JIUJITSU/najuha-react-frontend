@@ -101,7 +101,8 @@ function Competitionlist() {
     return
   }
 
-  async function clickedLike(competitionId, i) {
+  // 좋아요 클릭
+  async function clickedLike(competitionId) {
     //로그인 안한 상태 
     if (!userId) {
       alert('로그인이 필요합니다')
@@ -122,29 +123,29 @@ function Competitionlist() {
 
     if (res?.status === 200) {
       let likeCount = res.data.result.competitionLikeCount
-      changeCompetitionLiked(likeCount, i)
+      changeCompetitionLiked(likeCount, competitionId)
     }
+
     return
   }
 
-  function changeCompetitionLiked(likeCount, competitionoffset) {
-    let copycompetitions = [...competitions]
-    copycompetitions[competitionoffset].competitionLikeCount = likeCount
-    if (
-      copycompetitions[competitionoffset].CompetitionLikes.find(
-        users => users.userId === userId
-      )
-    ) {
-      copycompetitions[competitionoffset].CompetitionLikes = copycompetitions[
-        competitionoffset
-      ].CompetitionLikes.filter(users => users.userId !== userId)
-    } else {
-      let newObject = { userId: userId }
-      copycompetitions[competitionoffset].CompetitionLikes =
-        copycompetitions[competitionoffset].CompetitionLikes.concat(newObject)
-    }
-
-    setCompetitions(copycompetitions)
+  // 좋아요 수 변경
+  function changeCompetitionLiked(likeCount, competitionId) {
+    setCompetitions(prevCompetitions => {
+    return prevCompetitions.map(competition => {
+      if (competition.id === competitionId) {
+        return {
+          ...competition,
+          competitionLikeCount: likeCount,
+          CompetitionLikes: competition.CompetitionLikes.find(like => like.userId === userId)
+            ? competition.CompetitionLikes.filter(like => like.userId !== userId)
+            : [...competition.CompetitionLikes, { userId }]
+        };
+      } else {
+        return competition;
+      }
+    });
+  });
   }
 
   useEffect(() => {
@@ -337,7 +338,7 @@ function Competitionlist() {
       .replace('-', '.')
     let year = competition.registrationDeadline.substr(0, 4)
     let displayNone = year === '2030' ? true : false
-    console.log('여기'+competition)
+    
     return {
       id: competition.id,
       title: competition.title,
@@ -374,24 +375,36 @@ function Competitionlist() {
       if (filter === 'active') {
         filteredCompetitions = filteredCompetitions.filter((competition) => {
           // 마감기한 조건에 따라 필터링
-          const currentDate = new Date();
-          const deadlineDate = new Date(competition.registrationDeadline);
+          if (competition.year === '2030') {
+            return
+          }
+      
+          let opendate = dayjs(competition.registrationDate, 'YYYY-MM-DD')
+          let finishdate = dayjs(competition.registrationDeadline, 'YYYY-MM-DD')
+          let deadlineDiffM = todaytime.diff(finishdate, 'm')
+          let opendateDiffM = todaytime.diff(opendate, 'm')
 
-          // currentDate와 deadlineDate 비교하여 필터링 조건을 설정합니다.
-          // 예를 들어, currentDate가 deadlineDate보다 이전인 경우에만 true를 반환하도록 설정합니다.
-          return currentDate <= deadlineDate;
+          if( (opendateDiffM >= 0) && (deadlineDiffM <= 0) ) {
+            return true
+          }
         });
       }
       //얼리버드 필터
       else if (filter === 'early') {
         filteredCompetitions = filteredCompetitions.filter((competition) => {
+          
           // 얼리버드 여부 
-          const currentDate = new Date();
-          const deadlineDate = new Date(competition.earlyBirdDeadline);
+          let opendate = dayjs(competition.registrationDate, 'YYYY-MM-DD')
+          let finishdate = dayjs(competition.registrationDeadline, 'YYYY-MM-DD')
+          let earlyBirdDate = dayjs(competition.earlyBirdDeadline, 'YYYY-MM-DD')
 
-          // currentDate와 deadlineDate 비교하여 필터링 조건을 설정합니다.
-          // 예를 들어, currentDate가 deadlineDate보다 이전인 경우에만 true를 반환하도록 설정합니다.
-          return currentDate <= deadlineDate;
+          let deadlineDiff = todaytime.diff(finishdate, 'm')
+          let openDiff = todaytime.diff(opendate, 'm')
+          let earlyBirdDiff = todaytime.diff(earlyBirdDate, 'm')
+
+          if (openDiff >= 0 && deadlineDiff <= 0 && earlyBirdDiff < 0) {
+            return true
+          }
         });
       }
       //간편결제 필터 
@@ -504,7 +517,7 @@ function Competitionlist() {
                 </div>
                 <div
                   className="each-competition-body-like"
-                  onClick={() => clickedLike(curcompetition.id, i)}>
+                  onClick={() => clickedLike(curcompetition.id)}>
                   {curcompetition.likeUsers.find(
                     users => users.userId === userId
                   ) ? (
