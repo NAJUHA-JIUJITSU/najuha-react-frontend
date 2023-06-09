@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { CSVLink } from 'react-csv'
-import { getAdminCompetitionApplicationListCsv } from '../apis/api/admin'
+import {
+  getAdminCompetitionApplicationListCsv,
+  postAdminFixCompetitionPayments,
+} from '../apis/api/admin'
 import { CsvToHtmlTable } from 'react-csv-to-table'
 import './AdminCsvDownload.css'
 
 const convertHeaderToKorean = csvData => {
   const csvDataArray = csvData.split('\n')
-
   const headers = csvDataArray[0].split(',')
   const newHeaders = headers.map(header => {
     switch (header) {
@@ -88,52 +90,77 @@ const AdminCsvDownload = () => {
     setPaymentFilter(filter)
   }
 
+  const handleFixCompetitionPaymentError = async competitionId => {
+    try {
+      const res = await postAdminFixCompetitionPayments(competitionId)
+      alert(
+        `결제 오류 보정 성공.\n결제오류 보정 갯수 : ${res.data.result.fixedCnt}`
+      )
+    } catch (e) {
+      alert('결제 오류 보정 실패.')
+      console.log(e)
+    }
+  }
+
   return (
     <div>
-      <div>
-        <button onClick={() => handleFilterButtonClick('all')}>
-          결제완료 + 미결제
-        </button>
-        <button onClick={() => handleFilterButtonClick('paid')}>
-          결제완료
-        </button>
-        <button onClick={() => handleFilterButtonClick('unpaid')}>
-          미결제
-        </button>
-        <div style={{ fontSize: '30px' }}>
-          필터 :{' '}
-          {paymentFilter === 'all'
-            ? '결제완료 + 미결제'
-            : paymentFilter === 'paid'
-            ? '결제완료'
-            : '미결제'}
+      <div style={{ display: 'flex' }}>
+        <div style={{ padding: '20px', border: '1px solid black' }}>
+          <h1 style={{ fontSize: '25px' }}>
+            필터 :{' '}
+            {paymentFilter === 'all'
+              ? '결제완료 + 미결제'
+              : paymentFilter === 'paid'
+              ? '결제완료'
+              : '미결제'}
+          </h1>
+          <button onClick={() => handleFilterButtonClick('all')}>
+            결제완료 + 미결제
+          </button>
+          <button onClick={() => handleFilterButtonClick('paid')}>
+            결제완료
+          </button>
+          <button onClick={() => handleFilterButtonClick('unpaid')}>
+            미결제
+          </button>
+          <div
+            style={{
+              fontSize: '30px',
+            }}
+          >
+            count : {rowCnt}
+          </div>
         </div>
-        <CSVLink data={csvData} filename="applicationList.csv">
+        <div style={{ padding: '20px', border: '1px solid black' }}>
+          <h1 style={{ fontSize: '25px' }}>CSV 다운로드</h1>
+          <CSVLink data={csvData} filename="applicationList.csv">
+            <button
+              style={{
+                fontSize: '30px',
+              }}
+            >
+              나주하용
+            </button>
+          </CSVLink>
+          <CSVLink data={csvDataKo} filename="applicationList.csv">
+            <button
+              style={{
+                fontSize: '30px',
+              }}
+            >
+              대회사용
+            </button>
+          </CSVLink>
+        </div>
+        <div style={{ padding: '20px', border: '1px solid black' }}>
           <button
+            onClick={handleFixCompetitionPaymentError}
             style={{
               fontSize: '50px',
-              marginLeft: '20px',
             }}
           >
-            나주하용
+            결제 오류 보정
           </button>
-        </CSVLink>
-        <CSVLink data={csvDataKo} filename="applicationList.csv">
-          <button
-            style={{
-              fontSize: '50px',
-              marginLeft: '20px',
-            }}
-          >
-            대회사용
-          </button>
-        </CSVLink>
-        <div
-          style={{
-            fontSize: '30px',
-          }}
-        >
-          count : {rowCnt}
         </div>
       </div>
       <div>

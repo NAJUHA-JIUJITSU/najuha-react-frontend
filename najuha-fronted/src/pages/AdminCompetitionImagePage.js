@@ -1,19 +1,15 @@
 import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
-import { Cookies } from 'react-cookie'
 import {
   postAdminCompetitionPoster,
   postAdminCompetitionBracket,
 } from '../apis/api/admin'
 
 function AdminCompetitionImagePage() {
-  const cookies = new Cookies()
   const { id } = useParams()
   const [imgFile, setImgFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
   const [csvFile, setCsvFile] = useState(null)
-  const [csvData, setCsvData] = useState(null)
 
   const handleImgFileChange = e => {
     const selectedFile = e.target.files[0]
@@ -22,10 +18,15 @@ function AdminCompetitionImagePage() {
   }
 
   const handleImgUpload = async () => {
-    const formData = new FormData()
-    formData.append('competition-poster', imgFile)
-
-    const response = await postAdminCompetitionPoster(id, formData)
+    try {
+      const formData = new FormData()
+      formData.append('competition-poster', imgFile)
+      await postAdminCompetitionPoster(id, formData)
+      alert('이미지 업로드 성공')
+    } catch (error) {
+      alert('이미지 업로드 실패')
+      console.log(error)
+    }
   }
 
   const handleCsvFileChange = e => {
@@ -34,9 +35,15 @@ function AdminCompetitionImagePage() {
   }
 
   const handleCsvUpload = async () => {
-    const formData = new FormData()
-    formData.append('competition-bracket', csvFile)
-    const response = await postAdminCompetitionBracket(id, formData)
+    try {
+      const formData = new FormData()
+      formData.append('competition-bracket', csvFile)
+      await postAdminCompetitionBracket(id, formData)
+      alert('대진표 업로드 성공')
+    } catch (error) {
+      alert('대진표 업로드 실패')
+      console.log(error)
+    }
   }
 
   return (
