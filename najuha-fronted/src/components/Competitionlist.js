@@ -6,8 +6,9 @@ import searchicon from '../src_assets/검색돋보기아이콘.svg'
 import sampleposter from '../src_assets/samplePoster.png'
 import likeFull from '../src_assets/heartFull.png'
 import like from '../src_assets/heart.png'
+import viewCnt from '../src_assets/viewCnt.png'
 import dayjs from 'dayjs'
-import { getCompetitionList } from '../apis/api/competition'
+import { getCompetitionList, postCompetitionViewCnt } from '../apis/api/competition'
 import { postLike } from '../apis/api/like'
 import { Cookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode'
@@ -512,20 +513,26 @@ function Competitionlist() {
                     style={
                       curcompetition.displayNone ? { display: 'none' } : {}
                     }>
-                    ~{curcompetition.year}.{curcompetition.registrationDeadline}
+                    ~{curcompetition.year.substr(2)}.{curcompetition.registrationDeadline}
                   </p>
                 </div>
-                <div
-                  className="each-competition-body-like"
-                  onClick={() => clickedLike(curcompetition.id)}>
-                  {curcompetition.likeUsers.find(
-                    users => users.userId === userId
-                  ) ? (
-                    <img src={likeFull}></img>
-                  ) : (
-                    <img src={like}></img>
-                  )}
-                  <p>{curcompetition.likeCount}</p>
+                <div className="each-competition-body-bottom-right">
+                  <div className="each-competition-body-view">
+                      <img src={viewCnt}></img>
+                      <p>123</p>
+                  </div>
+                  <div
+                    className="each-competition-body-like"
+                    onClick={() => clickedLike(curcompetition.id)}>
+                    {curcompetition.likeUsers.find(
+                      users => users.userId === userId
+                    ) ? (
+                      <img src={likeFull}></img>
+                    ) : (
+                      <img src={like}></img>
+                    )}
+                    <p>{curcompetition.likeCount}</p>
+                  </div>
                 </div>
               </div>
             </div>

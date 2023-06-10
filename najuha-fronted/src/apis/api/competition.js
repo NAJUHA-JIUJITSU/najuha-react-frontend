@@ -72,3 +72,15 @@ export const getCompetitionBrackets = async competitionId => {
     handleError(e)
   }
 }
+
+export const postCompetitionViewCnt = async competitionId => {
+  try {
+    const res = await axiosApiWithToken(
+      `/competitions/${competitionId}/viewCnt`,
+      'post'
+    )
+    return res
+  } catch (e) {
+    handleError(e)
+  }
+}
