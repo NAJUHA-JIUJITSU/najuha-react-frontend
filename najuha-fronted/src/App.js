@@ -25,6 +25,7 @@ import AdminCsvDownload from './components/AdminCsvDownload'
 import AdminCompetitionInfoPage from './pages/AdminCompetitionInfoPage'
 import CompetitionApplicantListPage from './pages/CompetitionApplicantListPage'
 import CompetitionBracketPage from './pages/CompetitionBracketPage'
+import AdminUserListPage from './pages/AdminUserListPage'
 import Error404Page from './pages/Error404Page'
 import Error500Page from './pages/Error500Page'
 
@@ -83,6 +84,7 @@ function App() {
     true,
     true
   )
+  const AuthAdminUserListPage = Auth(AdminUserListPage, true, true, true)
   const AuthError404Page = Auth(Error404Page, null, null)
   const AuthError500Page = Auth(Error500Page, null, null)
 
@@ -149,6 +151,7 @@ function App() {
             path="/competition/:id/bracket"
             element={<AuthCompetitionBracketPage />}
           />
+          <Route path="/AdminUserList" element={<AuthAdminUserListPage />} />
 
           <Route path="/*" element={<AuthError404Page />} />
 
