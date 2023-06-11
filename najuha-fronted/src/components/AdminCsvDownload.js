@@ -63,6 +63,7 @@ const AdminCsvDownload = () => {
   const [csvDataKo, setCsvDataKo] = useState([])
   const [paymentFilter, setPaymentFilter] = useState('all')
   const [rowCnt, setRowCnt] = useState(0)
+  const [fixedApplications, setFixedApplications] = useState([])
   const competitionId = useParams().id
 
   const getCsvData = async () => {
@@ -90,9 +91,10 @@ const AdminCsvDownload = () => {
     setPaymentFilter(filter)
   }
 
-  const handleFixCompetitionPaymentError = async competitionId => {
+  const handleFixCompetitionPaymentError = async () => {
     try {
       const res = await postAdminFixCompetitionPayments(competitionId)
+      setFixedApplications(res.data.result.fixedApplications)
       alert(
         `결제 오류 보정 성공.\n결제오류 보정 갯수 : ${res.data.result.fixedCnt}`
       )
@@ -100,6 +102,16 @@ const AdminCsvDownload = () => {
       alert('결제 오류 보정 실패.')
       console.log(e)
     }
+  }
+
+  const downloadFixedApplications = () => {
+    const blob = new Blob([JSON.stringify(fixedApplications, null, 2)], {
+      type: 'application/json',
+    })
+    let downloadLink = document.createElement('a')
+    downloadLink.href = URL.createObjectURL(blob)
+    downloadLink.download = `competition_${competitionId}_fixedApplications.json`
+    downloadLink.click()
   }
 
   return (
@@ -152,15 +164,32 @@ const AdminCsvDownload = () => {
             </button>
           </CSVLink>
         </div>
-        <div style={{ padding: '20px', border: '1px solid black' }}>
+        <div
+          style={{
+            padding: '20px',
+            border: '1px solid black',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
           <button
             onClick={handleFixCompetitionPaymentError}
             style={{
-              fontSize: '50px',
+              fontSize: '30px',
             }}
           >
             결제 오류 보정
           </button>
+          {fixedApplications.length > 0 && (
+            <button
+              onClick={downloadFixedApplications}
+              style={{
+                fontSize: '30px',
+              }}
+            >
+              보정결과 다운로드
+            </button>
+          )}
         </div>
       </div>
       <div>
