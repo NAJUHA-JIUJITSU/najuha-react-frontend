@@ -1,0 +1,360 @@
+/* typography */
+
+.competition-top-title h2 {
+  font-weight: 500;
+  font-size: 3rem;
+  letter-spacing: -0.06em;
+}
+
+#competition-top-button1 {
+  font-weight: 400;
+  color: #4e82e6;
+  cursor: pointer;
+}
+
+#competition-top-button2 {
+  font-weight: 400;
+  color: #4e82e6;
+  cursor: pointer;
+}
+
+.competition-top-content-info-each h3 {
+  font-size: 18px;
+  color: #8c8c8c;
+  letter-spacing: -0.06em;
+}
+
+.competition-top-content-info-each p {
+  font-size: 20px;
+  letter-spacing: -0.06em;
+}
+
+.competition-top-content-copyWrap {
+  display: flex;
+}
+
+.competition-top-content-copy {
+  color: #0353e6;
+  min-width: 36px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+.competition-top-content-copyIcon {
+  width: 16px;
+  margin-right: 1px;
+}
+.competition-top-content-copy span {
+  font-size: 12px;
+}
+
+/* Layout */
+
+.competition-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  min-height: 60vh;
+  padding: 0 2rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding-top: 3vh;
+  overflow: hidden;
+}
+
+.competition-top-title {
+  margin-bottom: 3vh;
+}
+
+.competition-top-content-info {
+  padding-left: 5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  box-sizing: border-box;
+}
+
+/* component */
+
+.competition-top-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.competition-top-like img {
+  width: 20px;
+}
+.competition-top-like p {
+  font-size: 14px;
+}
+
+.competition-top-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#competition-top-button1 {
+  border: 1px solid #f1f1f1;
+  box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  min-width: 110px;
+  min-height: 46px;
+  font-size: 18px;
+  background: #ffffff;
+  letter-spacing: -0.06em;
+  margin-right: 0.5rem;
+}
+
+#competition-top-button2 {
+  border: 1px solid #f1f1f1;
+  box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  min-width: 125px;
+  min-height: 46px;
+  font-size: 18px;
+  background: #ffffff;
+  letter-spacing: -0.06em;
+  margin-right: 0.5rem;
+}
+
+/* .competition-top-title button::before{
+	  content: 'D-20';
+	  position: absolute;
+	  top: 0;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+	  display: block;
+	  background-color: #FFFFFF;
+  } */
+
+.competition-top-content {
+  display: flex;
+}
+
+.competition-top-content-img {
+  min-width: 220px;
+  max-width: 220px;
+  height: 264px;
+  background-color: white;
+}
+
+.competition-top-content-info {
+  width: calc(100% - 50px);
+}
+
+.competition-top-content-info-each {
+  display: flex;
+  /* align-items: center; */
+  margin-bottom: 2.3rem;
+}
+
+.competition-top-content-info-each p {
+  display: block;
+  min-width: calc(100%-50px);
+  /* overflow: hidden; */
+}
+
+#competition-top-content-info-each-last {
+  margin-bottom: 0;
+}
+
+.competition-top-content-info-each h3 {
+  min-width: 120px;
+}
+
+.competition-bottom-markdown {
+  margin-top: 1rem;
+  border-top: 1px solid #eeeeee;
+  padding-top: 4rem;
+}
+
+/* .competition-bottom-markdown {
+	  white-space: pre-wrap;
+  } */
+
+/* 마크다운 문법 */
+
+.competition-bottom-markdown hr {
+  /* height: 1px; */
+  margin-top: 34px;
+  margin-bottom: 26px;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 0;
+}
+
+.competition-bottom-markdown p {
+  font-size: 20px;
+  letter-spacing: -0.06em;
+  display: inline;
+}
+
+.competition-bottom-markdown a {
+  /* color: -webkit-link; */
+  text-decoration: underline;
+}
+
+.competition-bottom-markdown h1 {
+  font-size: 22px;
+  display: block;
+  margin-bottom: 53px;
+  letter-spacing: -0.06em;
+}
+
+.competition-bottom-markdown h2 {
+  font-size: 18px;
+  display: inline-block;
+  width: 129px;
+  margin-bottom: 24px;
+  letter-spacing: -0.06em;
+  color: #8c8c8c;
+}
+
+.competition-bottom-markdown h3 {
+  font-size: 18px;
+  display: block;
+  width: 100%;
+  letter-spacing: -0.06em;
+  color: #8c8c8c;
+}
+
+.competition-bottom-markdown ul {
+  padding-left: 129px;
+}
+
+.competition-bottom-markdown li:last-child {
+  margin-bottom: 24px;
+}
+
+.competition-bottom-markdown li::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  background-color: black;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.competition-bottom-markdown li {
+  position: relative;
+  font-size: 20px;
+  margin-bottom: 18px;
+  padding-left: 22px;
+  letter-spacing: -0.06em;
+}
+
+.competition-bottom-markdown img {
+  max-width: 100%;
+  margin-bottom: 2.4rem;
+}
+
+@media (max-width: 1049px) {
+  .competition-wrapper {
+    max-width: 768px;
+  }
+  .competition-top-like img {
+    width: 14px;
+  }
+  .competition-top-like p {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 750px) {
+  .competition-wrapper {
+    max-width: 650px;
+    min-height: 60vh;
+  }
+
+  /* typography */
+  .competition-top-title h2 {
+    font-size: 2rem;
+    letter-spacing: -0.06em;
+    margin-bottom: 10px;
+  }
+
+  #competition-top-button1 {
+    font-size: 1.6rem;
+  }
+
+  #competition-top-button2 {
+    font-size: 1.6rem;
+  }
+
+  .competition-top-content {
+    display: block;
+  }
+
+  .competition-top-content-info-each h3 {
+    font-size: 1.4rem;
+    color: #8c8c8c;
+    letter-spacing: -0.06em;
+  }
+
+  .competition-top-content-info-each p {
+    font-size: 1.6rem;
+    letter-spacing: -0.06em;
+  }
+
+  /* Layout */
+
+  .competition-top-content-info {
+    padding-left: 0;
+    padding-bottom: 1.4rem;
+    box-sizing: border-box;
+  }
+
+  .competition-top-content-info-each {
+    margin-bottom: 1.4rem;
+  }
+
+  .competition-bottom-markdown img {
+    margin-bottom: 1.6rem;
+  }
+
+  /* component */
+
+  .competition-top-content-img {
+    min-width: 110px;
+    max-width: 110px;
+    height: 144px;
+  }
+
+  .competition-top-content-info {
+    width: 100%;
+  }
+
+  #competition-top-button1 {
+    width: 96px;
+    height: 40px;
+    min-width: 96px;
+    min-height: 40px;
+  }
+
+  #competition-top-button2 {
+    width: 106px;
+    height: 40px;
+    min-width: 106px;
+    min-height: 40px;
+  }
+
+  .competition-top-content-info-each h3 {
+    min-width: 98px;
+  }
+
+  .competition-bottom-markdown li {
+    position: relative;
+    font-size: 16px;
+    margin-bottom: 16px;
+    padding-left: 18px;
+  }
+
+  .competition-top-content-copy {
+    min-width: 38px;
+    margin-left: 8px;
+    display: block;
+  }
+  .competition-top-content-copyIcon {
+    width: 12px;
+  }
+}

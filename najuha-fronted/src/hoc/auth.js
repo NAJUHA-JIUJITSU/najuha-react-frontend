@@ -8,7 +8,8 @@ export default function (
   SpecificComponent,
   LoginOption,
   UserLevelOption,
-  adminRoute = null
+  adminRoute = null,
+  hostRoute = null
 ) {
   function AuthenticationCheck(props) {
     const cookies = new Cookies()
@@ -67,6 +68,11 @@ export default function (
         //     navigate('/')
         //   }
         // }
+
+        if (hostRoute && decodedToken.userLevel < 3) {
+          alert('접근 권한이 없습니다.')
+          navigate('/')
+        }
       }
     }, [])
 

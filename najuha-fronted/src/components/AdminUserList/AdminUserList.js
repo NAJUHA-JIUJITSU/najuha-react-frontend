@@ -95,6 +95,7 @@ function AdminUserList() {
         <select value={searchLevel} onChange={handleSearchLevel}>
           <option value={2}>Level 2</option>
           <option value={3}>Level 3</option>
+          <option value={5}>Level 5</option>
         </select>
       </div>
       <div className="AdminUserList">
