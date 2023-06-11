@@ -214,3 +214,16 @@ export const getAdminUserCnt = async () => {
     console.log(e)
   }
 }
+
+// 6.19 대회에 해당하는 결제 오류 일괄수정
+export const postAdminFixCompetitionPayments = async id => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competitions/${id}/payments`,
+      'post'
+    )
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}
