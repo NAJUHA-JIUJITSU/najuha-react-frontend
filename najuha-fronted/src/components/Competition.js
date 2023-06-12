@@ -4,10 +4,11 @@ import './competition.css'
 import sampleposter from '../src_assets/samplePoster.png'
 import copy from '../src_assets/copy.png'
 import dayjs from 'dayjs'
-import { getCompetitionDetail } from '../apis/api/competition'
+import { getCompetitionDetail, postCompetitionViewCnt } from '../apis/api/competition'
 import MarkdownEditor from './MarkdownEditor'
 import likeFull from '../src_assets/heartFull.png'
 import like from '../src_assets/heart.png'
+import viewCnt from '../src_assets/viewCnt.png'
 import { Cookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode'
 import { postLike } from '../apis/api/like'
@@ -113,6 +114,7 @@ function Competition() {
     )
       ? likeFull
       : like
+    let viewCnt = competition.CompetitionViewCnts[0]?.viewCnt
 
     setViewCompetition({
       id: competition.id,
@@ -131,6 +133,7 @@ function Competition() {
       likeCount: competition.competitionLikeCount,
       likeUsers: competition.CompetitionLikes,
       likeImg: likeImg,
+      viewCnt : viewCnt,
     })
   }
 
@@ -212,6 +215,7 @@ function Competition() {
 
   useEffect(() => {
     getCompetition(id)
+    postCompetitionViewCnt(id)
   }, [])
 
   // 유저 아이디, 레벨 확인하기
@@ -243,12 +247,18 @@ function Competition() {
       <div className="competition-top">
         <div className="competition-top-title">
           <h2>{viewCompetition.title}</h2>
-          <div
-            className="each-competition-body-like competition-top-like"
-            onClick={() => clickedLike(viewCompetition.id)}
-          >
-            <img src={viewCompetition.likeImg}></img>
-            <p>{viewCompetition.likeCount}</p>
+          <div className="competition-viewLike">
+            <div className="each-competition-body-view">
+              <img src={viewCnt}></img>
+              <p>{viewCompetition.viewCnt ? viewCompetition.viewCnt : 0}</p>
+            </div>
+            <div
+              className="each-competition-body-like"
+              onClick={() => clickedLike(viewCompetition.id)}
+            >
+              <img src={viewCompetition.likeImg}></img>
+              <p>{viewCompetition.likeCount}</p>
+            </div>
           </div>
         </div>
         <div className="competition-top-content">

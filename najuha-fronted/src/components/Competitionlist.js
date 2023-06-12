@@ -8,7 +8,7 @@ import likeFull from '../src_assets/heartFull.png'
 import like from '../src_assets/heart.png'
 import viewCnt from '../src_assets/viewCnt.png'
 import dayjs from 'dayjs'
-import { getCompetitionList, postCompetitionViewCnt } from '../apis/api/competition'
+import { getCompetitionList } from '../apis/api/competition'
 import { postLike } from '../apis/api/like'
 import { Cookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode'
@@ -339,6 +339,7 @@ function Competitionlist() {
       .replace('-', '.')
     let year = competition.registrationDeadline.substr(0, 4)
     let displayNone = year === '2030' ? true : false
+    let viewCnt = competition.CompetitionViewCnts[0]?.viewCnt
     
     return {
       id: competition.id,
@@ -362,6 +363,7 @@ function Competitionlist() {
       likeUsers: competition.CompetitionLikes,
       year: year,
       displayNone: displayNone,
+      viewCnt : viewCnt,
     }
   }
 
@@ -494,6 +496,7 @@ function Competitionlist() {
                 className="each-competition-body-desc-top"
                 onClick={() => {
                   window.scrollTo(0, 0)
+                  // postCompetitionViewCnt(curcompetition.id)
                   navigate(`/competition/${curcompetition.id}`)
                 }}>
                 <p>{curcompetition.title}</p>
@@ -519,7 +522,7 @@ function Competitionlist() {
                 <div className="each-competition-body-bottom-right">
                   <div className="each-competition-body-view">
                       <img src={viewCnt}></img>
-                      <p>123</p>
+                      <p>{curcompetition.viewCnt ? curcompetition.viewCnt : 0}</p>
                   </div>
                   <div
                     className="each-competition-body-like"
