@@ -289,6 +289,7 @@
   border: 1px solid #d9e0e4;
   border-radius: 10px;
   overflow: hidden;
+  position: relative;
 }
 
 .each-competition-body-poster {
@@ -305,7 +306,7 @@
 
 .each-competition-body-poster-block {
   position: absolute;
-  background: rgba(0, 0, 0, 0.432);
+  background: rgba(0, 0, 0, 0.5);
   width: 100%;
   height: 100%;
   top: 0;
@@ -346,13 +347,16 @@
 /* 대회카드 아래 (신청기간 + 좋아요) */
 .each-competition-body-desc-bottom {
   width: 96%;
-  padding-top: 5px;
-  height: 50px;
+  padding: 14px 0px;
+  margin-top: 10px;
+  /* height: 50px; */
   position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   letter-spacing: -0.7px;
+  
+  border-top: 1px solid #F3F3F3;
 }
 
 .each-competition-body-applyDate {
@@ -365,20 +369,42 @@
   margin-right: 6px;
 }
 
+.each-competition-body-bottom-right {
+  display: flex;
+}
+
+/* 좋아요 수 */
 .each-competition-body-like {
   cursor: pointer;
+  display: flex;
 }
 
 .each-competition-body-like p {
   color: #ff5f5f !important;
+  text-align: center;
+  cursor: pointer !important;
+  font-size: 14px;
 }
 
 .each-competition-body-like img {
   width: 14px;
+  margin-right: 2px;
 }
-.each-competition-body-like p {
-  text-align: center;
-  cursor: pointer !important;
+
+/* 방문자 수 */
+.each-competition-body-view {
+  display: flex;
+  margin-right: 8px;
+}
+
+.each-competition-body-view p {
+  font-size: 14px;
+  color: #595959 !important;
+}
+
+.each-competition-body-view img {
+  width: 14px;
+  margin-right: 2px;
 }
 
 /* 필터 체크박스 디자인 */
@@ -531,8 +557,12 @@
   }
 
   /* 모바일 카드 크기 줄여보기 */
-  /* .each-competition-body {
-    height: 110px;
+  .competition-col {
+    margin-bottom: 0px;
+  }
+
+  .each-competition-body {
+    height: 120px;
   }
   .each-competition-body-poster {
     min-width: 96px;
@@ -550,7 +580,7 @@
   }
 
   .each-competition-body-desc-top {
-    height: 60px;
+    height: 54px;
   }
 
   .each-competition-body-desc-top p {
@@ -559,7 +589,6 @@
 
   .each-competition-body-desc-bottom,
   .each-competition-body-desc-middle {
-    height: 16px;
     margin-bottom: 5px;
   }
 
@@ -567,6 +596,12 @@
     font-size: 14px;
   }
 
+  .each-competition-body-desc-middle {
+    height: 20px;
+  }
+
   .each-competition-body-desc-bottom {
-  } */
+    padding: 3px 0px;
+    height: 30px;
+  }
 }

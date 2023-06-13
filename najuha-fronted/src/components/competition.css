@@ -64,6 +64,10 @@
   margin-bottom: 3vh;
 }
 
+.competition-viewLike {
+  display: flex;
+}
+
 .competition-top-content-info {
   padding-left: 5rem;
   padding-top: 2rem;
@@ -78,12 +82,21 @@
   justify-content: space-between;
 }
 
-.competition-top-like img {
-  width: 20px;
+/* 방문자수 좋아요 */
+.competition-viewLike img{
+  min-width: 20px;
+  max-width: 20px;
+  min-height: 20px;
+  max-height: 20px;
 }
-.competition-top-like p {
-  font-size: 14px;
+.competition-viewLike .each-competition-body-view{
+  margin-right: 10px;
+  margin-left: 8px;
+} 
+.competition-viewLike p{
+  font-size: 18px;
 }
+
 
 .competition-top-buttons {
   display: flex;
@@ -252,18 +265,30 @@
   .competition-wrapper {
     max-width: 768px;
   }
-  .competition-top-like img {
-    width: 14px;
-  }
-  .competition-top-like p {
-    font-size: 10px;
-  }
 }
 
 @media (max-width: 750px) {
   .competition-wrapper {
     max-width: 650px;
     min-height: 88vh;
+  }
+ /* 방문자수 좋아요 */
+  .competition-viewLike {
+   display: block; 
+  }
+  .competition-viewLike img{
+    min-width: 16px;
+    max-width: 16px;
+    min-height: 16px;
+    max-height: 16px;
+  }
+  .competition-viewLike .each-competition-body-view, .competition-viewLike .each-competition-body-like{
+    margin-right: 6px;
+    margin-left: 8px;
+  } 
+  
+  .competition-viewLike p{
+    font-size: 14px;
   }
 
   /* typography */
