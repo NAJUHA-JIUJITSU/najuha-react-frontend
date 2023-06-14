@@ -466,13 +466,13 @@ function ProfileInfo() {
           <div className="ProfileInfo_competition_date">
             <h3>참가자 공개</h3>
             <p>
-              {competitionApplicationInfo?.tournamentTableOpenDate !== null
-                ? competitionApplicationInfo?.tournamentTableOpenDate?.slice(
+              {competitionApplicationInfo?.applicantTableOpenDate !== null
+                ? competitionApplicationInfo?.applicantTableOpenDate?.slice(
                     2,
                     4
                   ) === '30'
                   ? '해당없음'
-                  : `${competitionApplicationInfo?.tournamentTableOpenDate}`
+                  : `${competitionApplicationInfo?.applicantTableOpenDate}`
                 : ''}
             </p>
           </div>
