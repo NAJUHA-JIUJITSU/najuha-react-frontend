@@ -443,7 +443,7 @@ function ProfileInfo() {
             <h3>얼리버드 마감</h3>
             <p>
               {competitionApplicationInfo.earlyBirdDeadline !== null
-                ? competitionApplicationInfo.earlyBirdDeadline?.slice(0, 2) ===
+                ? competitionApplicationInfo.earlyBirdDeadline?.slice(2, 4) ===
                   '98'
                   ? '해당없음'
                   : `${competitionApplicationInfo.earlyBirdDeadline}`
@@ -455,8 +455,8 @@ function ProfileInfo() {
             <p>
               {competitionApplicationInfo?.registrationDeadline !== null
                 ? competitionApplicationInfo?.registrationDeadline?.slice(
-                    0,
-                    2
+                    2,
+                    4
                   ) === '30'
                   ? '해당없음'
                   : `${competitionApplicationInfo?.registrationDeadline}`
@@ -468,8 +468,8 @@ function ProfileInfo() {
             <p>
               {competitionApplicationInfo?.tournamentTableOpenDate !== null
                 ? competitionApplicationInfo?.tournamentTableOpenDate?.slice(
-                    0,
-                    2
+                    2,
+                    4
                   ) === '30'
                   ? '해당없음'
                   : `${competitionApplicationInfo?.tournamentTableOpenDate}`
@@ -481,8 +481,8 @@ function ProfileInfo() {
             <p>
               {competitionApplicationInfo.tournamentTableOpenDate !== null
                 ? competitionApplicationInfo.tournamentTableOpenDate?.slice(
-                    0,
-                    2
+                    2,
+                    4
                   ) === '98'
                   ? '해당없음'
                   : `${competitionApplicationInfo.tournamentTableOpenDate}`
