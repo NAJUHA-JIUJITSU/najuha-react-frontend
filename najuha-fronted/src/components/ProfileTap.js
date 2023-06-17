@@ -1,4 +1,6 @@
 import React from 'react'
+import jwt_decode from 'jwt-decode'
+import { Cookies } from 'react-cookie'
 import './profileTap.css'
 import { useNavigate } from 'react-router-dom'
 
@@ -6,6 +8,13 @@ function ProfileTap(props) {
   let userName = props.userName
   let competitionApplications = props.competitionApplications
   const navigate = useNavigate()
+  const cookies = new Cookies()
+  const xAccessToken = cookies.get('x-access-token')
+  let decodedToken = null
+  if (xAccessToken) {
+    decodedToken = jwt_decode(xAccessToken)
+  }
+  const userLevel = decodedToken?.userLevel
 
   //실시간 대회 수 그리기
   function renderCompetitonNowCount() {
@@ -74,6 +83,16 @@ function ProfileTap(props) {
           >
             내 프로필
           </div>
+          {userLevel > 3 && (
+            <div
+              className="ProfileTap_information-btn"
+              onClick={() => {
+                navigate('/Profilepage', { state: 'HostCompetitionList' })
+              }}
+            >
+              주최대회 목록
+            </div>
+          )}
           {/* <div className="ProfileTap_information-btn">개인정보처리방침</div>
           <div className="ProfileTap_information-btn">이용약관</div>
           <div className="ProfileTap_information-btn">버전정보</div> */}

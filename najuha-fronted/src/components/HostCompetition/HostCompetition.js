@@ -227,6 +227,9 @@ function HostCompetition() {
       const csv2 = convertHeaderToKorean(res2.data.result.csv)
       downloadCsv(csv2, `결제완료_${viewCompetition.title}_참가자명단.csv`)
     }
+    if (!res1.data.result.csv && !res2.data.result.csv) {
+      alert('아직 참가자가 없습니다.')
+    }
   }
 
   useEffect(() => {
@@ -257,15 +260,15 @@ function HostCompetition() {
   }, [competition])
 
   return (
-    <div className="competition-wrapper">
-      <div className="competition-top">
-        <div className="competition-top-title">
+    <div className="HostCompetition-wrapper">
+      <div className="HostCompetition-top">
+        <div className="HostCompetition-top-title">
           <h2>{viewCompetition.title}</h2>
         </div>
-        <div className="competition-top-content">
-          {/* <div className='competition-top-content-img'></div> */}
+        <div className="HostCompetition-top-content">
+          {/* <div className='HostCompetition-top-content-img'></div> */}
           <img
-            className="competition-top-content-img"
+            className="HostCompetition-top-content-img"
             src={
               competition
                 ? competition.CompetitionPoster
@@ -275,31 +278,31 @@ function HostCompetition() {
             }
             alt="대회이미지"
           />
-          <div className="competition-top-content-info">
-            <div className="competition-top-content-info-each">
+          <div className="HostCompetition-top-content-info">
+            <div className="HostCompetition-top-content-info-each">
               <h3>대회 날짜</h3>
               <p>
                 {viewCompetition.doreOpen} ({viewCompetition.doreOpenDay})
               </p>
             </div>
-            <div className="competition-top-content-info-each">
+            <div className="HostCompetition-top-content-info-each">
               <h3>대회 장소</h3>
-              <div className="competition-top-content-copyWrap">
+              <div className="HostCompetition-top-content-copyWrap">
                 <p>{viewCompetition ? viewCompetition.location : ''}</p>
                 <div
-                  className="competition-top-content-copy"
+                  className="HostCompetition-top-content-copy"
                   onClick={copyToClipboard}
                 >
                   <img
                     src={copy}
                     alt="복사하기"
-                    className="competition-top-content-copyIcon"
+                    className="HostCompetition-top-content-copyIcon"
                   ></img>
                   <span>복사</span>
                 </div>
               </div>
             </div>
-            <div className="competition-top-content-info-each">
+            <div className="HostCompetition-top-content-info-each">
               <h3>얼리버드 마감</h3>
               <p>
                 {viewCompetition.earlyBirdDeadline !== null
@@ -309,7 +312,7 @@ function HostCompetition() {
                   : ''}
               </p>
             </div>
-            <div className="competition-top-content-info-each">
+            <div className="HostCompetition-top-content-info-each">
               <h3>참가신청 마감</h3>
               <p>
                 {viewCompetition.registrationDeadline !== null
@@ -319,7 +322,7 @@ function HostCompetition() {
                   : ''}
               </p>
             </div>
-            <div className="competition-top-content-info-each">
+            <div className="HostCompetition-top-content-info-each">
               <h3>참가자 공개</h3>
               <p>
                 {viewCompetition.applicantTableOpenDate !== null
@@ -330,8 +333,8 @@ function HostCompetition() {
               </p>
             </div>
             <div
-              id="competition-top-content-info-each-last"
-              className="competition-top-content-info-each"
+              id="HostCompetition-top-content-info-each-last"
+              className="HostCompetition-top-content-info-each"
             >
               <h3>대진표 공개</h3>
               <p>
@@ -344,8 +347,8 @@ function HostCompetition() {
             </div>
           </div>
         </div>
-        <div className="competition-top-buttons">
-          <button id="competition-top-button1" onClick={handleCsvDownload}>
+        <div className="HostCompetition-top-buttons">
+          <button id="HostCompetition-top-button1" onClick={handleCsvDownload}>
             다운로드
           </button>
         </div>

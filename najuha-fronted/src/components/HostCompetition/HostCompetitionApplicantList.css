@@ -1,32 +1,32 @@
 /* 대회 신청 목록 필터 */
-.CompetitionApplicationList-filter-title {
+.HostCompetitionApplicationList-filter-title {
   font-size: 2.5rem;
   font-weight: 700;
 }
 
-.CompetitionApplicationList-filter-teaminfo label {
+.HostCompetitionApplicationList-filter-teaminfo label {
   font-size: 1.4rem;
 }
 
-.CompetitionApplicationList-filter-top-table-column li {
+.HostCompetitionApplicationList-filter-top-table-column li {
   font-size: 1.4rem;
   font-weight: 600;
 }
 
-.CompetitionApplicationList-filter-top-table-row li {
+.HostCompetitionApplicationList-filter-top-table-row li {
   font-size: 1.6rem;
   color: #8c8c8c;
 }
 
-.CompetitionApplicationList-filter-top-table-row li p {
+.HostCompetitionApplicationList-filter-top-table-row li p {
   width: 86%;
 }
 
-.CompetitionApplicationList-filter-top-table-row input {
+.HostCompetitionApplicationList-filter-top-table-row input {
   font-size: 1.6rem;
 }
 
-.CompetitionApplicationList-filter-bottom-title {
+.HostCompetitionApplicationList-filter-bottom-title {
   font-size: 1.6rem;
   font-weight: 700;
   text-align: center;
@@ -34,7 +34,7 @@
 
 /* Layout */
 
-.CompetitionApplicationList-filter-wrapper {
+.HostCompetitionApplicationList-filter-wrapper {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
@@ -42,59 +42,59 @@
   box-sizing: border-box;
 }
 
-.CompetitionApplicationList-filter-top {
+.HostCompetitionApplicationList-filter-top {
   position: relative;
   margin-bottom: 40px;
 }
 
-.CompetitionApplicationList-filter-title {
+.HostCompetitionApplicationList-filter-title {
   text-align: center;
   padding: 4vh 0;
 }
 
-.CompetitionApplicationList-filter-teaminfo {
+.HostCompetitionApplicationList-filter-teaminfo {
   text-align: center;
   margin-bottom: 30px;
   /* display: inline-block; */
 }
 
-.CompetitionApplicationList-filter-teaminfo label {
+.HostCompetitionApplicationList-filter-teaminfo label {
   margin-left: 25px;
 }
 
-.CompetitionApplicationList-filter-teaminfo input {
+.HostCompetitionApplicationList-filter-teaminfo input {
   margin-left: 10px;
 }
 
-.CompetitionApplicationList-filter-teaminfo input::placeholder {
+.HostCompetitionApplicationList-filter-teaminfo input::placeholder {
   font-size: 1.4rem;
 }
-.CompetitionApplicationList-filter-top-table-row li input::placeholder {
+.HostCompetitionApplicationList-filter-top-table-row li input::placeholder {
   font-size: 1.4rem;
 }
 
-.CompetitionApplicationList-filter-top-table {
+.HostCompetitionApplicationList-filter-top-table {
   width: 82%;
   margin: 0 auto;
 }
 
-.CompetitionApplicationList-filter-top-table-child1 {
+.HostCompetitionApplicationList-filter-top-table-child1 {
   width: 40%;
   display: inline-block;
 }
 
-.CompetitionApplicationList-filter-top-table-child2 {
+.HostCompetitionApplicationList-filter-top-table-child2 {
   width: 60%;
   display: inline-block;
 }
 
-.CompetitionApplicationList-filter-top-table-column {
+.HostCompetitionApplicationList-filter-top-table-column {
   display: table;
   margin: 0 auto;
   width: 100%;
 }
 
-.CompetitionApplicationList-filter-top-table-column li {
+.HostCompetitionApplicationList-filter-top-table-column li {
   display: table-cell;
   vertical-align: middle;
   width: 16.66%;
@@ -103,13 +103,13 @@
   padding-left: 2%;
 }
 
-.CompetitionApplicationList-filter-top-table-row {
+.HostCompetitionApplicationList-filter-top-table-row {
   display: table;
   margin: 0 auto;
   width: 100%;
 }
 
-.CompetitionApplicationList-filter-top-table-row li {
+.HostCompetitionApplicationList-filter-top-table-row li {
   display: table-cell;
   vertical-align: middle;
   width: 16.66%;
@@ -121,7 +121,7 @@
 
 /*Component*/
 
-.CompetitionApplicationList-filter-teaminfo input {
+.HostCompetitionApplicationList-filter-teaminfo input {
   width: 170px;
   height: 30px;
   border: 1px solid #e2eaef;
@@ -130,54 +130,54 @@
   font-size: 1.6rem;
 }
 
-.CompetitionApplicationList-filter-top-table-column li {
+.HostCompetitionApplicationList-filter-top-table-column li {
   background: #e9f3fd;
   border: 1px solid #e2eaef;
 }
 
-.CompetitionApplicationList-filter-top-table-child1 li:first-child {
+.HostCompetitionApplicationList-filter-top-table-child1 li:first-child {
   border-radius: 5px 0px 0px 0px;
 }
 
-.CompetitionApplicationList-filter-top-table-child2 li:last-child {
+.HostCompetitionApplicationList-filter-top-table-child2 li:last-child {
   border-radius: 0px 5px 0px 0px;
 }
 
-.CompetitionApplicationList-filter-top-table-row li {
+.HostCompetitionApplicationList-filter-top-table-row li {
   border: 1px solid #e2eaef;
   position: relative;
   cursor: pointer;
 }
 
-.CompetitionApplicationList-filter-top-table-row li:first-child {
+.HostCompetitionApplicationList-filter-top-table-row li:first-child {
   border-radius: 0px 0px 0px 5px;
   padding-left: 10px;
 }
 
-.CompetitionApplicationList-filter-top-table-row li input {
+.HostCompetitionApplicationList-filter-top-table-row li input {
   margin-left: -7px;
   padding-left: 7px;
 }
 
-.CompetitionApplicationList-filter-top-table-row li:last-child {
+.HostCompetitionApplicationList-filter-top-table-row li:last-child {
   border-radius: 0px 0px 5px 0px;
 }
 
-#CompetitionApplicationList-filter-top-table-ginogi {
+#HostCompetitionApplicationList-filter-top-table-ginogi {
   border-radius: 0px;
 }
 
-#CompetitionApplicationList-filter-top-table-division {
+#HostCompetitionApplicationList-filter-top-table-division {
   border-radius: 0px;
 }
 
-.CompetitionApplicationList-filter-top-table-row-dropdown-icon {
+.HostCompetitionApplicationList-filter-top-table-row-dropdown-icon {
   position: absolute;
   right: 5px;
   bottom: 12px;
 }
 
-.CompetitionApplicationList-filter-top-table-row input {
+.HostCompetitionApplicationList-filter-top-table-row input {
   box-sizing: border-box;
   border: 0;
   border-radius: 0px 0px 0px 5px;
@@ -186,7 +186,7 @@
   padding-left: 10px;
 }
 
-#CompetitionApplicationList-filter-top-table-row-dropdown {
+#HostCompetitionApplicationList-filter-top-table-row-dropdown {
   position: absolute;
   top: 39px;
   left: 0;
@@ -197,7 +197,7 @@
   border: none;
 }
 
-#CompetitionApplicationList-filter-top-table-row-dropdown li {
+#HostCompetitionApplicationList-filter-top-table-row-dropdown li {
   width: 100%;
   box-sizing: border-box;
   border: 1px solid #e2eaef;
@@ -211,7 +211,7 @@
   color: #000000;
 }
 
-.CompetitionApplicationList-filter-top-table-row-disable {
+.HostCompetitionApplicationList-filter-top-table-row-disable {
   pointer-events: none;
   opacity: 0.7;
   background-color: #cecece;
@@ -220,16 +220,16 @@
 /* 바텀테이블 component */
 
 @media (max-width: 1049px) {
-  .CompetitionApplicationList-filter-wrapper {
+  .HostCompetitionApplicationList-filter-wrapper {
     width: 700px;
   }
 
-  .CompetitionApplicationList-filter-top-table {
+  .HostCompetitionApplicationList-filter-top-table {
     width: 100%;
     margin: 0 auto;
   }
 
-  .CompetitionApplicationList-filter-button-add {
+  .HostCompetitionApplicationList-filter-button-add {
     right: 0px;
     bottom: -40px;
     height: 36px;
@@ -241,37 +241,37 @@
 }
 
 @media (max-width: 750px) {
-  .CompetitionApplicationList-filter-wrapper {
+  .HostCompetitionApplicationList-filter-wrapper {
     width: 90%;
   }
 
-  .CompetitionApplicationList-filter-top-table-child1 {
+  .HostCompetitionApplicationList-filter-top-table-child1 {
     width: 100%;
   }
 
-  .CompetitionApplicationList-filter-top-table-child2 {
+  .HostCompetitionApplicationList-filter-top-table-child2 {
     width: 100%;
   }
 
-  .CompetitionApplicationList-filter-top-table-child1 li:last-child {
+  .HostCompetitionApplicationList-filter-top-table-child1 li:last-child {
     border-radius: 0px 5px 0px 0px;
   }
 
-  .CompetitionApplicationList-filter-top-table-child2 li:first-child {
+  .HostCompetitionApplicationList-filter-top-table-child2 li:first-child {
     border-radius: 5px 0px 0px 0px;
   }
 
-  #CompetitionApplicationList-filter-top-table-ginogi {
+  #HostCompetitionApplicationList-filter-top-table-ginogi {
     border-radius: 0 0 5px 0px;
   }
 
-  #CompetitionApplicationList-filter-top-table-division {
+  #HostCompetitionApplicationList-filter-top-table-division {
     border-radius: 0 0 0 5px;
   }
 }
 
 /* Csv Table */
-.CompetitionApplicantList-wrapper {
+.HostCompetitionApplicantList-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -282,22 +282,22 @@
   overflow: auto; /* 스크롤 적용 */
 }
 
-.CompetitionApplicantList-csv-wrapper {
+.HostCompetitionApplicantList-csv-wrapper {
   overflow: auto;
   max-height: 80vh;
   padding: 10px;
 }
 
-.CompetitionApplicantList-csv {
+.HostCompetitionApplicantList-csv {
   padding: 10px;
 }
 
-.CompetitionApplicantList-csv body {
+.HostCompetitionApplicantList-csv body {
   padding: 1.5em;
   background: #f5f5f5;
 }
 
-.CompetitionApplicantList-csv table {
+.HostCompetitionApplicantList-csv table {
   border: 1px #a39485 solid;
   font-size: 0.9em;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
@@ -307,19 +307,19 @@
   overflow: hidden;
 }
 
-.CompetitionApplicantList-csv th {
+.HostCompetitionApplicantList-csv th {
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0.5em 1em;
   font-size: 1.4rem;
 }
 
-.CompetitionApplicantList-csv thead {
+.HostCompetitionApplicantList-csv thead {
   font-weight: bold;
   color: #000000;
   background: #f5f5f5;
 }
 
-.CompetitionApplicantList-csv td,
+.HostCompetitionApplicantList-csv td,
 th {
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0.5em 1em;
@@ -329,17 +329,17 @@ th {
   text-align: center;
 }
 
-.CompetitionApplicantList-csv td {
+.HostCompetitionApplicantList-csv td {
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 0.5em 1em;
   vertical-align: middle;
 }
 
-.CompetitionApplicantList-csv a {
+.HostCompetitionApplicantList-csv a {
   color: #73685d;
 }
 
-.CompetitionApplicantList-csv @media all and (max-width: 750px) {
+.HostCompetitionApplicantList-csv @media all and (max-width: 750px) {
   table,
   thead,
   tbody,
@@ -349,11 +349,11 @@ th {
     display: block;
   }
 
-  .CompetitionApplicantList-csv th {
+  .HostCompetitionApplicantList-csv th {
     text-align: center;
   }
 
-  .CompetitionApplicantList-csv table {
+  .HostCompetitionApplicantList-csv table {
     table-layout: fixed;
     position: relative;
     padding-bottom: 0;
@@ -361,28 +361,28 @@ th {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 
-  .CompetitionApplicantList-csv thead {
+  .HostCompetitionApplicantList-csv thead {
     float: left;
     white-space: nowrap;
   }
 
-  .CompetitionApplicantList-csv tbody {
+  .HostCompetitionApplicantList-csv tbody {
     overflow-x: auto;
     overflow-y: hidden;
     position: relative;
     white-space: nowrap;
   }
 
-  .CompetitionApplicantList-csv tr {
+  .HostCompetitionApplicantList-csv tr {
     display: inline-block;
     vertical-align: top;
   }
 
-  .CompetitionApplicantList-csv th {
+  .HostCompetitionApplicantList-csv th {
     border-bottom: 1px solid #a39485;
   }
 
-  .CompetitionApplicantList-csv td {
+  .HostCompetitionApplicantList-csv td {
     border-bottom: 1px solid #e5e5e5;
   }
 }

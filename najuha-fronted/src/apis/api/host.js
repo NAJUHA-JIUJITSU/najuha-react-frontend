@@ -27,3 +27,12 @@ export const getHostCompetitionApplicationListCsv = async (
     handleError(e)
   }
 }
+
+export const getHostCompetitionList = async () => {
+  try {
+    const res = await axiosApiWithToken(`/host/competitions`, 'get')
+    return res
+  } catch (e) {
+    handleError(e)
+  }
+}

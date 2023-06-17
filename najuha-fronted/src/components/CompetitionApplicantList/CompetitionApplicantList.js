@@ -3,7 +3,6 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import dropdownicon from '../../src_assets/드랍다운아이콘.svg'
-import deleteicon from '../../src_assets/명단삭제로고.svg'
 import { getCompetitionDetail } from '../../apis/api/competition'
 import { getCompetitionApplicationList } from '../../apis/api/competition'
 import { CsvToHtmlTable } from 'react-csv-to-table'
@@ -88,6 +87,8 @@ function CompetitionApplicantList() {
             return '체급'
           case 'team':
             return '소속팀'
+          default:
+            return ''
         }
       }
     )
