@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import dropdownicon from '../../src_assets/드랍다운아이콘.svg'
 import { getCompetitionDetail } from '../../apis/api/competition'
-import { getCompetitionApplicationList } from '../../apis/api/competition'
+import { getHostCompetitionApplicationList } from '../../apis/api/host'
 import { CsvToHtmlTable } from 'react-csv-to-table'
 import './HostCompetitionApplicantList.css'
 
@@ -92,7 +92,7 @@ function CompetitionApplicantList() {
   }
 
   const getCsvData = async () => {
-    const res = await getCompetitionApplicationList(id)
+    const res = await getHostCompetitionApplicationList(id)
     if (res && res.data && res.data.result) {
       setApplicantRawData(res.data.result)
       setCsvData(convertCsvHeader(jsonToCsv(res.data.result)))

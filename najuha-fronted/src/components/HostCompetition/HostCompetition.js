@@ -5,6 +5,7 @@ import sampleposter from '../../src_assets/samplePoster.png'
 import copy from '../../src_assets/copy.png'
 import dayjs from 'dayjs'
 import { getCompetitionDetail } from '../../apis/api/competition'
+import { getHostCompetitionApplicationListCsv } from '../../apis/api/host'
 import { Cookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode'
 
@@ -150,6 +151,37 @@ function HostCompetition() {
     }
   }
 
+  function downloadCsv(data, filename) {
+    let csvData = new Blob([data], { type: 'text/csv' })
+    let csvUrl = URL.createObjectURL(csvData)
+    let tempLink = document.createElement('a')
+
+    tempLink.href = csvUrl
+    tempLink.setAttribute('download', filename)
+    tempLink.click()
+  }
+
+  async function handleCsvDownload() {
+    const [res1, res2] = await Promise.all([
+      getHostCompetitionApplicationListCsv(id, 'unpaid'),
+      getHostCompetitionApplicationListCsv(id, 'paid'),
+    ])
+
+    if (res1?.status === 200 && res1.data.result.csv) {
+      downloadCsv(
+        res1.data.result.csv,
+        `미결제_${viewCompetition.title}_참가자명단.csv`
+      )
+    }
+
+    if (res2?.status === 200 && res2.data.result.csv) {
+      downloadCsv(
+        res2.data.result.csv,
+        `결제완료_${viewCompetition.title}_참가자명단.csv`
+      )
+    }
+  }
+
   useEffect(() => {
     getCompetition(id)
   }, [])
@@ -266,12 +298,7 @@ function HostCompetition() {
           </div>
         </div>
         <div className="competition-top-buttons">
-          <button
-            id="competition-top-button1"
-            onClick={() => {
-              window.location.href = competition.nonPartnershipPageLink
-            }}
-          >
+          <button id="competition-top-button1" onClick={handleCsvDownload}>
             다운로드
           </button>
         </div>
