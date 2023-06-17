@@ -161,6 +161,57 @@ function HostCompetition() {
     tempLink.click()
   }
 
+  const convertHeaderToKorean = csvData => {
+    console.log(csvData)
+    const csvDataArray = csvData.split('\n')
+    const headers = csvDataArray[0].split(',')
+    const newHeaders = headers.map(header => {
+      switch (header) {
+        case 'division':
+          return '디비전'
+        case 'playerName':
+          return '이름'
+        case 'playerBirth':
+          return '생년월일'
+        case 'phoneNumber':
+          return '전화번호'
+        case 'uniform':
+          return '유니폼'
+        case 'gender':
+          return '성별'
+        case 'divisionName':
+          return '디비전명'
+        case 'belt':
+          return '벨트'
+        case 'weight':
+          return '체급'
+        case 'team':
+          return '소속팀'
+        case 'isPayment':
+          return '결제여부'
+        case 'amount':
+          return '결제금액'
+        case 'normal':
+          return '일반금액'
+        case 'earlyBird':
+          return '얼리버드할인'
+        case 'withGi':
+          return '노기할인'
+        case 'withOther':
+          return '앱솔할인'
+        case 'orderId':
+          return '주문번호'
+        case 'paymentId':
+          return '결제ID'
+        default:
+          return header
+      }
+    })
+
+    csvDataArray[0] = newHeaders.join(',')
+    return csvDataArray.join('\n')
+  }
+
   async function handleCsvDownload() {
     const [res1, res2] = await Promise.all([
       getHostCompetitionApplicationListCsv(id, 'unpaid'),
@@ -168,17 +219,13 @@ function HostCompetition() {
     ])
 
     if (res1?.status === 200 && res1.data.result.csv) {
-      downloadCsv(
-        res1.data.result.csv,
-        `미결제_${viewCompetition.title}_참가자명단.csv`
-      )
+      const csv1 = convertHeaderToKorean(res1.data.result.csv)
+      downloadCsv(csv1, `미결제_${viewCompetition.title}_참가자명단.csv`)
     }
 
     if (res2?.status === 200 && res2.data.result.csv) {
-      downloadCsv(
-        res2.data.result.csv,
-        `결제완료_${viewCompetition.title}_참가자명단.csv`
-      )
+      const csv2 = convertHeaderToKorean(res2.data.result.csv)
+      downloadCsv(csv2, `결제완료_${viewCompetition.title}_참가자명단.csv`)
     }
   }
 
