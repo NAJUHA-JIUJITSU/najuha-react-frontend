@@ -23,6 +23,13 @@ function AdminUserList() {
     setOffset(0)
   }
 
+  const handleSearchClick = async () => {
+    setUserList([])
+    setOffset(0)
+    const res = await getAdminUserList(0, searchName, searchLevel)
+    setUserList(res.data.result)
+  }
+
   const handleSearchLevel = event => {
     setSearchLevel(event.target.value)
     setUserList([])
@@ -48,7 +55,7 @@ function AdminUserList() {
   useEffect(() => {
     setUserList([])
     getUserList()
-  }, [searchName, searchLevel])
+  }, [searchLevel])
 
   const data = React.useMemo(() => userList, [userList])
   const columns = React.useMemo(
@@ -87,16 +94,17 @@ function AdminUserList() {
   return (
     <div className="AdminUserList-wrapper">
       <div>
-        <input
-          type="text"
-          placeholder="이름으로 검색"
-          onChange={handleSearchNameChange}
-        />
         <select value={searchLevel} onChange={handleSearchLevel}>
           <option value={2}>Level 2</option>
           <option value={3}>Level 3</option>
           <option value={5}>Level 5</option>
         </select>
+        <input
+          type="text"
+          placeholder="이름으로 검색"
+          onChange={handleSearchNameChange}
+        />
+        <button onClick={handleSearchClick}>검색</button>
       </div>
       <div className="AdminUserList">
         <InfiniteScroll
