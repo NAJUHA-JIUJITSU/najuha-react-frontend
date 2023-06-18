@@ -213,21 +213,13 @@ function HostCompetition() {
   }
 
   async function handleCsvDownload() {
-    const [res1, res2] = await Promise.all([
-      getHostCompetitionApplicationListCsv(id, 'unpaid'),
-      getHostCompetitionApplicationListCsv(id, 'paid'),
-    ])
+    const res = await getHostCompetitionApplicationListCsv(id, 'paid')
 
-    if (res1?.status === 200 && res1.data.result.csv) {
-      const csv1 = convertHeaderToKorean(res1.data.result.csv)
-      downloadCsv(csv1, `미결제_${viewCompetition.title}_참가자명단.csv`)
-    }
-
-    if (res2?.status === 200 && res2.data.result.csv) {
-      const csv2 = convertHeaderToKorean(res2.data.result.csv)
+    if (res?.status === 200 && res.data.result.csv) {
+      const csv2 = convertHeaderToKorean(res.data.result.csv)
       downloadCsv(csv2, `결제완료_${viewCompetition.title}_참가자명단.csv`)
     }
-    if (!res1.data.result.csv && !res2.data.result.csv) {
+    if (!res.data.result.csv) {
       alert('아직 참가자가 없습니다.')
     }
   }
