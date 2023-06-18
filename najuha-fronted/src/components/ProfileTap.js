@@ -83,7 +83,7 @@ function ProfileTap(props) {
           >
             내 프로필
           </div>
-          {userLevel > 3 && (
+          {userLevel >= 3 && (
             <div
               className="ProfileTap_information-btn"
               onClick={() => {

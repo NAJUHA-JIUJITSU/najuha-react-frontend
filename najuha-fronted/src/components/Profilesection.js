@@ -51,7 +51,7 @@ function Profilesection() {
         getCompetitionApplication()
         getUsers()
       }
-      if (userLevel > 3) {
+      if (userLevel >= 3) {
         getHostCompetitions()
       }
     }
