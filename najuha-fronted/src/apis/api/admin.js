@@ -227,3 +227,22 @@ export const postAdminFixCompetitionPayments = async id => {
     console.log(e)
   }
 }
+
+// 6.20 유저 조회
+export const getAdminUserList = async (offset, name, level) => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/users?offset=${offset}&name=${name}&level=${level}`,
+      'get'
+    )
+    return res
+  } catch (e) {}
+}
+
+// 6.21 유저 레벨 수정
+export const patchAdminUserLevel = async (userId, data) => {
+  try {
+    const res = await axiosApiWithToken(`/admin/users/${userId}`, 'patch', data)
+    return res
+  } catch (e) {}
+}

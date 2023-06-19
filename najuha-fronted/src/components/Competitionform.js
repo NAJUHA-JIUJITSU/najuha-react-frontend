@@ -449,7 +449,7 @@ function Competition_form() {
               <input
                 type="text"
                 className="competition_register_top_host"
-                placeholder="대회사"
+                placeholder="대회사_id"
                 value={host}
                 onChange={e => {
                   setHost(e.target.value)
@@ -461,7 +461,7 @@ function Competition_form() {
               <input
                 type="text"
                 className="competition_register_top_doreOpen"
-                placeholder="대회날짜 ex)0000-00-00 00:00:00"
+                placeholder="2023-04-13 23:59:59"
                 value={doreOpen}
                 onChange={e => {
                   setDoreOpen(e.target.value)
@@ -473,7 +473,7 @@ function Competition_form() {
               <input
                 type="text"
                 className="competition_register_top_registrationDate"
-                placeholder="신청시작 ex)0000-00-00 00:00:00"
+                placeholder="ex) 2023-04-13 00:00:00, 해당없음) 2030-01-01 00:00:00"
                 value={registrationDate}
                 onChange={e => {
                   setRegistrationDate(e.target.value)
@@ -485,7 +485,7 @@ function Competition_form() {
               <input
                 type="text"
                 className="competition_register_top_registrationDeadLine"
-                placeholder="신청마감 ex)0000-00-00 00:00:00"
+                placeholder="ex) 2023-04-13 23:59:59, 해당없음) 2030-01-02 00:00:00"
                 value={registrationDeadLine}
                 onChange={e => {
                   setRegistrationDeadLine(e.target.value)
@@ -521,7 +521,7 @@ function Competition_form() {
               <input
                 type="text"
                 className="competition_register_top_earlyBirdDeadline"
-                placeholder="얼리버드기한 ex)2022-08-27 00:00:00"
+                placeholder="ex) 2023-04-13 23:59:59, 해당없음) 1998-01-01 00:00:00"
                 value={earlybirdDeadline}
                 onChange={e => {
                   setEarlybirdDeadline(e.target.value)
@@ -533,7 +533,7 @@ function Competition_form() {
               <input
                 type="text"
                 className="competition_register_top_applicantTableOpenDate"
-                placeholder="선수명단오픈 ex)2022-08-27 00:00:00"
+                placeholder="ex) 2023-04-13 00:00:00, 해당없음) 2030-01-01 00:00:00"
                 value={applicantTableOpenDate}
                 onChange={e => {
                   setApplicantTableOpenDate(e.target.value)
@@ -545,7 +545,7 @@ function Competition_form() {
               <input
                 type="text"
                 className="competition_register_top_tournamentTableLink"
-                placeholder="대진표오픈 ex)2022-08-27 00:00:00"
+                placeholder="ex) 2023-04-13 00:00:00, 해당없음) 1998-01-01 00:00:00"
                 value={tournamentTableOpenDate}
                 onChange={e => {
                   setTournamentTableOpenDate(e.target.value)

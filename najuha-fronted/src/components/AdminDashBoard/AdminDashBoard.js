@@ -38,6 +38,13 @@ function AdminDashBoard() {
           <li>회원수 : {userCnt}</li>
           <li>방문자수 : {competitionListViewCnt}</li>
         </ul>
+        <button
+          onClick={() => {
+            navigate('/AdminUserList')
+          }}
+        >
+          유저 리스트 페이지로 이동
+        </button>
       </div>
       <button
         onClick={createCompetition}

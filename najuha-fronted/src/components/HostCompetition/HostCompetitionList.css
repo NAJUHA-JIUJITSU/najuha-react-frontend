@@ -1,0 +1,360 @@
+/* UA reset */
+
+/* Typography */
+
+:root {
+  font-size: 62.5%; /* 10px */
+}
+
+/* Layout */
+
+.HostCompetitionList_right {
+  width: 68%;
+  height: 84vh;
+  margin-left: 4%;
+  overflow-y: auto;
+}
+.HostCompetitionList_right::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+}
+.HostCompetitionList_right::-webkit-scrollbar-thumb {
+  background-color: #dedede;
+  border-radius: 10px;
+  height: 3%;
+}
+
+/* Components */
+
+.HostCompetitionList_right h2 {
+  font-size: 3rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  box-sizing: border-box;
+  font-weight: 400;
+}
+.HostCompetitionList_competitonNavbar {
+  position: sticky;
+  top: 0px;
+  background-color: rgba(255, 255, 255, 1);
+  z-index: 99;
+  padding-top: 4rem;
+  border-bottom: solid 1px #f0f0f0;
+  box-sizing: border-box;
+}
+
+.HostCompetitionList_competitonNav {
+  color: #b4b4b4;
+  display: flex;
+  gap: 1rem;
+  font-size: 2rem;
+  letter-spacing: -0.2rem;
+  text-align: center;
+}
+
+.HostCompetitionList_competitonNav li:after {
+  display: block;
+  content: '';
+  width: 100px;
+  /* border-bottom: 1px solid #a01a1a; */
+  padding: 0.5rem;
+}
+
+.HostCompetitionList_active {
+  color: #000000;
+  font-weight: 500;
+}
+.HostCompetitionList_competitonNav .HostCompetitionList_active:after {
+  border-bottom: 4px solid black;
+}
+
+.HostCompetitionList_competitonHr {
+  height: 4px;
+  border: 0;
+  background-color: #fbfbfb;
+  margin-bottom: 2rem;
+}
+
+/* 대회 리스트 목록 */
+.HostCompetitionList_competitonNav {
+  cursor: pointer;
+}
+
+.HostCompetitionList_competitonList {
+  /* border : solid 1px red; */
+  padding: 4px;
+}
+
+.HostCompetitionList_competitoninfo {
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  color: #8c8c8c;
+  text-align: right;
+  padding: 0.4rem;
+  letter-spacing: -0.12rem;
+}
+
+.HostCompetitionList_competitoninfo a,
+.HostCompetitionList_competitoninfo img {
+  cursor: pointer;
+}
+
+/* 대회 박스 */
+
+.HostCompetitionList_competitoninfo a {
+  margin-bottom: 1rem;
+}
+
+.HostCompetitionList_competitoninfo img {
+  margin-left: 0.5rem;
+  margin-bottom: -1px;
+}
+
+.HostCompetitionList_competitonbox {
+  border: solid 1px #ececec;
+  height: 16.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: -6rem;
+  border-radius: 10px;
+  display: flex;
+}
+
+.HostCompetitionList_boxDelete {
+  margin-left: 96.5%;
+  margin-top: 1rem;
+}
+.HostCompetitionList_boxDeleteHidden {
+  display: none;
+}
+
+.HostCompetitionList_boxLeft {
+  /* border : solid 1px red; */
+  width: 15%;
+  margin: 2rem;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.HostCompetitionList_boxLeft img {
+  width: 100%;
+  height: 100%;
+}
+
+.HostCompetitionList_posterBlack {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.432);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.HostCompetitionList_boxLeft h3 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.8rem;
+  color: white;
+  letter-spacing: -0.04rem;
+  z-index: 10;
+}
+
+.HostCompetitionList_boxLeft span {
+  font-size: 2rem;
+}
+
+.HostCompetitionList_boxRight {
+  /* border : solid 1px blue; */
+  width: 85%;
+  margin-bottom: 2rem;
+  letter-spacing: -0.1rem;
+
+  overflow: hidden;
+}
+
+.HostCompetitionList_boxRight img {
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.HostCompetitionList_deleteNone {
+  display: block;
+  height: 14px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.HostCompetitionList_boxRightTitle {
+  width: 98%;
+  padding-bottom: 0.4rem;
+  height: 65%;
+  align-items: center;
+  font-size: 1.4rem;
+  box-sizing: border-box;
+}
+
+.HostCompetitionList_boxRightTitle h3 {
+  margin-bottom: 1rem;
+  font-size: 2.4rem;
+
+  height: 1.8em;
+  display: block;
+  /* white-space: normal; */
+  white-space: nowrap;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.HostCompetitionList_boxRightTitle p {
+  color: #696969;
+}
+
+.HostCompetitionList_boxRightCost {
+  display: flex;
+  margin-right: 2rem;
+  margin-bottom: 6rem;
+  box-sizing: border-box;
+}
+
+.HostCompetitionList_costLayout {
+  color: #8c8c8c;
+  display: flex;
+  align-items: flex-end;
+  margin-left: auto;
+}
+
+.HostCompetitionList_costLayout h3 {
+  font-size: 1.4rem;
+  margin-right: -0.4rem;
+}
+
+.HostCompetitionList_costLayout p {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-left: 1rem;
+  margin-right: 0.8rem;
+}
+
+.HostCompetitionList_costBtn {
+  width: 96px;
+  height: 40px;
+  min-width: 96px;
+  min-height: 40px;
+
+  border-radius: 30px;
+  border: 1px solid #f1f1f1;
+  text-align: center;
+  background: #ffffff;
+  color: #8c8c8c;
+  font-weight: 400;
+  font-size: 1.6rem;
+  box-shadow: 0.5px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.HostCompetitionList_costBtn {
+  cursor: default;
+}
+
+.HostCompetitionList_payCss .HostCompetitionList_costBtn {
+  cursor: pointer;
+}
+
+/* 결제하기 금액 + 버튼 효과 */
+.HostCompetitionList_payCss {
+  color: #000000;
+}
+.HostCompetitionList_payCss .HostCompetitionList_costBtn {
+  color: #4e82e5;
+}
+
+@media (max-width: 1049px) {
+  /* Layout */
+
+  .HostCompetitionList_right {
+    width: 100%;
+    margin-left: 0%;
+  }
+
+  #payInfoBtn {
+    width: 6.6rem;
+    height: 3.2rem;
+    font-size: 1.4rem;
+    margin: 0 4px;
+  }
+}
+
+@media (max-width: 750px) {
+  .HostCompetitionList_costLayout {
+    align-items: center;
+  }
+
+  .HostCompetitionList_right {
+    height: 88vh;
+  }
+
+  .HostCompetitionList_right h2 {
+    font-size: 2.6rem;
+    padding-top: 1rem;
+    padding-bottom: 4rem;
+  }
+  .HostCompetitionList_competitonNav li:after {
+    width: 90px;
+  }
+
+  .HostCompetitionList_boxDelete {
+    margin-left: 92%;
+    margin-top: 1rem;
+  }
+
+  .HostCompetitionList_competitonbox {
+    height: 125px;
+    margin-bottom: 0.6rem;
+  }
+
+  .HostCompetitionList_boxLeft {
+    margin: 0rem;
+    width: 100px;
+    min-width: 100px;
+    margin-right: 0.8rem;
+    border-radius: 10px 0 0 10px;
+    overflow: hidden;
+  }
+
+  .HostCompetitionList_boxLeft h3 {
+    font-size: 2.4rem;
+  }
+
+  .HostCompetitionList_boxRight img {
+    margin-bottom: 0;
+  }
+
+  .HostCompetitionList_boxRightTitle h3 {
+    font-size: 2rem;
+    height: 1.4em;
+  }
+
+  .HostCompetitionList_boxRightTitle p {
+    font-size: 1.4rem;
+  }
+
+  .HostCompetitionList_boxRightCost {
+    display: flex;
+    /* border: solid 1px red; */
+    margin-right: 0rem;
+    margin-bottom: 2rem;
+  }
+
+  .HostCompetitionList_boxRightCost p {
+    font-size: 1.8rem;
+  }
+  .HostCompetitionList_boxRightCost h3 {
+    font-size: 1.4rem;
+  }
+}
