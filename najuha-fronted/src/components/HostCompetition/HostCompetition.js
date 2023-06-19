@@ -162,7 +162,6 @@ function HostCompetition() {
   }
 
   const convertHeaderToKorean = csvData => {
-    console.log(csvData)
     const csvDataArray = csvData.split('\n')
     const headers = csvDataArray[0].split(',')
     const newHeaders = headers.map(header => {
