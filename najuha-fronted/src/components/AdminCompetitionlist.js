@@ -55,6 +55,7 @@ function AdminCompetitionlist() {
   const [activeMonth, setActiveMonth] = useState(0)
   const [activeLocation, setActiveLocation] = useState(0)
   const [userId, setUserId] = useState('')
+  const [filters, setFilters] = useState([]); // 사용자가 선택한 필터 조건들
 
   const offsetRef = useRef()
   const locationRef = useRef()
@@ -108,41 +109,44 @@ function AdminCompetitionlist() {
     return
   }
 
-  async function clickedLike(competitionId, i) {
+  // 좋아요 클릭
+  async function clickedLike(competitionId) {
+    //로그인 안한 상태 
     if (!userId) {
       alert('로그인이 필요합니다')
       window.location.href = kakaoAuthURL
       return
     }
+   
     let res = await postLike(competitionId)
 
     if (res?.status === 200) {
       let likeCount = res.data.result.competitionLikeCount
-      changeCompetitionLiked(likeCount, i)
+      changeCompetitionLiked(likeCount, competitionId)
     }
+
     return
   }
 
-  function changeCompetitionLiked(likeCount, competitionoffset) {
-    let copycompetitions = [...competitions]
-    copycompetitions[competitionoffset].competitionLikeCount = likeCount
-    if (
-      copycompetitions[competitionoffset].CompetitionLikes.find(
-        users => users.userId === userId
-      )
-    ) {
-      copycompetitions[competitionoffset].CompetitionLikes = copycompetitions[
-        competitionoffset
-      ].CompetitionLikes.filter(users => users.userId !== userId)
-    } else {
-      let newObject = { userId: userId }
-      copycompetitions[competitionoffset].CompetitionLikes =
-        copycompetitions[competitionoffset].CompetitionLikes.concat(newObject)
-    }
-
-    setCompetitions(copycompetitions)
+  // 좋아요 수 변경
+  function changeCompetitionLiked(likeCount, competitionId) {
+    setCompetitions(prevCompetitions => {
+    return prevCompetitions.map(competition => {
+      if (competition.id === competitionId) {
+        return {
+          ...competition,
+          competitionLikeCount: likeCount,
+          CompetitionLikes: competition.CompetitionLikes.find(like => like.userId === userId)
+            ? competition.CompetitionLikes.filter(like => like.userId !== userId)
+            : [...competition.CompetitionLikes, { userId }]
+        };
+      } else {
+        return competition;
+      }
+    });
+  });
   }
-
+  
   useEffect(() => {
     const currentElement = lastElement
     const currentObserver = observer.current
@@ -225,6 +229,86 @@ function AdminCompetitionlist() {
   useEffect(() => {
     console.log(`title값은: ${title}`)
   }, [title])
+
+  //대회 필터해주는 함수
+  const getFilteredAndSortedCompetitions = (competitions) => {
+    // 필터 적용
+    let filteredCompetitions = competitions
+
+    // 선택된 필터 조건들을 모두 적용
+    filters.forEach((filter) => {
+      //신청가능 필터
+      if (filter === 'active') {
+        filteredCompetitions = filteredCompetitions.filter((competition) => {
+          // 마감기한 조건에 따라 필터링
+          if (competition.year === '2030') {
+            return
+          }
+      
+          let opendate = dayjs(competition.registrationDate, 'YYYY-MM-DD')
+          let finishdate = dayjs(competition.registrationDeadline, 'YYYY-MM-DD')
+          let deadlineDiffM = todaytime.diff(finishdate, 'm')
+          let opendateDiffM = todaytime.diff(opendate, 'm')
+
+          if( (opendateDiffM >= 0) && (deadlineDiffM <= 0) ) {
+            return true
+          }
+        });
+      }
+      //얼리버드 필터
+      else if (filter === 'early') {
+        filteredCompetitions = filteredCompetitions.filter((competition) => {
+          
+          // 얼리버드 여부 
+          let opendate = dayjs(competition.registrationDate, 'YYYY-MM-DD')
+          let finishdate = dayjs(competition.registrationDeadline, 'YYYY-MM-DD')
+          let earlyBirdDate = dayjs(competition.earlyBirdDeadline, 'YYYY-MM-DD')
+
+          let deadlineDiff = todaytime.diff(finishdate, 'm')
+          let openDiff = todaytime.diff(opendate, 'm')
+          let earlyBirdDiff = todaytime.diff(earlyBirdDate, 'm')
+
+          if (openDiff >= 0 && deadlineDiff <= 0 && earlyBirdDiff < 0) {
+            return true
+          }
+        });
+      }
+      //간편결제 필터 
+      else if (filter === 'easypay') {
+        filteredCompetitions = filteredCompetitions.filter((competition) => {
+          // 파트너십 여부
+          return competition.isPartnership
+        });
+      }
+      //내 좋아요 필터 
+      else if (filter === 'likes') {
+        // 사용자가 로그인하지 않은 경우, 좋아요 체크하지 않음
+        if (!userId) {
+            alert('로그인이 필요합니다')
+            window.location.href = kakaoAuthURL
+            return false
+        }
+
+        filteredCompetitions = filteredCompetitions.filter((competition) => {
+          // 대회의 CompetitionLikes 배열에서 현재 사용자의 ID와 일치하는 객체를 찾아서 좋아요 여부를 반환
+          return competition.CompetitionLikes.some((like) => like.userId === userId);
+        });
+      }
+    });
+
+    return filteredCompetitions;
+  }
+
+  // 필터 목록 변경
+  const handleFilter = (condition) => {
+    if (filters.includes(condition)) {
+      // 이미 선택된 필터인 경우, 해당 필터를 해제
+      setFilters(filters.filter((filter) => filter !== condition));
+    } else {
+      // 선택되지 않은 필터인 경우, 해당 필터를 추가
+      setFilters([...filters, condition]);
+    }
+  };
 
   function listRefresh() {
     // 검색 변수가 바뀔때마다 초기화 해주는 역할.
@@ -387,7 +471,9 @@ function AdminCompetitionlist() {
   }
 
   function renderCompetitionList() {
-    return competitions.map((competition, i) => {
+    let filteredCompetitions = getFilteredAndSortedCompetitions(competitions)
+
+    return filteredCompetitions.map((competition, i) => {
       let curcompetition = competitionParsing(competition)
       let cardGray = competitionCardGray(
         competition.registrationDate,
@@ -460,7 +546,7 @@ function AdminCompetitionlist() {
                 </div>
                 <div
                   className="each-competition-body-like"
-                  onClick={() => clickedLike(curcompetition.id, i)}
+                  onClick={() => clickedLike(curcompetition.id)}
                 >
                   {curcompetition.likeUsers.find(
                     users => users.userId === userId
@@ -662,6 +748,44 @@ function AdminCompetitionlist() {
             }}
           />
         </div>
+      </div>
+      <div className="competition-filter">
+        <label>
+          <input
+            type="checkbox"
+            value="active"
+            checked={filters.includes('active')}
+            onChange={() => handleFilter('active')}
+          />
+          <span className='filter-active'>신청가능</span>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            value="early"
+            checked={filters.includes('early')}
+            onChange={() => handleFilter('early')}
+          />
+            <span className='filter-early'>얼리버드</span>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            value="easypay"
+            checked={filters.includes('easypay')}
+            onChange={() => handleFilter('easypay')}
+          />
+            <span className='filter-easypay'>간편결제</span>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            value="likes"
+            checked={filters.includes('likes')}
+            onChange={() => handleFilter('likes')}
+          />
+             <span className='filter-likes'>좋아요 <img src={likeFull}></img></span>
+        </label>
       </div>
       <div className="competition-list">
         <ul className="competition-row">
