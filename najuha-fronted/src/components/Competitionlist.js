@@ -8,7 +8,7 @@ import likeFull from '../src_assets/heartFull.png'
 import like from '../src_assets/heart.png'
 import viewCnt from '../src_assets/viewCnt.png'
 import dayjs from 'dayjs'
-import { getCompetitionList } from '../apis/api/competition'
+import { getCompetitionList, postCompetitionListViewCnt } from '../apis/api/competition'
 import { postLike } from '../apis/api/like'
 import { Cookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode'
@@ -99,6 +99,12 @@ function Competitionlist() {
       let newCompetitions = res.data.result
       setCompetitions(competitions => [...competitions, ...newCompetitions])
     }
+    return
+  }
+ 
+  async function postViewCompetitionListPage() {
+    let res = await postCompetitionListViewCnt()
+    
     return
   }
 
@@ -199,7 +205,7 @@ function Competitionlist() {
     }
   }, [locationDropdown])
 
-  // 유저 아이디, 레벨 확인하기
+  // 유저 아이디, 레벨 확인하기, 페이지 조회수 증가
   useEffect(() => {
     let decodedToken
     if (xAccessToken) {
@@ -211,6 +217,9 @@ function Competitionlist() {
       setUserId(decodedToken.userId)
       setDecodedToken(decodedToken)
     }
+
+    // 조회수 증가
+    postViewCompetitionListPage()
   }, [])
 
   function listRefresh() {
