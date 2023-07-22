@@ -39,6 +39,7 @@ export const getUserApplicationCompetitionInfo = async applicationId => {
       `/users/competitionApplications/${applicationId}`,
       'get'
     )
+    console.log(res)
     return res
   } catch (e) {
     handleError(e)
@@ -78,10 +79,13 @@ export const patchUserApplicationCompetition = async (
 }
 
 //2.8 유저결제환불
-export const deleteUserPayment = async orderId => {
+export const deleteUserPayment = async (orderId, applicationInfoIds) => {
   try {
-    console.log(orderId)
-    const res = await axiosApiWithToken(`/users/payments/${orderId}`, 'delete')
+    const res = await axiosApiWithToken(
+      `/users/payments/${orderId}`,
+      'delete',
+      { applicationInfoIds }
+    )
     return res
   } catch (e) {
     alert('환불에 실패하였습니다.')
