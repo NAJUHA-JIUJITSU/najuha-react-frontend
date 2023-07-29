@@ -206,13 +206,45 @@ function PaymentInfo() {
       `결제 ID: ${application?.competitionPayment?.id}\n` +
       `결제 금액: ${application?.competitionPayment?.amount}원`
 
+    const applicationInfoIds = []
+    for (const info of application.CompetitionApplicationInfos) {
+      if (info.status === 'ACTIVE') applicationInfoIds.push(info.id)
+    }
+
     return (
       <button
         onClick={() => {
           if (window.confirm(confirmMessage))
-            refund(application?.competitionPayment?.orderId)
+            refund(application?.competitionPayment?.orderId, applicationInfoIds)
         }}
         style={{ color: 'red', height: '30px', marginTop: '15px' }}
+      >
+        환불
+      </button>
+    )
+  }
+
+  // 부분 환불 버튼
+  function PartialRefundButton({ orderId, applicationInfo }) {
+    const confirmMessage =
+      '정말로 환불하시겠습니까?\n' +
+      `applicationInfoId: ${applicationInfo.id}\n` +
+      `playerName: ${applicationInfo.playerName}\n` +
+      `uniform: ${applicationInfo.uniform}\n` +
+      `gender: ${applicationInfo.gender}` +
+      `divisionName: ${applicationInfo.divisionName}\n` +
+      `belt: ${applicationInfo.belt}\n` +
+      `weight: ${applicationInfo.weight}\n`
+
+    const applicationInfoIds = [applicationInfo.id]
+
+    return (
+      <button
+        onClick={() => {
+          if (window.confirm(confirmMessage))
+            refund(orderId, applicationInfoIds)
+        }}
+        style={{ color: 'red' }}
       >
         환불
       </button>
@@ -251,9 +283,13 @@ function PaymentInfo() {
     const renderInfoTableRow = (info, i) => {
       const { normal, amount, discount } = getTotalAmounts(info)
       const isEditing = editingRow === info.id
+      const isCancelled = info.status === 'CANCELED'
 
       return (
-        <tr key={info.id}>
+        <tr
+          key={info.id}
+          style={{ backgroundColor: isCancelled ? 'lightgray' : 'white' }}
+        >
           <td>{i + 1}</td>
           <td>
             {editingRow === info.id ? (
@@ -439,7 +475,7 @@ function PaymentInfo() {
           <td>{normal || 0}원</td>
           <td>{discount || 0}원</td>
           <td>
-            {isEditing ? (
+            {!isCancelled && isEditing ? (
               <>
                 <button onClick={() => saveChangesApplicationInfo(info)}>
                   저장
@@ -453,9 +489,15 @@ function PaymentInfo() {
                   취소
                 </button>
               </>
-            ) : (
-              <button onClick={() => setEditingRow(info.id)}>수정</button>
-            )}
+            ) : !isCancelled ? (
+              <>
+                <button onClick={() => setEditingRow(info.id)}>수정</button>
+                <PartialRefundButton
+                  orderId={application?.competitionPayment?.orderId}
+                  applicationInfo={info}
+                />
+              </>
+            ) : null}
           </td>
         </tr>
       )
@@ -467,6 +509,7 @@ function PaymentInfo() {
       let discount = 0
 
       application.CompetitionApplicationInfos.forEach(info => {
+        if (info.status === 'CANCELED') return
         const {
           normal: infoNormal,
           amount: infoAmount,
@@ -532,8 +575,8 @@ function PaymentInfo() {
   }
 
   //환불 함수
-  async function refund(orderId) {
-    await deleteAdminApplicationPayment(orderId)
+  async function refund(orderId, applicationInfoIds) {
+    await deleteAdminApplicationPayment(orderId, applicationInfoIds)
     getCompetitionApplicationInfo(paymentFilter)
   }
 

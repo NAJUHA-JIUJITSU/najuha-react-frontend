@@ -271,8 +271,9 @@ function ProfileInfo() {
           )
         }
         const applicationInfoIds = []
-        for (const info of rawCompetitionApplicationInfo.CompetitionApplicationInfos)
-          applicationInfoIds.push(info.id)
+        for (const info of rawCompetitionApplicationInfo.CompetitionApplicationInfos) {
+          if (info.status === 'ACTIVE') applicationInfoIds.push(info.id)
+        }
 
         return (
           //대회신청마감안지남
@@ -383,7 +384,7 @@ function ProfileInfo() {
         >
           <li>{i + 1}</li>
           <li>
-            {application.playerName} {isCanceled ? ' (환불)' : ''}
+            {isCanceled ? ' (환불)' : ''} {application.playerName}
           </li>
           <li>{application.playerBirth}</li>
           <li>{application.gender == 'female' ? '여자' : '남자'}</li>
