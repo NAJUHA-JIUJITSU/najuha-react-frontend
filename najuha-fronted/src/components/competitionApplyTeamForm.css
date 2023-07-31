@@ -341,6 +341,10 @@
   margin: 0 auto;
 }
 
+.CompetitionApplyTeamForm-bottom-table-row.canceled {
+  background-color: gainsboro;
+}
+
 .CompetitionApplyTeamForm-bottom-table-row li {
   width: 11.9%;
   display: table-cell;

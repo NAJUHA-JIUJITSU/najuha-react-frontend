@@ -147,12 +147,13 @@ function ProfileInfo() {
       application.CompetitionApplicationInfos[0].phoneNumber
     )
     let isGroup = application.isGroup ? '단체' : '개인'
+    let isPay =
+      application.competitionPayment === null ? '예상 결제금액' : '총 결제금액'
+
     let amount =
       today > new Date(application.Competition.earlyBirdDeadline)
         ? application.expectedPrice.earlyBirdFalse
         : application.expectedPrice.earlyBirdTrue
-    let isPay =
-      application.competitionPayment === null ? '예상 결제금액' : '총 결제금액'
 
     //버튼 렌더에 필요한 정보
     let competitionPayment = application.competitionPayment
@@ -196,8 +197,8 @@ function ProfileInfo() {
   }
 
   // 신청 대회 지우기(결제 미완료)
-  async function deleteCompetitionApplication(id) {
-    const res = await deleteUserApplicationCompetition(id)
+  async function deleteCompetitionApplication(id, data) {
+    const res = await deleteUserApplicationCompetition(id, data)
     if (res?.status === 200) {
       alert('대회가 삭제되었습니다.')
       navigate('/Profilepage', { state: 'UserApplicationList' })
@@ -206,8 +207,8 @@ function ProfileInfo() {
   }
 
   //결제 취소하기(결제 완료)
-  async function reundPayment(orderId) {
-    const res = await deleteUserPayment(orderId)
+  async function reundPayment(orderId, applicationInfoIds) {
+    const res = await deleteUserPayment(orderId, applicationInfoIds)
     if (res?.status === 200) {
       alert('환불이 완료되었습니다.')
       getCompetitionApplicationInfo()
@@ -269,6 +270,10 @@ function ProfileInfo() {
             </div>
           )
         }
+        const applicationInfoIds = []
+        for (const info of rawCompetitionApplicationInfo.CompetitionApplicationInfos) {
+          if (info.status === 'ACTIVE') applicationInfoIds.push(info.id)
+        }
 
         return (
           //대회신청마감안지남
@@ -277,9 +282,14 @@ function ProfileInfo() {
             <button
               id="CompetitionApplyTeamForm-bottom-table-buttons-save"
               onClick={() => {
-                if (window.confirm('환불하시겠습니까?')) {
+                if (
+                  window.confirm(
+                    '환불하시겠습니까?\n부분환불을 원하시는 경우 고객센터로 문의주세요.'
+                  )
+                ) {
                   reundPayment(
-                    rawCompetitionApplicationInfo?.competitionPayment.orderId
+                    rawCompetitionApplicationInfo?.competitionPayment.orderId,
+                    applicationInfoIds
                   )
                 }
               }}
@@ -366,13 +376,20 @@ function ProfileInfo() {
     )
   }
 
-  //(오칸 코드) 테이블 렌더
   function renderCompetitionApplicationList() {
     return competitionApplicationList.map((application, i) => {
+      const isCanceled = application.status === 'CANCELED'
       return (
-        <ul key={i} className="CompetitionApplyTeamForm-bottom-table-row">
+        <ul
+          key={i}
+          className={`CompetitionApplyTeamForm-bottom-table-row ${
+            isCanceled ? 'canceled' : ''
+          }`}
+        >
           <li>{i + 1}</li>
-          <li>{application.playerName}</li>
+          <li>
+            {isCanceled ? ' (환불)' : ''} {application.playerName}
+          </li>
           <li>{application.playerBirth}</li>
           <li>{application.gender == 'female' ? '여자' : '남자'}</li>
           <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
@@ -526,26 +543,63 @@ function ProfileInfo() {
             </ul>
             {renderCompetitionApplicationList()}
           </div>
-          <div className="CompetitionApplyTeamForm-bottom-table-results">
-            <div className="CompetitionApplyTeamForm-bottom-table-result CompetitionApplyTeamForm-bottom-table-result-red">
-              <h3 id="CompetitionApplyTeamForm-bottom-table-result-key">
-                총 할인금액
-              </h3>
-              <h3>
-                {rawCompetitionApplicationInfo.expectedPrice
-                  ? rawCompetitionApplicationInfo.expectedPrice.normalPrice -
-                    competitionApplicationInfo.amount
-                  : 0}
-                원
-              </h3>
+          {!rawCompetitionApplicationInfo.isPayment && (
+            <div className="CompetitionApplyTeamForm-bottom-table-results">
+              <div className="CompetitionApplyTeamForm-bottom-table-result CompetitionApplyTeamForm-bottom-table-result-red">
+                <h3 id="CompetitionApplyTeamForm-bottom-table-result-key">
+                  총 할인금액
+                </h3>
+                <h3>
+                  {rawCompetitionApplicationInfo.expectedPrice
+                    ? rawCompetitionApplicationInfo.expectedPrice.normalPrice -
+                      competitionApplicationInfo.amount
+                    : 0}
+                  원
+                </h3>
+              </div>
+              <div className="CompetitionApplyTeamForm-bottom-table-result">
+                <h3 id="CompetitionApplyTeamForm-bottom-table-result-key">
+                  총 결제금액
+                </h3>
+                <h3>{competitionApplicationInfo.amount}원</h3>
+              </div>
             </div>
-            <div className="CompetitionApplyTeamForm-bottom-table-result">
-              <h3 id="CompetitionApplyTeamForm-bottom-table-result-key">
-                총 결제금액
-              </h3>
-              <h3>{competitionApplicationInfo.amount}원</h3>
+          )}
+          {rawCompetitionApplicationInfo.isPayment && (
+            <div className="CompetitionApplyTeamForm-bottom-table-results">
+              <div className="CompetitionApplyTeamForm-bottom-table-result CompetitionApplyTeamForm-bottom-table-result-red">
+                <h3 id="CompetitionApplyTeamForm-bottom-table-result-key">
+                  총 할인금액
+                </h3>
+                <h3>
+                  {rawCompetitionApplicationInfo.CompetitionApplicationInfos.reduce(
+                    (total, application) => {
+                      if (application.status === 'ACTIVE') {
+                        return (
+                          total +
+                          application.priceTag.earlyBird +
+                          application.priceTag.withGi +
+                          application.priceTag.withOther
+                        )
+                      } else {
+                        return total
+                      }
+                    },
+                    0
+                  )}
+                  원
+                </h3>
+              </div>
+              <div className="CompetitionApplyTeamForm-bottom-table-result">
+                <h3 id="CompetitionApplyTeamForm-bottom-table-result-key">
+                  총 결제금액
+                </h3>
+                <h3>
+                  {rawCompetitionApplicationInfo.competitionPayment.amount}원
+                </h3>
+              </div>
             </div>
-          </div>
+          )}
           {renderButton(competitionApplicationInfo)}
         </div>
         {/* 오칸 코드 가져온 부분 - 끝 */}
