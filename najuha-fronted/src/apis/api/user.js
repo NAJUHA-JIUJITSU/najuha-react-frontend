@@ -39,7 +39,6 @@ export const getUserApplicationCompetitionInfo = async applicationId => {
       `/users/competitionApplications/${applicationId}`,
       'get'
     )
-    console.log(res)
     return res
   } catch (e) {
     handleError(e)

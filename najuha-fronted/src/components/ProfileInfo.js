@@ -573,6 +573,7 @@ function ProfileInfo() {
                       if (application.status === 'ACTIVE') {
                         return (
                           total +
+                          application.priceTag.earlyBird +
                           application.priceTag.withGi +
                           application.priceTag.withOther
                         )
