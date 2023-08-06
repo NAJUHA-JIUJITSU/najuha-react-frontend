@@ -8,7 +8,6 @@ function CompetitionApplyTeampage() {
     <>
       <Navbar />
       <CompetitionApplyPatchTeamForm />
-      <Footer />
     </>
   )
 }
