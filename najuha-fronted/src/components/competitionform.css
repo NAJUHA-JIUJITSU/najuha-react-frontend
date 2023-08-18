@@ -79,6 +79,7 @@
 .uniform input,
 .gender input {
   width: 100px;
+  margin-bottom: 20px;
 }
 
 .uniform h4,
