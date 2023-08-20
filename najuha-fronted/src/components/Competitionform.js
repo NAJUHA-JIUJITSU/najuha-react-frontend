@@ -33,6 +33,7 @@ function Competition_form() {
       constantFactor: {
         uniform: '',
         gender: '',
+        isGenderIntegration: false,
         divisionName: '',
         birth: [null, null],
       },
@@ -67,6 +68,7 @@ function Competition_form() {
         constantFactor: {
           uniform: '',
           gender: '',
+          isGenderIntegration: false,
           divisionName: '',
           birth: [null, null],
         },
@@ -91,6 +93,12 @@ function Competition_form() {
   function changeGender(text, i) {
     let newDiv = [...divisions]
     newDiv[i].constantFactor.gender = text
+    setDivisions(newDiv)
+  }
+
+  function changeGenderIntegration(value, i) {
+    let newDiv = [...divisions]
+    newDiv[i].constantFactor.isGenderIntegration = value
     setDivisions(newDiv)
   }
 
@@ -287,6 +295,25 @@ function Competition_form() {
                 }}
               />
               <h4>여자</h4>
+            </div>
+            <h3>남녀통합</h3>
+            <div className="gender">
+              <h4>통합</h4>
+              <input
+                type="radio"
+                checked={divs.constantFactor.isGenderIntegration === true}
+                onChange={() => {
+                  changeGenderIntegration(true, i)
+                }}
+              />
+              <input
+                type="radio"
+                checked={divs.constantFactor.isGenderIntegration === false}
+                onChange={() => {
+                  changeGenderIntegration(false, i)
+                }}
+              />
+              <h4>따로</h4>
             </div>
             <input
               className="divisionName"
