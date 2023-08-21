@@ -345,6 +345,11 @@
   background-color: gainsboro;
 }
 
+.CompetitionApplyTeamForm-bottom-table-row.canceled.refundMode {
+  background: #ffffff;
+  color: #8c8c8c;
+}
+
 .CompetitionApplyTeamForm-bottom-table-row li {
   width: 11.9%;
   display: table-cell;

@@ -19,6 +19,9 @@ import {
 import Paymentmodal from './Paymentmodal'
 
 function ProfileInfo() {
+  const [selectedItems, setSelectedItems] = useState([]) // 환불을 위한 체크박스
+  const [selectAll, setSelectAll] = useState(false) // 전체선택을 위한 체크박스
+
   const [rawCompetitionApplicationInfo, setRawCompetitionApplicationInfo] =
     useState({})
   const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState(
@@ -33,6 +36,30 @@ function ProfileInfo() {
   const xAccessToken = cookies.get('x-access-token')
   const { decodedToken, isExpired } = useJwt(xAccessToken)
   const navigate = useNavigate()
+
+  const toggleCheckbox = index => {
+    // 환불시 체크박스 선택을 위한 함수
+    setSelectedItems(prevSelectedItems =>
+      prevSelectedItems.includes(index)
+        ? prevSelectedItems.filter(item => item !== index)
+        : [...prevSelectedItems, index]
+    )
+  }
+  const toggleSelectAll = () => {
+    // 환불시 전체선택 체크박스 함수
+    const allSelectedItems = [
+      ...Array(competitionApplicationList.length).keys(),
+    ].filter(index => competitionApplicationList[index].status !== 'CANCELED')
+    if (selectAll) {
+      setSelectedItems([])
+    } else {
+      setSelectedItems(allSelectedItems)
+    }
+    setSelectAll(!selectAll)
+  }
+  useEffect(() => {
+    console.log(selectedItems)
+  }, [selectedItems])
 
   // 결제에 필요한 state값
   const [paymentmodal, setPaymentmodal] = useState(false)
@@ -406,31 +433,46 @@ function ProfileInfo() {
   function renderCompetitionApplicationList() {
     return competitionApplicationList.map((application, i) => {
       const isCanceled = application.status === 'CANCELED'
+      const refundClassName = refundMode ? 'refundMode' : ''
+      const isDisable = refundMode && isCanceled
+      const isSelected = selectedItems.includes(i)
+      const selectedRowStyle = isSelected ? { backgroundColor: '#E7F3FF' } : {}
+
       return (
-        <>
+        <ul
+          key={i}
+          className={`CompetitionApplyTeamForm-bottom-table-row ${
+            isCanceled ? 'canceled' : ''
+          } ${refundClassName}`}
+          onClick={() => {
+            if (refundMode && !isCanceled) toggleCheckbox(i)
+          }}
+          style={
+            (selectedRowStyle, { cursor: isDisable ? 'default' : 'pointer' })
+          }
+        >
           {refundMode ? (
-            ''
+            <li>
+              <input
+                type="checkbox"
+                disabled={isDisable}
+                checked={selectedItems.includes(i)}
+              />
+            </li>
           ) : (
-            <ul
-              key={i}
-              className={`CompetitionApplyTeamForm-bottom-table-row ${
-                isCanceled ? 'canceled' : ''
-              }`}
-            >
-              <li>{i + 1}</li>
-              <li>
-                {isCanceled ? ' (환불)' : ''} {application.playerName}
-              </li>
-              <li>{application.playerBirth}</li>
-              <li>{application.gender == 'female' ? '여자' : '남자'}</li>
-              <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
-              <li>{application.divisionName}</li>
-              <li>{application.belt}</li>
-              <li>{application.weight}</li>
-              <li>{application.pricingPolicy.normal}원</li>
-            </ul>
+            <li>{i + 1}</li>
           )}
-        </>
+          <li>
+            {isCanceled ? ' (환불)' : ''} {application.playerName}
+          </li>
+          <li>{application.playerBirth}</li>
+          <li>{application.gender == 'female' ? '여자' : '남자'}</li>
+          <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
+          <li>{application.divisionName}</li>
+          <li>{application.belt}</li>
+          <li>{application.weight}</li>
+          <li>{application.pricingPolicy.normal}원</li>
+        </ul>
       )
     })
   }
@@ -564,7 +606,17 @@ function ProfileInfo() {
             id="ProfileInfo-bottom"
           >
             <ul className="CompetitionApplyTeamForm-bottom-table-column">
-              <li>No.</li>
+              {refundMode ? (
+                <li style={{ padding: '0 6px 0 0' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onClick={toggleSelectAll}
+                  />
+                </li>
+              ) : (
+                <li>No.</li>
+              )}
               <li>이름</li>
               <li>생년월일</li>
               <li>성별</li>
