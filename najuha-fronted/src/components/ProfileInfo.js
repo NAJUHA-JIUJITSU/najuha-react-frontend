@@ -27,6 +27,7 @@ function ProfileInfo() {
   const [competitionApplicationList, setCompetitionApplicationList] = useState(
     []
   ) //유저 신청 대회 유저 리스트 가져오기
+  const [refundMode, setRefundMode] = useState(false) //환불 모드
   const [receiptUrl, setReceiptUrl] = useState('') //유저 결제 영수증 가져오기
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
@@ -275,38 +276,64 @@ function ProfileInfo() {
           if (info.status === 'ACTIVE') applicationInfoIds.push(info.id)
         }
 
+        //대회신청마감안지남
+        //모드에 따라서 버튼이 다르게 보여짐
+        //환불&결제내역(완료)버튼
+        //뒤로가기&환불하기 버튼
         return (
-          //대회신청마감안지남
-          //환불하기&결제내역(완료)버튼
-          <div className="CompetitionApplyTeamForm-bottom-table-buttons">
-            <button
-              id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              onClick={() => {
-                if (
-                  window.confirm(
-                    '환불하시겠습니까?\n부분환불을 원하시는 경우 고객센터로 문의주세요.'
-                  )
-                ) {
-                  reundPayment(
-                    rawCompetitionApplicationInfo?.competitionPayment.orderId,
-                    applicationInfoIds
-                  )
-                }
-              }}
-            >
-              환불하기
-            </button>
-            <button
-              id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              // style={cursorStyle}
-              onClick={() => {
-                //영수증 외부 페이지 띄우기
-                window.open(`${receiptUrl}`)
-              }}
-            >
-              결제내역
-            </button>
-          </div>
+          <>
+            {refundMode ? (
+              <div className="CompetitionApplyTeamForm-bottom-table-buttons">
+                <button
+                  id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+                  onClick={() => {
+                    setRefundMode(pre => !pre)
+                  }}
+                >
+                  뒤로가기
+                </button>
+                <button
+                  id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+                  onClick={() => {
+                    if (
+                      window.confirm(
+                        '환불하시겠습니까?\n부분환불을 원하시는 경우 고객센터로 문의주세요.'
+                      )
+                    ) {
+                      reundPayment(
+                        rawCompetitionApplicationInfo?.competitionPayment
+                          .orderId,
+                        applicationInfoIds
+                      )
+                    }
+                  }}
+                >
+                  환불하기
+                </button>
+              </div>
+            ) : (
+              <div className="CompetitionApplyTeamForm-bottom-table-buttons">
+                <button
+                  id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+                  onClick={() => {
+                    setRefundMode(pre => !pre)
+                  }}
+                >
+                  환불하기
+                </button>
+                <button
+                  id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+                  // style={cursorStyle}
+                  onClick={() => {
+                    //영수증 외부 페이지 띄우기
+                    window.open(`${receiptUrl}`)
+                  }}
+                >
+                  결제내역
+                </button>
+              </div>
+            )}
+          </>
         )
       }
       //환불완료
@@ -380,24 +407,30 @@ function ProfileInfo() {
     return competitionApplicationList.map((application, i) => {
       const isCanceled = application.status === 'CANCELED'
       return (
-        <ul
-          key={i}
-          className={`CompetitionApplyTeamForm-bottom-table-row ${
-            isCanceled ? 'canceled' : ''
-          }`}
-        >
-          <li>{i + 1}</li>
-          <li>
-            {isCanceled ? ' (환불)' : ''} {application.playerName}
-          </li>
-          <li>{application.playerBirth}</li>
-          <li>{application.gender == 'female' ? '여자' : '남자'}</li>
-          <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
-          <li>{application.divisionName}</li>
-          <li>{application.belt}</li>
-          <li>{application.weight}</li>
-          <li>{application.pricingPolicy.normal}원</li>
-        </ul>
+        <>
+          {refundMode ? (
+            ''
+          ) : (
+            <ul
+              key={i}
+              className={`CompetitionApplyTeamForm-bottom-table-row ${
+                isCanceled ? 'canceled' : ''
+              }`}
+            >
+              <li>{i + 1}</li>
+              <li>
+                {isCanceled ? ' (환불)' : ''} {application.playerName}
+              </li>
+              <li>{application.playerBirth}</li>
+              <li>{application.gender == 'female' ? '여자' : '남자'}</li>
+              <li>{application.uniform == 'gi' ? '기' : '노기'}</li>
+              <li>{application.divisionName}</li>
+              <li>{application.belt}</li>
+              <li>{application.weight}</li>
+              <li>{application.pricingPolicy.normal}원</li>
+            </ul>
+          )}
+        </>
       )
     })
   }
