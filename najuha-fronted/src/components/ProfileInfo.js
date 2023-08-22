@@ -132,6 +132,10 @@ function ProfileInfo() {
   //신청대회 데이터 파싱
   function applicationParsing(application) {
     let today = new Date()
+    let plus3DaysDeadline = new Date(
+      application.Competition.registrationDeadline
+    )
+    plus3DaysDeadline.setDate(plus3DaysDeadline.getDate() + 3)
     let id = application.id
     let competitionId = application.Competition.id
     let title = application.Competition.title
@@ -192,10 +196,7 @@ function ProfileInfo() {
     let status = application.competitionPayment
       ? application.competitionPayment.status
       : ' '
-    let CheckRegistrationDeadline =
-      today > new Date(application.Competition.registrationDeadline)
-        ? false
-        : true //false면 신청마감
+    let CheckRegistrationDeadline = today > plus3DaysDeadline ? false : true //false면 신청마감
     let CheckDoreOpen =
       today > new Date(application.Competition.doreOpen) ? false : true //false면 대회날짜 지남
 
