@@ -61,6 +61,10 @@ function ProfileInfo() {
     console.log(selectedItems)
   }, [selectedItems])
 
+  useEffect(() => {
+    console.log(competitionApplicationList)
+  }, [competitionApplicationList])
+
   // 결제에 필요한 state값
   const [paymentmodal, setPaymentmodal] = useState(false)
 
@@ -236,10 +240,20 @@ function ProfileInfo() {
 
   //결제 취소하기(결제 완료)
   async function reundPayment(orderId, applicationInfoIds) {
+    if (applicationInfoIds.length === 0) {
+      alert('환불할 부문을 선택해주세요.')
+      return
+    }
+    // selectedItems의 index를 id로 바꿔줌
+    applicationInfoIds = applicationInfoIds.map(element => {
+      return competitionApplicationList[element].id
+    })
     const res = await deleteUserPayment(orderId, applicationInfoIds)
     if (res?.status === 200) {
       alert('환불이 완료되었습니다.')
       getCompetitionApplicationInfo()
+      setRefundMode(false)
+      setSelectedItems([])
     }
     return
   }
@@ -330,7 +344,7 @@ function ProfileInfo() {
                       reundPayment(
                         rawCompetitionApplicationInfo?.competitionPayment
                           .orderId,
-                        applicationInfoIds
+                        selectedItems
                       )
                     }
                   }}
@@ -346,7 +360,7 @@ function ProfileInfo() {
                     setRefundMode(pre => !pre)
                   }}
                 >
-                  환불하기
+                  환불
                 </button>
                 <button
                   id="CompetitionApplyTeamForm-bottom-table-buttons-save"
