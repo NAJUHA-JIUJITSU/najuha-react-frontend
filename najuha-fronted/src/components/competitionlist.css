@@ -283,6 +283,24 @@
   margin-top: 2px;
 }
 
+.each-competition-tag-green {
+  background: #eaffeb;
+  color: #26a312;
+  font-size: 14px;
+  letter-spacing: -0.1em;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding-left: 2px;
+  padding-right: 3px;
+  margin-right: 5px;
+}
+
+.each-competition-tag-green p {
+  /*수직정렬 맞췄지만 p태그안에 수직이 뭔가 안맞아서 인위적으로 p태그를 이동시킴 */
+  margin-top: 2px;
+}
+
 .each-competition-body {
   display: flex;
   height: 140px;
@@ -355,8 +373,8 @@
   justify-content: space-between;
   align-items: center;
   letter-spacing: -0.7px;
-  
-  border-top: 1px solid #F3F3F3;
+
+  border-top: 1px solid #f3f3f3;
 }
 
 .each-competition-body-applyDate {
@@ -412,12 +430,12 @@
   /* margin-top: 2px; */
   margin-bottom: 10px;
   height: 40px;
-  
+
   overflow: auto;
   white-space: nowrap;
 }
-.competition-filter::-webkit-scrollbar{
-  display: none; 
+.competition-filter::-webkit-scrollbar {
+  display: none;
 }
 
 .competition-filter label {
@@ -425,53 +443,59 @@
   margin-right: 8px;
 }
 
-.competition-filter label input[type="checkbox"] {
-  display: none ;
+.competition-filter label input[type='checkbox'] {
+  display: none;
 }
 
 .competition-filter label span {
   position: relative;
   display: inline-block;
   padding: 10px 12px;
-  color: #999999; 
+  color: #999999;
   border-radius: 50px;
-  border: 1px solid #E4E4E4;
+  border: 1px solid #e4e4e4;
   font-size: 15px;
   transition: 0.1s;
   user-select: none;
-  overflow: hidden ;
+  overflow: hidden;
 }
 
 /* 신청가능 */
-.filter-active{
-  background-color: #F3F7FF;
+.filter-active {
+  background-color: #f3f7ff;
 }
-.competition-filter label input[type="checkbox"][value="active"]:checked ~ span {
-  border: 1px solid #4E82E5;
-  color: #4E82E5;
+.competition-filter
+  label
+  input[type='checkbox'][value='active']:checked
+  ~ span {
+  border: 1px solid #4e82e5;
+  color: #4e82e5;
 }
 
 /* 얼리버드 */
-.filter-early{
-  background-color: #FFF3F3;
+.filter-early {
+  background-color: #fff3f3;
 }
-.competition-filter label input[type="checkbox"][value="early"]:checked ~ span {
-  border: 1px solid #FF5F5F;
-  color: #FF5F5F;
+.competition-filter label input[type='checkbox'][value='early']:checked ~ span {
+  border: 1px solid #ff5f5f;
+  color: #ff5f5f;
 }
 
 /* 간편결제 */
-.filter-easypay{
-  background-color: #FAEDFF;
+.filter-easypay {
+  background-color: #faedff;
 }
-.competition-filter label input[type="checkbox"][value="easypay"]:checked ~ span {
-  border: 1px solid #BE4EE5;
-  color: #BE4EE5;
+.competition-filter
+  label
+  input[type='checkbox'][value='easypay']:checked
+  ~ span {
+  border: 1px solid #be4ee5;
+  color: #be4ee5;
 }
 
 /* 내 좋아요 */
-.filter-likes{
-  background-color: #FFFFFF;
+.filter-likes {
+  background-color: #ffffff;
 }
 .competition-filter label .filter-likes {
   padding: 9px 12px;
@@ -483,15 +507,17 @@
   transition: 0.1s;
   opacity: 0.5;
 }
-.competition-filter label input[type="checkbox"][value="likes"]:checked ~ span {
+.competition-filter label input[type='checkbox'][value='likes']:checked ~ span {
   border: 1px solid #101010;
   color: #101010;
 }
-.competition-filter label input[type="checkbox"][value="likes"]:checked ~ span img {
+.competition-filter
+  label
+  input[type='checkbox'][value='likes']:checked
+  ~ span
+  img {
   opacity: 1;
 }
-
-
 
 @media (max-width: 1049px) {
   /* Layout */
