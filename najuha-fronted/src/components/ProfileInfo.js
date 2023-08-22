@@ -49,7 +49,14 @@ function ProfileInfo() {
     // 환불시 전체선택 체크박스 함수
     const allSelectedItems = [
       ...Array(competitionApplicationList.length).keys(),
-    ].filter(index => competitionApplicationList[index].status !== 'CANCELED')
+    ]
+      .filter(index => competitionApplicationList[index].status !== 'CANCELED')
+      .filter(index => {
+        if (competitionApplicationInfo?.CheckAdjustDay) {
+          return competitionApplicationList[index].isSolo
+        }
+        return true
+      })
     if (selectAll) {
       setSelectedItems([])
     } else {
@@ -199,6 +206,11 @@ function ProfileInfo() {
     let CheckRegistrationDeadline = today > plus3DaysDeadline ? false : true //false면 신청마감
     let CheckDoreOpen =
       today > new Date(application.Competition.doreOpen) ? false : true //false면 대회날짜 지남
+    let CheckAdjustDay =
+      new Date(application.Competition.registrationDeadline) < today &&
+      today < plus3DaysDeadline
+        ? true
+        : false //true면 체급조정기간
 
     return {
       id: id,
@@ -226,6 +238,7 @@ function ProfileInfo() {
       status: status,
       CheckRegistrationDeadline: CheckRegistrationDeadline,
       CheckDoreOpen: CheckDoreOpen,
+      CheckAdjustDay: CheckAdjustDay,
     }
   }
 
@@ -447,24 +460,29 @@ function ProfileInfo() {
 
   function renderCompetitionApplicationList() {
     return competitionApplicationList.map((application, i) => {
+      const isSolo = application.isSolo
       const isCanceled = application.status === 'CANCELED'
-      const refundClassName = refundMode ? 'refundMode' : ''
-      const isDisable = refundMode && isCanceled
+      let isDisable = refundMode && isCanceled
+      if (competitionApplicationInfo?.CheckAdjustDay) {
+        isDisable = refundMode && (isCanceled || !isSolo)
+        console.log(isDisable)
+      }
       const isSelected = selectedItems.includes(i)
       const selectedRowStyle = isSelected ? { backgroundColor: '#E7F3FF' } : {}
+      const cursorStyle = isDisable
+        ? { cursor: 'default' }
+        : { cursor: 'pointer' }
 
       return (
         <ul
           key={i}
           className={`CompetitionApplyTeamForm-bottom-table-row ${
             isCanceled ? 'canceled' : ''
-          } ${refundClassName}`}
+          } ${isDisable ? 'disabled' : ''}`}
           onClick={() => {
-            if (refundMode && !isCanceled) toggleCheckbox(i)
+            if (!isDisable) toggleCheckbox(i)
           }}
-          style={
-            (selectedRowStyle, { cursor: isDisable ? 'default' : 'pointer' })
-          }
+          style={{ ...selectedRowStyle, ...cursorStyle }}
         >
           {refundMode ? (
             <li>
