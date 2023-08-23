@@ -64,14 +64,6 @@ function ProfileInfo() {
     }
     setSelectAll(!selectAll)
   }
-  useEffect(() => {
-    console.log(selectedItems)
-  }, [selectedItems])
-
-  useEffect(() => {
-    console.log(competitionApplicationList)
-  }, [competitionApplicationList])
-
   // 결제에 필요한 state값
   const [paymentmodal, setPaymentmodal] = useState(false)
 
@@ -465,13 +457,15 @@ function ProfileInfo() {
       let isDisable = refundMode && isCanceled
       if (competitionApplicationInfo?.CheckAdjustDay) {
         isDisable = refundMode && (isCanceled || !isSolo)
-        console.log(isDisable)
       }
       const isSelected = selectedItems.includes(i)
-      const selectedRowStyle = isSelected ? { backgroundColor: '#E7F3FF' } : {}
-      const cursorStyle = isDisable
-        ? { cursor: 'default' }
-        : { cursor: 'pointer' }
+      const selectedRowStyle =
+        refundMode && isSelected ? { backgroundColor: '#E7F3FF' } : {}
+      const cursorStyle = refundMode
+        ? isDisable
+          ? {}
+          : { cursor: 'pointer' }
+        : {}
 
       return (
         <ul
@@ -480,7 +474,7 @@ function ProfileInfo() {
             isCanceled ? 'canceled' : ''
           } ${isDisable ? 'disabled' : ''}`}
           onClick={() => {
-            if (!isDisable) toggleCheckbox(i)
+            if (refundMode && !isDisable) toggleCheckbox(i)
           }}
           style={{ ...selectedRowStyle, ...cursorStyle }}
         >
