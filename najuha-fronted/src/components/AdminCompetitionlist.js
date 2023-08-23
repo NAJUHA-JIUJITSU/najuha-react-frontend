@@ -362,7 +362,7 @@ function AdminCompetitionlist() {
       )
     }
 
-    if (deadlineDiff === 0) {
+    if (!(deadlineDiffM > 0) && deadlineDiff === 0) {
       // 오늘이 마감날짜(데드라인)일 경우
       return (
         <div className="each-competition-tag-blue">
