@@ -342,11 +342,7 @@ function ProfileInfo() {
                 <button
                   id="CompetitionApplyTeamForm-bottom-table-buttons-save"
                   onClick={() => {
-                    if (
-                      window.confirm(
-                        '환불하시겠습니까?\n부분환불을 원하시는 경우 고객센터로 문의주세요.'
-                      )
-                    ) {
+                    if (window.confirm('환불하시겠습니까?')) {
                       reundPayment(
                         rawCompetitionApplicationInfo?.competitionPayment
                           .orderId,
@@ -484,6 +480,7 @@ function ProfileInfo() {
                 type="checkbox"
                 disabled={isDisable}
                 checked={selectedItems.includes(i)}
+                readOnly
               />
             </li>
           ) : (
@@ -639,6 +636,7 @@ function ProfileInfo() {
                     type="checkbox"
                     checked={selectAll}
                     onClick={toggleSelectAll}
+                    readOnly
                   />
                 </li>
               ) : (
