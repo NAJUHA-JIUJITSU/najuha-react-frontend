@@ -253,3 +253,16 @@ export const patchAdminUserLevel = async (userId, data) => {
     return res
   } catch (e) {}
 }
+
+// 6.22 대회 단독 출전 명단 조회
+export const getAdminCompetitionSoloApplicationList = async competitionId => {
+  try {
+    const res = await axiosApiWithToken(
+      `/admin/competition/${competitionId}/soloApplicationInfos`,
+      'get'
+    )
+    return res
+  } catch (e) {
+    console.log(e)
+  }
+}

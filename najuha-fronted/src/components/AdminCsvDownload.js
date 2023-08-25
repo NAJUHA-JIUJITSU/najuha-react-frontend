@@ -4,6 +4,7 @@ import { CSVLink } from 'react-csv'
 import {
   getAdminCompetitionApplicationListCsv,
   postAdminFixCompetitionPayments,
+  getAdminCompetitionSoloApplicationList,
 } from '../apis/api/admin'
 import { CsvToHtmlTable } from 'react-csv-to-table'
 import './AdminCsvDownload.css'
@@ -61,10 +62,146 @@ const convertHeaderToKorean = csvData => {
 const AdminCsvDownload = () => {
   const [csvData, setCsvData] = useState([])
   const [csvDataKo, setCsvDataKo] = useState([])
+  const [soloParticipation, setSoloParticipation] = useState([])
+  const [isSoloParticipation, setIsSoloParticipation] = useState(false)
   const [paymentFilter, setPaymentFilter] = useState('all')
   const [rowCnt, setRowCnt] = useState(0)
   const [fixedApplications, setFixedApplications] = useState([])
   const competitionId = useParams().id
+  const [message, setMessage] = useState('')
+
+  const convertEngToKo = info => {
+    // 메세지 보낼때 한글로 바꿔주는 함수
+    info.gender = info.gender === 'male' ? '남자' : '여자'
+    info.uniform = info.uniform === 'gi' ? '기' : '노기'
+
+    return info
+  }
+
+  const makeTextforSoloParticipation = info => {
+    // 단독출전자들에게 보내는 메세지 제작 함수
+    info = convertEngToKo(info)
+    let text = `안녕하세요. 나주하입니다.\n
+    ${info.playerName}님이 신청해주신 ${info.gender}/${info.divisionName}/${info.belt}/${info.weight}는 참가자가 1명(본인)으로 단독출전 상태입니다.\n
+    1. 환불을 하기\n
+    2. 환불 후 다른부문을 신청하기\n
+    3. 단독우승하기\n
+    가 가능합니다. 1,2번을 원하실 경우 나주하 홈페이지에 신청대회목록에서 본인이 신청한 대회를 찾아서 환불을 진행해주시면됩니다.\n
+    단독우승을 원하실경우에는 시합날 대회장에 오시면 됩니다. 단, 단독우승도 계체를 통과해야합니다.\n`
+
+    return text
+  }
+
+  const sendkakaoMessageforSoloParticipation = async soloParticipation => {
+    try {
+      const request = soloParticipation.map(info => {
+        let text = makeTextforSoloParticipation(info)
+        let finalText = `${message}\n\n${text}`
+        setTimeout(() => {
+          console.log(finalText)
+        }, 2000)
+        // 카카오메세지보내는함수()
+      })
+      const result = await Promise.all(request)
+      // const data = result.map(res => res.json())
+      // console.log(result)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const getSoloApplicationList = async () => {
+    try {
+      const res = await getAdminCompetitionSoloApplicationList(competitionId)
+      if (res && res.data && res.data.result) {
+        setSoloParticipation(res.data.result)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    console.log(soloParticipation)
+  }, [soloParticipation])
+
+  //
+  //           "playerName": "허민투",
+  //           "playerBirth": "830413",
+  //           "phoneNumber": "01041153316",
+  //           "uniform": "no-gi",
+  //           "gender": "male",
+  //           "divisionName": "노기통합",
+  //           "belt": "고급",
+  //           "weight": "앱솔",
+  //           "team": "나주하",
+  //           "earlyBirdDeadline": "2022-08-01 03:31:00",
+  //           "pricingPolicy": {
+  //               "normal": 50000,
+  //               "withGi": 0,
+  //               "earlyBird": 20,
+  //               "withOther": -25000
+  //           },
+  //           "priceTag": {
+  //               "amount": 25000,
+  //               "normal": 50000,
+  //               "withGi": 0,
+  //               "earlyBird": 0,
+  //               "withOther": -25000
+  //           },
+  //           "status": "ACTIVE",
+  //           "createdAt": "2023-08-14 15:13:27",
+  //           "updatedAt": "2023-08-14 15:21:33",
+  //           "competitionApplicationId": 53
+  //       }
+
+  // const changeFilltertoSoloParticipation = data => { 나중에쓸 수도 있어서 일단 킵
+  //   // 단독출전 구별하는 함수를 작동시키는 함수
+  //   setCsvDataKo(fillterSoloParticipation(data))
+  // }
+
+  // const fillterSoloParticipation = data => {
+  //   // 단독출전 구별하는 함수
+
+  //   data = data.trim().split('\n')
+  //   let emptyRecords = []
+  //   let emptyViewerRecords =
+  //     '디비전,이름,생년월일,전화번호,유니폼,성별,디비전명,벨트,체급,소속팀,결제여부,결제금액,일반금액,얼리버드할인,노기할인,앱솔할인,주문번호,결제ID,createdAt' +
+  //     '\n'
+  //   let isInEmptyBlock = false
+
+  //   data.forEach(record => {
+  //     const attributes = record.split(',')
+  //     const isAllEmpty = attributes.every(attr => attr.trim() === '')
+
+  //     if (isAllEmpty) {
+  //       isInEmptyBlock = !isInEmptyBlock
+  //     } else if (isInEmptyBlock) {
+  //       emptyRecords.push(attributes.join(','))
+  //       emptyViewerRecords += attributes.join(',') + '\n'
+  //     }
+  //   })
+  //   emptyRecords = emptyRecords.map(record => record.split(','))
+  //   emptyRecords = emptyRecords.map(record => {
+  //     return {
+  //       요약: record[0],
+  //       이름: record[1],
+  //       생년월일: record[2],
+  //       전화번호: record[3],
+  //       유니폼: record[4] === 'gi' ? '기' : '노기',
+  //       성별: record[5] === 'male' ? '남자' : '여자',
+  //       디비전명: record[6],
+  //       벨트: record[7],
+  //       체급: record[8],
+  //     }
+  //   })
+  //   console.log(emptyRecords)
+
+  //   setSoloParticipation(emptyRecords)
+  //   setRowCnt(emptyRecords.length)
+
+  //   return emptyViewerRecords
+  // }
 
   const getCsvData = async () => {
     const res = await getAdminCompetitionApplicationListCsv(
@@ -190,6 +327,53 @@ const AdminCsvDownload = () => {
               보정결과 다운로드
             </button>
           )}
+        </div>
+        <div
+          style={{
+            padding: '20px',
+            border: '1px solid black',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <button
+            onClick={() => {
+              getSoloApplicationList()
+            }}
+            style={{
+              fontSize: '30px',
+            }}
+          >
+            단독출전
+          </button>
+          <div>{isSoloParticipation.length}명</div>
+          <button
+            onClick={() =>
+              //단독출전일때만 버튼누를수 있게
+              sendkakaoMessageforSoloParticipation(soloParticipation)
+            }
+            style={{
+              fontSize: '30px',
+            }}
+          >
+            단독출전 안내문자보내기
+          </button>
+        </div>
+        <div
+          style={{
+            padding: '20px',
+            border: '1px solid black',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <textarea
+            style={{
+              height: '100px',
+            }}
+            value={message}
+            onChange={e => setMessage(e.target.value)}
+          ></textarea>
         </div>
       </div>
       <div>
