@@ -5,6 +5,8 @@ import {
   getAdminCompetitionApplicationListCsv,
   postAdminFixCompetitionPayments,
   getAdminCompetitionSoloApplicationList,
+  getAdminCompetition,
+  postAdminKakoMessage,
 } from '../apis/api/admin'
 import { CsvToHtmlTable } from 'react-csv-to-table'
 import './AdminCsvDownload.css'
@@ -92,19 +94,53 @@ const AdminCsvDownload = () => {
     return text
   }
 
+  function formatDateToKorean(date) {
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1 // 월은 0부터 시작하기 때문에 +1을 해줍니다.
+    const day = date.getDate()
+    const dayOfWeek = date.getDay() // 일요일: 0, 월요일: 1, ..., 토요일: 6
+
+    const dayOfWeekKo = ['일', '월', '화', '수', '목', '금', '토']
+
+    const ret = `${year}년 ${month}월 ${day}일(${dayOfWeekKo[dayOfWeek]})`
+    return ret
+  }
+
   const sendkakaoMessageforSoloParticipation = async soloParticipation => {
     try {
+      const res = await getAdminCompetition(competitionId)
+      const competition = res.data.result
+      const registrationDeadlineDate = new Date(
+        competition.registrationDeadline
+      )
+      const soloMediateStartDate = new Date(registrationDeadlineDate)
+      soloMediateStartDate.setDate(registrationDeadlineDate.getDate() + 1)
+      const soloMediateEndDate = new Date(registrationDeadlineDate)
+      soloMediateEndDate.setDate(registrationDeadlineDate.getDate() + 3)
+      const soloMediateStartDateKo = formatDateToKorean(soloMediateStartDate)
+      const soloMediateEndDateKo = formatDateToKorean(soloMediateEndDate)
+
       const request = soloParticipation.map(info => {
-        let text = makeTextforSoloParticipation(info)
-        let finalText = `${message}\n\n${text}`
-        setTimeout(() => {
-          console.log(finalText)
-        }, 2000)
-        // 카카오메세지보내는함수()
+        let body = {
+          phoneNumber: info.phoneNumber,
+          title: competition.title,
+          soloMediateEndDate: soloMediateEndDateKo,
+          soloMediateStartDate: soloMediateStartDateKo,
+          uniform: info.uniform === 'gi' ? '기' : '노기',
+          playerName: info.playerName,
+          gender: info.gender === 'male' ? '남자' : '여자',
+          divisionName: info.divisionName,
+          belt: info.belt,
+          weight: info.weight,
+        }
+
+        return postAdminKakoMessage(body)
       })
       const result = await Promise.all(request)
-      // const data = result.map(res => res.json())
-      // console.log(result)
+      const data = result.map(res => res.data.result)
+      console.log(data)
+
+      alert(`${competition.title} 대회 단독 출전자 메시지 전송 완료.`)
     } catch (e) {
       console.log(e)
     }

@@ -266,3 +266,14 @@ export const getAdminCompetitionSoloApplicationList = async competitionId => {
     console.log(e)
   }
 }
+
+// 6.23 대회 단독 출전 카카오 메세지 전송
+export const postAdminKakoMessage = async (data, option) => {
+  try {
+    const res = await axiosApiWithToken('/admin/kakaoMessage', 'post', data)
+    return res
+  } catch (e) {
+    console.log(e)
+    alert(`카카오 메시지 보내기에 실패하였습니다.`)
+  }
+}
