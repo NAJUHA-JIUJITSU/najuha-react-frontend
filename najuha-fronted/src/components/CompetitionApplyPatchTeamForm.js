@@ -73,6 +73,7 @@ function CompetitionApplyPatchTeamForm() {
       delete info.earlyBirdDeadline
       delete info.status
       delete info.id
+      delete info.isSolo
     })
     return infos
   }
