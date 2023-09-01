@@ -4,7 +4,10 @@ import './competition.css'
 import sampleposter from '../src_assets/samplePoster.png'
 import copy from '../src_assets/copy.png'
 import dayjs from 'dayjs'
-import { getCompetitionDetail, postCompetitionViewCnt } from '../apis/api/competition'
+import {
+  getCompetitionDetail,
+  postCompetitionViewCnt,
+} from '../apis/api/competition'
 import MarkdownEditor from './MarkdownEditor'
 import likeFull from '../src_assets/heartFull.png'
 import like from '../src_assets/heart.png'
@@ -133,16 +136,18 @@ function Competition() {
       likeCount: competition.competitionLikeCount,
       likeUsers: competition.CompetitionLikes,
       likeImg: likeImg,
-      viewCnt : viewCnt,
+      viewCnt: viewCnt,
     })
   }
 
   function dateCheck(registrationDate, registrationDeadline) {
     let opendate = dayjs(registrationDate, 'YYYY-MM-DD')
     let finishdate = dayjs(registrationDeadline, 'YYYY-MM-DD')
-    let deadlineDiff = todaytime.diff(finishdate, 'm')
-    if (deadlineDiff > 0) {
-      // 마감날짜(데드라인)이 지났을경우
+    let deadlinePlus3Days = finishdate.add(3, 'day')
+
+    let plus3DaysDeadlineDiffM = todaytime.diff(deadlinePlus3Days, 'm')
+    if (plus3DaysDeadlineDiffM > 0) {
+      // 마감날짜(데드라인+3 => 단독출전조정)이 지났을경우
       return false
     }
     let openDiff = todaytime.diff(opendate, 'm')

@@ -19,6 +19,9 @@ import {
 import Paymentmodal from './Paymentmodal'
 
 function ProfileInfo() {
+  const [selectedItems, setSelectedItems] = useState([]) // 환불을 위한 체크박스
+  const [selectAll, setSelectAll] = useState(false) // 전체선택을 위한 체크박스
+
   const [rawCompetitionApplicationInfo, setRawCompetitionApplicationInfo] =
     useState({})
   const [competitionApplicationInfo, setcompetitionApplicationInfo] = useState(
@@ -27,12 +30,40 @@ function ProfileInfo() {
   const [competitionApplicationList, setCompetitionApplicationList] = useState(
     []
   ) //유저 신청 대회 유저 리스트 가져오기
+  const [refundMode, setRefundMode] = useState(false) //환불 모드
   const [receiptUrl, setReceiptUrl] = useState('') //유저 결제 영수증 가져오기
   const cookies = new Cookies()
   const xAccessToken = cookies.get('x-access-token')
   const { decodedToken, isExpired } = useJwt(xAccessToken)
   const navigate = useNavigate()
 
+  const toggleCheckbox = index => {
+    // 환불시 체크박스 선택을 위한 함수
+    setSelectedItems(prevSelectedItems =>
+      prevSelectedItems.includes(index)
+        ? prevSelectedItems.filter(item => item !== index)
+        : [...prevSelectedItems, index]
+    )
+  }
+  const toggleSelectAll = () => {
+    // 환불시 전체선택 체크박스 함수
+    const allSelectedItems = [
+      ...Array(competitionApplicationList.length).keys(),
+    ]
+      .filter(index => competitionApplicationList[index].status !== 'CANCELED')
+      .filter(index => {
+        if (competitionApplicationInfo?.CheckAdjustDay) {
+          return competitionApplicationList[index].isSolo
+        }
+        return true
+      })
+    if (selectAll) {
+      setSelectedItems([])
+    } else {
+      setSelectedItems(allSelectedItems)
+    }
+    setSelectAll(!selectAll)
+  }
   // 결제에 필요한 state값
   const [paymentmodal, setPaymentmodal] = useState(false)
 
@@ -100,6 +131,10 @@ function ProfileInfo() {
   //신청대회 데이터 파싱
   function applicationParsing(application) {
     let today = new Date()
+    let plus3DaysDeadline = new Date(
+      application.Competition.registrationDeadline
+    )
+    plus3DaysDeadline.setDate(plus3DaysDeadline.getDate() + 3)
     let id = application.id
     let competitionId = application.Competition.id
     let title = application.Competition.title
@@ -160,12 +195,14 @@ function ProfileInfo() {
     let status = application.competitionPayment
       ? application.competitionPayment.status
       : ' '
-    let CheckRegistrationDeadline =
-      today > new Date(application.Competition.registrationDeadline)
-        ? false
-        : true //false면 신청마감
+    let CheckRegistrationDeadline = today > plus3DaysDeadline ? false : true //false면 신청마감
     let CheckDoreOpen =
       today > new Date(application.Competition.doreOpen) ? false : true //false면 대회날짜 지남
+    let CheckAdjustDay =
+      new Date(application.Competition.registrationDeadline) < today &&
+      today < plus3DaysDeadline
+        ? true
+        : false //true면 체급조정기간
 
     return {
       id: id,
@@ -193,6 +230,7 @@ function ProfileInfo() {
       status: status,
       CheckRegistrationDeadline: CheckRegistrationDeadline,
       CheckDoreOpen: CheckDoreOpen,
+      CheckAdjustDay: CheckAdjustDay,
     }
   }
 
@@ -208,10 +246,20 @@ function ProfileInfo() {
 
   //결제 취소하기(결제 완료)
   async function reundPayment(orderId, applicationInfoIds) {
+    if (applicationInfoIds.length === 0) {
+      alert('환불할 부문을 선택해주세요.')
+      return
+    }
+    // selectedItems의 index를 id로 바꿔줌
+    applicationInfoIds = applicationInfoIds.map(element => {
+      return competitionApplicationList[element].id
+    })
     const res = await deleteUserPayment(orderId, applicationInfoIds)
     if (res?.status === 200) {
       alert('환불이 완료되었습니다.')
       getCompetitionApplicationInfo()
+      setRefundMode(false)
+      setSelectedItems([])
     }
     return
   }
@@ -275,38 +323,60 @@ function ProfileInfo() {
           if (info.status === 'ACTIVE') applicationInfoIds.push(info.id)
         }
 
+        //대회신청마감안지남
+        //모드에 따라서 버튼이 다르게 보여짐
+        //환불&결제내역(완료)버튼
+        //뒤로가기&환불하기 버튼
         return (
-          //대회신청마감안지남
-          //환불하기&결제내역(완료)버튼
-          <div className="CompetitionApplyTeamForm-bottom-table-buttons">
-            <button
-              id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              onClick={() => {
-                if (
-                  window.confirm(
-                    '환불하시겠습니까?\n부분환불을 원하시는 경우 고객센터로 문의주세요.'
-                  )
-                ) {
-                  reundPayment(
-                    rawCompetitionApplicationInfo?.competitionPayment.orderId,
-                    applicationInfoIds
-                  )
-                }
-              }}
-            >
-              환불하기
-            </button>
-            <button
-              id="CompetitionApplyTeamForm-bottom-table-buttons-save"
-              // style={cursorStyle}
-              onClick={() => {
-                //영수증 외부 페이지 띄우기
-                window.open(`${receiptUrl}`)
-              }}
-            >
-              결제내역
-            </button>
-          </div>
+          <>
+            {refundMode ? (
+              <div className="CompetitionApplyTeamForm-bottom-table-buttons">
+                <button
+                  id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+                  onClick={() => {
+                    setRefundMode(pre => !pre)
+                  }}
+                >
+                  뒤로가기
+                </button>
+                <button
+                  id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+                  onClick={() => {
+                    if (window.confirm('환불하시겠습니까?')) {
+                      reundPayment(
+                        rawCompetitionApplicationInfo?.competitionPayment
+                          .orderId,
+                        selectedItems
+                      )
+                    }
+                  }}
+                >
+                  환불하기
+                </button>
+              </div>
+            ) : (
+              <div className="CompetitionApplyTeamForm-bottom-table-buttons">
+                <button
+                  id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+                  onClick={() => {
+                    setRefundMode(pre => !pre)
+                  }}
+                >
+                  환불
+                </button>
+                <button
+                  id="CompetitionApplyTeamForm-bottom-table-buttons-save"
+                  // style={cursorStyle}
+                  onClick={() => {
+                    //영수증 외부 페이지 띄우기
+                    window.open(`${receiptUrl}`)
+                  }}
+                >
+                  결제내역
+                </button>
+              </div>
+            )}
+          </>
         )
       }
       //환불완료
@@ -378,15 +448,44 @@ function ProfileInfo() {
 
   function renderCompetitionApplicationList() {
     return competitionApplicationList.map((application, i) => {
+      const isSolo = application.isSolo
       const isCanceled = application.status === 'CANCELED'
+      let isDisable = refundMode && isCanceled
+      if (competitionApplicationInfo?.CheckAdjustDay) {
+        isDisable = refundMode && (isCanceled || !isSolo)
+      }
+      const isSelected = selectedItems.includes(i)
+      const selectedRowStyle =
+        refundMode && isSelected ? { backgroundColor: '#E7F3FF' } : {}
+      const cursorStyle = refundMode
+        ? isDisable
+          ? {}
+          : { cursor: 'pointer' }
+        : {}
+
       return (
         <ul
           key={i}
           className={`CompetitionApplyTeamForm-bottom-table-row ${
             isCanceled ? 'canceled' : ''
-          }`}
+          } ${isDisable ? 'disabled' : ''}`}
+          onClick={() => {
+            if (refundMode && !isDisable) toggleCheckbox(i)
+          }}
+          style={{ ...selectedRowStyle, ...cursorStyle }}
         >
-          <li>{i + 1}</li>
+          {refundMode ? (
+            <li>
+              <input
+                type="checkbox"
+                disabled={isDisable}
+                checked={selectedItems.includes(i)}
+                readOnly
+              />
+            </li>
+          ) : (
+            <li>{i + 1}</li>
+          )}
           <li>
             {isCanceled ? ' (환불)' : ''} {application.playerName}
           </li>
@@ -531,7 +630,18 @@ function ProfileInfo() {
             id="ProfileInfo-bottom"
           >
             <ul className="CompetitionApplyTeamForm-bottom-table-column">
-              <li>No.</li>
+              {refundMode ? (
+                <li style={{ padding: '0 6px 0 0' }}>
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onClick={toggleSelectAll}
+                    readOnly
+                  />
+                </li>
+              ) : (
+                <li>No.</li>
+              )}
               <li>이름</li>
               <li>생년월일</li>
               <li>성별</li>
