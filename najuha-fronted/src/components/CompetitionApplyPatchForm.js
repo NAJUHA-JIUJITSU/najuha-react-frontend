@@ -52,6 +52,7 @@ function CompetitionApplyPatchForm() {
     copyList.map(competitionapply => {
       delete competitionapply['price']
       delete competitionapply['check']
+      delete competitionapply['isSolo']
     })
     return copyList
   }
