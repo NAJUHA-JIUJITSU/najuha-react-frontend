@@ -235,7 +235,12 @@ function Competitionlist() {
     setCompetitions([])
   }
 
-  function makingRegisterTag(registrationDate, registrationDeadline, year) {
+  function makingRegisterTag(
+    registrationDate,
+    registrationDeadline,
+    year,
+    isPartnership
+  ) {
     if (year === '2030') {
       return
     }
@@ -267,8 +272,16 @@ function Competitionlist() {
       }
     }
 
-    if (deadlineDiffM > 0 && plus3DaysDeadlineDiffM > 0) {
-      // 마감날짜(데드라인)이 지났을경우 && 마감날짜+3(체급조정기간)일이 지났을 경우
+    if (deadlineDiffM > 0 && plus3DaysDeadlineDiffM > 0 && isPartnership) {
+      // 마감날짜(데드라인)이 지났을경우 && 마감날짜+3(체급조정기간)일이 지났을 경우 && 파트너쉽
+      return (
+        <div className="each-competition-tag-gray">
+          <p>신청마감</p>
+        </div>
+      )
+    }
+
+    if (deadlineDiffM > 0 && !isPartnership) {
       return (
         <div className="each-competition-tag-gray">
           <p>신청마감</p>
@@ -329,14 +342,12 @@ function Competitionlist() {
       )
   }
 
-  function makingPartnerTag(isPartnership) {
-    if (isPartnership) {
-      return (
-        <div className="each-competition-tag-purple">
-          <p>간편결제</p>
-        </div>
-      )
-    }
+  function makingPartnerTag() {
+    return (
+      <div className="each-competition-tag-purple">
+        <p>간편결제</p>
+      </div>
+    )
   }
 
   //신청마감 & 신청오픈 전 카드 색 변경
@@ -507,10 +518,13 @@ function Competitionlist() {
             {makingRegisterTag(
               competition.registrationDate,
               competition.registrationDeadline,
-              curcompetition.year
+              curcompetition.year,
+              competition.isPartnership
             )}
-            {makingPartnerTag(competition.isPartnership)}
-            {makingSoloAdjustmentTag(competition.registrationDeadline)}
+            {competition.isPartnership ? makingPartnerTag() : ''}
+            {competition.isPartnership
+              ? makingSoloAdjustmentTag(competition.registrationDeadline)
+              : ''}
           </div>
           <div className="each-competition-body" id={cardGray}>
             <div
