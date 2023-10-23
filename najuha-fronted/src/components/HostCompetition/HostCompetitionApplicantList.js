@@ -93,6 +93,8 @@ function CompetitionApplicantList() {
         switch (matched) {
           case 'playerName':
             return '선수명'
+          case 'playerBirth':
+            return '생년월일'
           case 'uniform':
             return '기/노기'
           case 'gender':
