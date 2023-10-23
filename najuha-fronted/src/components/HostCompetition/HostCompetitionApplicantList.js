@@ -88,7 +88,7 @@ function CompetitionApplicantList() {
 
   const convertCsvHeader = csvData => {
     return csvData.replace(
-      /playerName|uniform|gender|divisionName|belt|weight|team/g,
+      /playerName|playerBirth|uniform|gender|divisionName|belt|weight|team/g,
       function (matched) {
         switch (matched) {
           case 'playerName':
