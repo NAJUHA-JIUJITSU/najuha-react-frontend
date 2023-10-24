@@ -8,6 +8,7 @@ import {
   getAdminCompetition,
   postAdminKakoMessage,
 } from '../apis/api/admin'
+import { getHostCompetitionApplicationList } from '../apis/api/host'
 import { CsvToHtmlTable } from 'react-csv-to-table'
 import './AdminCsvDownload.css'
 
@@ -71,6 +72,25 @@ const AdminCsvDownload = () => {
   const [fixedApplications, setFixedApplications] = useState([])
   const competitionId = useParams().id
   const [message, setMessage] = useState('')
+  const [numofApplicant, setNumofApplicant] = useState(0)
+
+  const countApplicant = data => {
+    let tmp = {}
+    let num = 0
+
+    for (let i = 0; i < data.length; i++) {
+      if (tmp[data[i].playerName] === undefined) {
+        tmp[data[i].playerName] = [data[i].playerBirth]
+        num++
+      } else {
+        if (!tmp[data[i].playerName].includes(data[i].playerBirth)) {
+          tmp[data[i].playerName].push(data[i].playerBirth)
+          num++
+        }
+      }
+    }
+    return num
+  }
 
   const convertEngToKo = info => {
     // 메세지 보낼때 한글로 바꿔주는 함수
@@ -256,6 +276,18 @@ const AdminCsvDownload = () => {
     }
   }
 
+  const getApplicationList = async () => {
+    const res = await getHostCompetitionApplicationList(competitionId)
+    if (res && res.data && res.data.result) {
+      console.log(res.data.result)
+      setNumofApplicant(countApplicant(res.data.result))
+    }
+  }
+
+  useEffect(() => {
+    getApplicationList()
+  }, [])
+
   useEffect(() => {
     getCsvData()
   }, [paymentFilter])
@@ -291,6 +323,7 @@ const AdminCsvDownload = () => {
     <div>
       <div style={{ display: 'flex' }}>
         <div style={{ padding: '20px', border: '1px solid black' }}>
+          <h1 style={{ fontSize: '25px' }}>참가자 명수 : {numofApplicant}명</h1>
           <h1 style={{ fontSize: '25px' }}>
             필터 :{' '}
             {paymentFilter === 'all'
@@ -313,7 +346,7 @@ const AdminCsvDownload = () => {
               fontSize: '30px',
             }}
           >
-            count : {rowCnt}
+            부문갯수 : {rowCnt}
           </div>
         </div>
         <div style={{ padding: '20px', border: '1px solid black' }}>

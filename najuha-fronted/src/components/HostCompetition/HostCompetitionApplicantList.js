@@ -63,17 +63,38 @@ function CompetitionApplicantList() {
     belt: '',
     weight: '',
   })
-
+  const [numofApplicant, setNumofApplicant] = useState(0)
   const [applicantRawData, setApplicantRawData] = useState([])
   const [csvData, setCsvData] = useState([])
 
+  // 객체로 온 참가자명단에는 성명이랑 생년월일이 중복이 값이 있어 이거를 없애는 함수를 만들고싶어요 근데 성명은 같은데 생년월일이 다른 참가자도 있어요 이것도 카운트해야해
+  const countApplicant = data => {
+    let tmp = {}
+    let num = 0
+
+    for (let i = 0; i < data.length; i++) {
+      if (tmp[data[i].playerName] === undefined) {
+        tmp[data[i].playerName] = [data[i].playerBirth]
+        num++
+      } else {
+        if (!tmp[data[i].playerName].includes(data[i].playerBirth)) {
+          tmp[data[i].playerName].push(data[i].playerBirth)
+          num++
+        }
+      }
+    }
+    return num
+  }
+
   const convertCsvHeader = csvData => {
     return csvData.replace(
-      /playerName|uniform|gender|divisionName|belt|weight|team/g,
+      /playerName|playerBirth|uniform|gender|divisionName|belt|weight|team/g,
       function (matched) {
         switch (matched) {
           case 'playerName':
             return '선수명'
+          case 'playerBirth':
+            return '생년월일'
           case 'uniform':
             return '기/노기'
           case 'gender':
@@ -94,6 +115,7 @@ function CompetitionApplicantList() {
   const getCsvData = async () => {
     const res = await getHostCompetitionApplicationList(id)
     if (res && res.data && res.data.result) {
+      setNumofApplicant(countApplicant(res.data.result))
       setApplicantRawData(res.data.result)
       setCsvData(convertCsvHeader(jsonToCsv(res.data.result)))
     }
@@ -642,10 +664,14 @@ function CompetitionApplicantList() {
           </div>
         </div>
       </div>
-      <h3 className="HostCompetitionApplicationList-filter-bottom-title">
-        신청자 명단 (총 신청수
-        {` ${applicantRawData.length}`})
-      </h3>
+      <div className="HostCompetitionApplicationList-filter-bottom-title">
+        <h3>신청자 명단</h3>
+        <h3>
+          <span>부문갯수</span> {`${applicantRawData.length}`}개
+          <br />
+          <span>참가자수</span> {`${numofApplicant}`}명
+        </h3>
+      </div>
       <div className="HostCompetitionApplicantList-wrapper">
         <div className="HostCompetitionApplicantList-csv-wrapper">
           {csvData.length > 0 && (

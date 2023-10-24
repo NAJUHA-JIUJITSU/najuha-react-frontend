@@ -19,7 +19,24 @@ import sampleposter from '../src_assets/samplePoster.png'
 import likeFull from '../src_assets/heartFull.png'
 import like from '../src_assets/heart.png'
 
-const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+const months = [
+  '20231',
+  '20232',
+  '20233',
+  '20234',
+  '20235',
+  '20236',
+  '20237',
+  '20238',
+  '20239',
+  '202310',
+  '202311',
+  '202312',
+  '20241',
+  '20242',
+  '20243',
+  '20244',
+]
 const locationSample = [
   '강원',
   '경기',
@@ -685,7 +702,7 @@ function AdminCompetitionlist() {
           ref={dateDropdownRef}
         >
           <p id={startDate === '' ? '' : 'competition-searchzone-black'}>
-            {startDate === '' ? '날짜' : `${temDate}월~`}
+            {startDate === '' ? '날짜' : `${temDate}월`}
           </p>
           <img src={dropdownicon} alt="아래 화살표" />
           {dateDropdown ? (
@@ -701,6 +718,10 @@ function AdminCompetitionlist() {
                 전체
               </li>
               {months.map(element => {
+                let year = element.slice(0, 4)
+                element = element.slice(4, 6)
+                let renderElement =
+                  year === '2024' ? `24년  ${element}월` : `23년  ${element}월`
                 return (
                   <li
                     id={
@@ -710,13 +731,14 @@ function AdminCompetitionlist() {
                     }
                     value={element}
                     onClick={() => {
-                      setStartDate(`2023-${element}-01`)
+                      if (year === '2024') setStartDate(`2024-${element}-01`)
+                      else setStartDate(`2023-${element}-01`)
                       setTemDate(element)
                       listRefresh()
                       setActiveMonth(element)
                     }}
                   >
-                    {element}월
+                    {renderElement}
                   </li>
                 )
               })}
