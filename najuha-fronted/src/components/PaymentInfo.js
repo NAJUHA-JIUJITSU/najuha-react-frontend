@@ -251,20 +251,20 @@ function PaymentInfo() {
     )
   }
 
-  // 결제상태 변경버튼
-  function changePaymentStatusButton(application) {
+  function changePaymentStatusButton(application, newStatus) {
     const confirmMessage =
-      '정말로 다음 결제 정보로 변경하시겠습니까?\n' +
-      `applicationid: ${application.id}\n`
+      `정말로 다음 결제 정보로 변경하시겠습니까?\n` +
+      `applicationid: ${application.id}\n` +
+      `변경될 상태: ${newStatus ? '결제완료' : '미결제'}`
 
     return (
       <button
         onClick={() => {
           if (window.confirm(confirmMessage))
-            changePaymentStatus(application.id, true)
+            changePaymentStatus(application.id, newStatus)
         }}
       >
-        결제완료 상태로 변경
+        {newStatus ? '결제완료 상태로 변경' : '미결제 상태로 변경'}
       </button>
     )
   }
@@ -531,9 +531,12 @@ function PaymentInfo() {
           <h2>
             할인가격 합 <span>{discount}원</span>
           </h2>
-          {paymentFilter
+          {/* {paymentFilter
             ? refundButton(application)
-            : changePaymentStatusButton(application)}
+            : changePaymentStatusButton(application, true)} */}
+          {paymentFilter && refundButton(application)}
+          {paymentFilter && changePaymentStatusButton(application, false)}
+          {!paymentFilter && changePaymentStatusButton(application, true)}
         </div>
       )
     }
