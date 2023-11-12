@@ -13,6 +13,8 @@ function UserApplicationList(props) {
   const userLevel = props.userLevel
   let competitionApplications = props.competitionApplications
 
+  const s3EndPoint = process.env.REACT_APP_S3_END_POINT
+
   // 신청 대회 지우기(결제 미완료)
   async function deleteCompetitionApplication(id) {
     const res = await deleteUserApplicationCompetition(id)
@@ -70,7 +72,7 @@ function UserApplicationList(props) {
         ? false
         : true
     let postUrl = application.Competition.CompetitionPoster
-      ? application.Competition.CompetitionPoster.imageUrl
+      ? `${s3EndPoint}/${application.Competition.CompetitionPoster.imageKey}`
       : samplePoster
     let isPayment = application.isPayment ? '결제완료' : '결제하기'
     let isCanceled =
@@ -192,13 +194,15 @@ function UserApplicationList(props) {
                   }}
                   src={xIcon}
                   alt="삭제 아이콘"
-                  className={xButton}></img>
+                  className={xButton}
+                ></img>
                 <div className={xButtonDiv}></div>
                 <div className="UserApplicationList_boxRightTitle">
                   <h3
                     onClick={() => {
                       navigate(`/Profilepage/info/${curApplication.id}`)
-                    }}>
+                    }}
+                  >
                     {curApplication.title}
                   </h3>
                   <p>{curApplication.location}</p>
@@ -214,7 +218,8 @@ function UserApplicationList(props) {
                   className="UserApplicationList_costBtn"
                   onClick={() => {
                     navigate(`/Profilepage/info/${curApplication.id}`)
-                  }}>
+                  }}
+                >
                   {curApplication.isPayment}
                 </button>
               </div>
@@ -251,19 +256,22 @@ function UserApplicationList(props) {
             <li
               key="개인 신청"
               className={active[0]}
-              onClick={() => isClicked('person', 0)}>
+              onClick={() => isClicked('person', 0)}
+            >
               개인 신청
             </li>
             <li
               key="단체 신청"
               className={active[1]}
-              onClick={() => isClicked('group', 1)}>
+              onClick={() => isClicked('group', 1)}
+            >
               단체 신청
             </li>
             <li
               key="지난 신청"
               className={active[2]}
-              onClick={() => isClicked('last', 2)}>
+              onClick={() => isClicked('last', 2)}
+            >
               지난 대회
             </li>
           </ul>

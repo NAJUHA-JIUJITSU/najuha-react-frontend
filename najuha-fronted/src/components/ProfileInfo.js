@@ -37,6 +37,8 @@ function ProfileInfo() {
   const { decodedToken, isExpired } = useJwt(xAccessToken)
   const navigate = useNavigate()
 
+  const s3EndPoint = process.env.REACT_APP_S3_END_POINT
+
   const toggleCheckbox = index => {
     // 환불시 체크박스 선택을 위한 함수
     setSelectedItems(prevSelectedItems =>
@@ -139,8 +141,9 @@ function ProfileInfo() {
     let competitionId = application.Competition.id
     let title = application.Competition.title
 
+    console.log(application)
     let postUrl = application.Competition.CompetitionPoster
-      ? application.Competition.CompetitionPoster.imageUrl
+      ? `${s3EndPoint}/${application.Competition.CompetitionPoster.imageKey}`
       : samplePoster
     let doreOpen = application.Competition.doreOpen
       .substr(0, 10)

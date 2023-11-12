@@ -48,6 +48,8 @@ function AdminCompetition() {
   const redirectUri = process.env.REACT_APP_REDIRECT_URI
   const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`
 
+  const s3EndPoint = process.env.REACT_APP_S3_END_POINT
+
   // 텍스트 복사
   const copyToClipboard = async () => {
     try {
@@ -238,7 +240,7 @@ function AdminCompetition() {
             src={
               competition
                 ? competition.CompetitionPoster
-                  ? competition.CompetitionPoster.imageUrl
+                  ? `${s3EndPoint}/${competition.CompetitionPoster.imageKey}`
                   : sampleposter
                 : ''
             }

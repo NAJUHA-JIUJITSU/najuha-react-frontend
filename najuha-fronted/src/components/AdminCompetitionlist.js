@@ -91,6 +91,8 @@ function AdminCompetitionlist() {
   const redirectUri = process.env.REACT_APP_REDIRECT_URI
   const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUri}&response_type=code`
 
+  const s3EndPoint = process.env.REACT_APP_S3_END_POINT
+
   const observer = useRef(
     new IntersectionObserver(
       async entries => {
@@ -503,7 +505,7 @@ function AdminCompetitionlist() {
       status: competition.status,
       posterImage:
         competition.CompetitionPoster != null
-          ? competition.CompetitionPoster.imageUrl
+          ? `${s3EndPoint}/${competition.CompetitionPoster.imageKey}`
           : sampleposter,
       earlyBirdDeadline:
         competition.earlyBirdDeadline != null

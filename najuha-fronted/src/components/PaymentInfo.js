@@ -34,6 +34,8 @@ function PaymentInfo() {
 
   const params = useParams() // ex) id: 1
 
+  const s3EndPoint = process.env.REACT_APP_S3_END_POINT
+
   let competitionPayAmount //대회 총 결제 금액
 
   //서버에서 대회신청 상세정보 가져오기
@@ -125,7 +127,7 @@ function PaymentInfo() {
     } = competition
 
     const postUrl = CompetitionPoster
-      ? CompetitionPoster.imageUrl
+      ? `${s3EndPoint}/${CompetitionPoster.imageKey}`
       : samplePoster
 
     return {
