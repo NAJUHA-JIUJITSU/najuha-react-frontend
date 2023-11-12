@@ -13,6 +13,8 @@ function PartnershipBanner() {
   const [competitions, setCompetitions] = useState([])
   const navigate = useNavigate()
 
+  const s3EndPoint = process.env.REACT_APP_S3_END_POINT
+
   async function getCompetitons() {
     const res = await getPartnershipCompetitionList()
     if (res?.status === 200) {
@@ -55,7 +57,7 @@ function PartnershipBanner() {
               style={{
                 backgroundImage: `url(${
                   competition.CompetitionPoster
-                    ? competition.CompetitionPoster.imageUrl
+                    ? `${s3EndPoint}/${competition.CompetitionPoster.imageKey}`
                     : sampleposter
                 }
                 )`,

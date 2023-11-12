@@ -9,6 +9,8 @@ function HostCompetitionList(props) {
   const userLevel = props.userLevel
   const hostCompetitions = props.hostCompetitions
 
+  const s3EndPoint = process.env.REACT_APP_S3_END_POINT
+
   //요일 값 구하기
   function getDayOfWeek(날짜문자열) {
     //ex) getDayOfWeek('2022-06-13')
@@ -34,7 +36,10 @@ function HostCompetitionList(props) {
             <div className="HostCompetitionList_competitonbox">
               <div className="HostCompetitionList_boxLeft">
                 <img
-                  src={competition.CompetitionPoster?.imageUrl || samplePoster}
+                  src={
+                    `${s3EndPoint}/${competition.CompetitionPoster.imageKey}` ||
+                    samplePoster
+                  }
                   alt="대회포스터"
                 ></img>
                 <p className="HostCompetitionList_posterBlack"></p>
