@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import './applymodal.css'
 import blackX from '../src_assets/blackX.svg'
-import { a } from 'react-spring'
 
 function ApplyModal(props) {
   function closeModal() {
@@ -117,8 +116,8 @@ function ApplyModal(props) {
                   e.target.value = e.target.value.slice(0, 50)
                 props.changeTeam(e.target.value)
               }}
-              pattern="[가-힣]{1,50}"
-              title="한글 50자 이하만 가능합니다."
+              pattern="{1,50}"
+              title="50자 이하만 가능합니다."
               required
             ></input>
           </div>
