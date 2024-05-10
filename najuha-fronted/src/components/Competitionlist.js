@@ -17,19 +17,18 @@ import { Cookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode'
 
 const months = [
-  '20234',
-  '20235',
-  '20236',
-  '20237',
-  '20238',
-  '20239',
-  '202310',
-  '202311',
-  '202312',
   '20241',
   '20242',
   '20243',
   '20244',
+  '20245',
+  '20246',
+  '20247',
+  '20248',
+  '20249',
+  '202410',
+  '202411',
+  '202412',
 ]
 const locationSample = [
   '강원',
@@ -664,8 +663,7 @@ function Competitionlist() {
               {months.map(element => {
                 let year = element.slice(0, 4)
                 element = element.slice(4, 6)
-                let renderElement =
-                  year === '2024' ? `24년  ${element}월` : `23년  ${element}월`
+                let renderElement = `${element}월`
                 return (
                   <li
                     id={
@@ -675,8 +673,7 @@ function Competitionlist() {
                     }
                     value={element}
                     onClick={() => {
-                      if (year === '2024') setStartDate(`2024-${element}-01`)
-                      else setStartDate(`2023-${element}-01`)
+                      setStartDate(`2024-${element}-01`)
                       setTemDate(element)
                       listRefresh()
                       setActiveMonth(element)
