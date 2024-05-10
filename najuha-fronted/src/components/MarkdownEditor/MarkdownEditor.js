@@ -1,9 +1,36 @@
 import { useState, useEffect } from 'react'
 import MDEditor from '@uiw/react-md-editor'
 import './MarkdownEditor.css'
-
+import { a } from 'react-spring'
+import axios from 'axios'
 function MarkdownEditor({ data, mode, onChange }) {
   const [markdownData, setMarkdownData] = useState(data)
+
+  //"https://drive.google.com/uc?export=view&id=1tRW3UvzVeSHMFghCxmv93ukMUOnpkrz7"에 get요청해줘
+  async function fetchGoogleDriveImage(fileId) {
+    const url = `https://drive.google.com/uc?export=view&id=${fileId}`
+
+    try {
+      const response = await fetch(url)
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      // Process the response here. For images, you might want to convert it to a blob
+      const imageBlob = await response.blob()
+      const imageUrl = URL.createObjectURL(imageBlob)
+
+      console.log('Image URL:', imageUrl)
+      // You can use the imageUrl to display the image, for example by setting it as the src of an img element
+    } catch (error) {
+      console.error('Error fetching image:', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchGoogleDriveImage('1tRW3UvzVeSHMFghCxmv93ukMUOnpkrz7')
+  }, [])
 
   useEffect(() => {
     setMarkdownData(data)
